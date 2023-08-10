@@ -85,5 +85,5 @@
   "devDependencies": {
     "npm-force-resolutions": "^0.0.10"
   },
-  "proxy": "https://backend-hymns.onrender.com"
+  "proxy": "https://hymns-be.onrender.com"
 }
