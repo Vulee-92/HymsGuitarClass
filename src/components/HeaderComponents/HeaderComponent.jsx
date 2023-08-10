@@ -461,6 +461,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               <Col span={3} >
                 <Typography
                   href="/"
+
                   sx={{
                     // display: { xs: "flex", md: "none" },
                     fontFamily: "monospace",

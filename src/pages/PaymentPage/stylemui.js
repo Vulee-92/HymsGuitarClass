@@ -20,6 +20,14 @@ export default makeStyles(() => {
       fontSize: "15px",
       fontWeight: 400,
     },
+    txtTilteBank: {
+      ...CStyles.txt_body_item,
+      color: "#000",
+      fontSize: "15px",
+      fontWeight: 400,
+      marginLeft: "15px",
+      marginBottom: "20px",
+    },
     txtOrder: {
       ...CStyles.txt_body_item,
       color: "#245c4f",
