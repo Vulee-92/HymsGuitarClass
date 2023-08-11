@@ -1,30 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import TypeProduct from "../../components/TypeProduct/TypeProduct";
 import {
   WrapperButtonMore,
-  WrapperDiscountGrid,
-  WrapperDiscountGridItem,
-  WrapperProducts,
   WrapperTitle,
-  WrapperTypeProduct,
 } from "./style";
-import slider1 from "../../assets/images/slider1.webp";
-import slider2 from "../../assets/images/slider2.jpg";
-import slider3 from "../../assets/images/slider3.webp";
-import SliderComponent from "../../components/SliderComponent/SliderComponent";
 import CardComponent from "../../components/CardComponent/CardComponent";
-import { Box, Button, ButtonBase, Container, Grid, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Stack, Typography, styled } from "@mui/material";
+import { Box, Button, Container, Grid, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Stack, Typography, styled } from "@mui/material";
 import styles from "./stylemui";
 import { Assets } from "../../configs";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
 import { useTranslation } from "react-i18next";
-import { Label } from '@mui/icons-material';
 import { useSelector } from "react-redux";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useDebounce } from "../../hooks/useDebounce";
-import { Card } from "antd";
-import { Masonry } from "@mui/lab";
 import { Parallax, ParallaxBanner, ParallaxProvider, useParallax } from "react-scroll-parallax";
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,7 +21,7 @@ import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const HomePage = () => {
   const searchProduct = useSelector((state) => state?.product?.search);
   const searchDebounce = useDebounce(searchProduct, 100);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(2);
   const classes = styles();
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -112,7 +100,7 @@ const HomePage = () => {
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -137,12 +125,7 @@ const HomePage = () => {
   //     setStateProducts(products?.data);
   //   }
   // }, [products]);
-  function Component() {
-    const parallax = useParallax({
-      speed: -10,
-    });
-    return <div ref={parallax.ref} />;
-  }
+
   const ParallaxBannerw = styled(ParallaxBanner)(({ theme }) => ({
     padding: theme.spacing(1),
     height: '300px',
@@ -264,47 +247,15 @@ const HomePage = () => {
           <WrapperTitle >Latest Releases</WrapperTitle>
 
           <ImageList variant="masonry" cols={1} gap={8}>
-            <div>
-              <Slider {...settings} style={{ overflow: 'hidden' }}>
-                {products?.data?.map((product, post, index) => {
-                  return (
-                    <div>
+            {/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
+            <Slider {...settings}>
 
-                      <ImageListItem key={product.image} style={{ cursor: 'pointers' }} >
+              {products?.data?.map((product, post, index) => {
+                return (
 
-                        <CardComponent
-                          post={post}
-                          index={index}
-                          key={product._id}
-                          countInStock={product.countInStock}
-                          description={product.description}
-                          image={product.image}
-                          name={product.name}
-                          price={product.price}
-                          rating={product.rating}
-                          type={product.type}
-                          discount={product.discount}
-                          selled={product.selled}
-                          id={product._id}
-                          createdAt={product.createdAt}
-                          style={{ cursor: 'pointers' }}
-                        />
-                        {/* <ImageListItemBar position="below" title={product.name} /> */}
+                  <div>
 
-                      </ImageListItem>
-
-                    </div>
-                  )
-
-                })}
-
-              </Slider>
-            </div>
-            {/* {products?.data?.map((product, post, index) => {
-              return (
-                <div>
-                  <ImageListItem key={product.image}>
-                    <Slider {...settings}>
+                    <ImageListItem key={product.image} style={{ cursor: 'pointers' }} >
 
                       <CardComponent
                         post={post}
@@ -321,18 +272,16 @@ const HomePage = () => {
                         selled={product.selled}
                         id={product._id}
                         createdAt={product.createdAt}
+                        style={{ cursor: 'pointers' }}
                       />
-                      <ImageListItemBar position="below" title={product.name} />
-                    </Slider>
+                      {/* <ImageListItemBar position="below" title={product.name} /> */}
+                    </ImageListItem>
+                  </div>
 
-                  </ImageListItem>
+                )
+              })}
+            </Slider>
 
-                </div>
-
-
-
-              );
-            })} */}
           </ImageList>
         </Box>
         <Button
