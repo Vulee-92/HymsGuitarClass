@@ -521,12 +521,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                         objectFit: 'cover'
                       }} />
                     ) : (
-                      <><img src={Assets.logoUser} alt="avatar" style={{
-                        height: '20px',
-                        width: '20px',
-                        borderRadius: '50%',
-                        objectFit: 'cover'
-                      }} /></>
+                      <></>
                     )}
                     {user?.access_token ? (
                       <>
