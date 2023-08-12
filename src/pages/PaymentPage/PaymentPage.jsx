@@ -92,7 +92,16 @@ const PaymentPage = () => {
   const totalPriceMemo = useMemo(() => {
     return Number(priceMemo) - Number(priceDiscountMemo) + Number(diliveryPriceMemo)
   }, [priceMemo, priceDiscountMemo, diliveryPriceMemo])
-
+  const mutationAddOrder = useMutationHooks(
+    (data) => {
+      const {
+        token,
+        ...rests } = data
+      const res = OrderService.createOrder(
+        { ...rests }, token)
+      return res
+    },
+  )
   const handleAddOrder = () => {
     if (user?.access_token && order?.orderItemsSlected && user?.name
       && user?.address && user?.phone && user?.city && priceMemo && user?.id) {
@@ -115,7 +124,6 @@ const PaymentPage = () => {
       )
     }
   }
-
   const mutationUpdate = useMutationHooks(
     (data) => {
       const { id,
@@ -128,16 +136,8 @@ const PaymentPage = () => {
     },
   )
 
-  const mutationAddOrder = useMutationHooks(
-    (data) => {
-      const {
-        token,
-        ...rests } = data
-      const res = OrderService.createOrder(
-        { ...rests }, token)
-      return res
-    },
-  )
+
+  console.log('mutationAddOrder', mutationAddOrder)
 
   const { isLoading, data } = mutationUpdate
   const { data: dataAdd, isLoading: isLoadingAddOrder, isSuccess, isError } = mutationAddOrder
