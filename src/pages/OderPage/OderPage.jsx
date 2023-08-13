@@ -38,10 +38,15 @@ import StepComponent from "../../components/StepComponent/StepComponent";
 import { Typography } from "@mui/material";
 import styles from "./stylemui";
 const OrderPage = () => {
+
+  // Sử dụng useSelector để lấy state từ Redux store
   const order = useSelector((state) => state.order);
-  console.log('order', order)
   const user = useSelector((state) => state.user);
+
+  // Sử dụng styles để tạo các class CSS cho component
   const classes = styles();
+
+  // Sử dụng useState để lưu trữ các giá trị cần thiết cho component
   const [listChecked, setListChecked] = useState([]);
   const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false);
   const [stateUserDetails, setStateUserDetails] = useState({
@@ -50,10 +55,17 @@ const OrderPage = () => {
     address: "",
     city: "",
   });
+
+  // Sử dụng useNavigate để chuyển hướng trang
   const navigate = useNavigate();
+
+  // Sử dụng Form để tạo form và lưu trữ giá trị của form
   const [form] = Form.useForm();
 
+  // Sử dụng useDispatch để gửi các action tới Redux store
   const dispatch = useDispatch();
+
+  // Hàm xử lý sự kiện khi checkbox được chọn hoặc bỏ chọn
   const onChange = (e) => {
     if (listChecked.includes(e.target.value)) {
       const newListChecked = listChecked.filter(
@@ -65,6 +77,7 @@ const OrderPage = () => {
     }
   };
 
+  // Hàm xử lý sự kiện khi số lượng sản phẩm được thay đổi
   const handleChangeCount = (type, idProduct, limited) => {
     if (type === "increase") {
       if (!limited) {
@@ -77,10 +90,12 @@ const OrderPage = () => {
     }
   };
 
+  // Hàm xử lý sự kiện khi sản phẩm được xóa khỏi đơn hàng
   const handleDeleteOrder = (idProduct) => {
     dispatch(removeOrderProduct({ idProduct }));
   };
 
+  // Hàm xử lý sự kiện khi checkbox "Chọn tất cả" được chọn hoặc bỏ chọn
   const handleOnchangeCheckAll = (e) => {
     if (e.target.checked) {
       const newListChecked = [];
@@ -93,6 +108,7 @@ const OrderPage = () => {
     }
   };
 
+  // Sử dụng useEffect để thực hiện các tác vụ khi state thay đổi
   useEffect(() => {
     dispatch(selectedOrder({ listChecked }));
   }, [listChecked]);
@@ -110,7 +126,10 @@ const OrderPage = () => {
         phone: user?.phone,
       });
     }
-  }, [isOpenModalUpdateInfo]);
+  }, [isOpenModalUpdateInfo, user]);
+
+  // Render ra giao diện cho component bằng cách sử dụng các thẻ HTML và CSS
+
 
   const handleChangeAddress = () => {
     setIsOpenModalUpdateInfo(true);

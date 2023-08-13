@@ -15,7 +15,7 @@ import {
 } from "./style";
 import { Badge, Col, Popover } from "antd";
 import Button from "@mui/material/Button";
-
+import * as ProductService from "../../services/ProductService";
 // import Search from 'antd/es/input/Search'
 import { resetUser } from "../../redux/slides/userSlide";
 
@@ -45,6 +45,8 @@ import {
   Stack,
   FormGroup,
   Icon,
+  Skeleton,
+  CardMedia,
 } from "@mui/material";
 import ProfileScreen from "../../pages/profile";
 import styles from "./stylemui";
@@ -53,13 +55,12 @@ import { searchProduct } from "../../redux/slides/productSlide";
 import { Header } from "antd/es/layout/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useQuery } from "@tanstack/react-query";
 
 const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const dispatch = useDispatch();
   const [openProfile, setOpenProfile] = useState(false);
   const navigate = useNavigate();
-  const pages = ["Sản phẩm", "Giới thiệu", "Bài viết", "Liên hệ"];
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
   const classes = styles();
   const user = useSelector((state) => state.user);
   const order = useSelector((state) => state.order);
@@ -114,10 +115,24 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  const fetchProductAll = async (context) => {
+    const limit = context?.queryKey && context?.queryKey[1];
+    const search = context?.queryKey && context?.queryKey[2];
+    const res = await ProductService.getAllProduct(search, limit);
 
+    return res;
+  };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const {
+    isLoading,
+    data: products,
+  } = useQuery([], fetchProductAll, {
+    retry: 3,
+    retryDelay: 100,
+    keepPreviousData: true,
+  });
   const content = (
     // <div>
     //   <WrapperContentPopup onClick={handleNavigateLogout}>dang xuat</WrapperContentPopup>
@@ -192,8 +207,15 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
     dispatch(searchProduct(e.target.value));
   };
   return (
-    <div>
-      {/* <AppBar
+
+
+    <Stack spacing={1}>
+      {
+        !products ? (
+          <Skeleton sx={{ height: '100%' }} animation="wave" variant="rectangular" />
+        ) : (
+          <div>
+            {/* <AppBar
         position=""
         className={
           colorChange ? classes.colorChangeLight : classes.colorChangeDark
@@ -393,9 +415,9 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               </Grid>
             </Menu>
           </Box> */}
-      {/* </Toolbar> */}
-      {/* </AppBar> */}
-      {/* <div style={{ heiht: '100%', width: '100%', display: 'flex', background: '#9255FD', justifyContent: 'center' }}>
+            {/* </Toolbar> */}
+            {/* </AppBar> */}
+            {/* <div style={{ heiht: '100%', width: '100%', display: 'flex', background: '#9255FD', justifyContent: 'center' }}>
         <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset' }}>
           <Col span={5}>
             <NavLogo className={colorChange ? classes.txtDark : classes.txtLight} href="/">HYMNS</NavLogo>
@@ -452,50 +474,51 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
           </Col>
         </WrapperHeader>
       </div> */}
-      <Fragment>
-        <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset', padding: '0px' }}>
-          <AppBar className={
-            colorChange ? classes.colorChangeDark : classes.colorChangeLight
-          }>
-            <NavContainer style={{ alignItems: "center" }}>
-              <Col span={3} >
-                <Typography
-                  href="/"
 
-                  sx={{
-                    // display: { xs: "flex", md: "none" },
-                    fontFamily: "monospace",
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: "inherit",
-                    textDecoration: "none",
-                    // cursor: 'pointer',
-                  }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff", }} >HYMNS</Typography>
+            <Fragment>
+              <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset', padding: '0px' }}>
+                <AppBar className={
+                  colorChange ? classes.colorChangeDark : classes.colorChangeLight
+                }>
+                  <NavContainer style={{ alignItems: "center" }}>
+                    <Col span={3} >
+                      <Typography
+                        href="/"
+
+                        sx={{
+                          // display: { xs: "flex", md: "none" },
+                          fontFamily: "monospace",
+                          fontWeight: 700,
+                          letterSpacing: '.3rem',
+                          color: "inherit",
+                          textDecoration: "none",
+                          // cursor: 'pointer',
+                        }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff", }} >HYMNS</Typography>
 
 
 
-              </Col>
-              <Col span={5} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
-                <NavMenu>
-                  <NavItem>
-                    <NavLinks href="/" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Home</Typography></NavLinks>
-                  </NavItem>
-                  <NavItem>
-                    <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>About</Typography></NavLinks>
-                  </NavItem>
-                  <NavItem>
-                    <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Product</Typography></NavLinks>
-                  </NavItem>
-                  <NavItem>
-                    <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Contact</Typography></NavLinks>
-                  </NavItem>
-                </NavMenu>
+                    </Col>
+                    <Col span={5} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
+                      <NavMenu>
+                        <NavItem>
+                          <NavLinks href="/" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Home</Typography></NavLinks>
+                        </NavItem>
+                        <NavItem>
+                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>About</Typography></NavLinks>
+                        </NavItem>
+                        <NavItem>
+                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Product</Typography></NavLinks>
+                        </NavItem>
+                        <NavItem>
+                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Contact</Typography></NavLinks>
+                        </NavItem>
+                      </NavMenu>
 
-              </Col>
-              <Col span={4} style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                <Loading isLoading={loading}>
-                  <WrapperHeaderAccout>
-                    {/* {!isHiddenSearch && (
+                    </Col>
+                    <Col span={4} style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                      <Loading isLoading={loading}>
+                        <WrapperHeaderAccout>
+                          {/* {!isHiddenSearch && (
                       <Col span={13}>
                         <ButttonInputSearch
                           size="large"
@@ -507,65 +530,65 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                         />
                       </Col>
                     )} */}
-                    {userAvatar ? (
-                      // <img src={userAvatar} alt="avatar" style={{
-                      //   height: '20px',
-                      //   width: '20px',
-                      //   borderRadius: '50%',
-                      //   objectFit: 'cover'
-                      // }} />
-                      <img src={Assets.logoUser} alt="avatar" style={{
-                        height: '20px',
-                        width: '20px',
-                        borderRadius: '50%',
-                        objectFit: 'cover'
-                      }} />
-                    ) : (
-                      <></>
-                    )}
-                    {user?.access_token ? (
-                      <>
-                        <>
-                          <Popover trigger="click" open={isOpenPopup} >
-                            <div style={{ cursor: 'pointer', maxWidth: 100, overflow: 'hidden', fontSize: '20px', }} >{content} </div>
-                          </Popover>
-                        </>
-                      </>
-                    ) : (
-                      <Box onClick={handleNavigateLogin}>
-                        <Button
-                          className={classes.btnLoginHeader}
-                          variant="contained"
-                          size="medium"
-                        >
-                          Login
-                        </Button>
-                      </Box>
-                    )}
-                  </WrapperHeaderAccout>
-                </Loading>
-                {!isHiddenCart && user.access_token && (
-                  <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
-                    <Badge count={order?.orderItems?.length} size="small">
-                      <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
-                    </Badge>
-                    {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
-                  </div>
-                )}
+                          {userAvatar ? (
+                            // <img src={userAvatar} alt="avatar" style={{
+                            //   height: '20px',
+                            //   width: '20px',
+                            //   borderRadius: '50%',
+                            //   objectFit: 'cover'
+                            // }} />
+                            <img src={Assets.logoUser} alt="avatar" style={{
+                              height: '20px',
+                              width: '20px',
+                              borderRadius: '50%',
+                              objectFit: 'cover'
+                            }} />
+                          ) : (
+                            <></>
+                          )}
+                          {user?.access_token ? (
+                            <>
+                              <>
+                                <Popover trigger="click" open={isOpenPopup} >
+                                  <div style={{ cursor: 'pointer', maxWidth: 100, overflow: 'hidden', fontSize: '20px', }} >{content} </div>
+                                </Popover>
+                              </>
+                            </>
+                          ) : (
+                            <Box onClick={handleNavigateLogin}>
+                              <Button
+                                className={classes.btnLoginHeader}
+                                variant="contained"
+                                size="medium"
+                              >
+                                Login
+                              </Button>
+                            </Box>
+                          )}
+                        </WrapperHeaderAccout>
+                      </Loading>
+                      {!isHiddenCart && user.access_token && (
+                        <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
+                          <Badge count={order?.orderItems?.length} size="small">
+                            <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
+                          </Badge>
+                          {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
+                        </div>
+                      )}
+                    </Col>
+
+
+                  </NavContainer>
+                </AppBar>
+              </WrapperHeader>
+            </Fragment>
+            <WrapperHeader>
+              {/* <ProfileScreen open={openProfile} onClose={() => setOpenProfile(false)} /> */}
+              <Col span={6}>
+                <WrapperTextHeader>Hymns</WrapperTextHeader>
               </Col>
-
-
-            </NavContainer>
-          </AppBar>
-        </WrapperHeader>
-      </Fragment>
-      <WrapperHeader>
-        {/* <ProfileScreen open={openProfile} onClose={() => setOpenProfile(false)} /> */}
-        <Col span={6}>
-          <WrapperTextHeader>Hymns</WrapperTextHeader>
-        </Col>
-        <Col span={12}>
-          {/* <ButttonInputSearch
+              <Col span={12}>
+                {/* <ButttonInputSearch
             size="large"
             bordered={false}
             textbutton="Tìm kiếm"
@@ -573,8 +596,8 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
           onChange={onSearch}
           backgroundColorButton="#5a20c1"
           /> */}
-        </Col>
-        {/* <Col span={6} style={{ display: 'flex', gap: '20px' }}>
+              </Col>
+              {/* <Col span={6} style={{ display: 'flex', gap: '20px' }}>
           <Loading isLoading={loading}>
             <WrapperHeaderAccout>
               {userAvatar ? (
@@ -607,8 +630,11 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
           </div>
         </Col> */}
-      </WrapperHeader>
-    </div >
+            </WrapperHeader>
+          </div >
+        )}
+
+    </Stack>
   );
 };
 

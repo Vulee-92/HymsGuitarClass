@@ -7,10 +7,11 @@ import AdminUser from '../../components/AdminUser/AdminUser';
 import AdminProduct from '../../components/AdminProduct/AdminProduct';
 import DashboardAppPage from '../Dashboard/DashboardAppPage';
 import BlogPage from '../AdminBlog/BlogPage';
-  import SvgColor from "../../components/svg-color";
+import SvgColor from "../../components/svg-color";
 import { StyledNavItem, StyledNavItemIcon } from '../../components/nav-section/styles';
 import { ListItemText } from '@mui/material';
 import { NavLink as RouterLink } from "react-router-dom";
+import OrderAdmin from '../../components/OrderAdmin/OrderAdmin';
 const AdminPage = () => {
 
   const renderPage = (key) => {
@@ -21,16 +22,17 @@ const AdminPage = () => {
         return <AdminUser />;
       case "product":
         return <AdminProduct />;
-
-      case "blog":
-        return <BlogPage />;
+      case 'orders':
+        return (
+          <OrderAdmin />
+        )
       default:
         return <></>;
     }
   }
 
   // ----------------------------------------------------------------------
-  
+
   const items = [
     getItem(
       "dashboard",
@@ -53,6 +55,11 @@ const AdminPage = () => {
     getItem(
       "blog",
       "blog",
+      <SvgColor src={`/assets/icons/navbar/ic_blog.svg`} sx={{ height: 0.9 }} />
+    ),
+    getItem(
+      "đơn hàng",
+      "orders",
       <SvgColor src={`/assets/icons/navbar/ic_blog.svg`} sx={{ height: 0.9 }} />
     ),
   ];
@@ -78,11 +85,11 @@ const AdminPage = () => {
   // }
   const [keySelected, setKeySelected] = useState('');
 
- 
 
-    const handleOnCLick = ({ key }) => {
-      setKeySelected(key)
-    }
+
+  const handleOnCLick = ({ key }) => {
+    setKeySelected(key)
+  }
 
   return (
     <>

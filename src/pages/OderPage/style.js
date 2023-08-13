@@ -69,7 +69,6 @@ export const WrapperInfo = styled.div`
   background: #fff;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
-  border-bottom: 1px solid #000;
   width: 100%;
 `;
 

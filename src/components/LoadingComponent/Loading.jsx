@@ -1,16 +1,15 @@
 import { Spin } from 'antd'
 import React from 'react'
-import electric from '../../assets/electric-guitar.svg'
-
+import electric from '../../assets/guitar-playing.png'
+import styles from "./stylemui";
 const Loading = ({ children, isLoading, deday = 10 }) => {
+  const classes = styles();
   const antIcon = <div style={{
     fontSize: 24,
     background: `url(${electric}) no-repeat 50% 50%`,
     backgroundSize: '5em',
     pointerEvents: 'none',
-    opacity: 0.4,
-    color: '#000',
-    content: '',
+    opacity: 1,
     position: 'fixed',
     zIndex: 100000,
     top: 0,
@@ -21,7 +20,7 @@ const Loading = ({ children, isLoading, deday = 10 }) => {
   }}></div>;
 
   return (
-    <Spin indicator={antIcon} spinning={isLoading} delay={deday}>
+    <Spin className={classes.spinner} indicator={antIcon} spinning={isLoading} delay={deday}>
       {children}
     </Spin>
   )
