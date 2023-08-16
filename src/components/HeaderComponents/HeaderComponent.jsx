@@ -32,7 +32,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import shopping from '../../assets/images/shopping.png'
-import { Assets } from "../../configs";
+import { Assets, Configs, Keys } from "../../configs";
 import { styled } from "@mui/material/styles";
 import Loading from "../LoadingComponent/Loading";
 import Switch from "@mui/material/Switch";
@@ -48,6 +48,7 @@ import {
   Skeleton,
   CardMedia,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import ProfileScreen from "../../pages/profile";
 import styles from "./stylemui";
 import "../../App.css";
@@ -56,18 +57,23 @@ import { Header } from "antd/es/layout/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
+import i18n from "../../utils/languages/i18n";
+import { Helpers } from "../../utils/helpers";
+import { ProductCartWidget } from "../../sections/@dashboard/products";
 
 const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const dispatch = useDispatch();
   const [openProfile, setOpenProfile] = useState(false);
   const navigate = useNavigate();
   const classes = styles();
+  const { t } = useTranslation();
   const user = useSelector((state) => state.user);
   const order = useSelector((state) => state.order);
   const [userName, setUserName] = useState("");
   const [search, setSearch] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
   const [loading, setLoading] = useState(false);
+  const [lang, setLang] = useState(i18n.language);
   const handleNavigateLogin = () => {
     navigate("/sign-in");
   };
@@ -133,6 +139,20 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
     retryDelay: 100,
     keepPreviousData: true,
   });
+  const onChangeLanguage = (lang) => {
+    setLang(lang);
+    i18n.changeLanguage(lang);
+    Helpers.setDataStorage(Keys.lang, lang);
+  };
+
+
+  // const handleChange = (event) => {
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.checked,
+  //   });
+  // };
+
   const content = (
     // <div>
     //   <WrapperContentPopup onClick={handleNavigateLogout}>dang xuat</WrapperContentPopup>
@@ -185,6 +205,64 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
       </Loading>
     </div>
   );
+  // const [lang, setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'en');
+
+  const handleLanguageChange = () => {
+    const newLang = lang === 'en' ? 'vi' : 'en';
+    setLang(newLang);
+    i18n.changeLanguage(newLang);
+    Helpers.setDataStorage(Keys.lang, newLang);
+  };
+
+
+  const LanguageSwitch = styled(Switch)(({ theme, lang }) => ({
+    width: 62,
+    height: 34,
+    padding: 7,
+    '& .MuiSwitch-switchBase': {
+      margin: 1,
+      padding: 0,
+      transform: 'translateX(6px)',
+      '&.Mui-checked': {
+        color: '#fff',
+        transform: 'translateX(22px)',
+        '& .MuiSwitch-thumb:before': {
+          backgroundImage: `url(${lang === 'vi' ? Assets.vnFlag : Assets.usFlag})`,
+          width: '100%',
+          height: '100%',
+          backgroundSize: "cover",
+        },
+        '& + .MuiSwitch-track': {
+          opacity: 1,
+          backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+        },
+      },
+    },
+    '& .MuiSwitch-thumb': {
+      width: 32,
+      height: 32,
+      '&:before': {
+        content: "''",
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        left: 0,
+        top: 0,
+        backgroundImage: `url(${lang === 'vi' ? Assets.usFlag : Assets.vnFlag})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      },
+    },
+    '& .MuiSwitch-track': {
+      opacity: 1,
+      backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+      borderRadius: 20 / 2,
+    },
+  }));
+
+
+
+
   const handleClickNavigate = (type) => {
     if (type === 'profile') {
       navigate('/profile')
@@ -206,6 +284,59 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
     setSearch(e.target.value);
     dispatch(searchProduct(e.target.value));
   };
+  // const MaterialUISwitch = styled(Switch)(({ theme, lang }) => (
+  //   {
+
+  //     width: 62,
+  //     height: 34,
+  //     padding: 7,
+  //     '& .MuiSwitch-switchBase': {
+  //       margin: 1,
+  //       padding: 0,
+  //       transform: 'translateX(6px)',
+  //       '&.Mui-checked': {
+  //         color: '#fff',
+  //         transform: 'translateX(22px)',
+  //         '& .MuiSwitch-thumb:before': {
+  //           backgroundImage: `url(${Assets.usFlag})`,
+  //           width: '100%',
+  //           height: '100%',
+  //           backgroundSize: "cover",
+
+  //         },
+  //         // '& + .MuiSwitch-track': {
+  //         //   opacity: 1,
+  //         //   backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+  //         // },
+  //       },
+  //     },
+  //     '& .MuiSwitch-thumb': {
+  //       // backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+  //       width: 32,
+  //       height: 32,
+  //       '&:before': {
+  //         content: "''",
+  //         position: 'absolute',
+  //         width: '100%',
+  //         height: '100%',
+  //         left: 0,
+  //         top: 0,
+  //         backgroundImage: `url(${Assets.vnFlag})`,
+  //         backgroundSize: "cover",
+  //         backgroundRepeat: "no-repeat",
+  //       },
+
+  //       // '& .MuiSwitch-track': {
+  //       //   opacity: 1,
+  //       //   backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+  //       //   borderRadius: 20 / 2,
+  //       // },
+  //     }
+
+  //   }
+
+  // )
+  // );
   return (
 
 
@@ -501,16 +632,16 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                     <Col span={5} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
                       <NavMenu>
                         <NavItem>
-                          <NavLinks href="/" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Home</Typography></NavLinks>
+                          <NavLinks href="/" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>    {t("navbar_home")}</Typography></NavLinks>
                         </NavItem>
                         <NavItem>
-                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>About</Typography></NavLinks>
+                          <NavLinks href="/about" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>About</Typography></NavLinks>
                         </NavItem>
                         <NavItem>
-                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Product</Typography></NavLinks>
+                          <NavLinks href="/products" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Product</Typography></NavLinks>
                         </NavItem>
                         <NavItem>
-                          <NavLinks href="#" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Contact</Typography></NavLinks>
+                          <NavLinks href="/contact" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Contact</Typography></NavLinks>
                         </NavItem>
                       </NavMenu>
 
@@ -567,14 +698,56 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                           )}
                         </WrapperHeaderAccout>
                       </Loading>
+
                       {!isHiddenCart && user.access_token && (
                         <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
                           <Badge count={order?.orderItems?.length} size="small">
                             <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
+
                           </Badge>
                           {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
                         </div>
-                      )}
+
+                      )
+
+                      }
+                      <FormControlLabel
+                        control={
+                          <LanguageSwitch
+                            sx={{ m: 1 }}
+                            checked={lang === 'en'}
+                            onClick={handleLanguageChange}
+                          />
+                        }
+                      // label="MUI switch"
+                      />
+                      {/* <FormControlLabel
+                        control={<MaterialUISwitch onChange={onChangeLanguage(Configs.language.us)} sx={{ m: 1 }} defaultChecked />}
+                      /> */}
+
+                      {/* <Box className={classes.conLanguage}>
+                        <Box
+
+                          className={classes.conLanguageItem}
+                          // component={"img"}
+                          // src={Assets.vnFlag}
+                          // style={{ opacity: lang === Configs.language.vi ? 1 : 0.5 }}
+                          onClick={() => onChangeLanguage(Configs.language.vi)}
+                        >
+                          <FormControlLabel
+                            control={<MaterialUISwitch onChange={onChangeLanguage(Configs.language.vi)} sx={{ m: 1 }} defaultChecked />}
+                          />
+                        </Box>
+                        <Box
+                          className={classes.conLanguageItem}
+                          // component={"img"}
+                          // src={Assets.usFlag}
+                          style={{ opacity: lang === Configs.language.en ? 1 : 0.5 }}
+                          onClick={() => onChangeLanguage(Configs.language.en)}
+                        >
+                         
+                        </Box>
+                      </Box> */}
                     </Col>
 
 
@@ -632,9 +805,10 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
         </Col> */}
             </WrapperHeader>
           </div >
-        )}
+        )
+      }
 
-    </Stack>
+    </Stack >
   );
 };
 

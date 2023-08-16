@@ -144,7 +144,7 @@ const SignUpPage = () => {
 
   const navigate = useNavigate()
   const handleNavigateSignIn = () => {
-    navigate('/sign-in')
+    navigate('/verify')
   }
   return (
     //   <div>
@@ -383,7 +383,7 @@ const SignUpPage = () => {
         </Button> */}
 
             <Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_alrealy_account')}  <span className={classes.txtBtnRegister}>{t('sign_in')}</span></Typography>
-
+            {/* 
             <Box className={classes.conLanguage}>
               <Box className={classes.conLanguageItem} component={'img'} src={Assets.vnFlag}
                 style={{ opacity: lang === Configs.language.vi ? 1 : .5 }}
@@ -393,7 +393,7 @@ const SignUpPage = () => {
                 style={{ opacity: lang === Configs.language.en ? 1 : .5 }}
                 onClick={() => onChangeLanguage(Configs.language.en)}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Grid>
       </Grid>

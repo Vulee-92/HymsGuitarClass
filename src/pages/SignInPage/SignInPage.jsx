@@ -330,7 +330,7 @@ const SignInPage = () => {
 
             {/* <Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_register')}<span className={classes.txtBtnRegister}>{t('register')}</span></Typography> */}
 
-            <Box className={classes.conLanguage}>
+            {/* <Box className={classes.conLanguage}>
               <Box
                 className={classes.conLanguageItem}
                 component={"img"}
@@ -345,7 +345,7 @@ const SignInPage = () => {
                 style={{ opacity: lang === Configs.language.en ? 1 : 0.5 }}
                 onClick={() => onChangeLanguage(Configs.language.en)}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Grid>
       </Grid>

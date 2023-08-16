@@ -35,8 +35,9 @@ import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useNavigate } from "react-router-dom";
 import StepComponent from "../../components/StepComponent/StepComponent";
-import { Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import styles from "./stylemui";
+import Item from "antd/es/list/Item";
 const OrderPage = () => {
 
   // Sử dụng useSelector để lấy state từ Redux store
@@ -400,7 +401,33 @@ const OrderPage = () => {
           </WrapperLeft>
           <WrapperRight>
             <div style={{ width: "100%" }}>
+              <WrapperInfo >
+                <Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }}>
+                  <Grid item xs={8}>
+                    <Typography style={{ color: 'rgb(128, 128, 137)', fontSize: '14px' }}>Giao tới</Typography>
+                  </Grid>
+                  <Grid item xs={8} style={{ textAlign: "right" }}>
+                    <Typography>  <span
+                      onClick={handleChangeAddress}
+                      style={{ color: "#245c4f", cursor: "pointer", fontSize: '14px', }}
+                    >
+                      Thay đổi
+                    </span></Typography>
+                  </Grid>
+                </Grid>
+                {/* <Typography variant="h6" component="h2">
+                  {`${user?.name} ${user?.phone}`}{" "}
+                </Typography> */}
 
+                <Box >
+
+                  <Typography style={{ color: 'rgb(128, 128, 137)', fontSize: '13px' }}>      <span style={{ fontWeight: "bold", color: "#245c4f", fontStyle: "italic", fontSize: "12px" }}>
+
+                    Nhà
+                  </span>   {" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
+                </Box>
+
+              </WrapperInfo>
               <WrapperInfo>
                 <div
                   style={{
@@ -456,20 +483,7 @@ const OrderPage = () => {
                     {convertPrice(diliveryPriceMemo)}
                   </span>
                 </div>
-                <WrapperInfo>
-                  <div>
-                    <span>Địa chỉ: </span>
-                    <span style={{ fontWeight: "bold" }}>
-                      {`${user?.address} ${user?.city}`}{" "}
-                    </span>
-                    <span
-                      onClick={handleChangeAddress}
-                      style={{ color: "#245c4f", cursor: "pointer" }}
-                    >
-                      - Thay đổi
-                    </span>
-                  </div>
-                </WrapperInfo>
+
               </WrapperInfo>
               <WrapperTotal>
                 <span>Tổng tiền</span>
@@ -479,6 +493,7 @@ const OrderPage = () => {
                       color: "#245c4f",
                       fontSize: "24px",
                       fontWeight: "bold",
+                      textAlign: "right"
                     }}
                   >
                     {convertPrice(totalPriceMemo)}
@@ -508,7 +523,7 @@ const OrderPage = () => {
             ></ButtonComponent>
           </WrapperRight>
         </div>
-      </div>
+      </div >
       <ModalComponent
         title="Cập nhật thông tin giao hàng"
         open={isOpenModalUpdateInfo}
@@ -574,7 +589,7 @@ const OrderPage = () => {
           </Form>
         </Loading>
       </ModalComponent>
-    </div>
+    </div >
   );
 };
 

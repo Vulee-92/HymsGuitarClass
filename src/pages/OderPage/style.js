@@ -65,7 +65,7 @@ export const WrapperRight = styled.div`
 `;
 
 export const WrapperInfo = styled.div`
-  padding: 17px 0;
+  padding: 20px 0;
   background: #fff;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;

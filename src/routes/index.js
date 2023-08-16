@@ -13,6 +13,9 @@ import OrderPage from "../pages/OderPage/OderPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import MyOrderPage from "../pages/MyOderPage/MyOderPage";
 import DetailsOrderPage from "../pages/DetailsOrderPage/DetailsOrderPage";
+import VerifyEmailPage from "../pages/VerifyEmailPage/VerifyEmailPage";
+import ContactPage from "../pages/ContactPage/ContactPage";
+import AboutPage from "../pages/AboutPage/AboutPage";
 
 export const routes = [
   {
@@ -21,11 +24,29 @@ export const routes = [
     isShowHeader: true,
     isShowFooter: true,
   },
+
   {
     path: "/profile",
     page: Profile,
     isShowHeader: true,
   },
+  {
+    path: "/about",
+    page: AboutPage,
+    isShowHeader: true,
+  },
+  {
+    path: "/contact",
+    page: ContactPage,
+    isShowHeader: true,
+  },
+
+  {
+    path: "/verify",
+    page: VerifyEmailPage,
+    isShowHeader: true,
+  },
+
   {
     path: "/order",
     page: OrderPage,

@@ -102,6 +102,7 @@ export const NavItem = styled.li`
 `;
 
 export const NavLinks = styled.a`
+width:"70px",
   color: #808080;
   display: flex;
   align-items: center;

@@ -19,7 +19,7 @@ import { removeAllOrderProduct } from '../../redux/slides/orderSlide';
 import { PayPalButton } from "react-paypal-button-v2";
 import * as PaymentService from '../../services/PaymentService'
 import { Assets } from "../../configs";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Slide, Typography } from "@mui/material";
 import styles from "./stylemui";
 const PaymentPage = () => {
   const order = useSelector((state) => state.order)
@@ -249,9 +249,10 @@ const PaymentPage = () => {
 
       <Loading isLoading={isLoadingAddOrder}>
         <div style={{ height: "100%", width: "1270px", margin: "0 auto" }}>
+          <Typography className={classes.txtOrder}>Phí giao hàng</Typography>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <WrapperLeft>
-              <Typography className={classes.txtOrder}>Phí giao hàng</Typography>
+              {/* <Typography className={classes.txtOrder}>Phí giao hàng</Typography> */}
               <WrapperInfo>
                 <div>
                   <Lable>   <Typography className={classes.nameProduct}>Chọn phương thức giao hàng</Typography></Lable>
@@ -300,11 +301,31 @@ const PaymentPage = () => {
             <WrapperRight>
               <div style={{ width: "100%" }}>
                 <WrapperInfo>
-                  <div>
+                  {/* <div>
                     <span>Địa chỉ: </span>
                     <span style={{ fontWeight: 'bold' }}>{`${user?.address} ${user?.city}`} </span>
                     <span onClick={handleChangeAddress} style={{ color: '#245c4f', cursor: 'pointer' }}>- Thay đổi</span>
-                  </div>
+                  </div> */}
+                  <Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }}>
+                    <Grid item xs={8}>
+                      <Typography style={{ color: 'rgb(128, 128, 137)', fontSize: '14px' }}>Giao tới</Typography>
+                    </Grid>
+                    <Grid item xs={8} style={{ textAlign: "right" }}>
+                      <Typography>  <span
+                        onClick={handleChangeAddress}
+                        style={{ color: "#245c4f", cursor: "pointer", fontSize: '14px', }}
+                      >
+                        Thay đổi
+                      </span></Typography>
+                    </Grid>
+                  </Grid>
+                  <Box >
+
+                    <Typography style={{ color: 'rgb(128, 128, 137)', fontSize: '13px' }}>      <span style={{ fontWeight: "bold", color: "#245c4f", fontStyle: "italic", fontSize: "12px" }}>
+
+                      Nhà
+                    </span>   {" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
+                  </Box>
                 </WrapperInfo>
                 <WrapperInfo>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
