@@ -9,6 +9,7 @@ import * as ProductService from "../../services/ProductService";
 import { convertPrice } from "../../utils";
 
 import styles from "./style";
+import Loading from "../../components/LoadingComponent/Loading";
 
 const PRODUCT_COLOR = [
   "#00AB55",
@@ -69,37 +70,47 @@ const ProductsPage = () => {
     ...product,
   }));
   return (
-    <>
-      {/* <Helmet>
+    <Loading isLoading={isLoading}>
+
+      <>
+        {!isLoading && (
+          <>
+            {/* <Helmet>
         <title> Dashboard: Products | Minimal UI </title>
       </Helmet> */}
-      <Box className={classes.container}></Box>
-      <Container>
-        <Typography className={classes.txtHeaderTitle}>
-          Products
-        </Typography>
+            < Box className={classes.container}></Box>
 
-        <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 5 }}
-        >
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              openFilter={openFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
-          </Stack>
-        </Stack>
 
-        <ProductList products={productList} />
-        {/* <ProductCartWidget /> */}
-      </Container>
-    </>
+            <Container>
+              <Typography className={classes.txtHeaderTitle}>
+                Products
+              </Typography>
+
+              {/* <Stack
+                direction="row"
+                flexWrap="wrap-reverse"
+                alignItems="center"
+                justifyContent="flex-end"
+                sx={{ mb: 5 }}
+              > */}
+              {/* <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+                  <ProductFilterSidebar
+                    openFilter={openFilter}
+                    onOpenFilter={handleOpenFilter}
+                    onCloseFilter={handleCloseFilter}
+                  /> */}
+              {/* <ProductSort /> */}
+              {/* </Stack> */}
+              {/* </Stack> */}
+
+              <ProductList products={productList} />
+              {/* <ProductCartWidget /> */}
+            </Container>
+          </>
+        )}
+      </>
+
+    </Loading >
   );
 };
 

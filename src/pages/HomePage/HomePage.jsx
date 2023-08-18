@@ -17,6 +17,7 @@ import { Parallax, ParallaxBanner, ParallaxProvider, useParallax } from "react-s
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet-async";
 <script src="https://unpkg.com/codyhouse-framework/main/assets/js/util.js"></script>;
 const HomePage = () => {
   const searchProduct = useSelector((state) => state?.product?.search);
@@ -142,113 +143,13 @@ const HomePage = () => {
   }));
   return (
     <Loading isLoading={isLoading || loading}>
-      {/* <WrapperTypeProduct>
-        {typeProducts.map((item) => {
-          return <TypeProduct name={item} key={item} />;
-        })}
-      </WrapperTypeProduct> */}
+      <Helmet>
+        <title> Trang chủ </title>
+      </Helmet>
       {!isLoading && (
-
         <>
           <Box className={classes.container} >
-
-            {/*   <Grid container className={classes.conContent} spacing={5}>
-          <Grid item xs={12} sm={6} lg={4} my={30} >
-          </Grid>
-          <Grid item xs={12} sm={6} lg={8} className={classes.conCard}>
-            <Grid spacing={3}>
-              <Grid item xs={12} sm={12} md={12}>
-                <Card className={classes.crypto_section}> */}
-            {/* <Box className={classes.bg_section}>
-                    <Box sx={{ width: '100%' }}>
-
-                      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
-                        <Grid item xs={6}>
-                          <CardComponent
-                            post={lastProduct}
-                            index={lastProduct}
-                            key={lastProduct._id}
-                            countInStock={lastProduct.countInStock}
-                            description={lastProduct.description}
-                            image={lastProduct.image}
-                            name={lastProduct.name}
-                            price={lastProduct.price}
-                            rating={lastProduct.rating}
-                            type={lastProduct.type}
-                            discount={lastProduct.discount}
-                            selled={lastProduct.selled}
-                            id={lastProduct._id}
-                            createdAt={lastProduct.createdAt}
-                          />
-                        </Grid>
-
-                        <Grid item xs={6}>
-                          <Item>1</Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Item>2</Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Item>3</Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Item>4</Item>
-                        </Grid>
-
-                      </Grid>
-
-                    </Box>
-                  </Box> */}
-
-            {/* <Stack spacing={2} sx={{ p: 3 }}>
-                    <Link color="inherit" underline="hover">
-                      <Typography
-                        onClick={() => handleDetailsProduct(id)}
-                        className={classes.NameCard}
-                        variant="subtitle2"
-                        noWrap
-                      >
-                        {name}
-                      </Typography>
-                    </Link>
-
-                    <Stack
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    onClick={() => handleDetailsProduct(id)}
-                    >
-                      <Box></Box>
-                      <Typography variant="subtitle1">
-                        <Typography
-                          component="span"
-                          variant="body1"
-                          sx={{
-                            color: "text.disabled",
-                            textDecoration: "line-through",
-                          }}
-                        >
-                          {selled && fCurrency(selled)}
-                        </Typography>
-                        <span> da ban {selled || 1000}+</span>
-                        {fCurrencyVND(price)}
-                      </Typography>
-                    </Stack>
-                  </Stack> */}
-            {/* </Card>
-              </Grid>
-            </Grid>
-
-          </Grid>
-        </Grid>*/}
           </Box>
-
-
-
-
-
-
           <Container maxWidth="lx" style={{ marginTop: '100px' }}>
             <Box>
               <WrapperTitle >Latest Releases</WrapperTitle>
@@ -335,12 +236,12 @@ const HomePage = () => {
           </Container>
 
 
-          <Container maxWidth="md" style={{ marginTop: '50px' }}>
+          <Container maxWidth="xl" style={{ marginTop: '50px' }}>
             <ParallaxProvider>
               <>
                 <Parallax speed={-5}>
-                  <Container maxWidth="md">
-                    <Box sx={{ width: '100%', maxWidth: 800, paddingLeft: '30px', paddingRight: '30px' }}>
+                  <Container maxWidth="xl">
+                    <Box sx={{ width: '100%', maxWidth: 1900, paddingLeft: '30px', paddingRight: '30px' }}>
 
                       <WrapperTitle style={{ marginBottom: '20px' }}>
                         Giới thiệu
@@ -392,42 +293,6 @@ const HomePage = () => {
 
 
             </ParallaxProvider>
-            {/* <Box className={classes.containerMaxWidth}> */}
-            {/* <Typography className={classes.txtHeaderTitle}>
-            Recent Posts
-          </Typography>
-          <Typography className={classes.txtDesTitleSignUp}>
-            Exclusive content from yours truly on this website ONLY. Join us
-            now!
-          </Typography> */}
-            {/* <WrapperTitle >SẢN PHẨM</WrapperTitle> */}
-
-            {/* </Box> */}
-
-            {/* <Grid container spacing={3}>
-          {products?.data?.map((product, post, index) => {
-            return (
-              <Grid item xs={12} sm={6} md={3}>
-                <CardComponent
-                  post={post}
-                  index={index}
-                  key={product._id}
-                  countInStock={product.countInStock}
-                  description={product.description}
-                  image={product.image}
-                  name={product.name}
-                  price={product.price}
-                  rating={product.rating}
-                  type={product.type}
-                  discount={product.discount}
-                  selled={product.selled}
-                  id={product._id}
-                  createdAt={product.createdAt}
-                />
-              </Grid>
-            );
-          })}
-        </Grid> */}
 
 
           </Container>

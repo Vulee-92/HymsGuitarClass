@@ -244,6 +244,7 @@ export default makeStyles(() => {
       height: "80px",
       width: "100%",
       justifyContent: "center",
+      textTransform: "capitalize",
       alignItems: "center",
       fontSize: "1rem",
       position: "fixed",
@@ -300,6 +301,7 @@ export default makeStyles(() => {
       // display: "fixed",
       height: "80px",
       display: "fixed",
+      textTransform: "capitalize",
       width: "100%",
       justifyContent: "center",
       alignItems: "center",
@@ -311,13 +313,15 @@ export default makeStyles(() => {
     },
     hymnsName: {
       ...CStyles.txt_title_item,
-      fontSize: "2rem",
+      fontSize: "1rem",
     },
     txtTilteLight: {
       ...CStyles.txt_body_item,
       color: "#fff",
       fontSize: "16px",
       fontWeight: 400,
+      textTransform: "capitalize",
+      marginRight: "10px",
       marginBottom: 0,
     },
     txtTilteDark: {
@@ -325,7 +329,9 @@ export default makeStyles(() => {
       color: "#000",
       fontSize: "16px",
       fontWeight: 400,
+      marginRight: "10px",
       marginBottom: 0,
+      textTransform: "capitalize",
     },
     txtInfoUser: {
       ...CStyles.txt_body_item,
@@ -345,6 +351,17 @@ export default makeStyles(() => {
       fontSize: "13px",
       fontWeight: 400,
       marginBottom: 0,
+    },
+    mobile_menu_icon: {
+      display: "none",
+      "@media screen and (max-width: 1213px)": {
+        nav_link: {
+          display: "none",
+        },
+        nav_link_mobile: {
+          display: "block",
+        },
+      },
     },
   };
 });

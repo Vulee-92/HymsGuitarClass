@@ -2,12 +2,12 @@ import React from 'react'
 import HeaderComponent from '../HeaderComponents/HeaderComponent'
 import FooterComponent from '../FooterComponent/FooterComponent'
 
-const DefaultComponent = ({children}) => {
+const DefaultComponent = ({ children }) => {
   return (
     <div>
-        <HeaderComponent />
-        {children}
-        <FooterComponent/>
+      <HeaderComponent />
+      {children}
+      <FooterComponent />
     </div>
   )
 }
