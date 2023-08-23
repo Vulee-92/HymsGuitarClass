@@ -202,6 +202,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
       </Loading>
     </div>
   );
+
   // const [lang, setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'en');
 
   const handleLanguageChange = () => {
@@ -302,7 +303,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               textDecoration: "none"
               // cursor: 'pointer',
             }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff", justifyContent: "center" }} >HYMNS</Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -339,7 +340,8 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">About</Typography>
-              </MenuItem>   <MenuItem onClick={handleCloseNavMenu}>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">Contact</Typography>
               </MenuItem>
             </Menu>
@@ -377,7 +379,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               // cursor: 'pointer',
             }} className={classes.hymnsName} style={{ justifyContent: "center", color: colorChange ? "#000" : "#fff", }} >HYMNS</Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex", justifyContent: "center", alignItems: 'center' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex", justifyContent: "center", alignItems: 'center' } }}>
             <Button
               onClick={handleCloseNavMenu}
               sx={{ color: "white", display: "block" }}
@@ -409,20 +411,23 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               About
             </Button>
           </Box>
-          <Box sx={{ flexGrow: 0, mr: 1 }}>
-            {userAvatar ? (
 
-              <img src={Assets.logoUser} alt="avatar" style={{
-                height: '20px',
-                width: '20px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }} />
-            ) : (
-              <></>
-            )}
-          </Box>
-          <Box sx={{ flexGrow: 0, mr: 2 }}>
+
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex", justifyContent: "center", alignItems: 'center' } }} >
+            <Box>
+
+              {userAvatar ? (
+
+                <img src={Assets.logoUser} alt="avatar" style={{
+                  height: '20px',
+                  width: '20px',
+                  borderRadius: '50%',
+                  objectFit: 'cover'
+                }} />
+              ) : (
+                <></>
+              )}
+            </Box>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -458,58 +463,61 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               </MenuItem>
 
             </Menu>
-            <Tooltip>
+            <MenuItem>
+
+              <Tooltip>
 
 
-              {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}> */}
-
-              {user?.access_token ? (
-                <>
+                {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}> */}
+                {user?.access_token ? (
                   <>
-                    <Popover trigger="click" open={isOpenPopup} >
-                      <div style={{ cursor: 'pointer', maxWidth: 100, overflow: 'hidden', fontSize: '20px', }} >{content} </div>
-                    </Popover>
+                    <>
+                      <Popover trigger="click" open={isOpenPopup} >
+                        <div style={{ cursor: 'pointer', maxWidth: 100, overflow: 'hidden', fontSize: '20px', }} >{content} </div>
+                      </Popover>
+                    </>
                   </>
-                </>
-              ) : (
-                <Box onClick={handleNavigateLogin}>
-                  <Button
-                    className={classes.btnLoginHeader}
-                    variant="contained"
-                    size="medium"
-                  >
-                    Login
-                  </Button>
-                </Box>
-              )}
-              {/* </IconButton> */}
-            </Tooltip>
+                ) : (
+                  <Box onClick={handleNavigateLogin}>
+                    <Button
+                      className={classes.btnLoginHeader}
+                      variant="contained"
+                      size="medium"
+                    >
+                      Login
+                    </Button>
+                  </Box>
+                )}
+                {/* </IconButton> */}
+              </Tooltip>
+            </MenuItem>
+            <MenuItem>
+              {!isHiddenCart && user.access_token && (
+                <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
+                  <Badge count={order?.orderItems?.length} size="small">
+                    <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
 
-          </Box>
-          <Box sx={{ flexGrow: 0, mr: 2 }}>
-            {!isHiddenCart && user.access_token && (
-              <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
-                <Badge count={order?.orderItems?.length} size="small">
-                  <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
+                  </Badge>
+                  {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
+                </div>
 
-                </Badge>
-                {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
-              </div>
-
-            )
-            }
-          </Box>
-          <Box>
-            <FormControlLabel
-              control={
-                <LanguageSwitch
-                  sx={{ m: 1 }}
-                  checked={lang === 'en'}
-                  onClick={handleLanguageChange}
-                />
+              )
               }
-            />
+            </MenuItem>
+
+            <MenuItem>
+              <FormControlLabel
+                control={
+                  <LanguageSwitch
+                    sx={{ m: 1 }}
+                    checked={lang === 'en'}
+                    onClick={handleLanguageChange}
+                  />
+                }
+              />
+            </MenuItem>
           </Box>
+
 
         </Toolbar>
       </Container>

@@ -23,6 +23,7 @@ const Loading = ({ children, isLoading, deday = 10 }) => {
     <Spin className={classes.spinner} indicator={antIcon} spinning={isLoading} delay={deday}>
       {children}
     </Spin>
+
   )
 }
 

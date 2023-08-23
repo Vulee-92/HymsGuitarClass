@@ -106,8 +106,7 @@ const CardComponent = (props, post, index) => {
               Bạn có thể chơi Đàn Guitar Fh200 Full gỗ hồng đào ở ngoài trời trong các buổi du ngoạn với đám bạn, người yêu hay trình diễn nó trên sân khấu với nhiều thể loại nhạc khác nhau từ cổ điển, country, jazz cho đến flamenco, ballad và các bản nhạc hiện đại với sắc độ biểu cảm tạo nên sự gắn kết, khuấy động không khí vui tươi chốn đông người.</p> */}
 
 
-      <Typography style={{ textAlign: 'center', cursor: 'pointers' }}>{convertPrice(price)}</Typography>
-
+      <Typography style={{ textAlign: 'center', cursor: 'pointers', fontSize: "18px" }}>{convertPrice(price)}</Typography>
 
     </section>
     // <Card className={classes.Image}>

@@ -8,6 +8,7 @@ import {
   faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import CStyles from '../../utils/common';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import TableComponent from "../TableComponent/TableComponent";
 import ModalComponent from "../ModalComponent/ModalComponent";
@@ -19,9 +20,11 @@ import { useMutationHooks } from "../../hooks/useMutationHook";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { getBase64 } from "../../utils";
+import CTable from '../../components/CTable';
 import * as UserService from "../../services/UserService";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as message from "../../components/Message/Message";
+
 import {
   Box,
   Container,
@@ -34,6 +37,7 @@ import {
   Tooltip,
   tooltipClasses,
 } from "@mui/material";
+import styles from "./stylemui";
 import { styled } from "@mui/styles";
 const AdminUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +48,38 @@ const AdminUser = () => {
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const [rowSelected, setRowSelected] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
+  const classes = styles();
+  // const [dataTableOverview, setDataTableOverview] = useState({
+  //   header: [
+  //     { name: 'Name', id: 'username', align: 'left', isCustom: true, cell: ({ cell }) => renderCellTeacherName(cell) },
+  //     { name: 'Room Class', id: 'fixedRoomCode', isCustom: true, cell: ({ cell }) => renderCellRoomClass(cell) },
+  //     // { name: 'Email', id: 'email', isCustom: true, cell: ({ cell }) => renderCellEmail(cell) },
+  //   ],
+  //   rows: []
+  // })
 
+  const [openDetail, setOpenDetail] = useState({
+    visible: false,
+    data: null
+  });
+  const renderCellTeacherName = (cell) => {
+    let newData = cell;
+    return (
+      <Box style={CStyles.rowAliCen} onClick={() => setOpenDetail({ visible: true, data: newData })}>
+        <Avatar className={classes.iconAvatarThumnailTable} src={cell.avatar} />
+        <Typography className={classes.txtNameTeacher}>{cell.username}</Typography>
+      </Box>
+    )
+  }
+
+  const renderCellRoomClass = (cell) => {
+    let newData = cell;
+    return (
+      <Box onClick={() => setOpenDetail({ visible: true, data: newData })} className={classes.conCellActivity} style={{ paddingRight: '20px' }}>
+        <Typography>{cell.fixedRoomCode}</Typography>
+      </Box>
+    )
+  }
   const inittial = () => ({
     name: "",
     email: "",
@@ -419,6 +454,14 @@ const AdminUser = () => {
       ),
     },
   ];
+  // const getData = () => {
+
+
+  //   setDataTableOverview({ ...dataTableOverview, rows: queryUser?.data?.data })
+  // }
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   const dataTable =
     queryUser?.data?.data?.length &&
     queryUser?.data?.data?.map((user) => {
@@ -427,8 +470,8 @@ const AdminUser = () => {
         key: user._id,
         isAdmin: user.isAdmin ? "TRUE" : "FALSE",
       };
-    });
-
+    }
+    );
   const user = useSelector((state) => state?.user);
   const [form] = Form.useForm();
 
@@ -630,7 +673,7 @@ const AdminUser = () => {
             };
           }}
         />
-
+        {/* <CTable selectedRow={true} className={classes.dataTable} data={dataTableOverview} isSort={false} sx={{ height: { xs: 'auto', sm: '620px' } }} /> */}
         <DrawerComponent
           title="Chi tiết nnguoi dung"
           isOpen={isOpenDrawer}

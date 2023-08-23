@@ -80,7 +80,7 @@ export const WrapperProductTiltle = styled.h2`
 position: relative;
   margin: 0.5em 0 0;
   text-align: center;
-  font-size: 1.75em;
+  font-size: 1em;
   color: var(--color-product-title);
   font-family: "Playfair Display", serif;
   font-weight: 700;

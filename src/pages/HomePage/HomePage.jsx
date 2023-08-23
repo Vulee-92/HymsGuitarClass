@@ -67,41 +67,44 @@ const HomePage = () => {
     keepPreviousData: true,
   });
   function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
-      <div
-        className={className}
-        // style={{ display: "none", marginLeft: '40px', marginTop: '30px', zIndex: 100000, }}
-        onClick={onClick}
-      >
-        <FontAwesomeIcon style={{
-          right: '40px', height: '30px', display: "block",
-          width: '30px', color: "#245c4f",
-        }} icon={faCircleArrowLeft} rotation={180} />
-      </div>
+      <Box className={classes.buttontoi} onClick={onClick}>
+        <FontAwesomeIcon icon={faCircleArrowLeft} rotation={180} />
+      </Box>
     );
   }
 
+
+  // function SamplePrevArrow(props) {
+  //   const { className, style, onClick } = props;
+  //   return (
+  //     <div
+  //       className={className}
+  //       // style={{ display: "block", marginLeft: '40px', marginTop: '30px', zIndex: 100000, position: 'fixed' }}
+  //       onClick={onClick}
+  //     >
+  //       <FontAwesomeIcon className={className} onClick={onClick} style={{
+  //         position: 'fixed', height: '30px',
+  //         width: '30px', color: "#245c4f", marginLeft: '50px'
+  //       }} icon={faCircleArrowLeft} />
+  //     </div>
+  //   );
+  // }
   function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
-      <div
-        className={className}
-        // style={{ display: "block", marginLeft: '40px', marginTop: '30px', zIndex: 100000, position: 'fixed' }}
-        onClick={onClick}
-      >
-        <FontAwesomeIcon className={className} onClick={onClick} style={{
-          position: 'fixed', height: '30px',
-          width: '30px', color: "#245c4f", marginLeft: '50px'
-        }} icon={faCircleArrowLeft} />
-      </div>
+      <Box className={classes.samplePrevArrow} onClick={onClick}>
+        <FontAwesomeIcon icon={faCircleArrowLeft} />
+      </Box>
     );
   }
+
 
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -109,8 +112,35 @@ const HomePage = () => {
     pauseOnHover: true,
     centerPadding: "60px",
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
+
+
   // const lastProduct = products?.data?.[products?.data?.length - 1]
   // useEffect(() => {
   //   if (refSearch.current) {
@@ -152,45 +182,47 @@ const HomePage = () => {
           </Box>
           <Container maxWidth="lx" style={{ marginTop: '100px' }}>
             <Box>
-              <WrapperTitle >Latest Releases</WrapperTitle>
+              <Typography className={classes.txtTitleBox}>Latest Releases</Typography>
+              <div className={classes.sliderWrapper}>
 
-              <ImageList variant="masonry" cols={1} gap={8}>
-                {/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
-                <Slider {...settings} style={{ overflow: 'hidden' }}>
+                <ImageList variant="masonry" cols={1} gap={8}>
+                  {/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
+                  <Slider {...settings} style={{ overflow: 'hidden' }}>
 
-                  {products?.data?.map((product, post, index) => {
-                    return (
+                    {products?.data?.map((product, post, index) => {
+                      return (
 
-                      <div>
+                        <div>
 
-                        <ImageListItem key={product.image} style={{ cursor: 'pointers' }} >
+                          <ImageListItem key={product.image} style={{ cursor: 'pointers' }} >
 
-                          <CardComponent
-                            post={post}
-                            index={index}
-                            key={product._id}
-                            countInStock={product.countInStock}
-                            description={product.description}
-                            image={product.image}
-                            name={product.name}
-                            price={product.price}
-                            rating={product.rating}
-                            type={product.type}
-                            discount={product.discount}
-                            selled={product.selled}
-                            id={product._id}
-                            createdAt={product.createdAt}
-                            style={{ cursor: 'pointers' }}
-                          />
-                          {/* <ImageListItemBar position="below" title={product.name} /> */}
-                        </ImageListItem>
-                      </div>
+                            <CardComponent
+                              post={post}
+                              index={index}
+                              key={product._id}
+                              countInStock={product.countInStock}
+                              description={product.description}
+                              image={product.image}
+                              name={product.name}
+                              price={product.price}
+                              rating={product.rating}
+                              type={product.type}
+                              discount={product.discount}
+                              selled={product.selled}
+                              id={product._id}
+                              createdAt={product.createdAt}
+                              style={{ cursor: 'pointers' }}
+                            />
+                            {/* <ImageListItemBar position="below" title={product.name} /> */}
+                          </ImageListItem>
+                        </div>
 
-                    )
-                  })}
-                </Slider>
+                      )
+                    })}
+                  </Slider>
+                </ImageList>
+              </div>
 
-              </ImageList>
             </Box>
             <Button
               sx={{ p: 3 }}
@@ -242,10 +274,8 @@ const HomePage = () => {
                 <Parallax speed={-5}>
                   <Container maxWidth="xl">
                     <Box sx={{ width: '100%', maxWidth: 1900, paddingLeft: '30px', paddingRight: '30px' }}>
+                      <Typography className={classes.txtTitleBox}>        Giới thiệu</Typography>
 
-                      <WrapperTitle style={{ marginBottom: '20px' }}>
-                        Giới thiệu
-                      </WrapperTitle>
 
 
                       <Typography className={classes.txtTilte}>

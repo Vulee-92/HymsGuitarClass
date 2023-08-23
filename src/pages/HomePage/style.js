@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-export const WrapperTypeProduct = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  justify-content: flex-start;
-  height: 44px;
-`;
+
 export const WrapperButtonMore = styled(ButtonComponent)`
   &:hover {
     color: #fff;
@@ -38,6 +32,10 @@ export const WrapperTitle = styled.h2`
   margin: 0;
   text-transform: uppercase;
   pointer-events: none;
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "2em",
+    marginTop: "50px"
+  }
 }`;
 export const WrapperDiscountGrid = styled.div`
 text-align: center;
