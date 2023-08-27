@@ -174,7 +174,7 @@ const HomePage = () => {
   return (
     <Loading isLoading={isLoading || loading}>
       <Helmet>
-        <title> Trang chủ </title>
+        <title> Hymns </title>
       </Helmet>
       {!isLoading && (
         <>

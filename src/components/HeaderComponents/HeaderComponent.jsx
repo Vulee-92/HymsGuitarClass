@@ -287,22 +287,22 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
     <AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters style={{ alignItems: 'center' }}>
+        <Toolbar disableGutters style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
 
           <Typography
             href="/"
 
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", md: "contents" },
               flexGrow: 1,
+              width: "30%",
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: "inherit",
               textDecoration: "none"
               // cursor: 'pointer',
-            }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff", justifyContent: "center" }} >HYMNS</Typography>
+            }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff" }} >HYMNS</Typography>
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -333,10 +333,10 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               }}
             >
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Home</Typography>
+                <Button href="/" textAlign="center">Home</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Product</Typography>
+                <Button href="/products" textAlign="center">Product</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">About</Typography>
@@ -346,6 +346,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               </MenuItem>
             </Menu>
           </Box>
+
           {/* <Typography
             variant="h5"
             noWrap
@@ -378,8 +379,22 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               textDecoration: "none"
               // cursor: 'pointer',
             }} className={classes.hymnsName} style={{ justifyContent: "center", color: colorChange ? "#000" : "#fff", }} >HYMNS</Typography>
+          <Box sx={{
+            display: { xs: "block", md: "none" }
+          }}>
+            {!isHiddenCart && user.access_token && (
+              <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
+                <Badge count={order?.orderItems?.length} size="small">
+                  <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
 
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex", justifyContent: "center", alignItems: 'center' } }}>
+                </Badge>
+                {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
+              </div>
+
+            )
+            }
+          </Box>
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }} style={{ justifyContent: "space-between", alignItems: 'center' }}>
             <Button
               onClick={handleCloseNavMenu}
               sx={{ color: "white", display: "block" }}

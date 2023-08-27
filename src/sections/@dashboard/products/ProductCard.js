@@ -28,7 +28,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { id, name, cover, price, colors, status, priceSale } = product;
+  const { id, name, image, price, colors, status, priceSale } = product;
   const navigate = useNavigate();
   const classes = styles();
   const handleDetailsProduct = (id) => {
@@ -57,7 +57,7 @@ export default function ShopProductCard({ product }) {
             <StyledProductImg
               onClick={() => handleDetailsProduct(id)}
               alt={name}
-              src={cover}
+              src={image}
             />
           </Box>
 

@@ -240,7 +240,7 @@ const OrderPage = () => {
     },
   ];
   return (
-    <div style={{ with: "100%", height: "100vh", marginTop: '60px' }}>
+    <div style={{ with: "100%", height: "100vh", marginTop: '100px' }}>
       <div style={{ height: "100%", width: "1270px", margin: "0 auto" }}>
         <Typography className={classes.txtOrder}>Giỏ hàng của bạn</Typography>
         <div style={{ display: "flex", justifyContent: "center" }}>

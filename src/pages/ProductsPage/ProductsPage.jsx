@@ -1,5 +1,5 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../../sections/@dashboard/products';
 import { faker } from "@faker-js/faker";
@@ -10,6 +10,7 @@ import { convertPrice } from "../../utils";
 
 import styles from "./style";
 import Loading from "../../components/LoadingComponent/Loading";
+import TypeProduct from "components/TypeProduct/TypeProduct";
 
 const PRODUCT_COLOR = [
   "#00AB55",
@@ -24,7 +25,7 @@ const PRODUCT_COLOR = [
 
 const ProductsPage = () => {
   const [openFilter, setOpenFilter] = useState(false);
-
+  const [typeProducts, setTypeProducts] = useState([])
   const handleOpenFilter = () => {
     setOpenFilter(true);
   };
@@ -37,6 +38,16 @@ const ProductsPage = () => {
     const res = await ProductService.getAllProduct();
     return res;
   };
+  const fetchAllTypeProduct = async () => {
+    const res = await ProductService.getAllTypeProduct()
+    if (res?.status === 'OK') {
+      setTypeProducts(res?.data)
+    }
+  }
+
+
+
+
 
   const { isLoading, data: products, isPreviousData } = useQuery(
     ["products"],
@@ -48,7 +59,9 @@ const ProductsPage = () => {
     }
   );
   console.log('productList', products)
-
+  useEffect(() => {
+    fetchAllTypeProduct()
+  }, [])
   const productList = products?.data?.map((product, index) => ({
     id: product._id,
     cover: product?.image,
@@ -80,7 +93,13 @@ const ProductsPage = () => {
       </Helmet> */}
             < Box className={classes.container}></Box>
 
-
+            <Box>
+              {typeProducts.map((item) => {
+                return (
+                  <TypeProduct name={item} key={item} />
+                )
+              })}
+            </Box>
             <Container>
               <Typography className={classes.txtHeaderTitle}>
                 Products

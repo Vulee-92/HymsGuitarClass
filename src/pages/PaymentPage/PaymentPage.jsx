@@ -245,7 +245,7 @@ const PaymentPage = () => {
   }, [])
 
   return (
-    <div style={{ with: "100%", height: "100vh", marginTop: '50px' }}>
+    <div style={{ with: "100%", height: "100vh", marginTop: '100px' }}>
 
       <Loading isLoading={isLoadingAddOrder}>
         <div style={{ height: "100%", width: "1270px", margin: "0 auto" }}>

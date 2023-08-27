@@ -1,14 +1,49 @@
 import { Checkbox, Col, Rate, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   WrapperContent,
   WrapperLableText,
   WrapperTextPrice,
   WrapperTextValue,
 } from "./style";
-
+import * as ProductService from "../../services/ProductService";
+import { useQuery } from "@tanstack/react-query";
+import TypeProduct from "components/TypeProduct/TypeProduct";
 const NavbarComponent = () => {
-  const onChange = () => {};
+  const onChange = () => { };
+
+  const [typeProducts, setTypeProducts] = useState([])
+  const fetchProductAll = async () => {
+    const res = await ProductService.getAllProduct();
+    return res;
+  };
+  const fetchAllTypeProduct = async () => {
+    const res = await ProductService.getAllTypeProduct()
+    if (res?.status === 'OK') {
+      setTypeProducts(res?.data)
+    }
+  }
+
+
+
+
+
+  const { isLoading, data: products, isPreviousData } = useQuery(
+    ["products"],
+    fetchProductAll,
+    {
+      retry: 3,
+      retryDelay: 100,
+      keepPreviousData: true,
+    }
+  );
+  console.log('productList', products)
+  useEffect(() => {
+    fetchAllTypeProduct()
+  }, [])
+
+
+
   const renderContent = (type, options) => {
     switch (type) {
       case "text":
@@ -61,7 +96,11 @@ const NavbarComponent = () => {
     <div>
       <WrapperLableText>Lable</WrapperLableText>
       <WrapperContent>
-        {renderContent("text", ["Tu lanh", "TV", "MAYGIAT"])}
+        {typeProducts.map((item) => {
+          return (
+            <TypeProduct name={item} key={item} />
+          )
+        })}
       </WrapperContent>
     </div>
   );
