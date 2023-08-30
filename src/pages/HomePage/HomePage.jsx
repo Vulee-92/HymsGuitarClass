@@ -18,6 +18,8 @@ import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
+import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import Typical from "react-typical";
 <script src="https://unpkg.com/codyhouse-framework/main/assets/js/util.js"></script>;
 const HomePage = () => {
   const searchProduct = useSelector((state) => state?.product?.search);
@@ -182,7 +184,13 @@ const HomePage = () => {
           </Box>
           <Container maxWidth="lx" style={{ marginTop: '100px' }}>
             <Box>
-              <Typography className={classes.txtTitleBox}>Latest Releases</Typography>
+              <Typical
+                steps={['Latest Releases', 100, 'New Products', 100]}
+                loop={Infinity}
+                wrapper="p"
+              />
+              {/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
+              <AnimationComponent type="text" text="Latest Releases" className={classes.txtTitleBox} />
               <div className={classes.sliderWrapper}>
 
                 <ImageList variant="masonry" cols={1} gap={8}>
@@ -274,10 +282,10 @@ const HomePage = () => {
                 <Parallax speed={-5}>
                   <Container maxWidth="xl">
                     <Box sx={{ width: '100%', maxWidth: 1900, paddingLeft: '30px', paddingRight: '30px' }}>
-                      <Typography className={classes.txtTitleBox}>        Giới thiệu</Typography>
+                      <Typography className={classes.txtTitleBox}>           <AnimationComponent type="text" text="Giới thiệu" /></Typography>
 
 
-
+                      <AnimationComponent text="   Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao" className={classes.txtTilte} />
                       <Typography className={classes.txtTilte}>
                         Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao
                       </Typography>

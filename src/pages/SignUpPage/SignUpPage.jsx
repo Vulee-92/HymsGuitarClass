@@ -20,6 +20,7 @@ import CButton from '../../components/CButton';
 import { Box, FormControl, Grid, Typography } from '@mui/material'
 import { Colors } from '../../utils/colors'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import AnimationComponent from 'components/AnimationComponent/AnimationComponent'
 const SignUpPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false)
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
@@ -41,7 +42,7 @@ const SignUpPage = () => {
   )
 
   const { data, isLoading, isSuccess, isError } = mutation
-
+  console.log("mutation", data)
   useEffect(() => {
     if (isSuccess) {
       message.success()
@@ -87,6 +88,7 @@ const SignUpPage = () => {
       password,
       confirmPassword
     })
+    console.log("mutation", mutation)
   }
   // has number
   const hasNumber = (number) => new RegExp(/[0-9]/).test(number);
@@ -237,138 +239,139 @@ const SignUpPage = () => {
 
         <Grid item xs={12} sm={6} lg={4} my={30} >
           {/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
-          <Typography className={classes.conTextCreate}>Create an account</Typography>
-          <Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>Already have an account? <Typography className={classes.txtDesTitleSignUpLight}>Sign in</Typography></Typography>
+          <Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Create an account" className={classes.conTextCreate} /></Typography>
+          <Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}><AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
         </Grid>
         <Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
-          <Box className={classes.conLogin}>
-            <Typography className={classes.txtHeaderTitle}>{t('sign_up')}</Typography>
-            {/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
-            <Box className={classes.conForm}>
-              <Box className={classes.conItemInput}>
-                <Typography className={classes.txtTitleInput}>{t('email')}</Typography>
-                <InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.secondary : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-                  className={classes.conInput}
-                  // fullWidth
-                  placeholder={t('email')}
-                  // startAdornment={
-                  //   <InputAdornment position='start'>
-                  //     <FontAwesomeIcon icon={faAddressCard} fontSize={20} color={form.email.isFocus || form.email.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-                  //   </InputAdornment>
-                  // }
-                  // disabled={loading}
-                  onFocus={() => onBlurFocusInput(true, 'email')}
-                  onBlur={() => onBlurFocusInput(false, 'email')}
-                  value={email} onChange={handleOnChangeEmail}
-                />
-              </Box>
-              <Box className={classes.conItemInput}>
-                <Typography className={classes.txtTitleInput}>{t('password')}</Typography>
-                <InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-                  className={classes.conInput}
-                  // fullWidth
-                  placeholder={t('password')}
+          <AnimationComponent type="box">
+            <Box className={classes.conLogin}>
+              <Typography className={classes.txtHeaderTitle}>{t('sign_up')}</Typography>
+              {/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
+              <Box className={classes.conForm}>
+                <Box className={classes.conItemInput}>
+                  <Typography className={classes.txtTitleInput}>{t('email')}</Typography>
+                  <InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.secondary : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+                    className={classes.conInput}
+                    // fullWidth
+                    placeholder={t('email')}
+                    // startAdornment={
+                    //   <InputAdornment position='start'>
+                    //     <FontAwesomeIcon icon={faAddressCard} fontSize={20} color={form.email.isFocus || form.email.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
+                    //   </InputAdornment>
+                    // }
+                    // disabled={loading}
+                    onFocus={() => onBlurFocusInput(true, 'email')}
+                    onBlur={() => onBlurFocusInput(false, 'email')}
+                    value={email} onChange={handleOnChangeEmail}
+                  />
+                </Box>
+                <Box className={classes.conItemInput}>
+                  <Typography className={classes.txtTitleInput}>{t('password')}</Typography>
+                  <InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+                    className={classes.conInput}
+                    // fullWidth
+                    placeholder={t('password')}
 
-                  // startAdornment={
-                  //   <InputAdornment position='start'>
-                  //     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-                  //   </InputAdornment>
-                  // }
+                    // startAdornment={
+                    //   <InputAdornment position='start'>
+                    //     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
+                    //   </InputAdornment>
+                    // }
 
-                  // endAdornment={
-                  //   <InputAdornment position='end'>
-                  //     <FontAwesomeIcon
-                  icon={form.password.isShow ? faEye : faEyeSlash}
-                  fontSize={20}
-                  value={password}
-                  type={isShowPassword ? "text" : "password"}
-                  onChange={handleOnChangePassword}
-                  color={Colors.primary}
+                    // endAdornment={
+                    //   <InputAdornment position='end'>
+                    //     <FontAwesomeIcon
+                    icon={form.password.isShow ? faEye : faEyeSlash}
+                    fontSize={20}
+                    value={password}
+                    type={isShowPassword ? "text" : "password"}
+                    onChange={handleOnChangePassword}
+                    color={Colors.primary}
+                    // className={classes.conIconInputRight}
+                    onClick={onChangeTypePassword}
+                  />
+                  {/* </InputAdornment> */}
+                  {/* } */}
+                  {/* type={form.password.isShow ? 'text' : 'password'}
+              // disabled={loading}
+              onFocus={() => onBlurFocusInput(true, 'password')}
+              onBlur={() => onBlurFocusInput(false, 'password')} */}
+                  {/* onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  // onValidate()
+                }
+              }} */}
+                  {/* /> */}
+                </Box>
+                <Box className={classes.conItemInput}>
+                  <Typography className={classes.txtTitleInput}>{t('password')}</Typography>
+                  <InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+                    className={classes.conInput}
+                    // fullWidth
+                    placeholder={t('password')}
+
+                    // startAdornment={
+                    //   <InputAdornment position='start'>
+                    //     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
+                    //   </InputAdornment>
+                    // }
+
+                    // endAdornment={
+                    //   <InputAdornment position='end'>
+                    //     <FontAwesomeIcon
+                    icon={form.password.isShow ? faEye : faEyeSlash}
+                    fontSize={20}
+                    value={confirmPassword}
+
+                    onChange={handleOnchangeConfirmPassword}
+                    color={Colors.primary}
                   // className={classes.conIconInputRight}
-                  onClick={onChangeTypePassword}
-                />
-                {/* </InputAdornment> */}
-                {/* } */}
-                {/* type={form.password.isShow ? 'text' : 'password'}
+                  />
+                  {/* </InputAdornment> */}
+                  {/* } */}
+                  {/* type={form.password.isShow ? 'text' : 'password'}
               // disabled={loading}
               onFocus={() => onBlurFocusInput(true, 'password')}
               onBlur={() => onBlurFocusInput(false, 'password')} */}
-                {/* onKeyDown={(e) => {
+                  {/* onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   // onValidate()
                 }
               }} */}
-                {/* /> */}
+                  {/* /> */}
+                </Box>
               </Box>
-              <Box className={classes.conItemInput}>
-                <Typography className={classes.txtTitleInput}>{t('password')}</Typography>
-                <InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-                  className={classes.conInput}
-                  // fullWidth
-                  placeholder={t('password')}
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item>
+                    <Box sx={{ bgcolor: level?.color, width: 85, height: 8, borderRadius: '7px' }} />
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle1" fontSize="0.75rem">
+                      {level?.label}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </FormControl>
+              <Typography className={classes.txtDesTitle}>{t('txt_agree')}</Typography>
 
-                  // startAdornment={
-                  //   <InputAdornment position='start'>
-                  //     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-                  //   </InputAdornment>
-                  // }
+              {/* <Box className={classes.conMsg}> */}
+              {/* <Typography className={classes.txtError}>{t(errorMsg)}</Typography> */}
+              {/* <Typography className={classes.txtForgot}>{t('for_ta_click_here')}</Typography> */}
+              {/* </Box> */}
+              {/* onClick={onPressJoinClassTa}  */}
+              {data?.status === 'ERR' && <span>{data?.message}</span>}
+              <Loading isLoading={isLoading}>
+                <CButton
+                  disabled={!email.length || !password.length}
+                  title={t('create_account')}
+                  onClick={handleSignUp}
 
-                  // endAdornment={
-                  //   <InputAdornment position='end'>
-                  //     <FontAwesomeIcon
-                  icon={form.password.isShow ? faEye : faEyeSlash}
-                  fontSize={20}
-                  value={confirmPassword}
-
-                  onChange={handleOnchangeConfirmPassword}
-                  color={Colors.primary}
-                // className={classes.conIconInputRight}
+                // onClick={onValidate}
+                // loading={loading}
                 />
-                {/* </InputAdornment> */}
-                {/* } */}
-                {/* type={form.password.isShow ? 'text' : 'password'}
-              // disabled={loading}
-              onFocus={() => onBlurFocusInput(true, 'password')}
-              onBlur={() => onBlurFocusInput(false, 'password')} */}
-                {/* onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  // onValidate()
-                }
-              }} */}
-                {/* /> */}
-              </Box>
-            </Box>
-            <FormControl fullWidth sx={{ mt: 2 }}>
-              <Grid container spacing={2} alignItems="center">
-                <Grid item>
-                  <Box sx={{ bgcolor: level?.color, width: 85, height: 8, borderRadius: '7px' }} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1" fontSize="0.75rem">
-                    {level?.label}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </FormControl>
-            <Typography className={classes.txtDesTitle}>{t('txt_agree')}</Typography>
-
-            {/* <Box className={classes.conMsg}> */}
-            {/* <Typography className={classes.txtError}>{t(errorMsg)}</Typography> */}
-            {/* <Typography className={classes.txtForgot}>{t('for_ta_click_here')}</Typography> */}
-            {/* </Box> */}
-            {/* onClick={onPressJoinClassTa}  */}
-            {data?.status === 'ERR' && <span>{data?.message}</span>}
-            <Loading isLoading={isLoading}>
-              <CButton
-                disabled={!email.length || !password.length}
-                title={t('create_account')}
-                onClick={handleSignUp}
-
-              // onClick={onValidate}
-              // loading={loading}
-              />
-            </Loading>
-            {/* <Box className={classes.conTitleLoginMethod}>
+              </Loading>
+              {/* <Box className={classes.conTitleLoginMethod}>
           <Box className={classes.conLine} />
           <Typography className={classes.txtTitleLoginMethod}>{t('txt_login_another')}</Typography>
           <Box className={classes.conLine} />
@@ -382,8 +385,8 @@ const SignUpPage = () => {
           <Typography className={classes.txtBtnGoogle}>{t('sign_in_with_google')}</Typography>
         </Button> */}
 
-            <Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_alrealy_account')}  <span className={classes.txtBtnRegister}>{t('sign_in')}</span></Typography>
-            {/* 
+              <Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_alrealy_account')}  <span className={classes.txtBtnRegister}>{t('sign_in')}</span></Typography>
+              {/* 
             <Box className={classes.conLanguage}>
               <Box className={classes.conLanguageItem} component={'img'} src={Assets.vnFlag}
                 style={{ opacity: lang === Configs.language.vi ? 1 : .5 }}
@@ -394,7 +397,9 @@ const SignUpPage = () => {
                 onClick={() => onChangeLanguage(Configs.language.en)}
               />
             </Box> */}
-          </Box>
+            </Box>
+          </AnimationComponent>
+
         </Grid>
       </Grid>
 

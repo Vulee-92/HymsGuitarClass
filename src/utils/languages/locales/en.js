@@ -2,7 +2,8 @@ const en = {
   sign_in: "Sign In",
   sign_up: "Sign Up",
   create_account: "Create Account",
-  txt_agree:"By Signing up, you agree to our  Terms of Service  and  Privacy Policy",
+  txt_agree:
+    "By Signing up, you agree to our  Terms of Service  and  Privacy Policy",
   txt_sign_in: "Enter your details to get sign in to your account",
   email: "Email",
   user_name: "User name",
@@ -41,9 +42,12 @@ const en = {
   txt_error_room_id_empty: "Room ID cannot be blank",
   txt_error_access_code_invalid: "Incorrect access code",
   txt_error_meeting_not_start: "Your teacher hasn't started the lesson",
-  txt_error_teacher_have_not_participated: "Your teacher hasn't started the lesson",
-  txt_error_room_id_invalid: "We can't find this meeting room, please check whether all fields are correct or not",
-  txt_error_meeting_required_field: "Required field is missing, please check whether all fields are filled in or not.",
+  txt_error_teacher_have_not_participated:
+    "Your teacher hasn't started the lesson",
+  txt_error_room_id_invalid:
+    "We can't find this meeting room, please check whether all fields are correct or not",
+  txt_error_meeting_required_field:
+    "Required field is missing, please check whether all fields are filled in or not.",
   navbar_home: "Home",
   role: "Role",
   student: "Student",
@@ -55,7 +59,7 @@ const en = {
   start_lesson_with_this_resource: "Start session with this resource",
   home: "Home",
   txt_vc_report_title: "VC Lesson Report for Class",
-  hi: 'Hi',
+  hi: "Hi",
   export: "Export",
   overview: "Overview",
   total_activity: "Total activity",
@@ -91,8 +95,8 @@ const en = {
   sub_online_room: "'s Online Meeting Room",
   first_name: "First name",
   last_name: "Last name",
-  err_required_fields: 'Please fill in all required fields',
-  update_information_success: 'Update information success',
+  err_required_fields: "Please fill in all required fields",
+  update_information_success: "Update information success",
   add_user: "Add user",
   add_teacher: "Add teacher",
   add: "Add",
@@ -110,8 +114,11 @@ const en = {
   good: "Good",
   strong: "Strong",
   the_input_is_email: "The input is email",
-  new_user_create_an_account: "New user? Created an account"
-
+  new_user_create_an_account: "New user? Created an account",
+  contactmessenger: "Message",
+  type_your_message: "Type your message",
+  send_message: "Send message",
+  get_in_touch: "Get in touch",
 };
 
 export default en;

@@ -2,8 +2,10 @@ const vi = {
   sign_in: "Đăng nhập",
   sign_up: "Đăng ký",
   create_account: "Tạo tài khoản",
-  txt_agree:"Bằng cách đăng ký, bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư của chúng tôi",
-  txt_sign_in: "Nhập thông tin chi tiết của bạn để đăng nhập vào tài khoản của bạn",
+  txt_agree:
+    "Bằng cách đăng ký, bạn đồng ý với Điều khoản dịch vụ và Chính sách quyền riêng tư của chúng tôi",
+  txt_sign_in:
+    "Nhập thông tin chi tiết của bạn để đăng nhập vào tài khoản của bạn",
   email: "Email",
   user_name: "Tên đăng nhập",
   password: "Mật khẩu",
@@ -42,8 +44,10 @@ const vi = {
   txt_error_access_code_invalid: "Mã truy cập không đúng",
   txt_error_meeting_not_start: "Giáo viên chưa bắt đầu buổi học",
   txt_error_teacher_have_not_participated: "Giáo viên chưa bắt đầu buổi học",
-  txt_error_room_id_invalid: "Chúng tôi không thể tìm thấy mã phòng học này, bạn hãy vui lòng kiểm tra xem thông tin đã đúng chưa nhé",
-  txt_error_meeting_required_field: "Thông tin bắt buộc bị thiếu, bạn hãy vui lòng kiểm tra xem tất cả các thông tin đã được điền hay chưa nhé",
+  txt_error_room_id_invalid:
+    "Chúng tôi không thể tìm thấy mã phòng học này, bạn hãy vui lòng kiểm tra xem thông tin đã đúng chưa nhé",
+  txt_error_meeting_required_field:
+    "Thông tin bắt buộc bị thiếu, bạn hãy vui lòng kiểm tra xem tất cả các thông tin đã được điền hay chưa nhé",
   navbar_home: "Trang chủ",
   role: "Vai trò",
   student: "Học sinh",
@@ -54,7 +58,7 @@ const vi = {
   optional: "Tùy chọn",
   start_lesson_with_this_resource: "Bắt đầu buổi học với tài nguyên này",
   txt_vc_report_title: "Báo cáo bài học VC cho lớp",
-  hi: 'Xin chào',
+  hi: "Xin chào",
   export: "Xuất file",
   overview: "Tổng quan",
   total_activity: "Hoạt động",
@@ -93,21 +97,24 @@ const vi = {
   must_not_be_blank: "Không được để trống",
   first_name: "Họ",
   last_name: "Tên",
-  err_required_fields: 'Vui lòng điền đầy đủ thông tin',
-  update_information_success: 'Cập nhập thông tin thành công',
+  err_required_fields: "Vui lòng điền đầy đủ thông tin",
+  update_information_success: "Cập nhập thông tin thành công",
   in_progress: "Đang diễn ra",
   ended: "Đã kết thúc",
   confirm: "Xác nhận",
   notification: "Thông báo",
-  txt_confirm_change_host: "Vui lòng nhập mật khẩu của bạn để cập nhật các thay đổi",
+  txt_confirm_change_host:
+    "Vui lòng nhập mật khẩu của bạn để cập nhật các thay đổi",
   poor: "Quá yếu",
   weak: "Yếu",
   normal: "Bình thường",
   good: "Mạnh vừa",
   strong: "Mạnh",
   the_input_is_email: "Đầu vào phải là email",
-  new_user_create_an_account:"Người dùng mới? Tạo tài khoản"
-
+  new_user_create_an_account: "Người dùng mới? Tạo tài khoản",
+  contactmessenger: "Tin nhắn",
+  type_your_message: "Nội dung tin nhắn của bạn",
+  send_message: "Gửi tin nhắn",
+  get_in_touch: "Liên lạc",
 };
 export default vi;
-
