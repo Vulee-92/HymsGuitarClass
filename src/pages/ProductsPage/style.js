@@ -8,12 +8,12 @@ export default makeStyles(() => {
   return {
     container: {
       ...CStyles.center,
-      height: "40vh",
+      height: "60vh",
       backgroundImage: `url(${Assets.bgSheet})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
+      overflowY: "auto",
       padding: Configs.pH,
-      display: "fixed",
     },
     conModal: {
       ...CStyles.shadow,
@@ -29,6 +29,14 @@ export default makeStyles(() => {
       height: "100%",
       marginBottom: "5%",
       marginTop: "5%",
+    },
+    conTextCreate: {
+      ...CStyles.txt_header_title,
+      // color: Colors.da,
+      fontSize: 60,
+      textAlign: "left",
+      fontWeight: 600,
+      color: "#fff",
     },
     conHeader: {
       ...CStyles.center,

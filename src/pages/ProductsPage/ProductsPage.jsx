@@ -11,6 +11,8 @@ import { convertPrice } from "../../utils";
 import styles from "./style";
 import Loading from "../../components/LoadingComponent/Loading";
 import TypeProduct from "components/TypeProduct/TypeProduct";
+import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import Typical from "react-typical";
 
 const PRODUCT_COLOR = [
   "#00AB55",
@@ -91,8 +93,18 @@ const ProductsPage = () => {
             {/* <Helmet>
         <title> Dashboard: Products | Minimal UI </title>
       </Helmet> */}
-            < Box className={classes.container}></Box>
+            < Box className={classes.container}>
 
+              <Typography className={classes.conTextCreate}>
+                <Typical
+                  steps={['Guitar', 2000, 'Ukulele', 2000, 'Tuner', 2000, 'Pick', 2000, 'Capo', 2000]}
+                  loop={Infinity}
+                  wrapper="p"
+                  className={classes.conTextCreate}
+                />
+              </Typography>
+
+            </Box>
             <Box>
               {typeProducts.map((item) => {
                 return (
@@ -101,9 +113,7 @@ const ProductsPage = () => {
               })}
             </Box>
             <Container>
-              <Typography className={classes.txtHeaderTitle}>
-                Products
-              </Typography>
+              <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />
 
               {/* <Stack
                 direction="row"
