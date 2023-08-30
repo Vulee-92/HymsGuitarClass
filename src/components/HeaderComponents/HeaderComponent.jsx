@@ -342,7 +342,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                 <Typography textAlign="center">About</Typography>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Contact</Typography>
+                <Button href="/contact" textAlign="center">Contact</Button>
               </MenuItem>
             </Menu>
           </Box>
@@ -414,6 +414,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
             <Button
               onClick={handleCloseNavMenu}
               sx={{ color: "white", display: "block" }}
+              href="/contact"
               className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
             >
               Contact
