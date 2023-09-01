@@ -14,7 +14,7 @@ export const TypeProduct = ({ name }) => {
   };
   return (
     <div
-      style={{ padding: "30px 10px", cursor: "pointer" }}
+      style={{ padding: "10px 0px", cursor: "pointer" }}
       onClick={() => handleNavigateType(name)}
     >
       {name}

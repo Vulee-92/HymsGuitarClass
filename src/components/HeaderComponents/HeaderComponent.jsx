@@ -78,7 +78,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const [isMobile, setMobile] = useState(false);
   const [lang, setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
   const handleNavigateLogin = () => {
-    navigate("/sign-in");
+    navigate("/login");
   };
   const [colorChange, setColorchange] = useState(false);
   const changeNavbarColor = () => {
@@ -336,7 +336,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                 <Button href="/" textAlign="center">Home</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Button href="/products" textAlign="center">Product</Button>
+                <Button href="/product" textAlign="center">Product</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">About</Typography>
@@ -406,7 +406,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
             <Button
               onClick={handleCloseNavMenu}
               sx={{ color: "white", display: "block" }}
-              href="/products"
+              href="/product"
               className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
             >
               Product

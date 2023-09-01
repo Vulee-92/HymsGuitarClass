@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../../sections/@dashboard/products';
@@ -13,6 +13,10 @@ import Loading from "../../components/LoadingComponent/Loading";
 import TypeProduct from "components/TypeProduct/TypeProduct";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
+import NavbarComponent from "components/NavbarComponent/NavbarComponent";
+import { useDebounce } from "hooks/useDebounce";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const PRODUCT_COLOR = [
   "#00AB55",
@@ -24,30 +28,72 @@ const PRODUCT_COLOR = [
   "#94D82D",
   "#FFC107",
 ];
-
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  boxShadow: "none",
+  color: theme.palette.text.secondary,
+}));
 const ProductsPage = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const [typeProducts, setTypeProducts] = useState([])
   const handleOpenFilter = () => {
     setOpenFilter(true);
+    // setState(null);
   };
   const classes = styles();
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
-
-  const fetchProductAll = async () => {
-    const res = await ProductService.getAllProduct();
-    return res;
-  };
+  const searchProduct = useSelector((state) => state?.product?.search);
+  const searchDebounce = useDebounce(searchProduct, 500);
+  // const fetchProductAll = async () => {
+  //   const res = await ProductService.getAllProduct();
+  //   return res;
+  // };
   const fetchAllTypeProduct = async () => {
-    const res = await ProductService.getAllTypeProduct()
+    const res = await ProductService.getProductType()
     if (res?.status === 'OK') {
       setTypeProducts(res?.data)
     }
   }
+  const fetchProductAll = async (page, limit) => {
+    setLoading(true);
+    let res;
+    if (state) {
+      res = await ProductService.getProductType(state, page, limit);
+    } else {
+      res = await ProductService.getAllProduct();
+    }
+    if (res?.status === "OK") {
+      setLoading(false);
+      setProducts(res?.data);
+      setPanigate({ ...panigate, total: res?.totalPage });
+    } else {
+      setLoading(false);
+    }
+  };
+  const { state } = useLocation();
 
-
+  const [productss, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [panigate, setPanigate] = useState({
+    page: 0,
+    limit: 10,
+    total: 1,
+  });
+  const fetchProductType = async (type, page, limit) => {
+    setLoading(true);
+    const res = await ProductService.getProductType(type, page, limit);
+    if (res?.status === "OK") {
+      setLoading(false);
+      setProducts(res?.data);
+      setPanigate({ ...panigate, total: res?.totalPage });
+    } else {
+      setLoading(false);
+    }
+  };
 
 
 
@@ -60,39 +106,38 @@ const ProductsPage = () => {
       keepPreviousData: true,
     }
   );
-  console.log('productList', products)
+  console.log('setProducts', products)
+  // console.log('productList', products)
   useEffect(() => {
-    fetchAllTypeProduct()
-  }, [])
+    if (state) {
+      fetchProductType(state, panigate.page, panigate.limit);
+    }
+  }, [state, panigate.page, panigate.limit]);
   const productList = products?.data?.map((product, index) => ({
     id: product._id,
     cover: product?.image,
     name: product?.name[index],
     price: convertPrice(faker.datatype.number({ min: 4, max: 99, precision: 0.01 })),
-    // priceSale: convertPrice(index % 3
-    //   ? null
-    //   : faker.datatype.number({ min: 19, max: 29, precision: 0.01 }),),
-
     colors:
       (index === 0 && PRODUCT_COLOR.slice(0, 2)) ||
       (index === 1 && PRODUCT_COLOR.slice(1, 3)) ||
       (index === 2 && PRODUCT_COLOR.slice(2, 4)) ||
       (index === 3 && PRODUCT_COLOR.slice(3, 6)) ||
-      (index === products.length - 1 && PRODUCT_COLOR.slice(4, 6)) ||
-      (index === products.length - 2 && PRODUCT_COLOR.slice(5, 6)) ||
+      (index === productss.length - 1 && PRODUCT_COLOR.slice(4, 6)) ||
+      (index === productss.length - 2 && PRODUCT_COLOR.slice(5, 6)) ||
       PRODUCT_COLOR,
     status: sample(["new", "new", "", ""]),
     ...product,
-  }));
+  })).filter(product => state ? product.type === state : true);
   return (
     <Loading isLoading={isLoading}>
 
       <>
         {!isLoading && (
           <>
-            {/* <Helmet>
-        <title> Dashboard: Products | Minimal UI </title>
-      </Helmet> */}
+            <Helmet>
+              <title> Product </title>
+            </Helmet>
             < Box className={classes.container}>
 
               <Typography className={classes.conTextCreate}>
@@ -105,35 +150,63 @@ const ProductsPage = () => {
               </Typography>
 
             </Box>
-            <Box>
+            {/* <Box>
               {typeProducts.map((item) => {
                 return (
                   <TypeProduct name={item} key={item} />
                 )
               })}
-            </Box>
+            </Box> */}
             <Container>
-              <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />
+              <Grid container spacing={2}>
+                <Grid item xs={3} spacing={2}>
+                  <Item style={{ marginTop: "50px" }}>
+                    <NavbarComponent />
+                  </Item>
+                </Grid>
+                <Grid item xs={9}>
+                  <Item>
+                    {/* <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} /> */}
+                    <Grid container spacing={2}>
+                      {searchDebounce === ""
+                        ? productList?.map((products) => (
+                          <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
+                            {/* <ProductList products={[products]} /> */}
+                          </Grid>
+                        ))
+                        : productList
+                          ?.filter((pro) =>
+                            pro?.name?.toLowerCase()?.includes(searchDebounce?.toLowerCase())
+                          )
+                          .map((products) => (
+                            <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
+                              <ProductList products={[products]} />
+                            </Grid>
+                          ))}
+                    </Grid>
+                    {/* <Stack
+                      direction="row"
+                      flexWrap="wrap-reverse"
+                      alignItems="center"
+                      justifyContent="flex-end"
+                      sx={{ mb: 5 }}
+                    >
+                      <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+                        <ProductFilterSidebar
+                          openFilter={openFilter}
+                          onOpenFilter={handleOpenFilter}
+                          onCloseFilter={handleCloseFilter}
+                        />
+                        <ProductSort />
+                      </Stack>
+                    </Stack> */}
+                    <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
+                    {/* <ProductCartWidget /> */}
+                  </Item>
+                </Grid>
 
-              {/* <Stack
-                direction="row"
-                flexWrap="wrap-reverse"
-                alignItems="center"
-                justifyContent="flex-end"
-                sx={{ mb: 5 }}
-              > */}
-              {/* <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-                  <ProductFilterSidebar
-                    openFilter={openFilter}
-                    onOpenFilter={handleOpenFilter}
-                    onCloseFilter={handleCloseFilter}
-                  /> */}
-              {/* <ProductSort /> */}
-              {/* </Stack> */}
-              {/* </Stack> */}
+              </Grid>
 
-              <ProductList products={productList} />
-              {/* <ProductCartWidget /> */}
             </Container>
           </>
         )}

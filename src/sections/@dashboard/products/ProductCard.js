@@ -37,8 +37,11 @@ export default function ShopProductCard({ product }) {
   return (
     <>
       <>
-        <Card>
-          <Box sx={{ pt: "100%", position: "relative" }}>
+        <Card className={classes.boxCard}>
+          <Box
+            className={classes.boxBorderCard}
+            sx={{ pt: "100%", position: "relative" }}
+          >
             {status && (
               <Label
                 variant="filled"

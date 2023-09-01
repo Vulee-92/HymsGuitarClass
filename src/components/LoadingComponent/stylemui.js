@@ -32,6 +32,13 @@ export default makeStyles(() => {
       alignItems: "center",
       justifyContent: "center",
     },
+    textLoading: {
+      ...CStyles.txt_body_item,
+      color: "#000",
+      fontSize: "40px",
+      fontWeight: 300,
+      textTransform: "capitalize",
+    },
     overlay: {
       position: "fixed",
       top: 0,

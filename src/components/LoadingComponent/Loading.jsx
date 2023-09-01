@@ -24,6 +24,7 @@ const Loading = ({ children, isLoading, deday = 10 }) => {
           <div className={classes.overlay}></div>
           <div className={classes.text}>
             <Typical
+              className={classes.textLoading}
               steps={['Hymns...', 2000, 'Please wait...', 1000]}
               loop={Infinity}
               wrapper="p"

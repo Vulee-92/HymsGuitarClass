@@ -45,7 +45,7 @@ const TypeProductPage = () => {
       fetchProductType(state, panigate.page, panigate.limit);
     }
   }, [state, panigate.page, panigate.limit]);
-
+  console.log('fetchProductType', products)
   const onChange = (current, pageSize) => {
     setPanigate({ ...panigate, page: current - 1, limit: pageSize });
   };

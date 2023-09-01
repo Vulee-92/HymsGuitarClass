@@ -184,11 +184,7 @@ const HomePage = () => {
           </Box>
           <Container maxWidth="lx" style={{ marginTop: '100px' }}>
             <Box>
-              <Typical
-                steps={['Latest Releases', 100, 'New Products', 100]}
-                loop={Infinity}
-                wrapper="p"
-              />
+
               {/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
               <AnimationComponent type="text" text="Latest Releases" className={classes.txtTitleBox} />
               <div className={classes.sliderWrapper}>

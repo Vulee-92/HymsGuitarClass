@@ -30,5 +30,14 @@ export default makeStyles(() => {
       fontWeight: 600,
       color: "#0b2238",
     },
+    boxCard: {
+      borderBottom: "0px",
+      borderTop: "2px solid #454F5B",
+      borderRadius: "9px",
+      boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
+    },
+    boxBorderCard: {
+      boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.14)",
+    },
   };
 });
