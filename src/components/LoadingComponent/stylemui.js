@@ -36,7 +36,7 @@ export default makeStyles(() => {
       ...CStyles.txt_body_item,
       color: "#000",
       fontSize: "40px",
-      fontWeight: 300,
+      fontWeight: 400,
       textTransform: "capitalize",
     },
     overlay: {

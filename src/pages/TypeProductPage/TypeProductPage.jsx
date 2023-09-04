@@ -109,3 +109,4 @@ const TypeProductPage = () => {
 };
 
 export default TypeProductPage;
+

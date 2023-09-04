@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, InputAdornment, Typography, Grid } from "@mui/material";
+import { Box, FormControl, Input, InputAdornment, Typography, Grid, Snackbar, Alert } from "@mui/material";
 import { useMutationHooks } from "hooks/useMutationHook";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -104,6 +104,8 @@ const ContactPage = () => {
 
 
   const onValidate = () => {
+    handleContact();
+
     setErrorMsg("");
     setForm({
       ...form,
@@ -145,7 +147,6 @@ const ContactPage = () => {
     if (isError) {
       return setForm(newForm);
     }
-    handleContact();
   };
 
   return (
@@ -210,8 +211,14 @@ const ContactPage = () => {
                   <CButton style={{ fullWidth: "30%" }}
                     disabled={!name.length || !email.length || !contactmessenger.length}
                     title={t('send_message')}
-                    onClick={handleContact}
+                    onClick={onValidate}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        onValidate();
+                      }
+                    }}
                   />
+
                 </Loading>
               </Box>
             </AnimationComponent>

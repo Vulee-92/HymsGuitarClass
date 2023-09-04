@@ -17,10 +17,10 @@ export default makeStyles(() => {
     txtTilte: {
       ...CStyles.txt_body_item,
       color: "#6c7a87",
-      marginTop: "1.45rem",
+      marginTop: "0.4rem",
       fontSize: "15px",
       fontWeight: 400,
-      marginBottom: "30px",
+      // marginBottom: "30px",
     },
   };
 });

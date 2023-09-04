@@ -179,7 +179,7 @@ const ProductsPage = () => {
                             pro?.name?.toLowerCase()?.includes(searchDebounce?.toLowerCase())
                           )
                           .map((products) => (
-                            <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
+                            <Grid sx={{ m: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
                               <ProductList products={[products]} />
                             </Grid>
                           ))}

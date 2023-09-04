@@ -17,11 +17,12 @@ import Loading from "../LoadingComponent/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./stylemui";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Breadcrumbs, Button, Container, Grid, Link, Paper, Rating, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Breadcrumbs, Button, Container, Grid, Link, Paper, Rating, Snackbar, Stack, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Zoom from "react-img-zoom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import CustomizedSnackbars from "components/MessageComponent/MessageComponent";
 const ProductDetailsComponent = ({ idProduct }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,6 +35,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
   const user = useSelector((state) => state.user);
   const order = useSelector((state) => state.order)
   const classes = styles();
+  const [open, setOpen] = React.useState(false);
   const [errorLimitOrder, setErrorLimitOrder] = useState(false)
   const onChange = (value) => {
     setNumProduct(Number(value));
@@ -108,6 +110,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
       //         required: true,
       //     },
       // },
+      setOpen(true);
       const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id)
       if ((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
         dispatch(addOrderProduct({
@@ -140,6 +143,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
     }
   }, [numProduct])
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Loading isLoading={isLoading}>
@@ -149,11 +155,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
           </Grid>
 
         </Grid>
-        <Grid spacing={2}>
-          <Grid item xs={8}>
+        <Grid spacing={2} >
 
-          </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} >
             <Paper>
               <div style={{
                 display: "flex", float: 'right', aliggItems: "center", gap: "12px", alignItems: 'center',
@@ -182,41 +186,58 @@ const ProductDetailsComponent = ({ idProduct }) => {
                   }}
                   onClick={handleAddOrderProduct}
                 >Thêm vào giỏ hàng</Button>
-                {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
+                {!errorLimitOrder ? (
+                  <>
+                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                      <Alert style={{ border: "1px solid #245c4f", fontSize: "13px" }} severity="success" sx={{ width: '100%' }}>
+                        Đã thêm vào giỏ hàng!
+                      </Alert>
+                    </Snackbar></>
+                ) : (
+                  <>
+                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                      <Alert style={{ border: "1px solid red", fontSize: "13px", color: "red" }} severity="error" sx={{ width: '100%' }}>
+                        Sản phẩm đã hết hàng!
+                      </Alert>
+                    </Snackbar></>
+                )}
+
+                {/* {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>} */}
               </div>
             </Paper>
           </Grid>
 
         </Grid>
-        <Grid spacing={2}>
-          <Grid item xs={12}>
-            <div role="presentation" >
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link underline="hover" color="inherit" href="/">
-                  Trang chủ
-                </Link>
-                <Link
-                  underline="hover"
-                  color="inherit"
-                  href="/material-ui/getting-started/installation/"
-                >
-                  Guitar
-                </Link>
-                <Typography className={classes.nameProduct}>     {productDetails?.name}</Typography>
-              </Breadcrumbs>
-            </div>
-            <Paper className={classes.nameProduct}>             <Typography className={classes.nameProduct}><span style={{ cursor: 'pointer' }} onClick={() => { navigate('/') }}>Trang chủ</span> - Chi tiết sản phẩm</Typography>
-            </Paper>
-          </Grid>
 
-        </Grid>
         <Grid container spacing={2} style={{
           // textAlign: '-webkit-center', marginBottom: '50px',
         }}>
+          <Grid spacing={2}>
+            <Grid item xs={12}>
+              <div role="presentation" >
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link underline="hover" color="inherit" href="/" style={{ fontSize: '16px', textAlign: "center" }}>
+                    Trang chủ
+                  </Link>
+                  <Link
+                    style={{ fontSize: '16px' }}
+                    underline="hover"
+                    color="inherit"
+                    href="/product"
+                  >
+                    sản phẩm
+                  </Link>
+                  <Link className={classes.nameProduct}>     {productDetails?.name}</Link>
+                </Breadcrumbs>
+              </div>
+              {/* <Paper className={classes.nameProduct}>
+              <Typography className={classes.nameProduct}><span style={{ cursor: 'pointer' }} onClick={() => { navigate('/') }}>Trang chủ</span> - Chi tiết sản phẩm</Typography>
+            </Paper> */}
+            </Grid>
+
+          </Grid>
           <Grid item xs={8}>
-            <Typography className={classes.nameProduct}>
-              {productDetails?.name}
-            </Typography>
+
           </Grid>
           <Grid item xs={8}>
             <div>

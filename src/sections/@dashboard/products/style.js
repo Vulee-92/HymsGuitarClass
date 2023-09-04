@@ -18,15 +18,23 @@ export default makeStyles(() => {
     },
     txtHeaderTitle: {
       ...CStyles.txt_header_title,
-      fontSize: 18,
+      // fontSize: 18,
       textAlign: "left",
       fontWeight: 600,
       color: "#0b2238",
+      display: "vertical",
+      fontSize: "16px",
+      // fontWeight: 400,
+      height: "62.4px",
+      marginBottom: "10px",
+      minHeight: "62.4px",
+      overflow: "hidden",
+      overflowWrap: "break-word",
     },
     txtPrice: {
       ...CStyles.txt_body_item,
       fontSize: 16,
-      textAlign: "right",
+      textAlign: "left",
       fontWeight: 600,
       color: "#0b2238",
     },
@@ -38,6 +46,16 @@ export default makeStyles(() => {
     },
     boxBorderCard: {
       boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.14)",
+    },
+    txtStockingOut: {
+      ...CStyles.txt_body_item,
+      color: "red",
+      textAlign: "right",
+    },
+    txtStocking: {
+      ...CStyles.txt_body_item,
+      color: "#45cc8f",
+      textAlign: "right",
     },
   };
 });
