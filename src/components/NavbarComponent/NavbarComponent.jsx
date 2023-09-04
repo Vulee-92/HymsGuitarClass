@@ -26,6 +26,7 @@ const NavbarComponent = () => {
     if (res?.status === 'OK') {
       setTypeProducts(res?.data)
     }
+    console.log("data", res?.data)
   }
 
   const handleAllClick = () => {
@@ -110,7 +111,7 @@ const NavbarComponent = () => {
     <div>
       <Accordion style={{ margin: "0px", boxShadow: "none" }}>
         <AccordionSummary style={{ marginTop: "0px" }}
-          expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={23} />}
+          expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           className={classes.BoxTilte}
@@ -118,12 +119,12 @@ const NavbarComponent = () => {
           <Typography className={classes.txtTilte}>Loại sản phẩm</Typography>
         </AccordionSummary>
         <AccordionDetails style={{ boxShadow: "none" }}>
-          <Typography className={classes.txtTilte} onClick={handleAllClick}>All</Typography>
-          <Typography className={classes.txtTilte}>
+          {/* <Typography className={classes.txtTilteItem} sx={{ paddingBottom: 1 }} onClick={handleAllClick}>Tất cả</Typography> */}
+          <Typography className={classes.txtTilteItem}>
             {typeProducts.map((item) => {
               return (
                 <>
-                  <TypeProduct className={classes.txtTilte} name={item} key={item} />
+                  <TypeProduct className={classes.txtTilteItem} products={item.type} count={item.count} name={item.type} key={item.type} />
                 </>
               )
             })}

@@ -37,6 +37,11 @@ export const Assets = {
   /** IMAGE */
   logo: require("../assets/images/logo/Hymnslogo.png"),
   bankOrder: require("../assets/images/bank.png"),
+  hymns_1: require("../assets/hymnsAbout/hymns_1.jpg"),
+  hymns_2: require("../assets/hymnsAbout/hymns_2.jpg"),
+  hymns_3: require("../assets/hymnsAbout/hymns_3.jpg"),
+  hymns_4: require("../assets/hymnsAbout/hymns_4.jpg"),
+  hymns_5: require("../assets/hymnsAbout/hymns_5.jpg"),
   bgSheet: require("../assets/images/background/sheet.jpg"),
   bgGuitar: require("../assets/images/background/bgguitar.jpg"),
   bgClass: require("../assets/images/background/class.jpg"),

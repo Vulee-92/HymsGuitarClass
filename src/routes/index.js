@@ -16,7 +16,6 @@ import DetailsOrderPage from "../pages/DetailsOrderPage/DetailsOrderPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage/VerifyEmailPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import AboutPage from "../pages/AboutPage/AboutPage";
-
 export const routes = [
   {
     path: "/",

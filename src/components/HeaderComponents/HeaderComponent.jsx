@@ -286,8 +286,11 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   return (
 
     <AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+      <Container maxWidth="xl" sx={{
+        paddingLeft: "100px",
+        paddingRight: "60px",
+      }}>
+        <Toolbar disableGutters style={{ paddingLeft: "100px", display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
 
           <Typography
             href="/"
@@ -339,7 +342,10 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
                 <Button href="/product" textAlign="center">Product</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">About</Typography>
+                <Typography href="/about" textAlign="center">About</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Button href="/contact" textAlign="center">Blog</Button>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Button href="/contact" textAlign="center">Contact</Button>
@@ -394,6 +400,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
             )
             }
           </Box>
+
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }} style={{ justifyContent: "space-between", alignItems: 'center' }}>
             <Button
               onClick={handleCloseNavMenu}
@@ -424,11 +431,31 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               sx={{ color: "white", display: "block" }}
               className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
             >
+              Blog
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ color: "white", display: "block" }}
+              href="/about"
+              className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+            >
               About
             </Button>
           </Box>
-
-
+          {/* <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }} style={{ justifyContent: "space-between", alignItems: 'center' }}>
+            {!isHiddenSearch && (
+              <Col span={13}>
+                <ButttonInputSearch
+                  size="large"
+                  bordered={false}
+                  textbutton="Tìm kiếm"
+                  placeholder="input search text"
+                  onChange={onSearch}
+                  backgroundColorButton="#5a20c1"
+                />
+              </Col>
+            )}
+          </Box> */}
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex", justifyContent: "center", alignItems: 'center' } }} >
             <Box>
 

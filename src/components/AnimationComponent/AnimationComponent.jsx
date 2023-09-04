@@ -64,7 +64,7 @@ const AnimationComponent = ({ text, className, children, type, threshold, rootMa
         opacity: 1,
         y: 0,
         transition: {
-          delay: 0.1,
+          delay: .5,
           staggerDirection: 0.08
         }
       }
