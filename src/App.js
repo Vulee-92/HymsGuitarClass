@@ -210,6 +210,7 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import { ContextMenuTrigger, MenuItem } from "react-contextmenu";
 import { routes } from "./routes";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import DefaultComponent from "./components/DefaultComponent/DefaultComponent";
@@ -221,7 +222,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slides/userSlide";
 import Loading from "./components/LoadingComponent/Loading";
 import { HelmetProvider } from "react-helmet-async";
-
+import { ContextMenu } from "react-contextmenu";
+function handleClick(e, data) {
+  console.log(data.foo);
+}
 function App() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);

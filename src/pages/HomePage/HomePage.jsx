@@ -78,21 +78,7 @@ const HomePage = () => {
   }
 
 
-  // function SamplePrevArrow(props) {
-  //   const { className, style, onClick } = props;
-  //   return (
-  //     <div
-  //       className={className}
-  //       // style={{ display: "block", marginLeft: '40px', marginTop: '30px', zIndex: 100000, position: 'fixed' }}
-  //       onClick={onClick}
-  //     >
-  //       <FontAwesomeIcon className={className} onClick={onClick} style={{
-  //         position: 'fixed', height: '30px',
-  //         width: '30px', color: "#245c4f", marginLeft: '50px'
-  //       }} icon={faCircleArrowLeft} />
-  //     </div>
-  //   );
-  // }
+
   function SamplePrevArrow(props) {
     const { onClick } = props;
     return (

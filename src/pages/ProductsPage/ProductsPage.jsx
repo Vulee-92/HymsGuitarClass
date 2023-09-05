@@ -157,34 +157,37 @@ const ProductsPage = () => {
                 )
               })}
             </Box> */}
-            <Container>
-              <Grid container spacing={2}>
-                <Grid item xs={3} spacing={2}>
-                  <Item style={{ marginTop: "50px" }}>
+            <Container maxWidth="lg">
+              <Grid container spacing={2} style={{ marginTop: "50px" }}>
+                <Grid item xs={12} sm={3} md={3} spacing={2} >
+                  <Item >
                     <NavbarComponent />
                   </Item>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={12} sm={9} md={9}>
                   <Item>
-                    {/* <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} /> */}
+                    <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
+                    {/* 
+                    <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />
                     <Grid container spacing={2}>
                       {searchDebounce === ""
                         ? productList?.map((products) => (
-                          <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
-                            {/* <ProductList products={[products]} /> */}
+                          <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={6} key={products.id} style={{ maxWidth: "100%" }}>
+                            <ProductList products={[products]} />
                           </Grid>
                         ))
                         : productList
                           ?.filter((pro) =>
                             pro?.name?.toLowerCase()?.includes(searchDebounce?.toLowerCase())
                           )
-                          .map((products) => (
-                            <Grid sx={{ m: "20px" }} item xs={12} sm={6} md={3} key={products.id} style={{ maxWidth: "100%" }}>
-                              <ProductList products={[products]} />
-                            </Grid>
-                          ))}
+                        .map((products) => (
+                          <Grid sx={{ m: "20px" }} item xs={12} sm={6} md={6} key={products.id} style={{ maxWidth: "100%" }}>
+                            <ProductList products={[products]} />
+                          </Grid>
+                        ))
+                      }
                     </Grid>
-                    {/* <Stack
+                    <Stack
                       direction="row"
                       flexWrap="wrap-reverse"
                       alignItems="center"
@@ -199,14 +202,13 @@ const ProductsPage = () => {
                         />
                         <ProductSort />
                       </Stack>
-                    </Stack> */}
-                    <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
-                    {/* <ProductCartWidget /> */}
+                    </Stack>
+                    <ProductCartWidget /> */}
+
                   </Item>
                 </Grid>
 
               </Grid>
-
             </Container>
           </>
         )}

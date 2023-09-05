@@ -287,10 +287,8 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
     <AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
       <Container maxWidth="xl" sx={{
-        paddingLeft: "100px",
-        paddingRight: "60px",
       }}>
-        <Toolbar disableGutters style={{ paddingLeft: "100px", display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+        <Toolbar disableGutters style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
 
           <Typography
             href="/"
