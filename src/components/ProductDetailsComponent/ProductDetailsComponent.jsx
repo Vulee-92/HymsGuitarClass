@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./stylemui";
 import { Accordion, AccordionDetails, AccordionSummary, useScrollTrigger, Alert, Box, Breadcrumbs, Button, Card, CardContent, CardMedia, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, Fab, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Rating, Snackbar, Stack, Typography, useMediaQuery } from "@mui/material";
 import { makeStyles } from '@mui/styles';
-import Zoom from "react-img-zoom";
+import 'react-medium-image-zoom/dist/styles.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
@@ -25,6 +25,7 @@ import { useDebounce } from "hooks/useDebounce";
 import { convertPrice } from "utils";
 import { faker } from "@faker-js/faker";
 import { ShoppingCart } from "@mui/icons-material";
+import ImageZoom from "react-image-zooom";
 
 
 const ProductDetailsComponent = ({ idProduct }) => {
@@ -45,7 +46,21 @@ const ProductDetailsComponent = ({ idProduct }) => {
   const [open, setOpen] = React.useState(false);
   const [errorLimitOrder, setErrorLimitOrder] = useState(false)
   const [openDialog, setOpenDialog] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
 
+
+  const handleMouseMove = (event) => {
+    setIsZoomed(true);
+    const { left, top, width, height } = event.target.getBoundingClientRect();
+    const x = ((event.clientX - left) / width) * 100;
+    const y = ((event.clientY - top) / height) * 100;
+    setZoomPosition({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setIsZoomed(false);
+  };
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -273,9 +288,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
       <Loading isLoading={isLoading}>
         <div>
-          <h1>Chi tiết sản phẩm</h1>
-          {/* Nội dung trang chi tiết sản phẩm */}
-
           <Drawer
             sx={{
               flexShrink: 0,
@@ -286,7 +298,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
             variant="persistent"
 
             anchor="bottom" open={isCartOpen} onClose={handleCartClose} disableDiscovery>
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between" }} style={{ background: 'rgb(36, 92, 79,0.1)' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between" }} style={{ background: 'rgb(36, 92, 79,0.1)', overflow: "hidden", }}>
               <Typography className={classes.priceTitle} style={{ alignItems: "center", gap: "12px", padding: '30px', textAlign: "center" }}>
                 {productDetails?.price?.toLocaleString()}₫
               </Typography>
@@ -296,17 +308,32 @@ const ProductDetailsComponent = ({ idProduct }) => {
                     style={{
                       background: "#245c4f",
                       height: "48px",
-                      width: "100%",
+                      width: "190px",
                       border: "none",
                       borderRadius: "4px",
+
                       color: "#fff",
-                      fontSize: "15px",
-                      textTransform: "capitalize",
-                      fontWeight: "700",
+                      fontSize: "10px",
+                      fontWeight: "600",
+                      textTransform: "capitalize"
                     }}
-                    href="/order"
-                  >Xem giỏ hàng</Button>
-                  {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
+                    onClick={handleAddOrderProduct}
+                  >Thêm vào giỏ hàng</Button>
+                  {!errorLimitOrder ? (
+                    <>
+                      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                        <Alert style={{ border: "1px solid #245c4f", fontSize: "13px" }} severity="success" sx={{ width: '100%' }}>
+                          Đã thêm vào giỏ hàng!
+                        </Alert>
+                      </Snackbar></>
+                  ) : (
+                    <>
+                      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                        <Alert style={{ border: "1px solid red", fontSize: "13px", color: "red" }} severity="error" sx={{ width: '100%' }}>
+                          Sản phẩm đã hết hàng!
+                        </Alert>
+                      </Snackbar></>
+                  )}
                 </div>
               </div>
             </Box>
@@ -314,7 +341,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
         </div>
 
 
-        <Container width={{ md: "xs", xl: "xs", lg: "xs" }} >
+        <Container width={{ md: "xs", xl: "xs", lg: "xs" }} style={{ overflow: "hidden" }} >
           <Grid spacing={2}>
             <Grid item xs={12}>
             </Grid>
@@ -433,13 +460,29 @@ const ProductDetailsComponent = ({ idProduct }) => {
           }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Zoom key={productDetails?.image}
-              style={{ maxHeight: '400px', textAlign: '-webkit-center' }}
-              img={productDetails?.image}
-              zoomScale={3}
-              height={400}
-              width={1200}
-            />
+            {/* <Zoom
+                key={productDetails?.image}
+                style={{ maxHeight: '400px', textAlign: '-webkit-center' }}
+                img={productDetails?.image}
+                zoomScale={1.5}
+                height={400}
+                width={'100%'}
+                zoomImage={{
+                  src: productDetails?.image,
+                  alt: '',
+                  style: { maxHeight: '800px', maxWidth: '800px' },
+                }}
+                isZoomed={isZoomed}
+                zoomPosition={zoomPosition}
+                onZoomEnd={() => setIsZoomed(false)}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                zoomWidth={400}
+                zoomStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
+                onZoomChange={(zoomed) => setIsZoomed(zoomed)}
+              /> */}
+            <ImageZoom key={productDetails?.image} src={productDetails?.image} alt="A image to apply the ImageZoom plugin" zoom="200" />
+
           </Grid>
 
           {/* xs, extra-small: 0px
