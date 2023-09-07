@@ -16,6 +16,17 @@ export default makeStyles(() => {
       alignItems: "center",
       display: "flex",
     },
+    nameProductInfo: {
+      ...CStyles.txt_title_item,
+      alignItems: "center",
+      display: "flex",
+      fontWeight: 400,
+      lineHeight: 1.7,
+    },
+    nameProductMobile: {
+      ...CStyles.txt_title_item,
+      alignItems: "left",
+    },
     txtTilte: {
       ...CStyles.txt_body_item,
       color: "#434c55",
@@ -73,6 +84,16 @@ export default makeStyles(() => {
     arrowIcon: {
       color: "#333333",
       fontSize: "20px",
+    },
+    galleryProduct: {
+      width: "100%",
+      border: "10px solid #fff",
+      margin: " 5px auto",
+      height: "50%",
+
+      "@media all and (min-width: 768px)": {
+        width: "calc(30% - 10px)",
+      },
     },
     txtTitleBox: {
       ...CStyles.txt_title_item,

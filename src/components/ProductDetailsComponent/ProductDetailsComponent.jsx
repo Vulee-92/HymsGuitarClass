@@ -17,7 +17,7 @@ import { Accordion, AccordionDetails, AccordionSummary, useScrollTrigger, Alert,
 import { makeStyles } from '@mui/styles';
 import 'react-medium-image-zoom/dist/styles.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faChevronDown, faCircleArrowLeft, faPeopleCarryBox, faTruck } from "@fortawesome/free-solid-svg-icons";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Slider from "react-slick";
 import CardComponent from "components/CardComponent/CardComponent";
@@ -347,7 +347,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
             </Grid>
 
           </Grid>
-          <Divider variant="middle" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} />
+          {/* <Divider variant="middle" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} /> */}
           <Grid container spacing={2} >
             {/* xs, extra-small: 0px
           sm, small: 600px
@@ -411,52 +411,33 @@ const ProductDetailsComponent = ({ idProduct }) => {
           }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Grid spacing={2} item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }}>
+            <Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" }, paddingTop: "10px", paddingBottom: "10px" }}>
               <Grid item xs={12}>
                 <div role="presentation" >
-                  <Breadcrumbs aria-label="breadcrumb">
-                    <Link underline="hover" color="inherit" href="/" style={{ fontSize: '16px', textAlign: "center" }}>
+                  <Breadcrumbs aria-label="breadcrumb" separator="›" sx={{ fontSize: "13px" }}>
+                    <Link underline="hover" color="inherit" href="/" style={{}}>
                       Trang chủ
                     </Link>
                     <Link
-                      style={{ fontSize: '16px' }}
+                      style={{}}
                       underline="hover"
                       color="inherit"
                       href="/product"
                     >
                       sản phẩm
                     </Link>
-                    <Link className={classes.nameProduct}>     {productDetails?.name}</Link>
+                    <Link sx={{ fontSize: "13px !important" }} className={classes.nameProduct}>{productDetails?.name}</Link>
                   </Breadcrumbs>
                 </div>
               </Grid>
-
             </Grid>
-            <Grid item xs={8}>
-
-            </Grid>
-            <Grid item xs={8}>
-              <div>
-                {/* <Rate
-                allowHalf
-                defaultValue={productDetails?.rating}
-                value={productDetails?.rating}
-              />
-              <WrapperStyleTextSell>
-                {" "}
-                | Da ban {productDetails?.countInStock}+
-              </WrapperStyleTextSell> */}
-              </div>
-            </Grid>
-
-
           </Grid>
           <Typography sx={{ display: { xs: "flex", xl: "none", lg: "none", md: "none", sm: "none" } }}
-            style={{ marginTop: "15px", marginBottom: "15px", padding: '10px 16px ', textAlign: "left" }} className={classes.nameProduct}>
+            style={{ marginTop: "15px", marginBottom: "15px", padding: '10px 16px ', textAlign: "left" }} className={classes.nameProductMobile}>
             {productDetails?.name}</Typography>
           <Divider variant="fullWidth" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} />
           <Grid container spacing={2} style={{
-            // textAlign: '-webkit-center', marginBottom: '50px',
+            textAlign: '-webkit-center', marginTop: '0px',
           }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
@@ -481,7 +462,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
                 zoomStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
                 onZoomChange={(zoomed) => setIsZoomed(zoomed)}
               /> */}
-            <ImageZoom key={productDetails?.image} src={productDetails?.image} alt="A image to apply the ImageZoom plugin" zoom="200" />
+            <Box className={classes.galleryProduct}>
+              <ImageZoom key={productDetails?.image} src={productDetails?.image} alt="A image to apply the ImageZoom plugin" zoom="200" />
+
+            </Box>
 
           </Grid>
 
@@ -546,18 +530,18 @@ const ProductDetailsComponent = ({ idProduct }) => {
               <Paper style={{ background: 'rgb(36, 92, 79,0.1)', boxShadow: 'none', }} >
                 <Box sx={{ display: { xs: "flex" }, justifyContent: "space-around", flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "column-reverse", xl: "column", lg: "column" } }}>
                   <WrapperPriceProduct style={{ padding: '10px 16px ', background: 'rgb(36, 92, 79,0.01)' }}>
-                    <WrapperPriceTextProduct style={{ textAlign: 'center' }}>
+                    <Typography className={classes.nameProduct} style={{ textAlign: 'left', fontSize: "32px" }}>
                       {productDetails?.price?.toLocaleString()}₫
-                    </WrapperPriceTextProduct>
+                    </Typography>
                   </WrapperPriceProduct>
-                  <Typography className={classes.nameProduct} style={{ padding: '10px 16px ' }}>
-                    {productDetails?.name}
-                    {/* // <Stack spacing={1}>
+                  {/* <Typography className={classes.nameProduct} style={{ padding: '10px 16px ' }}>
+                    {productDetails?.name} */}
+                  {/* // <Stack spacing={1}>
                   //   <Rating name="size-small" defaultValue={productDetails?.rating} size="small" />
                   // </Stack> */}
 
-                    {/* Da ban {productDetails?.countInStock}+ */}
-                  </Typography>
+                  {/* Da ban {productDetails?.countInStock}+ */}
+                  {/* </Typography> */}
                   {/* <Rate
                   allowHalf
                   defaultValue={productDetails?.rating}
@@ -614,7 +598,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
                       <PlusOutlined style={{ color: "#000", fontSize: "20px" }} />
                     </button>
                   </Box>
+
                 </Box>
+
                 <div style={{ alignItems: "center", gap: "12px", padding: '16px', textAlign: "center" }}>
                   <div>
 
@@ -640,6 +626,18 @@ const ProductDetailsComponent = ({ idProduct }) => {
                     {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
                   </div>
                 </div>
+                <Box sx={{ display: "flex", paddingLeft: "16px" }}>
+                  <FontAwesomeIcon icon={faBox} style={{ color: "#245c4f", marginRight: "15px", fontSize: "16px" }} />
+                  <Typography className={classes.nameProductInfo}>Còn hàng</Typography>
+                </Box>
+                <Box sx={{ display: "flex", paddingTop: "5px", paddingLeft: "16px" }}>
+                  <FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#245c4f", marginRight: "10px", fontSize: "16px" }} />
+                  <Typography className={classes.nameProductInfo}>Miễn phí vận chuyển cho mọi đơn hàng trong khu vực nội thành TP. Tam Kỳ</Typography>
+                </Box>
+                <Box sx={{ display: "flex", paddingTop: "5px", paddingLeft: "16px" }}>
+                  <FontAwesomeIcon icon={faTruck} style={{ color: "#245c4f", marginRight: "10px", fontSize: "16px" }} />
+                  <Typography className={classes.nameProductInfo}>Hỗ trợ vận chuyển toàn quốc</Typography>
+                </Box>
               </Paper >
             </Grid >
           </Grid >
