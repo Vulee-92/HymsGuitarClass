@@ -8,12 +8,14 @@ export default makeStyles(() => {
   return {
     container: {
       ...CStyles.center,
-      height: "45vh",
-      backgroundImage: `url(${Assets.bgSheet})`,
-      backgroundSize: "cover",
+      marginTop: "50px !important",
+      marginBottom: "10px !important",
+      backgroundImage: `url(${Assets.bgProduct})`,
       backgroundRepeat: "no-repeat",
-      overflowY: "auto",
       padding: Configs.pH,
+      backgroundSize: "cover",
+      height: "70vw",
+      maxHeight: "40vh",
     },
     conModal: {
       ...CStyles.shadow,

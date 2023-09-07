@@ -126,7 +126,7 @@ const ProductsPage = () => {
       (index === productss.length - 1 && PRODUCT_COLOR.slice(4, 6)) ||
       (index === productss.length - 2 && PRODUCT_COLOR.slice(5, 6)) ||
       PRODUCT_COLOR,
-    status: sample(["new", "new", "", ""]),
+    // status: sample(["new", "new", "", ""]),
     ...product,
   })).filter(product => state ? product.type === state : true);
   return (
@@ -158,7 +158,7 @@ const ProductsPage = () => {
               })}
             </Box> */}
             <Container maxWidth="lg">
-              <Grid container spacing={2} style={{ marginTop: "50px" }}>
+              <Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px", xl: "50px", lg: "50px", md: "0px", sm: "0px" } }}>
                 <Grid item xs={12} sm={3} md={3} spacing={2} >
                   <Item >
                     <NavbarComponent />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import * as ProductService from "../../services/ProductService";
 import { addOrderProduct, resetOrder } from "../../redux/slides/orderSlide";
@@ -13,7 +13,8 @@ import Loading from "../LoadingComponent/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./stylemui";
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Breadcrumbs, Button, Container, Grid, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Rating, Snackbar, Stack, Typography, makeStyles, useMediaQuery } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, useScrollTrigger, Alert, Box, Breadcrumbs, Button, Card, CardContent, CardMedia, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, Fab, Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Rating, Snackbar, Stack, Typography, useMediaQuery } from "@mui/material";
+import { makeStyles } from '@mui/styles';
 import Zoom from "react-img-zoom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +24,7 @@ import CardComponent from "components/CardComponent/CardComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { convertPrice } from "utils";
 import { faker } from "@faker-js/faker";
+import { ShoppingCart } from "@mui/icons-material";
 
 
 const ProductDetailsComponent = ({ idProduct }) => {
@@ -37,10 +39,29 @@ const ProductDetailsComponent = ({ idProduct }) => {
   const order = useSelector((state) => state.order)
   const classes = styles();
   const [limit, setLimit] = useState(6);
+  const [showFab, setShowFab] = useState(false);
   const searchProduct = useSelector((state) => state?.product?.search);
   const searchDebounce = useDebounce(searchProduct, 100);
   const [open, setOpen] = React.useState(false);
   const [errorLimitOrder, setErrorLimitOrder] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
+
+
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
+  };
+  const [open1, setOpen1] = useState(false);
   const onChange = (value) => {
     setNumProduct(Number(value));
   };
@@ -102,7 +123,12 @@ const ProductDetailsComponent = ({ idProduct }) => {
         setErrorLimitOrder(true)
       }
     }
+    handleCartClick()
+    setOpenDialog(true);
   }
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   const { isLoading, data: productDetails } = useQuery(
     ["product-details", idProduct],
     fetchGetDetailsProduct,
@@ -188,28 +214,113 @@ const ProductDetailsComponent = ({ idProduct }) => {
       }
     ]
   };
-  const productList = products?.data?.map((product, index) => ({
-    id: product._id,
-    cover: product?.image,
-    name: product?.name[index],
-    price: convertPrice(faker.datatype.number({ min: 4, max: 99, precision: 0.01 })),
 
-    // status: sample(["new", "new", "", ""]),
-    ...product,
-  }));
+  const handleToggleDrawer = () => {
+    setOpen1(!open1);
+  };
+  const cartButtonRef = useRef(null);
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (cartButtonRef.current) {
+  //       const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
+  //       if (cartButtonTop < 0) {
+  //         setIsCartOpen(true);
+  //       } else {
+  //         setIsCartOpen(false);
+  //       }
+  //     }
+  //   };
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const handleScroll = () => {
+      const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
+      if (cartButtonTop < 0) {
+        setIsCartOpen(true);
+      } else {
+        setIsCartOpen(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const CartDrawer = ({ isOpen, onClose }) => {
+    return (
+      <Drawer
+        sx={{
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+
+        anchor="bottom" open={isCartOpen} onClose={handleCartClose} disableDiscovery>
+        {/* Nội dung của Drawer */}
+        <Typography>XIn chào</Typography>
+      </Drawer>
+    );
+  };
   return (
     <>
+
       <Loading isLoading={isLoading}>
-        <Container maxWidth="lg" style={{ marginTop: '50px' }}>
+        <div>
+          <h1>Chi tiết sản phẩm</h1>
+          {/* Nội dung trang chi tiết sản phẩm */}
+
+          <Drawer
+            sx={{
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+              },
+            }}
+            variant="persistent"
+
+            anchor="bottom" open={isCartOpen} onClose={handleCartClose} disableDiscovery>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between" }} style={{ background: 'rgb(36, 92, 79,0.1)' }}>
+              <Typography className={classes.priceTitle} style={{ alignItems: "center", gap: "12px", padding: '30px', textAlign: "center" }}>
+                {productDetails?.price?.toLocaleString()}₫
+              </Typography>
+              <div style={{ alignItems: "center", gap: "12px", padding: '16px', textAlign: "center" }}>
+                <div>
+                  <Button variant="contained"
+                    style={{
+                      background: "#245c4f",
+                      height: "48px",
+                      width: "100%",
+                      border: "none",
+                      borderRadius: "4px",
+                      color: "#fff",
+                      fontSize: "15px",
+                      textTransform: "capitalize",
+                      fontWeight: "700",
+                    }}
+                    href="/order"
+                  >Xem giỏ hàng</Button>
+                  {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
+                </div>
+              </div>
+            </Box>
+          </Drawer>
+        </div>
+
+
+        <Container width={{ md: "xs", xl: "xs", lg: "xs" }} >
           <Grid spacing={2}>
             <Grid item xs={12}>
             </Grid>
 
           </Grid>
-          <hr style={{ margin: "10px 0" }} />
+          <Divider variant="middle" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} />
           <Grid container spacing={2} >
             {/* xs, extra-small: 0px
           sm, small: 600px
@@ -267,11 +378,13 @@ const ProductDetailsComponent = ({ idProduct }) => {
             </Grid>
 
           </Grid>
-          <hr style={{ margin: "10px 0" }} />
+          <Divider variant="fullWidth" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} />
           <Grid container spacing={2} style={{
             // textAlign: '-webkit-center', marginBottom: '50px',
-          }}>
-            <Grid spacing={2}>
+          }}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Grid spacing={2} item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }}>
               <Grid item xs={12}>
                 <div role="presentation" >
                   <Breadcrumbs aria-label="breadcrumb">
@@ -309,20 +422,33 @@ const ProductDetailsComponent = ({ idProduct }) => {
               </div>
             </Grid>
 
+
+          </Grid>
+          <Typography sx={{ display: { xs: "flex", xl: "none", lg: "none", md: "none", sm: "none" } }}
+            style={{ marginTop: "15px", marginBottom: "15px", padding: '10px 16px ', textAlign: "left" }} className={classes.nameProduct}>
+            {productDetails?.name}</Typography>
+          <Divider variant="fullWidth" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} />
+          <Grid container spacing={2} style={{
+            // textAlign: '-webkit-center', marginBottom: '50px',
+          }}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             <Zoom key={productDetails?.image}
-              style={{ maxHeight: '500px', textAlign: '-webkit-center' }}
+              style={{ maxHeight: '400px', textAlign: '-webkit-center' }}
               img={productDetails?.image}
               zoomScale={3}
-              height={500}
+              height={400}
               width={1200}
             />
           </Grid>
+
           {/* xs, extra-small: 0px
           sm, small: 600px
           md, medium: 900px
           lg, large: 1200px
           xl, extra-large: 1536px */}
-          <Grid container spacing={2} sx={{ display: { xs: "flex" }, flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "column-reverse", xl: "row", lg: "row" } }}>
+
+          <Grid container spacing={2} sx={{ display: { xs: "flex" }, justifyContent: "space-around", flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "column-reverse", xl: "row", lg: "row" } }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: '30px' }}>
               <Paper style={{ boxShadow: 'none' }}>
                 <Typography sx={{ margin: "0 !important" }} className={classes.txtTitleBox}>Mô tả sản phẩm</Typography>
@@ -373,22 +499,23 @@ const ProductDetailsComponent = ({ idProduct }) => {
               </div>
 
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: 'fit-content', marginTop: '30px', padding: '10px 16px ' }}>
-              <Paper style={{ background: 'rgb(36, 92, 79,0.1)', boxShadow: 'none', }}>
-                <WrapperPriceProduct style={{ padding: '10px 16px ', background: 'rgb(36, 92, 79,0.01)' }}>
-                  <WrapperPriceTextProduct style={{ textAlign: 'center' }}>
-                    {productDetails?.price?.toLocaleString()}₫
-                  </WrapperPriceTextProduct>
-                </WrapperPriceProduct>
-                <Typography className={classes.nameProduct} style={{ padding: '10px 16px ' }}>
-                  {productDetails?.name}
-                  {/* // <Stack spacing={1}>
+            <Grid container spacing={2} sx={{ justifyContent: { xs: "center" }, marginTop: "40px" }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: 'fit-content' }} >
+              <Paper style={{ background: 'rgb(36, 92, 79,0.1)', boxShadow: 'none', }} >
+                <Box sx={{ display: { xs: "flex" }, justifyContent: "space-around", flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "column-reverse", xl: "column", lg: "column" } }}>
+                  <WrapperPriceProduct style={{ padding: '10px 16px ', background: 'rgb(36, 92, 79,0.01)' }}>
+                    <WrapperPriceTextProduct style={{ textAlign: 'center' }}>
+                      {productDetails?.price?.toLocaleString()}₫
+                    </WrapperPriceTextProduct>
+                  </WrapperPriceProduct>
+                  <Typography className={classes.nameProduct} style={{ padding: '10px 16px ' }}>
+                    {productDetails?.name}
+                    {/* // <Stack spacing={1}>
                   //   <Rating name="size-small" defaultValue={productDetails?.rating} size="small" />
                   // </Stack> */}
 
-                  {/* Da ban {productDetails?.countInStock}+ */}
-                </Typography>
-                {/* <Rate
+                    {/* Da ban {productDetails?.countInStock}+ */}
+                  </Typography>
+                  {/* <Rate
                   allowHalf
                   defaultValue={productDetails?.rating}
                   value={productDetails?.rating}
@@ -396,11 +523,13 @@ const ProductDetailsComponent = ({ idProduct }) => {
                 /> */}
 
 
-                {/* <Box style={{ padding: '10px 16px ' }}>
+                  {/* <Box style={{ padding: '10px 16px ' }}>
                 <Typography className={classes.nameProduct}>Giao đến </Typography>
                 <Typography className="address">{user?.address}</Typography>
                 <Typography className={classes.nameProduct}>Đổi địa chỉ</Typography>
               </Box> */}
+                </Box>
+
                 <Box style={{ padding: '10px 16px ', display: 'flex' }}>
 
                   <Typography className={classes.nameProduct}>Slượng:</Typography>
@@ -445,7 +574,11 @@ const ProductDetailsComponent = ({ idProduct }) => {
                 </Box>
                 <div style={{ alignItems: "center", gap: "12px", padding: '16px', textAlign: "center" }}>
                   <div>
-                    <Button variant="contained"
+
+                    <Fab variant="contained"
+                      ref={cartButtonRef}
+                      color="primary"
+                      aria-label="Mua hàng"
                       style={{
                         background: "#245c4f",
                         height: "48px",
@@ -456,14 +589,96 @@ const ProductDetailsComponent = ({ idProduct }) => {
                         fontSize: "15px",
                         fontWeight: "700",
                       }}
+
+
+
                       onClick={handleAddOrderProduct}
-                    >Thêm vào giỏ hàng</Button>
+                    >Thêm vào giỏ hàng</Fab>
                     {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
                   </div>
                 </div>
               </Paper >
             </Grid >
           </Grid >
+
+          <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }} style={{ background: 'rgb(36, 92, 79,0.1)' }}>
+              <DialogTitle className={classes.nameProduct}>Sản phẩm thêm vào giỏ hàng!</DialogTitle>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} style={{ paddingRight: "30px", color: "#245c4f" }} autoFocus>
+                  X
+                </Button>
+              </DialogActions>
+            </Box>
+            <DialogContent style={{ padding: "0px", boxShadow: "none", }}>
+              <Card style={{ padding: "none", boxShadow: "none", }} sx={{ display: 'flex' }}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 70, height: 70 }}
+                  image={productDetails?.image}
+                  alt="Live from space album cover"
+                />
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <CardContent sx={{ flex: '1 0 auto' }}>
+                    <Typography className={classes.nameProduct} style={{ fontSize: "14px" }} component="div" variant="h5">
+                      {productDetails?.name}
+                    </Typography>
+                    <Typography className={classes.priceTitle} style={{ textAlign: 'left', marginTop: '10px' }} variant="subtitle1" color="text.secondary" component="div">
+                      {productDetails?.price?.toLocaleString()}₫
+                    </Typography>
+                  </CardContent>
+                  <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+
+                  </Box>
+                </Box>
+
+              </Card>
+              <div style={{ alignItems: "center", gap: "12px", padding: '16px', textAlign: "center", background: 'rgb(36, 92, 79,0.1)' }}>
+                <div>
+                  <Button variant="contained"
+                    style={{
+                      background: "#245c4f",
+                      height: "48px",
+                      width: "100%",
+                      border: "none",
+                      borderRadius: "4px",
+                      color: "#fff",
+                      fontSize: "15px",
+                      textTransform: "capitalize",
+                      fontWeight: "700",
+                    }}
+                    href="/order"
+                  >Xem giỏ hàng</Button>
+                  {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
+                </div>
+              </div>
+            </DialogContent>
+
+          </Dialog>
+          {showFab && (
+            <Fab sx={{
+              position: 'fixed', display: "flex"
+            }} color="primary" onClick={handleAddOrderProduct}>
+              <div style={{ alignItems: "center", gap: "12px", padding: '16px', textAlign: "center" }}>
+                <div>
+                  <Button variant="contained"
+                    style={{
+                      background: "#245c4f",
+                      height: "48px",
+                      width: "100%",
+                      border: "none",
+                      borderRadius: "4px",
+                      color: "#fff",
+                      fontSize: "15px",
+                      fontWeight: "700",
+                    }}
+                    onClick={handleAddOrderProduct}
+                  >Thêm vào giỏ hàng</Button>
+                  {errorLimitOrder && <div style={{ color: 'red' }}>San pham het hang</div>}
+                </div>
+              </div>
+            </Fab>
+          )}
           <hr style={{ margin: "60px 0" }} />
           <Box style={{ margin: "60px 0", }}>
 

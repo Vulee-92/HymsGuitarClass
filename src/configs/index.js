@@ -48,6 +48,7 @@ export const Assets = {
   bgBanner: require("../assets/images/background/banner.jpg"),
   bgLogin: require("../assets/images/background/bgLogin.jpg"),
   bgSignUp: require("../assets/images/background/bgSignIn.jpg"),
+  bgProduct: require("../assets/images/background/bgproduct.jpg"),
   bgHome: require("../assets/images/background/index.jpg"),
   bgJoinClass: require("../assets/images/background/bgJoinClass.png"),
   logoGoogle: require("../assets/images/logo/logoGoogle.png"),

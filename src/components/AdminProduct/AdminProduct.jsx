@@ -639,6 +639,18 @@ const AdminProduct = () => {
     }
   }, [isSuccessDelected]);
   const [stateProduct, setStateProduct] = useState(inittial());
+
+  const renderOptions = (data) => {
+    if (!data || !Array.isArray(data)) {
+      return [];
+    }
+
+    return data.map((item) => ({
+      label: `${item.type} (${item.count})`,
+      value: item.type,
+    }));
+  };
+  console.log("renderOptions", renderOptions)
   return (
     <>
       <Container>
@@ -702,7 +714,6 @@ const AdminProduct = () => {
                   name="name"
                 />
               </Form.Item>
-
               <Form.Item
                 label="Type"
                 name="type"
@@ -710,20 +721,20 @@ const AdminProduct = () => {
               >
                 <Select
                   name="type"
-                  // defaultValue="lucy"
-                  style={{ width: 120 }}
+                  style={{ width: "100%" }}
                   value={stateProduct.type}
                   onChange={handleChangeSelect}
-                  options={renderOptions(typeProduct?.data?.data)}
+                  options={[
+                    ...renderOptions(typeProduct?.data?.data),
+                    { label: "Add new type", value: "add_type" },
+                  ]}
                 />
               </Form.Item>
               {stateProduct.type === "add_type" && (
                 <Form.Item
                   label="New type"
                   name="newType"
-                  rules={[
-                    { required: true, message: "Please input your type!" },
-                  ]}
+                  rules={[{ required: true, message: "Please input your type!" }]}
                 >
                   <InputComponent
                     value={stateProduct.newType}
