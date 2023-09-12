@@ -1,7 +1,7 @@
 import { Checkbox,Form } from "antd";
 import PropTypes from "prop-types";
 import React,{ useEffect,useState } from "react";
-import { CustomCheckbox,WrapperCountOrder,WrapperInfo,WrapperItemOrder,WrapperLeft,WrapperListOrder,WrapperRight,WrapperStyleHeader,WrapperStyleHeaderDilivery,WrapperTotal } from "./style";
+import { CustomCheckbox,Lable,WrapperCountOrder,WrapperInfo,WrapperItemOrder,WrapperLeft,WrapperListOrder,WrapperRight,WrapperStyleHeader,WrapperStyleHeaderDilivery,WrapperTotal } from "./style";
 import { DeleteOutlined,MinusOutlined,PlusOutlined } from "@ant-design/icons";
 
 import { WrapperInputNumber } from "../../components/ProductDetailsComponent/style";
@@ -19,7 +19,7 @@ import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useNavigate } from "react-router-dom";
 import StepComponent from "../../components/StepComponent/StepComponent";
-import { Alert,Box,Button,Container,Drawer,Grid,Snackbar,Stack,Step,StepConnector,StepLabel,Stepper,Typography,stepConnectorClasses } from "@mui/material";
+import { Box,Button,Container,Grid,Snackbar,Stack,Step,StepConnector,StepLabel,Stepper,Typography,stepConnectorClasses } from "@mui/material";
 import styles from "./stylemui";
 import Item from "antd/es/list/Item";
 import { styled } from "@mui/styles";
@@ -143,7 +143,6 @@ const ColorlibStepIconRoot = styled("div")(({ theme,ownerState }) => ({
 	}),
 }));
 
-const steps = ["Select campaign settings","Create an ad group","Create an ad"];
 const OrderPage = () => {
 	// Sử dụng useSelector để lấy state từ Redux store
 	const order = useSelector((state) => state.order);
@@ -447,10 +446,12 @@ const OrderPage = () => {
 			</Helmet>
 			{isMobileDevice ? (
 				<>
-					<div>
+					<div style={{ with: "100%",marginTop: "90px" }}>
 						<MobileCartTotalPriceComponent name={"Mua hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
 					</div>
 					<div style={{ with: "100%",height: "100vh",marginTop: "65px" }}>
+						<Typography className={classes.txtOrder}>Giỏ hàng</Typography>
+
 						<Grid style={{
 							padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
 						}} sx={{ display: { xs: "flex",lx: "none",md: "none" } }} >
@@ -485,7 +486,7 @@ const OrderPage = () => {
 
 							>
 								<CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length}></CustomCheckbox>
-								<Box sx={{ display: { xs: "flex",xl: "none" } }}>
+								<Box sx={{ display: { xs: "flex",xl: "none" },justifyContent: "space-between",width: "100%" }}>
 									<Typography className={classes.nameAllProduct} > Tất cả ({order.orderItems.length} sản phẩm)</Typography>
 									<DeleteOutlined style={{ cursor: "pointer" }} onClick={handleRemoveAllOrder} />
 
@@ -554,6 +555,8 @@ const OrderPage = () => {
 																width: "calc(100% - 5px)",
 																display: "flex",
 																alignItems: "center",
+																width: "100%",
+																justifyContent: "space-between",
 															}}
 														>
 															<img

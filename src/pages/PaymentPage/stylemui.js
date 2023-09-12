@@ -17,9 +17,26 @@ export default makeStyles(() => {
     txtTilte: {
       ...CStyles.txt_body_item,
       color: "#000",
-      fontSize: "15px",
-      fontWeight: 400,
-    },
+      fontSize: "13px",
+			fontWeight: 400,
+			lineHeight: 1.5
+		},
+			btnAddCard: {
+			...CStyles.txt_title_item,
+				background: "#245c4f",
+											height: "44px",
+								width: "120px",
+											border: "none",
+											borderRadius: "4px",
+
+											color: "#fff",
+											fontSize: "10px",
+											fontWeight: "600",
+				textTransform: "capitalize",
+				"&:hover": {
+							background: "#245c4f",
+											}
+			},
     txtTilteBank: {
       ...CStyles.txt_body_item,
       color: "#000",
@@ -39,6 +56,16 @@ export default makeStyles(() => {
       marginRight: "15px",
       marginBottom: "15px",
       textAlign: "center",
-    },
+		},
+			nameInfoUser: {
+			...CStyles.txt_body_item,
+			color: "rgb(36, 36, 36)",
+			fontSize: "14px",
+			fontWeight: 500,
+			alignItems: "center",
+			// margin: 0px 0px 10px,
+			maxHeight: "40px",
+			overflow: "hidden",
+		},
   };
 });

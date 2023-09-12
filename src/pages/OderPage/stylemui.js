@@ -9,6 +9,9 @@ export default makeStyles(() => {
 		container: {
 			maxWidth: " 1140px",
 		},
+		    nameProduct: {
+      ...CStyles.txt_title_item,
+    },
 		priceTitle: {
 			...CStyles.txt_title_item,
 			color: "#45cc8f",
@@ -28,6 +31,18 @@ export default makeStyles(() => {
 			fontSize: "13px",
 			fontWeight: 400,
 			marginBottom: 0,
+		},
+		  txtOrder: {
+      ...CStyles.txt_body_item,
+      color: "#245c4f",
+      fontSize: "25px",
+      fontWeight: 700,
+      paddingBottom: "10px",
+      borderBottom: "3px solid #245c4f",
+      marginLeft: "15px",
+      marginRight: "15px",
+      marginBottom: "15px",
+      textAlign: "center",
 		},
 		nameProduct: {
 			...CStyles.txt_title_item,
@@ -58,7 +73,10 @@ export default makeStyles(() => {
 											color: "#fff",
 											fontSize: "10px",
 											fontWeight: "600",
-											textTransform: "capitalize",
+			textTransform: "capitalize",
+												"&:hover": {
+							background: "#245c4f",
+											}
 			},
 		InfoHomeUser: {
 					...CStyles.txt_title_item,

@@ -94,9 +94,6 @@ const ProductsPage = () => {
 			setLoading(false);
 		}
 	};
-
-
-
 	const { isLoading,data: products,isPreviousData } = useQuery(
 		["products"],
 		fetchProductAll,
@@ -106,8 +103,6 @@ const ProductsPage = () => {
 			keepPreviousData: true,
 		}
 	);
-	console.log('setProducts',products)
-	// console.log('productList', products)
 	useEffect(() => {
 		if (state) {
 			fetchProductType(state,panigate.page,panigate.limit);

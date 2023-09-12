@@ -14,7 +14,7 @@ const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOr
 	const location = useLocation();
 
 	useEffect(() => {
-		if (location.pathname === "/order") {
+		if (location.pathname === "/order" || location.pathname === "/payment") {
 			setOpen(true);
 		} else {
 			setOpen(false);

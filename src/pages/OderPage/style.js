@@ -53,7 +53,11 @@ export const WrapperItemOrder = styled.div`
     display: flex;
   }
 `;
-
+export const Lable = styled.span`
+  font-size: 12px;
+  color: #000;
+  font-weight: bold;
+`;
 export const WrapperPriceDiscount = styled.span`
   color: #999;
   font-size: 12px;
