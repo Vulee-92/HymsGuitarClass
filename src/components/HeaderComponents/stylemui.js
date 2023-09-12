@@ -231,7 +231,16 @@ export default makeStyles(() => {
     containerMaxWidth: {
       maxWidth: "960px",
     },
-
+  txtTilte: {
+      ...CStyles.txt_body_item,
+      color: "#434c55",
+      fontSize: "17px",
+      fontWeight: 400,
+      lineHeight: 1.7,
+      textAlign: "left",
+      fontSmooth: "antialiased !important",
+      // marginBottom: "30px",
+    },
     colorChangeDark: {
       // background: "#000",
       // backdropFilter: "saturate(1) blur(20px) !important",

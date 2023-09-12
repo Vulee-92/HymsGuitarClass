@@ -25,7 +25,8 @@ export default makeStyles(() => {
     },
     nameProductMobile: {
       ...CStyles.txt_title_item,
-      alignItems: "left",
+			alignItems: "left",
+			     fontSize: "22px",
     },
     txtTilte: {
       ...CStyles.txt_body_item,
@@ -60,7 +61,7 @@ export default makeStyles(() => {
       backgroundColor: "#245c4f",
       borderRadius: "50%",
       boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
-      zIndex: 100000,
+      zIndex: 1000,
       cursor: "pointer",
     },
     samplePrevArrow: {
@@ -78,7 +79,7 @@ export default makeStyles(() => {
       backgroundColor: "#245c4f",
       borderRadius: "50%",
       boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
-      zIndex: 100000,
+      zIndex: 1000,
       cursor: "pointer",
     },
     arrowIcon: {
@@ -104,15 +105,23 @@ export default makeStyles(() => {
       textAlign: "left",
       zIndex: 10,
       marginTop: "100px",
-      textTransform: "uppercase",
+      textTransform: "capitalize",
       margin: 0,
       pointerEvents: "none",
 
       "@media (max-width: 550px)": {
         fontSize: ".9rem",
         marginTop: "50px",
-        textAlign: "center",
+        textAlign: "left",
       },
-    },
+		},
+		boxAnswer: {
+			margin: "10px 0px",
+			boxShadow: "none",
+			border: "1px solid #d6d6d4",
+			  "&:hover": {
+      backgroundColor: "#AFC4BF"
+      },
+		}
   };
 });

@@ -58,6 +58,7 @@ export default makeStyles(() => {
       height: "40px",
       width: "40px",
       marginLeft: "10px",
+      marginRight: "10px",
       fontSize: "20px",
       color: "#fff",
       border: "1px solid #edeef1",

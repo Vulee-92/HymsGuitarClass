@@ -10,6 +10,7 @@ import { ColorPreview } from "../../../components/color-utils";
 import { convertPrice } from "../../../utils";
 import { useNavigate } from "react-router-dom";
 import styles from "./style";
+import LazyLoad from "react-lazyload";
 // ----------------------------------------------------------------------
 
 const StyledProductImg = styled("img")({
@@ -61,16 +62,20 @@ export default function ShopProductCard({ product }) {
               >
                 {status}
               </Label>
-            )}
-            <StyledProductImg
+						)}
+						<LazyLoad height={200}>
+							   <StyledProductImg
               onClick={() => handleDetailsProduct(id)}
               alt={name}
               src={image}
             />
+						 </LazyLoad>
+         
           </Box>
 
-          <Stack spacing={2} sx={{ p: 3 }}>
-            <Link color="inherit" underline="hover">
+					<Stack spacing={2} sx={{ p: 3 }}>
+						<LazyLoad>
+							 <Link color="inherit" underline="hover">
               <Typography
                 className={classes.txtHeaderTitle}
                 onClick={() => handleDetailsProduct(id)}
@@ -78,6 +83,8 @@ export default function ShopProductCard({ product }) {
                 {name}
               </Typography>
             </Link>
+							</LazyLoad>
+           
             <Typography
               className={
                 countInStock === 0

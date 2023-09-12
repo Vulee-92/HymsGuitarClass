@@ -25,13 +25,28 @@ export default makeStyles(() => {
       backgroundColor: Colors.adminMeetingColor,
       borderRadius: Configs.br,
       boxShadow: "rgba(0, 0, 0, .5) 0px 1px 2px",
+		},
+		  conInfo: {
+      maxWidth: 720,
+      margin: "auto",
+      padding: "0px !important",
     },
     conLogin: {
       padding: 32,
       borderRadius: Configs.br,
       height: "100%",
     },
-
+  txtTilteInfoContact: {
+      ...CStyles.txt_body_item,
+      color: "#434c55",
+      marginTop: "1.45rem",
+      fontSize: "17px",
+      fontWeight: 400,
+      lineHeight: 1.7,
+      textAlign: "left",
+      marginBottom: "30px",
+      fontSmooth: "antialiased !important",
+    },
     conForm: {
       marginBottom: 24,
     },
