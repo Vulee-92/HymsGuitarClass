@@ -19,7 +19,6 @@ import Slider from "react-slick";
 import CardComponent from "components/CardComponent/CardComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { convertPrice } from "utils";
-import { faker } from "@faker-js/faker";
 import { ShoppingCart } from "@mui/icons-material";
 import ImageZoom from "react-image-zooom";
 import { Helmet } from "react-helmet-async";

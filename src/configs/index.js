@@ -35,37 +35,23 @@ export const Configs = {
 
 export const Assets = {
   /** IMAGE */
-  logo: require("../assets/images/logo/Hymnslogo.png"),
   bankOrder: require("../assets/images/bank.png"),
   hymns_1: require("../assets/hymnsAbout/hymns_1.jpg"),
   hymns_2: require("../assets/hymnsAbout/hymns_2.jpg"),
   hymns_3: require("../assets/hymnsAbout/hymns_3.jpg"),
   hymns_4: require("../assets/hymnsAbout/hymns_4.jpg"),
 	hymns_5: require("../assets/hymnsAbout/hymns_5.jpg"),
-	loading:  require("../assets/loading/electric-guitar.gif"),
   bgSheet: require("../assets/images/background/sheet.jpg"),
-  bgGuitar: require("../assets/images/background/bgguitar.jpg"),
-  bgClass: require("../assets/images/background/class.jpg"),
-  bgBanner: require("../assets/images/background/banner.jpg"),
   bgLogin: require("../assets/images/background/bgLogin.jpg"),
   bgSignUp: require("../assets/images/background/bgSignIn.jpg"),
   bgProduct: require("../assets/images/background/bgproduct.jpg"),
   bgHome: require("../assets/images/background/index.jpg"),
-  bgJoinClass: require("../assets/images/background/bgJoinClass.png"),
-  logoGoogle: require("../assets/images/logo/logoGoogle.png"),
   usFlag: require("../assets/images/flag/united-kingdom.png"),
   vnFlag: require("../assets/images/flag/vietnam.png"),
   defaultAvatar: require("../assets/images/defaultAvatar.png"),
-  logoApollo: require("../assets/images/logo/logoApollo.png"),
   logoUser: require("../assets/images/logo/user.png"),
 
-  iconDefaultAvatar: require("../assets/images/icon/iconDefaultAvatar.png"),
   // /** ICON */
-  raiseHand: require("../assets/images/icon/raiseHand.png"),
-  mic: require("../assets/images/icon/mic.png"),
-  star: require("../assets/images/icon/star.png"),
-  cameraOn: require("../assets/images/icon/cameraOn.png"),
-  timeOnline: require("../assets/images/icon/timeOnline.png"),
 };
 
 export const Keys = {

@@ -1,36 +1,38 @@
-import React, {useEffect, useRef, useState} from "react";
-import {WrapperButtonMore, WrapperTitle} from "./style";
-import CardComponent from "../../components/CardComponent/CardComponent";
-import {Box, Button, Container, Grid, ImageList, ImageListItem, ImageListItemBar, Link, Paper, Stack, Typography, styled} from "@mui/material";
+import React,{ Suspense,useEffect,useRef,useState } from "react";
+import { WrapperButtonMore,WrapperTitle } from "./style";
+// import CardComponent from "../../components/CardComponent/CardComponent";
+import { Box,Button,Container,Grid,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Stack,Typography,styled } from "@mui/material";
 import styles from "./stylemui";
-import {Assets} from "../../configs";
-import {useQuery} from "@tanstack/react-query";
+import { Assets } from "../../configs";
+import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
-import {useTranslation} from "react-i18next";
-import {useSelector} from "react-redux";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import Loading from "../../components/LoadingComponent/Loading";
-import {useDebounce} from "../../hooks/useDebounce";
-import {Parallax, ParallaxBanner, ParallaxProvider, useParallax} from "react-scroll-parallax";
+import { useDebounce } from "../../hooks/useDebounce";
+import { Parallax,ParallaxBanner,ParallaxProvider,useParallax } from "react-scroll-parallax";
 import Slider from "react-slick";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {Helmet} from "react-helmet-async";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet-async";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
+
+const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
 const HomePage = () => {
 	const searchProduct = useSelector((state) => state?.product?.search);
-	const searchDebounce = useDebounce(searchProduct, 100);
-	const [limit, setLimit] = useState(4);
+	const searchDebounce = useDebounce(searchProduct,100);
+	const [limit,setLimit] = useState(4);
 	const classes = styles();
-	const [loading, setLoading] = useState(false);
-	const {t} = useTranslation();
-	const [typeProducts, setTypeProducts] = useState([]);
+	const [loading,setLoading] = useState(false);
+	const { t } = useTranslation();
+	const [typeProducts,setTypeProducts] = useState([]);
 
 	const fetchProductAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
-		const res = await ProductService.getAllProduct(search, limit);
+		const res = await ProductService.getAllProduct(search,limit);
 
 		return res;
 	};
@@ -54,18 +56,18 @@ const HomePage = () => {
 		setLoading(true);
 		fetchAllTypeProduct();
 		setLoading(false);
-	}, []);
+	},[]);
 	const {
 		isLoading,
 		data: products,
 		isPreviousData,
-	} = useQuery(["products", limit, searchDebounce], fetchProductAll, {
+	} = useQuery(["products",limit,searchDebounce],fetchProductAll,{
 		retry: 3,
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
 	function SampleNextArrow(props) {
-		const {onClick} = props;
+		const { onClick } = props;
 		return (
 			<Box className={classes.buttontoi} onClick={onClick}>
 				<FontAwesomeIcon icon={faCircleArrowLeft} rotation={180} />
@@ -74,7 +76,7 @@ const HomePage = () => {
 	}
 
 	function SamplePrevArrow(props) {
-		const {onClick} = props;
+		const { onClick } = props;
 		return (
 			<Box className={classes.samplePrevArrow} onClick={onClick}>
 				<FontAwesomeIcon icon={faCircleArrowLeft} />
@@ -137,13 +139,13 @@ const HomePage = () => {
 	//   }
 	// }, [products]);
 
-	const ParallaxBannerw = styled(ParallaxBanner)(({theme}) => ({
+	const ParallaxBannerw = styled(ParallaxBanner)(({ theme }) => ({
 		padding: theme.spacing(1),
 		height: "300px",
 		width: "400px",
 		textAlign: "center",
 	}));
-	const Item = styled(Paper)(({theme}) => ({
+	const Item = styled(Paper)(({ theme }) => ({
 		backgroundColor: "#1A2027",
 		...theme.typography.body2,
 		padding: theme.spacing(1),
@@ -159,30 +161,34 @@ const HomePage = () => {
 			{!isLoading && (
 				<>
 					<Box className={classes.container}></Box>
-					<Container maxWidth='lx' style={{marginTop: "100px"}}>
+					<Container maxWidth='lx' style={{ marginTop: "100px" }}>
 						<Box>
 							{/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
 							<AnimationComponent type='text' text='Latest Releases' className={classes.txtTitleBox} />
 							<div className={classes.sliderWrapper}>
 								<ImageList variant='masonry' cols={1} gap={8}>
 									{/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
-									<Slider {...settings} style={{overflow: "hidden"}}>
-										{products?.data?.map((product, post, index) => {
+									<Suspense fallback={<div>Loading...</div>}>
+
+										{/* <Slider {...settings} style={{ overflow: "hidden" }}> */}
+										{products?.data?.map((product,post,index) => {
 											return (
 												<div>
-													<ImageListItem key={product.image} style={{cursor: "pointers"}}>
-														<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{cursor: "pointers"}} />
+													<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
+														<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
 														{/* <ImageListItemBar position="below" title={product.name} /> */}
 													</ImageListItem>
 												</div>
 											);
 										})}
-									</Slider>
+										{/* </Slider> */}
+									</Suspense>
+
 								</ImageList>
 							</div>
 						</Box>
 						<Button
-							sx={{p: 3}}
+							sx={{ p: 3 }}
 							style={{
 								width: "100%",
 								display: "flex",
@@ -212,12 +218,12 @@ const HomePage = () => {
 						</Button>
 					</Container>
 
-					<Container maxWidth='xl' style={{marginTop: "50px"}}>
+					<Container maxWidth='xl' style={{ marginTop: "50px" }}>
 						<ParallaxProvider>
 							<>
 								<Parallax speed={-5}>
 									<Container maxWidth='xl'>
-										<Box sx={{width: "100%", maxWidth: 1900, paddingLeft: "30px", paddingRight: "30px"}}>
+										<Box sx={{ width: "100%",maxWidth: 1900,paddingLeft: "30px",paddingRight: "30px" }}>
 											<Typography className={classes.txtTitleBox}>
 												{" "}
 												<AnimationComponent type='text' text='Giới thiệu' />
@@ -232,12 +238,12 @@ const HomePage = () => {
                   </Typography> */}
 										</Box>
 
-										<Box sx={{flexGrow: 1}}>
+										<Box sx={{ flexGrow: 1 }}>
 											<Grid container spacing={2} columns={16}>
 												<Grid item xs={8}>
 													<ParallaxBannerw
 														layers={[
-															{image: `${Assets.bgClass}`, speed: -20},
+															{ image: `${Assets.bgClass}`,speed: -20 },
 															// { image: `${Assets.bgClass}`, speed: -10 },
 														]}
 														className='aspect-[2/1]'
@@ -246,7 +252,7 @@ const HomePage = () => {
 												<Grid item xs={8}>
 													<ParallaxBannerw
 														layers={[
-															{image: `${Assets.bgClass}`, speed: -20},
+															{ image: `${Assets.bgClass}`,speed: -20 },
 															// { image: `${Assets.bgClass}`, speed: -10 },
 														]}
 														className='aspect-[2/1]'
@@ -260,14 +266,14 @@ const HomePage = () => {
 						</ParallaxProvider>
 					</Container>
 
-					<Container maxWidth='2100px' style={{marginTop: "100px"}}>
+					<Container maxWidth='2100px' style={{ marginTop: "100px" }}>
 						<ParallaxProvider>
 							<>
 								<Parallax speed={-5}>
-									<Box sx={{flexGrow: 1}}>
+									<Box sx={{ flexGrow: 1 }}>
 										<Grid container spacing={2}>
 											<Grid item xs={12}>
-												<ParallaxBannerw style={{height: "500px", background: "linear - gradient(0deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.86))"}} layers={[{image: `${Assets.bgBanner}`, speed: -20}]} className='aspect-[2/1]' />
+												<ParallaxBannerw style={{ height: "500px",background: "linear - gradient(0deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.86))" }} layers={[{ image: `${Assets.bgBanner}`,speed: -20 }]} className='aspect-[2/1]' />
 											</Grid>
 										</Grid>
 									</Box>

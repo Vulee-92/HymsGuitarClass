@@ -1,20 +1,20 @@
 import { Checkbox,Form } from "antd";
 import PropTypes from "prop-types";
-import React,{ useEffect,useState } from "react";
+import React,{ Suspense,useEffect,useState } from "react";
 import { CustomCheckbox,Lable,WrapperCountOrder,WrapperInfo,WrapperItemOrder,WrapperLeft,WrapperListOrder,WrapperRight,WrapperStyleHeader,WrapperStyleHeaderDilivery,WrapperTotal } from "./style";
 import { DeleteOutlined,MinusOutlined,PlusOutlined } from "@ant-design/icons";
 
 import { WrapperInputNumber } from "../../components/ProductDetailsComponent/style";
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+// import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useDispatch,useSelector } from "react-redux";
 import { decreaseAmount,increaseAmount,removeAllOrderProduct,removeOrderProduct,selectedOrder } from "../../redux/slides/orderSlide";
 import { convertPrice } from "../../utils";
 import { useMemo } from "react";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
-import InputComponent from "../../components/InputComponent/InputComponent";
+// import InputComponent from "../../components/InputComponent/InputComponent";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import * as UserService from "../../services/UserService";
-import Loading from "../../components/LoadingComponent/Loading";
+// import Loading from "../../components/LoadingComponent/Loading";
 import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useNavigate } from "react-router-dom";
@@ -28,12 +28,14 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import { Check,Label } from "@mui/icons-material";
 import TableComponent from "components/TableComponent/TableComponent";
 import { AvatarTable } from "components/AdminUser/style";
-import MobileCartTotalPriceComponent from "../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import { Helmet } from "react-helmet-async";
-
+const ButtonComponent = React.lazy(() => import('../../components/ButtonComponent/ButtonComponent'));
+const Loading = React.lazy(() => import('../../components/LoadingComponent/Loading'));
+const InputComponent = React.lazy(() => import('../../components/InputComponent/InputComponent'));
+const MobileCartTotalPriceComponent = React.lazy(() => import('../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent'));
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
 		top: 10,
@@ -446,9 +448,11 @@ const OrderPage = () => {
 			</Helmet>
 			{isMobileDevice ? (
 				<>
-					<div style={{ with: "100%",marginTop: "90px" }}>
-						<MobileCartTotalPriceComponent name={"Mua hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
-					</div>
+					<Suspense fallback={<div>...loading</div>}>
+						<div style={{ with: "100%",marginTop: "90px" }}>
+							<MobileCartTotalPriceComponent name={"Mua hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
+						</div>
+					</Suspense>
 					<div style={{ with: "100%",height: "100vh",marginTop: "65px" }}>
 						<Typography className={classes.txtOrder}>Giỏ hàng</Typography>
 
@@ -1190,23 +1194,26 @@ const OrderPage = () => {
 											</span>
 										</WrapperTotal>
 									</div>
-									<ButtonComponent
-										onClick={() => handleAddCard()}
-										size={40}
-										styleButton={{
-											background: "#245c4f",
-											height: "48px",
-											width: "320px",
-											border: "none",
-											borderRadius: "4px",
-										}}
-										textbutton={"Mua hàng"}
-										styleTextButton={{
-											color: "#fff",
-											fontSize: "15px",
-											fontWeight: "700",
-										}}
-									></ButtonComponent>
+									<Suspense fallback={<div>...loading</div>}>
+										<ButtonComponent
+											onClick={() => handleAddCard()}
+											size={40}
+											styleButton={{
+												background: "#245c4f",
+												height: "48px",
+												width: "320px",
+												border: "none",
+												borderRadius: "4px",
+											}}
+											textbutton={"Mua hàng"}
+											styleTextButton={{
+												color: "#fff",
+												fontSize: "15px",
+												fontWeight: "700",
+											}}
+										></ButtonComponent>
+									</Suspense>
+
 								</WrapperRight>
 							</div>
 						</div >

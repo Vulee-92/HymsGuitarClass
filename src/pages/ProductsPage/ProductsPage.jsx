@@ -1,23 +1,19 @@
 import { Box,Container,Grid,Paper,Stack,Typography,styled } from "@mui/material";
-import React,{ useEffect,useState } from "react";
+import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort,ProductList,ProductCartWidget,ProductFilterSidebar } from '../../sections/@dashboard/products';
-import { faker } from "@faker-js/faker";
 import { useQuery } from "@tanstack/react-query";
-import { sample } from "lodash";
 import * as ProductService from "../../services/ProductService";
 import { convertPrice } from "../../utils";
 
 import styles from "./style";
 import Loading from "../../components/LoadingComponent/Loading";
-import TypeProduct from "components/TypeProduct/TypeProduct";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
-import NavbarComponent from "components/NavbarComponent/NavbarComponent";
+// import NavbarComponent from "components/NavbarComponent/NavbarComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-
+const NavbarComponent = React.lazy(() => import('components/NavbarComponent/NavbarComponent'));
 const PRODUCT_COLOR = [
 	"#00AB55",
 	"#000000",
@@ -35,6 +31,8 @@ const Item = styled(Paper)(({ theme }) => ({
 	boxShadow: "none",
 	color: theme.palette.text.secondary,
 }));
+// const ProductList = React.lazy(() => import('../../sections/@dashboard/products'));
+
 const ProductsPage = () => {
 	const [openFilter,setOpenFilter] = useState(false);
 	const [typeProducts,setTypeProducts] = useState([])
@@ -112,7 +110,7 @@ const ProductsPage = () => {
 		id: product._id,
 		cover: product?.image,
 		name: product?.name[index],
-		price: convertPrice(faker.datatype.number({ min: 4,max: 99,precision: 0.01 })),
+		// price: convertPrice(number({ min: 4,max: 99,precision: 0.01 })),
 		colors:
 			(index === 0 && PRODUCT_COLOR.slice(0,2)) ||
 			(index === 1 && PRODUCT_COLOR.slice(1,3)) ||
@@ -162,6 +160,7 @@ const ProductsPage = () => {
 						</Grid>
 						<Grid item xs={12} sm={9} md={9}>
 							<Item>
+
 								<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
 								{/* 
                     <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />

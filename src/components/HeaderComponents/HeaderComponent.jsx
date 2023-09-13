@@ -31,12 +31,10 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import shopping from '../../assets/images/shopping.png'
 import { Assets,Configs,Keys } from "../../configs";
 import { styled } from "@mui/material/styles";
 import Loading from "../LoadingComponent/Loading";
 import Switch from "@mui/material/Switch";
-import AdbIcon from "@mui/icons-material/Adb";
 import {
 	Menu,
 	MenuItem,
