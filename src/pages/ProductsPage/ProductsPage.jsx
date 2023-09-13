@@ -127,42 +127,42 @@ const ProductsPage = () => {
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
-			<Loading isLoading={isLoading} >
+			{/* <Loading isLoading={isLoading} > */}
 
-				<Helmet>
-					<title> Product </title>
-				</Helmet>
-				< Box className={classes.container}>
+			<Helmet>
+				<title> Product </title>
+			</Helmet>
+			< Box className={classes.container}>
 
-					<Typography className={classes.conTextCreate}>
-						<Typical
-							steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
-							loop={Infinity}
-							wrapper="p"
-							className={classes.conTextCreate}
-						/>
-					</Typography>
+				<Typography className={classes.conTextCreate}>
+					<Typical
+						steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
+						loop={Infinity}
+						wrapper="p"
+						className={classes.conTextCreate}
+					/>
+				</Typography>
 
-				</Box>
-				{/* <Box>
+			</Box>
+			{/* <Box>
               {typeProducts.map((item) => {
                 return (
                   <TypeProduct name={item} key={item} />
                 )
               })}
             </Box> */}
-				<Container maxWidth="lg">
-					<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-						<Grid item xs={12} sm={3} md={3} spacing={2} >
-							<Item >
-								<NavbarComponent />
-							</Item>
-						</Grid>
-						<Grid item xs={12} sm={9} md={9}>
-							<Item>
+			<Container maxWidth="lg">
+				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+					<Grid item xs={12} sm={3} md={3} spacing={2} >
+						<Item >
+							<NavbarComponent />
+						</Item>
+					</Grid>
+					<Grid item xs={12} sm={9} md={9}>
+						<Item>
 
-								<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
-								{/* 
+							<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
+							{/* 
                     <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />
                     <Grid container spacing={2}>
                       {searchDebounce === ""
@@ -200,12 +200,12 @@ const ProductsPage = () => {
                     </Stack>
                     <ProductCartWidget /> */}
 
-							</Item>
-						</Grid>
-
+						</Item>
 					</Grid>
-				</Container>
-			</Loading>
+
+				</Grid>
+			</Container>
+			{/* </Loading> */}
 		</>
 
 	);

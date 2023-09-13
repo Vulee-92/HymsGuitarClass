@@ -1,5 +1,8 @@
 import axios from "axios";
 import { axiosJWT } from "./UserService";
+import LRUCache from "lru-cache";
+
+const cache = new LRUCache({ max: 100, maxAge: 1000 * 60 * 10 }); // Lưu trữ tối đa 100 kết quả, mỗi kết quả được lưu trữ trong 10 phút
 
 // export const getAllProduct = async (search, limit) => {
 //     let res = {}
@@ -11,6 +14,13 @@ import { axiosJWT } from "./UserService";
 //     return res.data
 // }
 export const getAllProduct = async (search, limit) => {
+  const cacheKey = `${search}-${limit}`;
+  const cachedResult = cache.get(cacheKey);
+
+  if (cachedResult) {
+    return cachedResult;
+  }
+
   let res = {};
   if (search?.length > 0) {
     res = await axios.get(
@@ -21,7 +31,11 @@ export const getAllProduct = async (search, limit) => {
       `${process.env.REACT_APP_API_URL}/product/get-all?limit=${limit}`
     );
   }
-  return res.data;
+
+  const result = res.data;
+  cache.set(cacheKey, result); // Lưu kết quả vào bộ nhớ đệm
+
+  return result;
 };
 
 export const getProductType = async (type, page, limit) => {

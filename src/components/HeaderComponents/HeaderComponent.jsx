@@ -46,6 +46,7 @@ import {
 	Icon,
 	Skeleton,
 	CardMedia,
+	Drawer,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ProfileScreen from "../../pages/profile";
@@ -54,7 +55,7 @@ import "../../App.css";
 import { searchProduct } from "../../redux/slides/productSlide";
 import { Header } from "antd/es/layout/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered,faUser,faX } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFast } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
@@ -75,8 +76,16 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const [loading,setLoading] = useState(false);
 	const [isMobile,setMobile] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
+
+	const [isDrawerOpen,setIsDrawerOpen] = useState(false);
+	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
+
+
 	const handleNavigateLogin = () => {
 		navigate("/login");
+	};
+	const handleNavigateSignIn = () => {
+		navigate("/sign-up");
 	};
 	const [colorChange,setColorchange] = useState(false);
 	const changeNavbarColor = () => {
@@ -178,21 +187,21 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 					style={{ marginTop: '20px' }}
 				>
 					<Typography className={classes.txtInfoUser}>THÔNG TIN TÀI KHOẢN</Typography>
-					<MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilteInfo}>Tài khoản của bạn </Typography></MenuItem>
+					<MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilte}>Tài khoản của bạn </Typography></MenuItem>
 					{user?.isAdmin && (
 						<MenuItem onClick={() => handleClickNavigate('admin')}>
-							<Typography className={classes.txtTilteInfo}>
+							<Typography className={classes.txtTilte}>
 								quản lý
 							</Typography>
 						</MenuItem>
 					)}
 					<MenuItem onClick={() => handleClickNavigate(`my-order`)}>
-						<Typography className={classes.txtTilteInfo}>
+						<Typography className={classes.txtTilte}>
 							Đơn hàng của bạn
 						</Typography>
 					</MenuItem>
 					<MenuItem onClick={() => handleClickNavigate()}>
-						<Typography className={classes.txtTilteInfo}>
+						<Typography className={classes.txtTilte}>
 							Đăng xuất
 						</Typography>
 					</MenuItem>
@@ -287,49 +296,104 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 				<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
 					<Toolbar disableGutters style={{ display: "flex",justifyContent: "space-between",alignItems: 'center' }}>
 
-						<Typography
-							href="/"
 
-							sx={{
-								display: { xs: "none",md: "contents" },
-								flexGrow: 1,
-								width: "30%",
-								fontFamily: "monospace",
-								fontWeight: 700,
-								letterSpacing: '.3rem',
-								color: "inherit",
-								textDecoration: "none"
-								// cursor: 'pointer',
-							}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff" }} >HYMNS</Typography>
-						<Box sx={{ flexGrow: 0,display: { xs: "flex",md: "none" } }}>
+						<Box sx={{ flexGrow: 0,display: { xs: "flex",md: "none" },position: "relative",zIndex: 1,overflow: 'auto' }} className={classes.headerHontainer}>
 							<IconButton
 								size="large"
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
-								onClick={handleOpenNavMenu}
+								onClick={(event) => {
+									event.stopPropagation();
+									setIsDrawerOpen(!isDrawerOpen);
+									setCurrentIcon(isDrawerOpen ? faBarsStaggered : faTimes);
+								}}
 								color="inherit"
 							>
-								<FontAwesomeIcon icon={faBarsStaggered} style={{ fontSize: "18px" }} />
+								<FontAwesomeIcon icon={currentIcon} style={{ fontSize: "18px" }} />
 							</IconButton>
-							<Menu
-								id="menu-appbar"
-								anchorEl={anchorElNav}
-								anchorOrigin={{
-									vertical: "bottom",
-									horizontal: "left"
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: "top",
-									horizontal: "left"
-								}}
-								open={Boolean(anchorElNav)}
-								onClose={handleCloseNavMenu}
+							{/* <Button >{"top"}</Button> */}
+							<Drawer anchor="left"
+								open={isDrawerOpen}
+								onClose={() => setIsDrawerOpen(false)}
+								variant="temporary"
+								disableScrollLock="false"
+								className={classes.menuContent}
 								sx={{
-									display: { xs: "block",md: "none" }
+									flexGrow: 0,display: { xs: "flex",md: "none" },position: "fixed",
+									width: 240,
+									flexShrink: 0,
+									'& .MuiDrawer-paper': {
+										width: 240,
+										boxSizing: 'border-box',
+										zIndex: 1,top: '80px !important'
+									},
 								}}
 							>
+
+								<MenuItem>
+									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Thông tin của bạn</Typography>
+
+								</MenuItem>
+								<MenuItem>
+									{user?.access_token ? (
+										<>
+											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{ marginRight: "16px" }} />
+											<Typography className={classes.txtTilte}>
+												{userName?.length ? userName : user?.email}
+											</Typography>
+										</>
+									) : (
+										<>
+											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" sx={{ marginRight: "10px" }} />
+											<Button onClick={handleNavigateLogin}
+												className={classes.txtTilte}
+											>
+												đăng nhập
+											</Button>
+										</>
+
+									)}
+
+								</MenuItem>
+								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }}>
+									<>
+										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{
+											marginRight: "15px",
+										}} />
+										<Button onClick={handleNavigateSignIn} className={classes.txtTilte}>
+											Tạo tài khoản
+										</Button>
+									</>
+								</MenuItem>
+								{user?.access_token ? (
+									<>
+										{/* <MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilte}>Tài khoản của bạn </Typography></MenuItem> */}
+										{user?.isAdmin && (
+											<MenuItem onClick={() => handleClickNavigate('admin')}>
+												<Typography className={classes.txtTilte}>
+													quản lý
+												</Typography>
+											</MenuItem>
+										)}
+										<MenuItem onClick={() => handleClickNavigate(`my-order`)}>
+											<FontAwesomeIcon icon={faTruckFast} fontSize="18px" color="#245c4f" style={{ marginRight: "10px" }} />
+											<Typography className={classes.txtTilte} >
+												Đơn hàng của bạn
+											</Typography>
+										</MenuItem>
+										<MenuItem onClick={() => handleClickNavigate()}>
+											<FontAwesomeIcon icon={faRightFromBracket} fontSize="18px" color="#245c4f" style={{ marginRight: "14px",}} />
+											<Typography className={classes.txtTilte} >
+												Đăng xuất
+											</Typography>
+										</MenuItem>
+									</>
+
+								) : (<></>)}
+								<MenuItem>
+									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Xem thêm</Typography>
+								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
 									<Button className={classes.txtTilte} href="/" textAlign="center">Home</Button>
 								</MenuItem>
@@ -345,27 +409,23 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								<MenuItem onClick={handleCloseNavMenu}>
 									<Button className={classes.txtTilte} href="/contact" textAlign="center">Contact</Button>
 								</MenuItem>
-							</Menu>
-						</Box>
+								<MenuItem>
+									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Ngôn ngữ</Typography>
+								</MenuItem>
+								<MenuItem>
+									<FormControlLabel
+										control={
+											<LanguageSwitch
+												sx={{ m: 1 }}
+												checked={lang === 'en'}
+												onClick={handleLanguageChange}
+											/>
+										}
+									/>
+								</MenuItem>
+							</Drawer>
 
-						{/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none"
-            }}
-          >
-            LOGO
-          </Typography> */}
+						</Box>
 						<Typography
 							href="/"
 
