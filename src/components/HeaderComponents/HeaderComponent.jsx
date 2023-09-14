@@ -321,7 +321,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								className={classes.menuContent}
 								sx={{
 									flexGrow: 0,display: { xs: "flex",md: "none" },position: "fixed",
-									width: 240,
+									width: 210,
 									flexShrink: 0,
 									'& .MuiDrawer-paper': {
 										width: 240,
