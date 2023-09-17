@@ -10,7 +10,6 @@ import { useDispatch,useSelector } from "react-redux";
 import { useLocation,useNavigate } from "react-router-dom";
 import styles from "./stylemui";
 import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialog,DialogActions,DialogContent,DialogTitle,Divider,Drawer,Fab,Grid,IconButton,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Rating,Snackbar,Stack,Typography,useMediaQuery } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import "react-medium-image-zoom/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck } from "@fortawesome/free-solid-svg-icons";
@@ -42,24 +41,11 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [isZoomed,setIsZoomed] = useState(false);
 	const [zoomPosition,setZoomPosition] = useState({ x: 0,y: 0 });
 
-	const handleMouseMove = (event) => {
-		setIsZoomed(true);
-		const { left,top,width,height } = event.target.getBoundingClientRect();
-		const x = ((event.clientX - left) / width) * 100;
-		const y = ((event.clientY - top) / height) * 100;
-		setZoomPosition({ x,y });
-	};
 
-	const handleMouseLeave = () => {
-		setIsZoomed(false);
-	};
 
 	const [isCartOpen,setIsCartOpen] = useState(false);
 
-	const trigger = useScrollTrigger({
-		disableHysteresis: true,
-		threshold: 0,
-	});
+
 
 	const handleCartClick = () => {
 		setIsCartOpen(true);
@@ -288,7 +274,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											style={{
 												background: "#245c4f",
 												height: "48px",
-												width: "190px",
+												width: "160px",
 												border: "none",
 												borderRadius: "4px",
 
@@ -402,7 +388,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 					{/* <Divider variant="middle" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} /> */}
 
-					<Divider variant='fullWidth' style={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" } }} />
+					{/* <Divider variant='fullWidth' style={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" } }} /> */}
 					<Grid
 						container
 						spacing={2}
@@ -432,7 +418,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Typography sx={{ display: { xs: "flex",xl: "flex",lg: "none",md: "none",sm: "none" },borderBottom: { xs: "2px solid #d6d6d4",xl: "none" },paddingBottom: { xs: "10px" } }} style={{ marginTop: "16px",marginBottom: "16px",textAlign: "left" }} className={classes.nameProductMobile}>
+					<Typography sx={{ display: { xs: "flex",xl: "flex",lg: "none",md: "none",sm: "none" },borderBottom: { xs: "2px solid #d6d6d4",xl: "none" },paddingBottom: { xs: "10px" },marginTop: { xs: 0,xl: "16px",lg: "16px",md: "16px" },}} style={{ marginBottom: "16px",textAlign: "left" }} className={classes.nameProductMobile}>
 						{productDetails?.name}
 					</Typography>
 
@@ -445,27 +431,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						}}
 						sx={{ display: "flex",justifyContent: "center" }}
 					>
-						{/* <Zoom
-                key={productDetails?.image}
-                style={{ maxHeight: '400px', textAlign: '-webkit-center' }}
-                img={productDetails?.image}
-                zoomScale={1.5}
-                height={400}
-                width={'100%'}
-                zoomImage={{
-                  src: productDetails?.image,
-                  alt: '',
-                  style: { maxHeight: '800px', maxWidth: '800px' },
-                }}
-                isZoomed={isZoomed}
-                zoomPosition={zoomPosition}
-                onZoomEnd={() => setIsZoomed(false)}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                zoomWidth={400}
-                zoomStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
-                onZoomChange={(zoomed) => setIsZoomed(zoomed)}
-              /> */}
+
 
 						<Box className={classes.galleryProduct}>
 							<ImageZoom key={productDetails?.image} src={productDetails?.image} alt='A image to apply the ImageZoom plugin' zoom='200' />
@@ -478,8 +444,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
           lg, large: 1200px
           xl, extra-large: 1536px */}
 
-					<Grid container spacing={2} sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
-						<Grid item xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: "30px" }}>
+					<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
+						<Grid item xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: "10px" }}>
 							<Paper style={{ boxShadow: "none" }}>
 								<Typography sx={{ margin: "0 !important",textAlign: { xs: "left" } }} className={classes.txtTitleBox}>
 									Mô tả sản phẩm
@@ -519,8 +485,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								</Accordion>
 							</div>
 						</Grid>
-						<Grid container spacing={2} sx={{ justifyContent: { xs: "center" },marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },marginTop: { xs: "0px",xl: "40px" },paddingLeft: { xs: "0px !important",xl: "0px" } }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "fit-content" }}>
-							<Paper style={{ background: "rgb(36, 92, 79,0.1)",boxShadow: "none",margin: "0.625rem" }}>
+						<Grid container spacing={2} sx={{ width: "100%",justifyContent: { xs: "center" },marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },marginTop: { xs: "0px",xl: "40px" },paddingLeft: { xs: "0px !important",xl: "0px" } }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "fit-content" }}>
+							<Paper style={{ background: "rgb(36, 92, 79,0.1)",boxShadow: "none",margin: "0.425rem",padding: "5px" }}>
 								<Box sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "column",lg: "column" } }}>
 									<WrapperPriceProduct style={{ padding: "10px 16px ",background: "rgb(36, 92, 79,0.01)" }}>
 										<Typography className={classes.nameProduct} style={{ textAlign: "left",fontSize: "32px" }}>

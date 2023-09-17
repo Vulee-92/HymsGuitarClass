@@ -167,21 +167,20 @@ const HomePage = () => {
 							<AnimationComponent type='text' text='Latest Releases' className={classes.txtTitleBox} />
 							<div className={classes.sliderWrapper}>
 								<ImageList variant='masonry' cols={1} gap={8}>
-									{/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
 									<Suspense fallback={<div>Loading...</div>}>
 
-										{/* <Slider {...settings} style={{ overflow: "hidden" }}> */}
-										{products?.data?.map((product,post,index) => {
-											return (
-												<div>
-													<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-														<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-														{/* <ImageListItemBar position="below" title={product.name} /> */}
-													</ImageListItem>
-												</div>
-											);
-										})}
-										{/* </Slider> */}
+										<Slider {...settings} style={{ overflow: "hidden" }}>
+											{products?.data?.map((product,post,index) => {
+												return (
+													<div>
+														<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
+															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+															{/* <ImageListItemBar position="below" title={product.name} /> */}
+														</ImageListItem>
+													</div>
+												);
+											})}
+										</Slider>
 									</Suspense>
 
 								</ImageList>

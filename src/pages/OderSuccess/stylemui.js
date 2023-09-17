@@ -12,7 +12,9 @@ export default makeStyles(() => {
       textAlign: "right",
     },
     nameProduct: {
-      ...CStyles.txt_title_item,
+			...CStyles.txt_title_item,
+			textAlign: "left",
+			marginBottom: "5px"
     },
     txtTilte: {
       ...CStyles.txt_body_item,
@@ -66,13 +68,13 @@ export default makeStyles(() => {
       marginBottom: "15px",
       textAlign: "center",
 		},
-			nameInfoUser: {
+			txtValueTotal: {
 			...CStyles.txt_body_item,
 			color: "rgb(36, 36, 36)",
 			fontSize: "14px",
-			fontWeight: 500,
+				fontWeight: 500,
+			marginBottom: "10px",
 			alignItems: "center",
-			// margin: 0px 0px 10px,
 			maxHeight: "40px",
 			overflow: "hidden",
 		},

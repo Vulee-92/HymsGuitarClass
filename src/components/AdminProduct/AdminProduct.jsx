@@ -847,7 +847,7 @@ const AdminProduct = () => {
 									{ required: true,message: "Please input your Rating!" },
 								]}
 							>
-								<Upload onChange={handleOnchangeAvatar} maxCount={1} accept=".jpg, .jpeg, .png, .webp">
+								{/* <Upload onChange={handleOnchangeAvatar} maxCount={1} accept=".jpg, .jpeg, .png, .webp">
 									<Button>Select File</Button>
 									{stateProduct.image && (
 										<img
@@ -861,7 +861,12 @@ const AdminProduct = () => {
 											}}
 										/>
 									)}
-								</Upload>
+								</Upload> */}
+								<InputComponent
+									value={stateProduct.image}
+									onChange={handleOnChange}
+									name="image"
+								/>
 							</Form.Item>
 
 							<Form.Item wrapperCol={{ offset: 20,span: 16 }}>

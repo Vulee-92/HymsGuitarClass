@@ -265,7 +265,7 @@ const PaymentPage = () => {
 						{/* {style = {{display: "flex",justifyContent: "center" }}} */}
 						<Grid spacing={2} sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 							<Grid item xs={12} sm={12} md={12} lg={8} xl={8} sx={{ padding: "0px",marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },margin: { xs: "0px",xl: "40px" } }}>
-								<WrapperLeft>
+								<Box className={classes.WrapperLeft}>
 									{/* <Typography className={classes.txtOrder}>Phí giao hàng</Typography> */}
 									<WrapperInfo>
 										<div>
@@ -305,14 +305,12 @@ const PaymentPage = () => {
 										</div>
 									</WrapperInfo>
 									{payment === 'bank' && (
-										<div >
-											<Typography className={classes.txtTilteBank}  >Nội dung chuyển khoản: <span style={{ color: '#245c4f',fontWeight: 'bold' }}>Tên và số điện thoại của bạn ^^</span></Typography>
-											<img src={Assets.bankOrder}
-												style={{ width: '290px',height: 'auto' }}
-											/>
-										</div>
+										<Box className={classes.boxTotal}>
+											<Typography className={classes.txtTilteBank} sx={{ margin: { xs: "0px" },padding: { xs: "10px" } }}   >Nội dung chuyển khoản: <span style={{ color: '#245c4f',fontWeight: 'bold' }}>Tên và số điện thoại của bạn ^^</span></Typography>
+											<Box sx={{ width: { xs: "200px",xl: '290px' },height: 'auto',margin: "0 auto" }} component={'img'} src={Assets.bankOrder} alt="logo" />
+										</Box>
 									)}
-								</WrapperLeft>
+								</Box>
 
 
 							</Grid>

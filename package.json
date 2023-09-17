@@ -64,6 +64,7 @@
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
     "simplebar-react": "^3.2.4",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.4",
     "web-vitals": "^2.1.4"
   },

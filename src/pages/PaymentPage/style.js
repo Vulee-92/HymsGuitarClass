@@ -44,7 +44,6 @@ export const WrapperCountOrder = styled.div`
 
 export const WrapperRight = styled.div`
   width: 100%;
-  margin-left: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;

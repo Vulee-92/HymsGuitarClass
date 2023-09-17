@@ -92,7 +92,7 @@ const CardComponent = (props,post,index) => {
 				cursor: 'pointer',
 				transform: 'translate3d(-50%, 0, 0)'
 			}} src={image} alt="img 01" />
-			<WrapperProductTiltle style={{ cursor: 'pointers' }} className="product__title" onClick={() => handleDetailsProduct(id)}> {name}</WrapperProductTiltle>
+			<WrapperProductTiltle style={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name ? `${name.slice(0,30)} ...` : name}</WrapperProductTiltle>
 			{/* <h3 class="product__subtitle" onClick={() => handleDetailsProduct(id)}> gỗ hồng đào</h3> */}
 			{/* <p class="product__description">Thông số : Full gỗ hồng đào nguyên tấm , có ti chỉnh cần , gắn khóa đúc cao cấp
               Tặng kèm : Bao vãi yamaha , capo , pick , bộ dây sơ cua
