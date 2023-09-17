@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetUser, updateUser } from "./redux/slides/userSlide";
 import Loading from "./components/LoadingComponent/Loading";
 import { HelmetProvider } from "react-helmet-async";
+import ScrollToTop from './components/ScrollToTopComponent/ScrollToTopComponent';
 
 function App() {
   const dispatch = useDispatch();
@@ -89,7 +90,8 @@ function App() {
       <HelmetProvider>
         <StyledEngineProvider injectFirst>
           <CssBaseline />
-          <Router>
+					<Router>
+						<ScrollToTop />
             <Routes>
               {routes.map((route) => {
                 const LazyPage = route.page;
@@ -101,7 +103,7 @@ function App() {
                     key={route.path}
                     path={route.path}
                     element={
-                      <Suspense fallback={<div>Loading...</div>}>
+                      <Suspense fallback={<div></div>}>
                         {isAuthorized ? (
                           <Layout>
                             <LazyPage />

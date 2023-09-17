@@ -24,6 +24,16 @@ export default makeStyles(() => {
 		WrapperLeft: {
 			  width: '100%'
 		},
+			txtValueTotal: {
+			...CStyles.txt_body_item,
+			color: "rgb(36, 36, 36)",
+			fontSize: "14px",
+				fontWeight: 400,
+							lineHeight: 1.5,
+			marginBottom: "10px",
+			alignItems: "center",
+			overflow: "hidden",
+		},
 			btnAddCard: {
 			...CStyles.txt_title_item,
 				background: "#245c4f",

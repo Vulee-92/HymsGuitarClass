@@ -17,9 +17,16 @@ export default makeStyles(() => {
 			color: "#45cc8f",
 			textAlign: "right",
 		},
-		// nameProduct: {
-		//   ...CStyles.txt_title_item,
-		// },
+			txtValueTotal: {
+			...CStyles.txt_body_item,
+			color: "rgb(36, 36, 36)",
+			fontSize: "14px",
+				fontWeight: 400,
+							lineHeight: 1.5,
+			marginBottom: "10px",
+			alignItems: "center",
+			overflow: "hidden",
+		},
 		footer: {
 			paddingTop: "10rem",
 			paddingBottom: "4rem",
@@ -90,13 +97,16 @@ export default makeStyles(() => {
 						fontWeight: 400,
 			},
 		nameAllProduct: {
-					...CStyles.txt_title_item,
-				fontWeight: 400,
-						lineHeight: 1.3,
-			fontSize: "13px",
 					alignItems: "center",
 			display: "flex",
-				marginLeft: "10px"
+			marginLeft: "10px",
+					...CStyles.txt_body_item,
+			color: "rgb(36, 36, 36)",
+			fontSize: "14px",
+				fontWeight: 500,
+							lineHeight: 1.5,
+			alignItems: "center",
+			overflow: "hidden",
 		},
 		BoxnameAllProduct: {
 	display: "flex",

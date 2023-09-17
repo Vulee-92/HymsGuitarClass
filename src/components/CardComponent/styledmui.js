@@ -9,6 +9,25 @@ export default makeStyles(() => {
     container: {
       ...CStyles.center,
       padding: Configs.pH,
+		},
+		nameProduct: {
+    ...CStyles.txt_header_title,
+      textAlign: "center",
+      fontWeight: 500,
+      color: "#0b2238",
+      fontSize: "16px",
+      height: "70px",
+      minHeight: "62.4px",
+      overflow: "hidden",
+			overflowWrap: "break-word",
+			paddingBottom: "5px"
+		},
+		  txtPrice: {
+      ...CStyles.txt_body_item,
+      fontSize: 16,
+      textAlign: "left",
+      fontWeight: 600,
+      color: "#0b2238",
     },
     Image: {
       zIndex: 10,

@@ -467,7 +467,7 @@ const OrderPage = () => {
 										</Typography>
 									</Grid>
 									<Grid item xs={8} style={{ textAlign: "right",color: "#245c4f",cursor: "pointer",fontSize: "14px" }}>
-										<Typography onClick={handleChangeAddress} style={{ color: "#245c4f",cursor: "pointer",fontSize: "14px",}}>{" "}Thay đổi</Typography>
+										<Typography className={classes.txtValueTotal} onClick={handleChangeAddress} style={{ color: "#245c4f",cursor: "pointer",fontSize: "14px",}}>{" "}Thay đổi</Typography>
 									</Grid>
 								</Grid>
 								{/* <Typography variant="h6" component="h2">
@@ -475,7 +475,7 @@ const OrderPage = () => {
                 </Typography> */}
 
 								<Box>
-									<Typography className={classes.InfoHomeUser} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>
+									<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>
 										{" "}<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px",}}> Nhà  </span>
 										{" "}{`${user?.address} ${user?.city}`}{" "}
 									</Typography>
@@ -776,8 +776,8 @@ const OrderPage = () => {
 										justifyContent: "space-between",
 									}}
 								>
-									<Typography className={classes.nameProductCard}>Tạm tính</Typography>
-									<Typography className={classes.nameProductCard}
+									<Typography className={classes.txtValueTotal}>Tạm tính</Typography>
+									<Typography className={classes.txtValueTotal}
 										style={{
 											color: "#000",
 											fontSize: "14px",
@@ -794,7 +794,7 @@ const OrderPage = () => {
 										justifyContent: "space-between",
 									}}
 								>
-									<Typography className={classes.nameProductCard}>Giảm giá</Typography>
+									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
 									<Typography
 										style={{
 											color: "#000",
@@ -812,8 +812,8 @@ const OrderPage = () => {
 										justifyContent: "space-between",
 									}}
 								>
-									<Typography className={classes.nameProductCard}>Phí giao hàng</Typography>
-									<Typography className={classes.nameProductCard}
+									<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
+									<Typography className={classes.txtValueTotal}
 										style={{
 											color: "#000",
 											fontSize: "14px",
@@ -842,7 +842,7 @@ const OrderPage = () => {
 										flexDirection: "column",
 									}}
 								>
-									<Typography className={classes.nameProductCard}
+									<Typography className={classes.txtValueTotal}
 										style={{
 											color: "#245c4f",
 											fontSize: "16px",
@@ -853,7 +853,7 @@ const OrderPage = () => {
 									>
 										{convertPrice(totalPriceMemo)}
 									</Typography>
-									<Typography className={classes.nameProductCard}>
+									<Typography className={classes.txtValueTotal}>
 										(Đã bao gồm VAT nếu có)
 									</Typography>
 								</Typography>
@@ -956,7 +956,7 @@ const OrderPage = () => {
 												onChange={handleOnchangeCheckAll}
 												checked={listChecked?.length === order?.orderItems?.length}
 											></CustomCheckbox>
-											<span> Tất cả ({order.orderItems.length} sản phẩm)</span>
+											<Typography className={classes.txtValueTotal} > Tất cả ({order.orderItems.length} sản phẩm)</Typography>
 										</span>
 										<div
 											style={{

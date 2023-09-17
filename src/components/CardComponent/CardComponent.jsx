@@ -92,7 +92,7 @@ const CardComponent = (props,post,index) => {
 				cursor: 'pointer',
 				transform: 'translate3d(-50%, 0, 0)'
 			}} src={image} alt="img 01" />
-			<WrapperProductTiltle style={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name ? `${name.slice(0,30)} ...` : name}</WrapperProductTiltle>
+			<Typography className={classes.nameProduct} style={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name ? `${name.slice(0,70)} ...` : name}</Typography>
 			{/* <h3 class="product__subtitle" onClick={() => handleDetailsProduct(id)}> gỗ hồng đào</h3> */}
 			{/* <p class="product__description">Thông số : Full gỗ hồng đào nguyên tấm , có ti chỉnh cần , gắn khóa đúc cao cấp
               Tặng kèm : Bao vãi yamaha , capo , pick , bộ dây sơ cua
@@ -105,7 +105,7 @@ const CardComponent = (props,post,index) => {
               Bạn có thể chơi Đàn Guitar Fh200 Full gỗ hồng đào ở ngoài trời trong các buổi du ngoạn với đám bạn, người yêu hay trình diễn nó trên sân khấu với nhiều thể loại nhạc khác nhau từ cổ điển, country, jazz cho đến flamenco, ballad và các bản nhạc hiện đại với sắc độ biểu cảm tạo nên sự gắn kết, khuấy động không khí vui tươi chốn đông người.</p> */}
 
 
-			<Typography style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
+			<Typography className={classes.txtPrice} style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
 
 		</section>
 		// <Card className={classes.Image}>

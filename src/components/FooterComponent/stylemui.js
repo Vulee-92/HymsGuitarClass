@@ -18,7 +18,7 @@ export default makeStyles(() => {
       ...CStyles.txt_title_item,
     },
     footer: {
-      paddingTop: "10rem",
+      paddingTop: "2rem",
       paddingBottom: "4rem",
     },
     txtTilte: {

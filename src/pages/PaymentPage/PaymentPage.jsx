@@ -331,37 +331,37 @@ const PaymentPage = () => {
 													</Typography>
 												</Grid>
 												<Grid item xs={8} style={{ textAlign: "right",color: "#245c4f",cursor: "pointer",fontSize: "14px" }}>
-													<Typography onClick={handleChangeAddress} style={{ color: "#245c4f",cursor: "pointer",fontSize: "14px",}}>{" "}Thay đổi</Typography>
+													<Typography className={classes.txtValueTotal} onClick={handleChangeAddress} style={{ color: "#245c4f",cursor: "pointer",fontSize: "14px",}}>{" "}Thay đổi</Typography>
 												</Grid>
 											</Grid>
 											<Box >
 
-												<Typography style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>      <span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px" }}>
+												<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}><span className={classes.txtValueTotal} style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px" }}>
 
 													Nhà
-												</span>   {" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
+												</span> {' '}{`${user?.address} ${user?.city}`}{" "} </Typography>
 											</Box>
 										</WrapperInfo>
 										<WrapperInfo>
 											<div style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-												<span>Tạm tính</span>
-												<span style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceMemo)}</span>
+												<Typography className={classes.txtValueTotal}>Tạm tính</Typography>
+												<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceMemo)}</Typography>
 											</div>
 											<div style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-												<span>Giảm giá</span>
-												<span style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</span>
+												<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
+												<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
 											</div>
 											<div style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-												<span>Phí giao hàng</span>
-												<span style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(diliveryPriceMemo)}</span>
+												<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
+												<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(diliveryPriceMemo)}</Typography>
 											</div>
 										</WrapperInfo>
 										<WrapperTotal>
-											<span>Tổng tiền</span>
-											<span style={{ display: 'flex',flexDirection: 'column' }}>
-												<span style={{ color: '#245c4f',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(totalPriceMemo)}</span>
-												<span style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</span>
-											</span>
+											<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
+											<Typography style={{ display: 'flex',flexDirection: 'column' }}>
+												<Typography className={classes.txtValueTotal} style={{ color: '#245c4f',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(totalPriceMemo)}</Typography>
+												<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
+											</Typography>
 										</WrapperTotal>
 									</div>
 									{payment === 'paypal' && sdkReady ? (

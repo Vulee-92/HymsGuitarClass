@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck } from "@fortawesome/free-solid-svg-icons";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Slider from "react-slick";
-import CardComponent from "components/CardComponent/CardComponent";
+import CardComponent from "../../components/CardComponent/CardComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { convertPrice } from "utils";
 import { ShoppingCart } from "@mui/icons-material";

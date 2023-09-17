@@ -349,7 +349,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 											<Button onClick={handleNavigateLogin}
 												className={classes.txtTilte}
 											>
-												đăng nhập
+												{t('sign_in')}
 											</Button>
 										</>
 
@@ -359,10 +359,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }}>
 									<>
 										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{
-											marginRight: "15px",
+											marginRight: "0px",
 										}} />
 										<Button onClick={handleNavigateSignIn} className={classes.txtTilte}>
-											Tạo tài khoản
+											{t('sign_up')}
 										</Button>
 									</>
 								</MenuItem>
@@ -395,22 +395,22 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Xem thêm</Typography>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/" textAlign="center">Home</Button>
+									<Button className={classes.txtTilte} href="/" textAlign="center">{t('home')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/product" textAlign="center">Product</Button>
+									<Button className={classes.txtTilte} href="/product" textAlign="center">{t('product')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/about" textAlign="center">About</Button>
+									<Button className={classes.txtTilte} href="/about" textAlign="center">{t('about')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/contact" textAlign="center">Blog</Button>
+									<Button className={classes.txtTilte} href="/contact" textAlign="center">{t('blog')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/contact" textAlign="center">Contact</Button>
+									<Button className={classes.txtTilte} href="/contact" textAlign="center">{t('contact')}</Button>
 								</MenuItem>
 								<MenuItem>
-									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Ngôn ngữ</Typography>
+									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">{t('language')}</Typography>
 								</MenuItem>
 								<MenuItem>
 									<FormControlLabel
@@ -463,7 +463,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								href="/"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								Home
+								{t('home')}
 							</Button>
 							<Button
 								onClick={handleCloseNavMenu}
@@ -471,7 +471,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								href="/product"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								Product
+								{t('product')}
 							</Button>
 							<Button
 								onClick={handleCloseNavMenu}
@@ -479,14 +479,14 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								href="/contact"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								Contact
+								{t('contact')}
 							</Button>
 							<Button
 								onClick={handleCloseNavMenu}
 								sx={{ color: "white",display: "block" }}
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								Blog
+								{t('blog')}
 							</Button>
 							<Button
 								onClick={handleCloseNavMenu}
@@ -494,7 +494,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								href="/about"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								About
+								{t('about')}
 							</Button>
 						</Box>
 						{/* <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }} style={{ justifyContent: "space-between", alignItems: 'center' }}>
