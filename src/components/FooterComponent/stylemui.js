@@ -27,7 +27,8 @@ export default makeStyles(() => {
       marginTop: "1.45rem",
       fontSize: "13px",
       fontWeight: 400,
-      marginBottom: 0,
+			marginBottom: 0,
+			cursor: "pointer",
     },
     inputEmail: {
       ...CStyles.txt_body_item,

@@ -31,16 +31,28 @@ function App() {
     setIsLoading(false);
   }, []);
 
-  const handleDecoded = () => {
-    let storageData =
-      user?.access_token || localStorage.getItem("access_token");
-    let decoded = {};
-    if (storageData && isJsonString(storageData) && !user?.access_token) {
+  // const handleDecoded = () => {
+  //   let storageData =
+  //     user?.access_token || localStorage.getItem("access_token");
+  //   let decoded = {};
+  //   if (storageData && isJsonString(storageData) && !user?.access_token) {
+  //     storageData = JSON.parse(storageData);
+  //     decoded = jwt_decode(storageData);
+  //   }
+  //   return { decoded, storageData };
+	// };
+	const handleDecoded = () => {
+  let storageData = user?.access_token || localStorage.getItem("access_token");
+  let decoded = {};
+  if (storageData) {
+    if (isJsonString(storageData) && !user?.access_token) {
       storageData = JSON.parse(storageData);
-      decoded = jwt_decode(storageData);
     }
-    return { decoded, storageData };
-  };
+    decoded = jwt_decode(storageData);
+  }
+  return { decoded, storageData };
+};
+
 
   const setAuthorizationHeader = async (config) => {
     const currentTime = new Date();

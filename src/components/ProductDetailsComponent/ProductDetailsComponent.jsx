@@ -21,6 +21,7 @@ import { convertPrice } from "utils";
 import { ShoppingCart } from "@mui/icons-material";
 import ImageZoom from "react-image-zooom";
 import { Helmet } from "react-helmet-async";
+import { bottom } from "@popperjs/core";
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	// const classess = useStyles({ isMobile });
@@ -257,7 +258,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							},
 						}}
 						variant='persistent'
-						anchor='bottom'
+						anchor={bottom}
 						open={isCartOpen}
 						onClose={handleCartClose}
 						disableDiscovery
@@ -270,6 +271,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 									<div>
 										<Button
+											className={classes.nameProductInfo}
 											variant='contained'
 											style={{
 												background: "#245c4f",
@@ -290,7 +292,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert style={{ border: "1px solid #245c4f",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
+													<Alert className={classes.nameProductInfo} style={{ border: "1px solid #245c4f",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
 														Đã thêm vào giỏ hàng!
 													</Alert>
 												</Snackbar>
@@ -298,7 +300,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										) : (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert style={{ border: "1px solid red",fontSize: "13px",color: "red" }} severity='error' sx={{ width: "100%" }}>
+													<Alert className={classes.nameProductInfo} style={{ border: "1px solid red",fontSize: "13px",color: "red" }} severity='error' sx={{ width: "100%" }}>
 														Sản phẩm đã hết hàng!
 													</Alert>
 												</Snackbar>
@@ -313,7 +315,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 				<Box sx={
 					{
 						textAlign: '-webkit-center',marginTop: '0px',
-						borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
+						borderBottom: { xl: "1px solid #d6d6d4",xs: "none",md: "1px solid #d6d6d4" },
 						display: "flex",justifyContent: "center",
 						// backgroundColor: "#f4f4f2"
 					}
@@ -343,6 +345,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											<Typography className={classes.txtTilte}>Bao gồm thuế. Miễn phí vận chuyển cho mọi đơn hàng!</Typography>
 										</Box>
 										<Button
+											className={classes.nameProductInfo}
 											variant='contained'
 											style={{
 												background: "#245c4f",
@@ -404,15 +407,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							<Grid item xs={12}>
 								<div role='presentation'>
 									<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "13px" }}>
-										<Link underline='hover' color='inherit' href='/' style={{}}>
+										<Typography className={classes.txtTilte} underline='hover' color='inherit' href='/' style={{}}>
 											Trang chủ
-										</Link>
-										<Link style={{}} underline='hover' color='inherit' href='/product'>
+										</Typography>
+										<Typography className={classes.txtTilte} style={{}} underline='hover' color='inherit' href='/product'>
 											sản phẩm
-										</Link>
-										<Link sx={{ fontSize: "13px !important" }} className={classes.nameProduct}>
+										</Typography>
+										<Typography sx={{ fontSize: "13px !important" }} className={classes.nameProduct}>
 											{productDetails?.name}
-										</Link>
+										</Typography>
 									</Breadcrumbs>
 								</div>
 							</Grid>
@@ -545,7 +548,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 									<div>
-										<Fab
+										<Button
+											className={classes.nameProductInfo}
 											variant='contained'
 											ref={cartButtonRef}
 											color='primary'
@@ -564,7 +568,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											onClick={handleAddOrderProduct}
 										>
 											Thêm vào giỏ hàng
-										</Fab>
+										</Button>
 										{errorLimitOrder && <div style={{ color: "red" }}>San pham het hang</div>}
 									</div>
 								</div>
@@ -648,6 +652,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 								<div>
 									<Button
+										className={classes.nameProductInfo}
 										variant='contained'
 										style={{
 											background: "#245c4f",

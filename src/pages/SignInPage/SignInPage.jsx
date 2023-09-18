@@ -170,19 +170,20 @@ const SignInPage = () => {
 			<Grid container className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>
-						<Typography className={classes.txtHeaderTitle}>
+						<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}>
 							{t("sign_in")}
 						</Typography>
 						<Typography
 							onClick={handleNavigateSignUp}
 							className={classes.txtDesTitle}
+							sx={{ fontSize: { xs: "13px !important",xl: "16px" } }}
 						>
 							{t("new_user_create_an_account")}
 						</Typography>
 						{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 						<Box className={classes.conForm}>
 							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
+								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>
 									{t("email")}
 								</Typography>
 								<Input
@@ -221,7 +222,7 @@ const SignInPage = () => {
 								/>
 							</Box>
 							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
+								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>
 									{t("password")}
 								</Typography>
 								<Input

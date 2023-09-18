@@ -8,7 +8,7 @@ export default makeStyles(() => {
   return {
     container: {
       ...CStyles.center,
-      height: "100vh",
+   height: "800px",
       backgroundImage: `url(${Assets.bgHome})`,
       backgroundSize: "100% ",
       backgroundRepeat: "no-repeat",
@@ -17,21 +17,23 @@ export default makeStyles(() => {
       // backgroundPosition: "0px -620px",
     },
     conContent: {
-      ...CStyles.rowJusCen,
+			...CStyles.rowJusCen,
+			margin: "0px"
     },
     conCard: {
       maxWidth: 720,
-      margin: "auto",
+  
       padding: "0px !important",
       backgroundColor: Colors.white,
       borderRadius: Configs.br,
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 4px",
+    boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
     },
-    conTextCreate: {
+		conTextCreate: {
+			     ...CStyles.txt_header_title,
       maxWidth: 720,
       margin: "auto",
       padding: "0px !important",
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 4px",
+  boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
       color: Colors.white,
       fontSize: 32,
       textAlign: "center",
@@ -152,10 +154,16 @@ export default makeStyles(() => {
     },
     txtDesTitle: {
       ...CStyles.txt_body_item,
-      textAlign: "center",
+      textAlign: "left",
       marginTop: Configs.pH,
-    },
-    txtDesTitleSignUp: {
+		},
+		txtStrongPassword: {
+     ...CStyles.txt_body_item,
+			textAlign: "left",
+				  fontWeight: 500,
+		},
+		txtDesTitleSignUp: {
+				   ...CStyles.txt_title_item,
       color: "#6c7a87",
       fontSize: "1rem",
       fontWeight: "400",
@@ -166,7 +174,8 @@ export default makeStyles(() => {
       boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 4px",
       textAlign: "center",
     },
-    txtDesTitleSignUpLight: {
+		txtDesTitleSignUpLight: {
+			   ...CStyles.txt_title_item,
       color: " #ffffff !important",
       fontSize: "1rem",
       fontWeight: "400",

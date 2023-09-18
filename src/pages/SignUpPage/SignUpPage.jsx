@@ -71,7 +71,7 @@ const SignUpPage = () => {
 	}
 
 	const handleNavigateSignUp = () => {
-		navigate('/sign-in')
+		navigate('/login')
 	}
 	const handleOnchangeConfirmPassword = (value) => {
 		setConfirmPassword(value)
@@ -95,7 +95,7 @@ const SignUpPage = () => {
 
 	// set color based on password strength
 	const strengthColor = (count) => {
-		if (count < 2) return { label: `${t('weak')}`,color: 'error.main' };
+		if (count < 2) return { label: `${t('weak')}`,color: 'error.main',fontSize: "12px" };
 		if (count < 3) return { label: `${t('weak')}`,color: 'warning.main' };
 		if (count < 4) return { label: `${t('normal')}`,color: 'warning.dark' };
 		if (count < 5) return { label: `${t('good')}`,color: 'success.main' };
@@ -234,16 +234,17 @@ const SignUpPage = () => {
 				<Grid item xs={12} sm={6} lg={4} my={30} >
 					{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Create an account" className={classes.conTextCreate} /></Typography>
-					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}><AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
+					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}>
+						<AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
 				</Grid>
-				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
+				<Grid item xs={12} sm={6} lg={4} className={classes.conCard} sx={{ margin: { xs: "30px 30px 600px 40px",xl: "60px 0px 0px 0px",md: "60px 0px 0px 0px" } }}>
 					<AnimationComponent type="box">
 						<Box className={classes.conLogin}>
-							<Typography className={classes.txtHeaderTitle}>{t('sign_up')}</Typography>
+							<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}>{t('sign_up')}</Typography>
 							{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 							<Box className={classes.conForm}>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput}>{t('email')}</Typography>
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('email')}</Typography>
 									<InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.secondary : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
 										className={classes.conInput}
 										// fullWidth
@@ -260,7 +261,7 @@ const SignUpPage = () => {
 									/>
 								</Box>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput}>{t('password')}</Typography>
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('password')}</Typography>
 									<InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
 										className={classes.conInput}
 										// fullWidth
@@ -298,7 +299,7 @@ const SignUpPage = () => {
 									{/* /> */}
 								</Box>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput}>{t('password')}</Typography>
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('password')}</Typography>
 									<InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
 										className={classes.conInput}
 										// fullWidth
@@ -341,13 +342,13 @@ const SignUpPage = () => {
 										<Box sx={{ bgcolor: level?.color,width: 85,height: 8,borderRadius: '7px' }} />
 									</Grid>
 									<Grid item>
-										<Typography variant="subtitle1" fontSize="0.75rem">
+										<Typography className={classes.txtStrongPassword} sx={{ fontSize: { xs: "13px !important" } }}>
 											{level?.label}
 										</Typography>
 									</Grid>
 								</Grid>
 							</FormControl>
-							<Typography className={classes.txtDesTitle}>{t('txt_agree')}</Typography>
+							<Typography className={classes.txtDesTitle} sx={{ fontSize: { xs: "13px !important" } }}>{t('txt_agree')}</Typography>
 
 							{/* <Box className={classes.conMsg}> */}
 							{/* <Typography className={classes.txtError}>{t(errorMsg)}</Typography> */}

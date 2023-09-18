@@ -105,6 +105,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 		setLoading(true);
 		await UserService.logoutUser();
 		dispatch(resetUser());
+		// Xoá cookie
+		localStorage.removeItem('refresh_token');
+		localStorage.removeItem('access_token');
+		document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 		setLoading(false);
 	};
 
@@ -461,6 +465,16 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 						</Box>
 
 						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex" } }} style={{ justifyContent: "space-between",alignItems: 'center' }}>
+							<Typography
+								href="/"
+								sx={{
+									fontFamily: "monospace",
+									fontWeight: 700,
+									letterSpacing: '.3rem',
+									color: "inherit",
+									textDecoration: "none",
+									cursor: 'pointer',
+								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '150px' }} >HYMNS</Typography>
 							<Button
 								onClick={handleCloseNavMenu}
 								sx={{ color: "white",display: "block" }}
