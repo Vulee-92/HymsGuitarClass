@@ -2,10 +2,10 @@ import React,{ useEffect } from "react";
 import {
 	Box,
 	Grid,
-	Input,
 	InputAdornment,
 	Typography,
 } from "@mui/material";
+import InputForm from "../../components/InputForm/InputForm";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Assets,Configs,Keys } from "../../configs";
@@ -40,17 +40,22 @@ const SignInPage = () => {
 	const location = useLocation();
 	const [loading,setLoading] = useState(false);
 	const navigate = useNavigate();
+	const [email,setEmail] = useState("");
+	const [password,setPassword] = useState("");
 	const [lang,setLang] = useState(i18n.language);
 	const [errorMsg,setErrorMsg] = useState("");
 	const mutation = useMutationHooks((data) => UserService.loginUser(data));
 
 	const { data,isLoading,isSuccess } = mutation;
 
-
+	const handleOnChangeEmail = (value) => setEmail(value);
+	const handleOnChangePassword = (value) => setPassword(value);
 	useEffect(() => {
 		if (isSuccess) {
 			if (location?.state) {
 				navigate(location?.state)
+			} else if (isLoading) {
+				navigate('/login')
 			} else {
 				navigate('/')
 			}
@@ -71,12 +76,7 @@ const SignInPage = () => {
 		const res = await UserService.getDetailsUser(id,token)
 		dispatch(updateUser({ ...res?.data,access_token: token,refreshToken }))
 	}
-	const handleSignIn = () => {
-		mutation.mutate({
-			email: form.email.value,
-			password: form.password.value,
-		});
-	};
+
 
 	const [form,setForm] = useState({
 		email: {
@@ -104,13 +104,10 @@ const SignInPage = () => {
 		});
 	};
 	const onBlurFocusInput = (value,field) => {
-		setForm({
-			...form,
-			[field]: {
-				...form[field],
-				isFocus: value,
-			},
-		});
+		setForm(prevState => ({
+			...prevState,
+			[field]: { ...prevState[field],isFocus: value }
+		}));
 	};
 
 	/** FUNCTIONS */
@@ -133,37 +130,40 @@ const SignInPage = () => {
 			},
 		});
 	};
-
-	const onValidate = () => {
-		setErrorMsg("");
-		setForm({
-			...form,
-			email: {
-				...form.email,
-				error: false,
-			},
-			password: {
-				...form.password,
-				error: false,
-			},
+	const handleSignIn = () => {
+		mutation.mutate({
+			email,
+			password,
 		});
+	};
+	const onValidate = () => {
+		let isError = false;
+		let newForm = {
+			email: { ...form.email,error: false,msg: "" },
+			password: { ...form.password,error: false,msg: "" },
+		};
 
-		let isError = false,
-			newForm = { ...form };
-		if (form.email.value.trim() === "") {
+		if (email.trim() === "") {
 			isError = true;
-			form.email.error = true;
-			form.email.msg = t("txt_error_name_empty");
+			newForm.email.error = true;
+			newForm.email.msg = t("txt_error_name_empty");
 		}
-		if (form.password.value.trim() === "") {
+
+		if (password.trim() === "") {
 			isError = true;
-			form.password.error = true;
-			form.password.msg = "txt_error_access_code_empty";
+			newForm.password.error = true;
+			newForm.password.msg = t("txt_error_name_empty");
 		}
-		if (isError) {
-			return setForm(newForm);
+		setForm(newForm);
+		if (!isError) {
+			handleSignIn();
+			setForm({
+				email: { ...form.email,value: "",error: false,msg: "" },
+				password: { ...form.password,value: "",error: false,msg: "" },
+			});
+			setErrorMsg("");
 		}
-		handleSignIn();
+
 	};
 	return (
 		<Box className={classes.container}>
@@ -183,10 +183,9 @@ const SignInPage = () => {
 						{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 						<Box className={classes.conForm}>
 							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>
-									{t("email")}
-								</Typography>
-								<Input
+								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t("email")}</Typography>
+
+								<InputForm
 									style={{
 										border:
 											!form.email.isFocus &&
@@ -200,7 +199,7 @@ const SignInPage = () => {
 									className={classes.conInput}
 									fullWidth
 									placeholder={t("email")}
-									value={form.email.value}
+									value={email}
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
@@ -215,8 +214,9 @@ const SignInPage = () => {
 											/>
 										</InputAdornment>
 									}
-									onChange={(event) => onChangeInput(event,"email")}
-									disabled={loading}
+									onChange={handleOnChangeEmail}
+									// onChange={(event) => onChangeInput(event,"email")}
+									// disabled={loading}
 									onFocus={() => onBlurFocusInput(true,"email")}
 									onBlur={() => onBlurFocusInput(false,"email")}
 								/>
@@ -225,7 +225,7 @@ const SignInPage = () => {
 								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>
 									{t("password")}
 								</Typography>
-								<Input
+								<InputForm
 									style={{
 										border:
 											!form.password.isFocus &&
@@ -239,8 +239,9 @@ const SignInPage = () => {
 									className={classes.conInput}
 									fullWidth
 									placeholder={t("password")}
-									value={form.password.value}
-									onChange={(event) => onChangeInput(event,"password")}
+									value={password}
+									onChange={handleOnChangePassword}
+									// onChange={(event) => onChangeInput(event,"password")}
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
@@ -291,8 +292,9 @@ const SignInPage = () => {
 						<Loading isLoading={isLoading}>
 							<CButton
 								title={t("sign_in")}
+								disabled={!email.length || !password.length}
 								onClick={onValidate}
-								loading={loading}
+								// loading={loading}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
 										onValidate();
