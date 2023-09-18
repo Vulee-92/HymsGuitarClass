@@ -50,11 +50,28 @@ const SignInPage = () => {
 
 	const handleOnChangeEmail = (value) => setEmail(value);
 	const handleOnChangePassword = (value) => setPassword(value);
+
+	const [form,setForm] = useState({
+		email: {
+			value: "",
+			isFocus: false,
+			msg: "",
+			error: false,
+		},
+		password: {
+			value: "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			isShow: false,
+		},
+	});
+
 	useEffect(() => {
 		if (isSuccess) {
 			if (location?.state) {
 				navigate(location?.state)
-			} else if (isLoading) {
+			} else if (form) {
 				navigate('/login')
 			} else {
 				navigate('/')
@@ -77,22 +94,6 @@ const SignInPage = () => {
 		dispatch(updateUser({ ...res?.data,access_token: token,refreshToken }))
 	}
 
-
-	const [form,setForm] = useState({
-		email: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-		},
-		password: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-			isShow: false,
-		},
-	});
 
 	const onChangeInput = (event,field) => {
 		setForm({

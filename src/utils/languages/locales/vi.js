@@ -42,6 +42,7 @@ const vi = {
 	about: "Giới thiệu",
 	blog: "Tin tức",
 	contact: "Liên hệ",
-	language: "Ngôn ngữ"
+	language: "Ngôn ngữ",
+	txt_error_name_empty: "Email hoặc mật khẩu sai"
 };
 export default vi;

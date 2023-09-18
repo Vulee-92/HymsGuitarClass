@@ -47,7 +47,8 @@ const en = {
 	about: "About",
 	blog: "Blog",
 	contact: "Contact",
-		language: "Language"
+	language: "Language",
+			txt_error_name_empty: "Email or password is incorrect"
 };
 
 export default en;
