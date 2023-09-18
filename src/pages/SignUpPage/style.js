@@ -165,7 +165,7 @@ export default makeStyles(() => {
 		txtSignUp: {
 				   ...CStyles.txt_title_item,
       color: "#000",
-      fontSize: "1rem",
+      fontSize: "2rem",
       fontWeight: "400",
       marginBottom: "1.25rem",
       maxWidth: 720,
