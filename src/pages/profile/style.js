@@ -61,6 +61,15 @@ export default makeStyles(() => {
       backgroundColor: "rgba(0,0,0,.3)",
       display: "none",
       cursor: "pointer",
+		},
+		  conTextCreate: {
+      ...CStyles.txt_header_title,
+      // color: Colors.da,
+      fontSize: 40,
+      textAlign: "center",
+      fontWeight: 600,
+				color: "#fff",
+			marginTop: "110px"
     },
     conIconPen: {
       position: "absolute",
@@ -70,7 +79,7 @@ export default makeStyles(() => {
     },
     conContent: {
       marginTop: 32,
-      padding: `0px 64px`,
+ padding: Configs.pH,
     },
     conInput: {
       ...CStyles.rowAliCen,
@@ -208,9 +217,7 @@ export default makeStyles(() => {
         display: "none",
       },
     },
-    conContent: {
-      ...CStyles.rowJusCen,
-    },
+  
     conCard: {
       maxWidth: 720,
       margin: "auto",

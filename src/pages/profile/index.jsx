@@ -25,7 +25,6 @@ import * as UserService from "../../services/UserService";
 import * as message from "../../components/Message/Message";
 
 import CStyles from "../../utils/common/index";
-import { Assets,Configs } from "../../configs";
 /** STYLES */
 import styles from "./style";
 // import { faPen } from '@fortawesome/free-light-svg-icons';
@@ -33,11 +32,9 @@ import { Colors } from "../../utils/colors";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import { useDispatch,useSelector } from "react-redux";
 import { updateUser } from "../../redux/slides/userSlide";
-import { getBase64 } from "../../utils";
-import { UploadOutlined } from "@ant-design/icons";
-import { FloatButton,Upload } from "antd";
 import Loading from "../../components/LoadingComponent/Loading";
 import CButton from "../../components/CButton";
+import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 
 const ProfileScreen = () => {
 	const classes = styles();
@@ -48,12 +45,16 @@ const ProfileScreen = () => {
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");
+	const [password,setPassword] = useState("");
+
 	const [address,setAddress] = useState("");
 	const [avatar,setAvatar] = useState("");
 	const mutation = useMutationHooks((data) => {
 		const { id,access_token,...rests } = data;
 		UserService.updateUser(id,rests,access_token);
 	});
+	const [loading,setLoading] = useState(false);
+	const [errorMsg,setErrorMsg] = useState("");
 
 	const dispatch = useDispatch();
 	const { data,isLoading,isSuccess,isError } = mutation;
@@ -61,6 +62,7 @@ const ProfileScreen = () => {
 		setEmail(user?.email);
 		setName(user?.name);
 		setPhone(user?.phone);
+		setPassword(user?.password);
 		setAddress(user?.address);
 		setAvatar(user?.avatar);
 	},[user]);
@@ -78,65 +80,26 @@ const ProfileScreen = () => {
 		const res = await UserService.getDetailsUser(id,token);
 		dispatch(updateUser({ ...res?.data,access_token: token }));
 	};
-
-	const handleOnchangeEmail = (value) => {
-		setEmail(value);
-	};
-	const handleOnchangeName = (value) => {
-		setName(value);
-	};
-	const handleOnchangePhone = (value) => {
-		setPhone(value);
-	};
-	const handleOnchangeAddress = (value) => {
-		setAddress(value);
-	};
-
-	const handleOnchangeAvatar = async ({ fileList }) => {
-		const file = fileList[0];
-		if (!file.url && !file.preview) {
-			file.preview = await file.originFileObj;
-		}
-		setAvatar(file.preview);
-	};
 	const handleUpdate = () => {
 		mutation.mutate({
 			id: user?.id,
-			email,
-			name,
+			name: form.name.value,
+			email: form.email.value,
 			phone,
 			address,
+			password,
 			avatar,
 			access_token: user?.access_token,
 		});
 	};
-	const [loading,setLoading] = useState(false);
-	const [firstName,setFirstName] = useState("");
-	const [lastName,setLastName] = useState("");
-	const [password,setPassword] = useState("");
-	const [tmpPassword,setTmpPassword] = useState("");
-	const [isShow,setIsShow] = useState(false);
-	const [userImage,setUserImage] = useState(null);
-	const [fileUpload,setFileUpload] = useState(null);
-	const [errorMsg,setErrorMsg] = useState("");
-	const [checkError,setCheckError] = useState({
-		value: false,
-		msg: "",
-	});
-	const [trialUser,setTrialUser] = useState(false);
-
-
-
-
-
-	const handleSignIn = () => {
-		mutation.mutate({
-			email: form.email.value,
-			password: form.password.value,
-		});
-	};
 
 	const [form,setForm] = useState({
+		name: {
+			value: "",
+			isFocus: false,
+			msg: "",
+			error: false,
+		},
 		email: {
 			value: "",
 			isFocus: false,
@@ -151,7 +114,6 @@ const ProfileScreen = () => {
 			isShow: false,
 		},
 	});
-
 	const onChangeInput = (event,field) => {
 		setForm({
 			...form,
@@ -171,15 +133,6 @@ const ProfileScreen = () => {
 		});
 	};
 
-	/** FUNCTIONS */
-	// const onChangeLanguage = (lang) => {
-	//   setLang(lang);
-	//   i18n.changeLanguage(lang);
-	//   Helpers.setDataStorage(Keys.lang, lang);
-	// };
-
-
-
 	const onChangeTypePassword = () => {
 		setForm({
 			...form,
@@ -194,6 +147,10 @@ const ProfileScreen = () => {
 		setErrorMsg("");
 		setForm({
 			...form,
+			name: {
+				...form.name,
+				error: false,
+			},
 			email: {
 				...form.email,
 				error: false,
@@ -206,6 +163,12 @@ const ProfileScreen = () => {
 
 		let isError = false,
 			newForm = { ...form };
+
+		if (form.name.value.trim() === "") {
+			isError = true;
+			form.name.error = true;
+			form.name.msg = t("txt_error_name_empty");
+		}
 		if (form.email.value.trim() === "") {
 			isError = true;
 			form.email.error = true;
@@ -219,7 +182,7 @@ const ProfileScreen = () => {
 		if (isError) {
 			return setForm(newForm);
 		}
-		handleSignIn();
+		handleUpdate();
 	};
 	/** LIFE CYCLE */
 
@@ -231,25 +194,56 @@ const ProfileScreen = () => {
 		//   onBackdropClick={onClose}
 		//   disableAutoFocus={true}
 		// >
-		<Box>
 
-
+		<Loading isLoading={isLoading || loading}>
 			<Box className={classes.container}>
+				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="My Account" className={classes.conTextCreate} /></Typography>
 			</Box>
-			<Grid container className={classes.conContent}>
+			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>
 						<Typography className={classes.txtHeaderTitle}>
-							{t("sign_in")}
 						</Typography>
-						{/* <Typography
-              onClick={handleNavigateSignUp}
-              className={classes.txtDesTitle}
-            >
-              {t("new_user_create_an_account")}
-            </Typography> */}
-						{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 						<Box className={classes.conForm}>
+							<Box className={classes.conItemInput}>
+								<Typography className={classes.txtTitleInput}>
+									{t("name")}
+								</Typography>
+								<Input
+									style={{
+										border:
+											!form.name.isFocus &&
+											`2px solid ${form.name.error
+												? Colors.secondary
+												: form.name.value.trim() !== ""
+													? Colors.success
+													: "transparent"
+											}`,
+									}}
+									className={classes.conInput}
+									fullWidth
+									placeholder={t("name")}
+									value={form?.name?.value}
+									startAdornment={
+										<InputAdornment position="start">
+											<FontAwesomeIcon
+												icon={faAddressCard}
+												fontSize={20}
+												color={
+													form.name.isFocus || form.name.value.trim() !== ""
+														? Colors.bgLogin
+														: Colors.bgLogin
+												}
+												className={classes.conIconInput}
+											/>
+										</InputAdornment>
+									}
+									onChange={(event) => onChangeInput(event,"name")}
+									disabled={loading}
+									onFocus={() => onBlurFocusInput(true,"name")}
+									onBlur={() => onBlurFocusInput(false,"name")}
+								/>
+							</Box>
 							<Box className={classes.conItemInput}>
 								<Typography className={classes.txtTitleInput}>
 									{t("email")}
@@ -357,10 +351,11 @@ const ProfileScreen = () => {
 							</span>
 						)}
 						<Loading isLoading={isLoading}>
-							<CButton
-								title={t("sign_in")}
+
+							<CButton style={{ fullWidth: "30%" }}
+								// disabled={!name.length || !email.length || !password.length}
+								title={t('save')}
 								onClick={onValidate}
-								loading={loading}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
 										onValidate();
@@ -369,187 +364,11 @@ const ProfileScreen = () => {
 							/>
 						</Loading>
 
-						{/* <Box className={classes.conTitleLoginMethod}>
-            <Box className={classes.conLine} />
-            <Typography className={classes.txtTitleLoginMethod}>{t('txt_login_another')}</Typography>
-            <Box className={classes.conLine} />
-          </Box>
 
-          <Button fullWidth className={classes.conBtnGoogle} 
-            disabled={loading}
-            onClick={onClick}
-          >
-            <Box className={classes.imgLogoGoogle} component={'img'} src={Assets.logoGoogle} />
-            <Typography className={classes.txtBtnGoogle}>{t('sign_in_with_google')}</Typography>
-          </Button> */}
-
-						{/* <Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_register')}<span className={classes.txtBtnRegister}>{t('register')}</span></Typography> */}
-
-						{/* <Box className={classes.conLanguage}>
-              <Box
-                className={classes.conLanguageItem}
-                component={"img"}
-                src={Assets.vnFlag}
-                style={{ opacity: lang === Configs.language.vi ? 1 : 0.5 }}
-                onClick={() => onChangeLanguage(Configs.language.vi)}
-              />
-              <Box
-                className={classes.conLanguageItem}
-                component={"img"}
-                src={Assets.usFlag}
-                style={{ opacity: lang === Configs.language.en ? 1 : 0.5 }}
-                onClick={() => onChangeLanguage(Configs.language.en)}
-              />
-            </Box> */}
 					</Box>
 				</Grid>
 			</Grid>
-			<Box>
-				<div style={{ height: '100%',margin: '0 auto' }}>
-
-					<Container className={classes.conModal}>
-						<Box>
-							<Box className={classes.conHeader}>
-								<Box>
-									{/* <Box className={classes.conImgAvatar} component={'img'} src={userImage || Assets.iconDefaultAvatar} /> */}
-									<label htmlFor="contained-button-file">
-										<Box htmlFor="avatar">Avatar</Box>
-										<Upload
-											className={classes.uploadFile}
-											onChange={handleOnchangeAvatar}
-											maxCount={1}
-										>
-											<Button icon={<UploadOutlined />}>Select File</Button>
-										</Upload>
-										{avatar && (
-											<img
-												src={avatar}
-												style={{
-													height: "60px",
-													width: "60px",
-													borderRadius: "50%",
-													objectFit: "cover",
-												}}
-												alt="avatar"
-											/>
-										)}
-										<Box className={classes.conImgAvatarOverlay}>
-											<FontAwesomeIcon
-												className={classes.conIconPen}
-												color={Colors.white}
-												fontSize={24}
-											/>
-										</Box>
-									</label>
-								</Box>
-								<Typography
-									className={classes.txtStudentName}
-								>{`${firstName} ${lastName}`}</Typography>
-								{/* <Typography
-              className={classes.txtUserId}
-              sx={{ ...CStyles.txt_1_line }}
-            >{`${t("student_id")}: `}</Typography> */}
-							</Box>
-							<Box className={classes.conContent}>
-								<Grid container spacing={2}>
-									{/* <Grid item xs={12} sm={6}>
-                  <Box>
-                    <Typography className={classes.txtTitleInput}>{t('first_name')}</Typography>
-                    <Input className={classes.conInput} fullWidth
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                      disabled={loading}
-                    />
-                  </Box>
-                </Grid> */}
-									{/* <Grid item xs={12}>
-                  <Box>
-                    <Typography className={classes.txtTitleInput}>{t('u')}</Typography>
-                    <Input className={classes.conInput} fullWidth
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                      disabled={loading}
-                    />
-                  </Box>
-                </Grid> */}
-									<Grid item xs={12}>
-										<Box>
-											<Typography className={classes.txtTitleInput}>
-												{t("user_name")}
-											</Typography>
-											<Input
-												className={classes.conInputUnfixable}
-												fullWidth
-												onChange={(event) => handleOnchangeName(event.target.value)}
-											/>
-										</Box>
-									</Grid>
-									<Grid item xs={12}>
-										<Box>
-											<Typography className={classes.txtTitleInput}>
-												{t("email")}
-											</Typography>
-											<Input
-												className={classes.conInputUnfixable}
-												fullWidth
-												value={email}
-											/>
-										</Box>
-									</Grid>
-									{/* {!trialUser &&
-                  <Grid item xs={12}>
-                    <Box>
-                      <Typography className={classes.txtTitleInput}>{t('password')}</Typography>
-                      <Input className={classes.conInput} fullWidth
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        endAdornment={
-                          <InputAdornment position='end'>
-                            <FontAwesomeIcon icon={isShow ? faEye : faEyeSlash} fontSize={20} color={'#F89030'} className={classes.conIconInputRight} 
-                              onClick={() => setIsShow(!isShow)}
-                            />
-                          </InputAdornment>
-                        }
-                        type={isShow ? 'email' : 'password'}
-                        disabled={loading}
-                      />
-                    </Box>
-                  </Grid>
-                } */}
-								</Grid>
-							</Box>
-
-							<Typography
-								className={classes.txtMsg}
-								style={{ color: checkError.value ? "#DC2121" : "#0F9757" }}
-							>
-								{t(checkError.msg)}
-							</Typography>
-
-							<Box className={classes.conFooter}>
-								<Grid container spacing={2}>
-									<Grid item xs={12} style={CStyles.center}>
-										<Box className={classes.conBtn} onClick={handleUpdate}>
-											{loading ? (
-												<CircularProgress size={34} style={{ color: Colors.white }} />
-											) : (
-												<Typography className={classes.txtBtn}>
-													{t("save")}
-												</Typography>
-											)}
-										</Box>
-									</Grid>
-								</Grid>
-							</Box>
-						</Box>
-						{/* <Box className={classes.imgHeaderIcon} component="img" src={Assets.iconCloseProfile} 
-          onClick={onClose}
-        /> */}
-					</Container>
-				</div >
-			</Box>
-		</Box>
-		// </Modal>
+		</Loading>
 	);
 };
 

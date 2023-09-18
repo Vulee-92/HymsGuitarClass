@@ -19,16 +19,18 @@ export default makeStyles(() => {
       ...CStyles.rowJusCen,
     },
     conCard: {
-      maxWidth: 720,
-      margin: "auto",
-      padding: "0px !important",
+      maxWidth: 900,
+			margin: "auto",
+			backgroundColor: '#ffffff',
       backgroundColor: Colors.adminMeetingColor,
-      borderRadius: Configs.br,
-      boxShadow: "rgba(0, 0, 0, .5) 0px 1px 2px",
+			borderRadius: Configs.br,
+			borderRadius: '8px',
+  padding: '0.3rem',
+      boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
 		},
 		  conInfo: {
       maxWidth: 720,
-      margin: "auto",
+      margin: "0 auto",
       padding: "0px !important",
     },
     conLogin: {
@@ -54,7 +56,39 @@ export default makeStyles(() => {
     conItemInput: {
       marginTop: 20,
     },
-
+		conInputMessage: {
+	 ...CStyles.txt_body_item,
+      display: "flex",
+      alignItems: "center",
+      fontWeight: `${CStyles.fBold} !important`,
+      marginTop: "8px !important",
+      backgroundColor: "rgba(210, 210, 210, 0.2) !important",
+      borderRadius: "8px !important",
+      border: "none",
+      height: "120px !important",
+      padding: `0px 16px`,
+      "& input": {
+        flex: 1,
+        "&::placeholder": {
+          color: Colors.placeHolder,
+          opacity: 1,
+          "-webkit-text-fill-color": Colors.placeHolder,
+        },
+        "-webkit-text-fill-color": `${Colors.text} !important`,
+      },
+      "& $Mui-disabled": {
+        opacity: 0,
+      },
+      "&:before": {
+        content: "none",
+      },
+      "&:after": {
+        height: 54,
+        border: `2px solid ${Colors.primary}`,
+        borderRadius: 8,
+        transition: "none",
+      },
+},
     conInput: {
       ...CStyles.txt_body_item,
       display: "flex",
@@ -172,7 +206,8 @@ export default makeStyles(() => {
       cursor: "pointer",
     },
     txtTitleInput: {
-      ...CStyles.txt_title_item,
+			...CStyles.txt_title_item,
+			 fontWeight: 400,
     },
     txtError: {
       ...CStyles.txt_error,

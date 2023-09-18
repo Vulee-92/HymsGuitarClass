@@ -84,6 +84,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const handleNavigateLogin = () => {
 		navigate("/login");
 	};
+	const handleNavigateProfile = () => {
+		navigate("/profile");
+	};
+
 	const handleNavigateSignIn = () => {
 		navigate("/sign-up");
 	};
@@ -339,7 +343,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									{user?.access_token ? (
 										<>
 											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{ marginRight: "16px" }} />
-											<Typography className={classes.txtTilte}>
+											<Typography className={classes.txtTilte} onClick={handleNavigateProfile}>
 												{userName?.length ? userName : user?.email}
 											</Typography>
 										</>

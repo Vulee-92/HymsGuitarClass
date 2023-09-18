@@ -170,9 +170,9 @@ const AboutPage = () => {
 							<Parallax speed={-5}>
 								<Container maxWidth="md">
 									<Box sx={{ width: '100%' }} >
-										<AnimationComponent type="text" text="HYMNS - VŨ LÊ" className={classes.txtHeaderTitle} />
+										<AnimationComponent type="text" text="HYMNS" className={classes.txtHeaderTitle} />
 										<Typography className={classes.txtTilte}>
-											Tôi là Vũ Lê, sáng lập HYMNS - một lớp học đàn guitar và cũng là cửa hàng đàn guitar trực tuyến. HYMNS mang đến cho những người yêu thích âm nhạc một trải nghiệm học tập chất lượng và mua sắm đàn guitar thuận tiện. Tôi rất hân hạnh được giới thiệu về HYMNS và mong muốn được chia sẻ với cộng đồng âm nhạc những giá trị mà HYMNS mang lại.
+											HYMNS mang đến cho những người yêu thích âm nhạc một trải nghiệm học tập chất lượng và mua sắm đàn guitar thuận tiện. Tôi rất hân hạnh được giới thiệu về HYMNS và mong muốn được chia sẻ với cộng đồng âm nhạc những giá trị mà HYMNS mang lại.
 										</Typography>
 										{/* 
                     <Box sx={{ flexGrow: 1 }}>
@@ -195,7 +195,7 @@ const AboutPage = () => {
 										{/* <Typography variant="overline" display="block" gutterBottom>
                     overline text
                   </Typography> */}
-										<AnimationComponent type="text" text="Về tôi" className={classes.txtHeaderTitle} />
+										{/* <AnimationComponent type="text" text="Về tôi" className={classes.txtHeaderTitle} />
 										<Typography className={classes.txtTilte}>
 											Hành trình âm nhạc của tôi bắt đầu từ hè năm lớp 7, khi tôi bước những bước đầu tiên vào việc chơi guitar acoustic dưới sự chỉ bày của một người Thầy trong hội thánh Tin Lành Phương Hoà. Một năm sau, tôi phát hiện ra niềm đam mê âm nhạc lớn nhất của mình với những bản cover theo phong cách fingerstyle. Ảnh hưởng đầu tiên của tôi chủ yếu là những người chơi guitar người Hàn và Nhật như Sungha Jung…
 										</Typography>
@@ -204,7 +204,7 @@ const AboutPage = () => {
 
 											<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.hymns_4} alt="logo" />
 
-										</Box>
+										</Box> */}
 										<AnimationComponent type="text" text="Lớp học Hymns" className={classes.txtHeaderTitle} />
 										<Typography className={classes.txtTilte}>
 											Hiện nay, HYMNS là lớp học đàn guitar của tôi, chuyên tập trung vào những bạn mới bắt đầu học guitar. Tôi sử dụng phương pháp giảng dạy cá nhân để tối đa hoá kết quả học tập cho từng học viên. Tôi luôn lắng nghe và tìm hiểu nhu cầu của từng học viên để có thể giúp họ phát triển kỹ năng chơi guitar một cách nhanh chóng và hiệu quả. Mục tiêu của lớp học là giúp các bạn học được cách chơi guitar một cách hiệu quả và có thể tự tin biểu diễn trước công chúng.
@@ -212,7 +212,7 @@ const AboutPage = () => {
 
 										<Box sx={{ flexGrow: 1 }}>
 
-											<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgClass} alt="logo" />
+											<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.class} alt="logo" />
 
 										</Box>
 										<AnimationComponent type="text" text="Cửa hàng guitar online" className={classes.txtHeaderTitle} />
@@ -228,10 +228,10 @@ const AboutPage = () => {
 										<Box sx={{ flexGrow: 1 }}>
 											<Grid container spacing={2} columns={16}>
 												<Grid item xs={8}>
-													<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.hymns_1} alt="logo" />
+													<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
 												</Grid>
 												<Grid item xs={8}>
-													<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.hymns_2} alt="logo" />
+													<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
 												</Grid>
 											</Grid>
 										</Box>
@@ -241,7 +241,7 @@ const AboutPage = () => {
 											HYMNS không chỉ là một lớp học đàn guitar và shop đàn online, mà còn là một cộng đồng yêu âm nhạc. HYMNS mong muốn mang lại cho các bạn yêu thích âm nhạc một môi trường học tập và trải nghiệm thú vị.</Typography>
 										<Box sx={{ flexGrow: 1 }}>
 
-											<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgBanner} alt="logo" />
+											<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
 
 										</Box>
 

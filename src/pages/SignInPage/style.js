@@ -8,7 +8,7 @@ export default makeStyles(() => {
   return {
     container: {
       ...CStyles.center,
-      height: "100vh",
+      height: "800px",
       backgroundImage: `url(${Assets.bgLogin})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
@@ -16,7 +16,8 @@ export default makeStyles(() => {
       padding: Configs.pH,
     },
     conContent: {
-      ...CStyles.rowJusCen,
+			...CStyles.rowJusCen,
+			 padding: Configs.pH,
     },
     conCard: {
       maxWidth: 720,

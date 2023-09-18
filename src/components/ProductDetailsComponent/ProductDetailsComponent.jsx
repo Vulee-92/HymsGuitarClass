@@ -315,7 +315,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						textAlign: '-webkit-center',marginTop: '0px',
 						borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
 						display: "flex",justifyContent: "center",
-						backgroundColor: "#f4f4f2"
+						// backgroundColor: "#f4f4f2"
 					}
 				} >
 					<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
@@ -326,7 +326,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
           lg, large: 1200px
           xl, extra-large: 1536px */}
 							<Grid sx={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" },flexDirection: { xl: "column-reverse",lg: "column-reverse" } }} item sm={12} md={12} lg={12} xl={12} style={{ height: "fit-content",margin: "16px",padding: "0px" }}>
-								<Paper sx={{ boxShadow: "none" }}>
+								<Paper sx={{ boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",}}>
 									<div
 										style={{
 											display: "flex",

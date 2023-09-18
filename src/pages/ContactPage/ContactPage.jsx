@@ -30,30 +30,90 @@ const ContactPage = () => {
 	const [lang,setLang] = useState(i18n.language);
 	const [errorMsg,setErrorMsg] = useState("");
 	const user = useSelector((state) => state.user);
-	const handleOnChangeEmail = (value) => {
-		setEmail(value)
-	}
-	const handleOnChangeName = (value) => {
-		setName(value)
-	}
-	const handleOnChangePhone = (value) => {
-		setPhone(value.toString())
-	}
-	const handleOnChangeMessage = (value) => {
-		setContactMessages(value)
-	}
 
-	const mutation = useMutationHooks(
-		data => ContactService.createContacts(data)
-	)
-	const { data,isLoading,isSuccess,isError } = mutation
-	console.log("mutation",data)
+	const handleOnChangeEmail = (value) => setEmail(value);
+	const handleOnChangeName = (value) => setName(value);
+	const handleOnChangePhone = (value) => setPhone(value.toString());
+	const handleOnChangeMessage = (value) => setContactMessages(value);
+
+	const mutation = useMutationHooks(data => ContactService.createContacts(data));
+	const { data,isLoading,isSuccess,isError } = mutation;
+
 	const clearForm = () => {
 		setName("");
 		setEmail("");
 		setPhone("");
 		setContactMessages("");
 	};
+
+
+
+
+	const [form,setForm] = useState({
+		name: { value: "",isFocus: false,msg: "",error: false },
+		phone: { value: "",isFocus: false,msg: "",error: false },
+		email: { value: "",isFocus: false,msg: "",error: false },
+		contactmessenger: { value: "",isFocus: false,msg: "",error: false },
+	});
+
+	const onBlurFocusInput = (value,field) => {
+		setForm(prevState => ({
+			...prevState,
+			[field]: { ...prevState[field],isFocus: value }
+		}));
+	};
+
+	const handleContact = () => {
+		mutation.mutate({ name,email,phone,contactmessenger });
+	};
+
+	const onValidate = () => {
+		let isError = false;
+		let newForm = {
+			name: { ...form.name,error: false,msg: "" },
+			phone: { ...form.phone,error: false,msg: "" },
+			email: { ...form.email,error: false,msg: "" },
+			contactmessenger: { ...form.contactmessenger,error: false,msg: "" }
+		};
+
+		if (name.trim() === "") {
+			isError = true;
+			newForm.name.error = true;
+			newForm.name.msg = t("txt_error_name_empty");
+		}
+
+		if (phone.trim() === "") {
+			isError = true;
+			newForm.phone.error = true;
+			newForm.phone.msg = t("txt_error_name_empty");
+		}
+
+		if (email.trim() === "") {
+			isError = true;
+			newForm.email.error = true;
+			newForm.email.msg = t("txt_error_name_empty");
+		}
+
+		if (contactmessenger.trim() === "") {
+			isError = true;
+			newForm.contactmessenger.error = true;
+			newForm.contactmessenger.msg = t("txt_error_name_empty");
+		}
+
+		setForm(newForm);
+
+		if (!isError) {
+			handleContact();
+			setForm({
+				name: { ...form.name,value: "",error: false,msg: "" },
+				phone: { ...form.phone,value: "",error: false,msg: "" },
+				email: { ...form.email,value: "",error: false,msg: "" },
+				contactmessenger: { ...form.contactmessenger,value: "",error: false,msg: "" }
+			});
+			setErrorMsg("");
+		}
+	};
+
 	useEffect(() => {
 		if (isSuccess) {
 			message.success()
@@ -62,109 +122,6 @@ const ContactPage = () => {
 			message.error()
 		}
 	},[isSuccess,isError])
-
-
-
-	const [form,setForm] = useState({
-		name: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-		},
-		phone: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-		},
-		email: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-		},
-		contactmessenger: {
-			value: "",
-			isFocus: false,
-			msg: "",
-			error: false,
-		},
-	});
-
-
-
-	const onBlurFocusInput = (value,field) => {
-		setForm({
-			...form,
-			[field]: {
-				...form[field],
-				isFocus: value,
-			},
-		});
-	};
-
-	/** FUNCTIONS */
-	const handleContact = () => {
-		mutation.mutate({
-			name,
-			email,
-			phone,
-			contactmessenger
-		}
-		);
-	};
-
-
-	const onValidate = () => {
-		let isError = false;
-		let newForm = {
-			name: { value: form.name.value,error: false,msg: "",isFocus: false },
-			phone: { value: form.phone.value,error: false,msg: "",isFocus: false },
-			email: { value: form.email.value,error: false,msg: "",isFocus: false },
-			contactmessenger: { value: form.contactmessenger.value,error: false,msg: "",isFocus: false },
-		};
-
-		if (form.name.value.trim() === "") {
-			isError = true;
-			newForm.name.error = true;
-			newForm.name.msg = t("txt_error_name_empty");
-		}
-		if (form.phone.value.trim() === "") {
-			isError = true;
-			newForm.phone.error = true;
-			newForm.phone.msg = t("txt_error_name_empty");
-		}
-
-		if (form.email.value.trim() === "") {
-			isError = true;
-			newForm.email.error = true;
-			newForm.email.msg = t("txt_error_name_empty");
-		}
-
-		if (form.contactmessenger.value.trim() === "") {
-			isError = true;
-			newForm.contactmessenger.error = true;
-			newForm.contactmessenger.msg = t("txt_error_name_empty");
-		}
-
-		if (isError) {
-			return setForm(newForm);
-		}
-
-		handleContact();
-
-		setForm({
-			name: { value: "",error: false,msg: "",isFocus: false },
-			phone: { value: "",error: false,msg: "",isFocus: false },
-			email: { value: "",error: false,msg: "",isFocus: false },
-			contactmessenger: { value: "",error: false,msg: "",isFocus: false },
-		});
-
-		setErrorMsg("");
-	};
-
-
 	return (
 		<>
 			<Loading isLoading={isLoading || loading}>
@@ -181,80 +138,77 @@ const ContactPage = () => {
 
 							{/* <Typography className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}><AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography> */}
 						</Grid>
-						<Grid item xs={12} sm={12} lg={4} className={classes.conCard}>
-							<AnimationComponent type="box">
-								<Box className={classes.conLogin}>
-									{/* <Typography className={classes.txtHeaderTitle}>{t('sign_up')}</Typography> */}
-									<Box className={classes.conForm}>
-										<Box className={classes.conItemInput}>
-											<Typography className={classes.txtTitleInput}>{t('name')}</Typography>
-											<InputForm style={{ border: !form.name.isFocus && `2px solid ${form.name.error ? Colors.danger : form.name.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-												className={classes.conInput}
-												placeholder={t('name')}
-												fontSize={20}
-												color={Colors.primary}
-												onFocus={() => onBlurFocusInput(true,'name')}
-												onBlur={() => onBlurFocusInput(false,'name')}
-												value={name} onChange={handleOnChangeName}
-											/>
-										</Box>
-										<Box className={classes.conItemInput}>
-											<Typography className={classes.txtTitleInput}>{t('phone')}</Typography>
-											<InputForm style={{ border: !form.phone.isFocus && `2px solid ${form.phone.error ? Colors.danger : form.phone.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-												className={classes.conInput}
-												placeholder={t('phone')}
-												fontSize={20}
-												color={Colors.primary}
-												onFocus={() => onBlurFocusInput(true,'phone')}
-												onBlur={() => onBlurFocusInput(false,'phone')}
-												value={phone} onChange={handleOnChangePhone}
-											/>
-										</Box>
-
-
-										<Box className={classes.conItemInput}>
-											<Typography className={classes.txtTitleInput}>{t('email')}</Typography>
-											<InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.danger : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-												className={classes.conInput}
-												placeholder={t('email')}
-												onFocus={() => onBlurFocusInput(true,'email')}
-												onBlur={() => onBlurFocusInput(false,'email')}
-												value={email} onChange={handleOnChangeEmail}
-											/>
-										</Box>
-
-										<Box className={classes.conItemInput}>
-											<Typography className={classes.txtTitleInput}>{t('contactmessenger')}</Typography>
-											<InputForm style={{ border: !form.contactmessenger.isFocus && `2px solid ${form.contactmessenger.error ? Colors.danger : form.contactmessenger.value.trim() !== '' ? Colors.success : 'transparent'}` }}
-												className={classes.conInput}
-												placeholder={t('type_your_message')}
-												fontSize={20}
-												value={contactmessenger}
-												onFocus={() => onBlurFocusInput(true,'contactmessenger')}
-												onBlur={() => onBlurFocusInput(false,'contactmessenger')}
-												onChange={handleOnChangeMessage}
-											/>
-										</Box>
+						<Grid item xs={12} sm={12} lg={4} className={classes.conCard} sx={{ marginTop: { xs: "0px",xl: "30px !important",md: "30px" } }}>
+							<Box className={classes.conLogin}>
+								<Box className={classes.conForm}>
+									<Box className={classes.conItemInput}>
+										<Typography className={classes.txtTitleInput}>{t('name')}</Typography>
+										<InputForm style={{ border: !form.name.isFocus && `2px solid ${form.name.error ? Colors.danger : form.name.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+											className={classes.conInput}
+											placeholder={t('name')}
+											fontSize={20}
+											color={Colors.primary}
+											onFocus={() => onBlurFocusInput(true,'name')}
+											onBlur={() => onBlurFocusInput(false,'name')}
+											value={name} onChange={handleOnChangeName}
+										/>
+									</Box>
+									<Box className={classes.conItemInput}>
+										<Typography className={classes.txtTitleInput}>{t('phone')}</Typography>
+										<InputForm style={{ border: !form.phone.isFocus && `2px solid ${form.phone.error ? Colors.danger : form.phone.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+											className={classes.conInput}
+											placeholder={t('phone')}
+											fontSize={20}
+											color={Colors.primary}
+											onFocus={() => onBlurFocusInput(true,'phone')}
+											onBlur={() => onBlurFocusInput(false,'phone')}
+											value={phone} onChange={handleOnChangePhone}
+										/>
 									</Box>
 
 
-									{/* <Typography className={classes.txtDesTitle}>{t('txt_agree')}</Typography> */}
-									{data?.status === 'ERR' && <span>{data?.message}</span>}
-									<Loading isLoading={isLoading}>
-										<CButton style={{ fullWidth: "30%" }}
-											disabled={!name.length || !email.length || !contactmessenger.length}
-											title={t('send_message')}
-											onClick={onValidate}
-											onKeyDown={(e) => {
-												if (e.key === "Enter") {
-													onValidate();
-												}
-											}}
+									<Box className={classes.conItemInput}>
+										<Typography className={classes.txtTitleInput}>{t('email')}</Typography>
+										<InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.danger : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+											className={classes.conInput}
+											placeholder={t('email')}
+											onFocus={() => onBlurFocusInput(true,'email')}
+											onBlur={() => onBlurFocusInput(false,'email')}
+											value={email} onChange={handleOnChangeEmail}
 										/>
+									</Box>
 
-									</Loading>
+									<Box className={classes.conItemInput}>
+										<Typography className={classes.txtTitleInput}>{t('contactmessenger')}</Typography>
+										<InputForm style={{ border: !form.contactmessenger.isFocus && `2px solid ${form.contactmessenger.error ? Colors.danger : form.contactmessenger.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+											className={classes.conInputMessage}
+											placeholder={t('type_your_message')}
+											fontSize={20}
+											value={contactmessenger}
+											onFocus={() => onBlurFocusInput(true,'contactmessenger')}
+											onBlur={() => onBlurFocusInput(false,'contactmessenger')}
+											onChange={handleOnChangeMessage}
+										/>
+									</Box>
 								</Box>
-							</AnimationComponent>
+
+
+								{/* <Typography className={classes.txtDesTitle}>{t('txt_agree')}</Typography> */}
+								{data?.status === 'ERR' && <span>{data?.message}</span>}
+								<Loading isLoading={isLoading}>
+									<CButton style={{ fullWidth: "30%" }}
+										disabled={!name.length || !email.length || !contactmessenger.length}
+										title={t('send_message')}
+										onClick={onValidate}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												onValidate();
+											}
+										}}
+									/>
+
+								</Loading>
+							</Box>
 
 						</Grid>
 					</Grid>

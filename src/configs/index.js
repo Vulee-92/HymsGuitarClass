@@ -49,7 +49,8 @@ export const Assets = {
   usFlag: require("../assets/images/flag/united-kingdom.png"),
   vnFlag: require("../assets/images/flag/vietnam.png"),
   defaultAvatar: require("../assets/images/defaultAvatar.png"),
-  logoUser: require("../assets/images/logo/user.png"),
+	logoUser: require("../assets/images/logo/user.png"),
+	class:  require("../assets/class.jpg"),
 
   // /** ICON */
 };
