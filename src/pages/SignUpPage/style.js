@@ -39,8 +39,8 @@ export default makeStyles(() => {
       textAlign: "center",
       fontWeight: 600,
     },
-    conLogin: {
-      padding: 32,
+    conSignUp: {
+      padding: 25,
       borderRadius: Configs.br,
       height: "80%",
     },
@@ -162,16 +162,16 @@ export default makeStyles(() => {
 			textAlign: "left",
 				  fontWeight: 500,
 		},
-		txtDesTitleSignUp: {
+		txtSignUp: {
 				   ...CStyles.txt_title_item,
-      color: "#6c7a87",
+      color: "#000",
       fontSize: "1rem",
       fontWeight: "400",
       marginBottom: "1.25rem",
       maxWidth: 720,
       margin: "auto",
       padding: "0px !important",
-      boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 4px",
+      boxShadow: "none",
       textAlign: "center",
     },
 		txtDesTitleSignUpLight: {

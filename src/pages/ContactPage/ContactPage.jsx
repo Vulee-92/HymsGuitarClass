@@ -141,6 +141,7 @@ const ContactPage = () => {
 						<Grid item xs={12} sm={12} lg={4} className={classes.conCard} sx={{ marginTop: { xs: "0px",xl: "30px !important",md: "30px" } }}>
 							<Box className={classes.conLogin}>
 								<Box className={classes.conForm}>
+
 									<Box className={classes.conItemInput}>
 										<Typography className={classes.txtTitleInput}>{t('name')}</Typography>
 										<InputForm style={{ border: !form.name.isFocus && `2px solid ${form.name.error ? Colors.danger : form.name.value.trim() !== '' ? Colors.success : 'transparent'}` }}

@@ -237,10 +237,10 @@ const SignUpPage = () => {
 					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}>
 						<AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
 				</Grid>
-				<Grid item xs={12} sm={6} lg={4} className={classes.conCard} sx={{ margin: { xs: "30px 30px 600px 40px",xl: "60px 0px 0px 0px",md: "60px 0px 0px 0px" } }}>
+				<Grid item xs={12} sm={6} lg={4} className={classes.conCard} sx={{ margin: { xs: "-180px 20px 400px 20px;",xl: "60px 0px 0px 0px",md: "60px 0px 0px 0px" } }}>
 					<AnimationComponent type="box">
-						<Box className={classes.conLogin}>
-							<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}>{t('sign_up')}</Typography>
+						<Box className={classes.conSignUp}>
+							<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}><AnimationComponent type="text" text="Sign in" className={classes.txtSignUp} /></Typography>
 							{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 							<Box className={classes.conForm}>
 								<Box className={classes.conItemInput}>
