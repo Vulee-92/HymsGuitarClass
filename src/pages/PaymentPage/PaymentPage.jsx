@@ -19,12 +19,12 @@ import { removeAllOrderProduct } from '../../redux/slides/orderSlide';
 import { PayPalButton } from "react-paypal-button-v2";
 import * as PaymentService from '../../services/PaymentService'
 import { Assets } from "../../configs";
-import { Box,Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Slide,Typography } from "@mui/material";
+import { Box,Breadcrumbs,Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Slide,Typography } from "@mui/material";
 import styles from "./stylemui";
 import MobileCartTotalPriceComponent from '../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent';
 import { styled } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong,faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -69,7 +69,9 @@ const PaymentPage = () => {
 	const handleChangeAddress = () => {
 		setIsOpenModalUpdateInfo(true)
 	}
-
+	const backToOrder = () => {
+		navigate("/order");
+	}
 	const priceMemo = useMemo(() => {
 		const result = order?.orderItemsSlected?.reduce((total,cur) => {
 			return total + ((cur.price * cur.amount))
@@ -261,7 +263,38 @@ const PaymentPage = () => {
 			<div style={{ with: "100%",marginTop: '100px' }}>
 				<Loading isLoading={isLoadingAddOrder}>
 					<Box sx={{ width: { xl: "1270px",xs: "100%" },margin: "0 auto" }}>
-						<Typography className={classes.txtOrder}>Phí giao hàng</Typography>
+						<Typography className={classes.txtOrder}>				Phương thức thanh toán & giao hàng</Typography>
+						<Grid
+							style={{
+								padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
+							}}
+							sx={
+								{
+									marginTop: '0px',
+									borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
+									display: "flex",justifyContent: "center"
+								}
+							}
+						>
+							<Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "flex",xl: "flex",lg: "flex",md: "none",sm: "none" },paddingTop: "10px !important",paddingBottom: "10px" }}>
+								<Grid item xs={12}>
+									<div role='presentation'>
+
+										<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "11px" }}>
+											<Typography style={{ fontSize: "13px" }} underline='hover' color='inherit' href='/order'	>
+												Giỏ hàng
+											</Typography>
+											<Typography style={{ fontSize: "13px",marginBottom: "0px" }} underline='hover' href='/payment' className={classes.nameProduct}>
+												Phương thức thanh toán & giao hàng
+											</Typography>
+											{/* <Typography className={classes.txtValueTotal} style={{ fontSize: "13px",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} >
+												Tiến hành đặt hàng
+											</Typography> */}
+										</Breadcrumbs>
+									</div>
+								</Grid>
+							</Grid>
+						</Grid>
 						{/* {style = {{display: "flex",justifyContent: "center" }}} */}
 						<Grid spacing={2} sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 							<Grid item xs={12} sm={12} md={12} lg={8} xl={8} sx={{ padding: "0px",marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },margin: { xs: "0px",xl: "40px" } }}>
@@ -270,6 +303,7 @@ const PaymentPage = () => {
 									<WrapperInfo>
 										<div>
 											<Lable><Typography className={classes.nameProduct}>Chọn phương thức giao hàng</Typography></Lable>
+
 											<WrapperRadio onChange={handleDilivery} value={delivery}>
 												<Radio value="fast">
 													<span style={{ color: "#ea8500",fontWeight: "bold" }}>
@@ -361,6 +395,7 @@ const PaymentPage = () => {
 											<Typography style={{ display: 'flex',flexDirection: 'column' }}>
 												<Typography className={classes.txtValueTotal} style={{ color: '#245c4f',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(totalPriceMemo)}</Typography>
 												<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
+												<Typography className={classes.txtValueTotal} style={{ color: '#245c4f',fontSize: '13px',textAlign: "right",cursor: 'pointer' }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Quay lại giỏ hàng</Typography>
 											</Typography>
 										</WrapperTotal>
 									</div>

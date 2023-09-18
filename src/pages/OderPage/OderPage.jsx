@@ -19,7 +19,7 @@ import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useNavigate } from "react-router-dom";
 import StepComponent from "../../components/StepComponent/StepComponent";
-import { Box,Button,Container,Grid,Snackbar,Stack,Step,StepConnector,StepLabel,Stepper,Typography,stepConnectorClasses } from "@mui/material";
+import { Box,Breadcrumbs,Button,Container,Grid,Link,Snackbar,Stack,Step,StepConnector,StepLabel,Stepper,Typography,stepConnectorClasses } from "@mui/material";
 import styles from "./stylemui";
 import Item from "antd/es/list/Item";
 import { styled } from "@mui/styles";
@@ -450,12 +450,41 @@ const OrderPage = () => {
 				<>
 					<Suspense fallback={<div>...loading</div>}>
 						<div style={{ with: "100%",marginTop: "90px" }}>
-							<MobileCartTotalPriceComponent name={"Mua hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
+							<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
 						</div>
 					</Suspense>
 					<div style={{ with: "100%",height: "100vh",marginTop: "65px" }}>
 						<Typography className={classes.txtOrder}>Giỏ hàng</Typography>
-
+						<Grid
+							style={{
+								padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
+							}}
+							sx={
+								{
+									marginTop: '0px',
+									borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
+									display: "flex",justifyContent: "flex-	start"
+								}
+							}
+						>
+							<Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "flex",xl: "flex",lg: "flex",md: "none",sm: "none" },paddingTop: "10px !important",paddingBottom: "10px" }}>
+								<Grid item xs={12}>
+									<div role='presentation'>
+										<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "11px" }}>
+											<Typography style={{ fontSize: "13px" }} underline='hover' color='inherit' href='/order' className={classes.nameProduct}	>
+												Giỏ hàng
+											</Typography>
+											<Typography className={classes.txtValueTotal} style={{ fontSize: "13px",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} underline='hover' href='/payment'>
+												Phương thức thanh toán & giao hàng
+											</Typography>
+											{/* <Typography className={classes.txtValueTotal} style={{ fontSize: "13px",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} >
+												Tiến hành đặt hàng
+											</Typography> */}
+										</Breadcrumbs>
+									</div>
+								</Grid>
+							</Grid>
+						</Grid>
 						<Grid style={{
 							padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
 						}} sx={{ display: { xs: "flex",lx: "none",md: "none" } }} >
@@ -504,6 +533,7 @@ const OrderPage = () => {
 							<Typography sx={{ display: { xs: "none",lx: "flex",md: "flex" } }} className={classes.txtOrder}>Giỏ hàng của bạn</Typography>
 							<Grid container spacing={2} style={{ display: "flex",justifyContent: "center" }}>
 								<Grid item xs={12} xl={9}>
+
 									{/* <Typography className={classes.nameProduct}>Phí giao hàng</Typography> */}
 									{/* <Stack sx={{ width: '100%' }} spacing={4}>
 								<Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
@@ -744,7 +774,7 @@ const OrderPage = () => {
 										variant='contained'
 
 										onClick={() => handleAddCard()}
-									>Mua hàng</Button>
+									>Đặt hàng</Button>
 									{/* <ButtonComponent
 								onClick={() => handleAddCard()}
 								size={40}
@@ -935,6 +965,35 @@ const OrderPage = () => {
 							<Typography className={classes.txtOrder}>Giỏ hàng của bạn</Typography>
 							<div style={{ display: "flex",justifyContent: "center" }}>
 								<WrapperLeft>
+									<Grid
+										container
+										spacing={2}
+										sx={
+											{
+												textAlign: '-webkit-center',marginTop: '0px',
+												borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
+												display: "flex",justifyContent: "center"
+											}
+										}
+									>
+										<Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" },paddingTop: "10px !important",paddingBottom: "10px" }}>
+											<Grid item xs={12}>
+												<div role='presentation'>
+													<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "13px" }}>
+														<Link underline='hover' color='inherit' href='/' style={{}}>
+															Giỏ hàng
+														</Link>
+														<Link style={{}} underline='hover' color='inherit' href='/product'>
+															Thông tin tài khoản
+														</Link>
+														<Link sx={{ fontSize: "13px !important" }} className={classes.nameProduct}>
+															Phương thức thanh toán
+														</Link>
+													</Breadcrumbs>
+												</div>
+											</Grid>
+										</Grid>
+									</Grid>
 									<Typography className={classes.nameAllProduct}>Phí giao hàng</Typography>
 									<WrapperStyleHeaderDilivery>
 										<StepComponent
@@ -1205,7 +1264,7 @@ const OrderPage = () => {
 												border: "none",
 												borderRadius: "4px",
 											}}
-											textbutton={"Mua hàng"}
+											textbutton={"Đặt hàng"}
 											styleTextButton={{
 												color: "#fff",
 												fontSize: "15px",

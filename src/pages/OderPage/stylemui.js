@@ -42,7 +42,7 @@ export default makeStyles(() => {
 		  txtOrder: {
       ...CStyles.txt_body_item,
       color: "#245c4f",
-      fontSize: "25px",
+      fontSize: "18px",
       fontWeight: 700,
       paddingBottom: "10px",
       borderBottom: "3px solid #245c4f",
@@ -113,18 +113,7 @@ export default makeStyles(() => {
 			textAlign: "center",
 
 		},
-		txtOrder: {
-			...CStyles.txt_body_item,
-			color: "#245c4f",
-			fontSize: "25px",
-			fontWeight: 700,
-			paddingBottom: "10px",
-			borderBottom: "3px solid #245c4f",
-			marginLeft: "15px",
-			marginRight: "15px",
-			marginBottom: "15px",
-			textAlign: "center",
-		},
+	
 		customSendEmail: {
 			backgroundColor: "#245c4f",
 			height: "40px",
