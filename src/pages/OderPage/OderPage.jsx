@@ -618,7 +618,7 @@ const OrderPage = () => {
 																<Typography className={classes.nameProductCard}
 																>
 
-																	{order?.name.length > 30 ? `${order?.name.slice(0,100)}...` : order?.name}
+																	{order?.name.length > 30 ? `${order?.name.slice(0,50)}...` : order?.name}
 																</Typography>
 																<Typography sx={{ display: { xs: "none",xl: "flex" } }} className={classes.txtNameTable} style={{ fontSize: "13px",color: "#242424" }}>
 																	{convertPrice(order?.price)}
@@ -663,7 +663,7 @@ const OrderPage = () => {
 																	style={{
 																		fontSize: "15px",
 																		color: "rgb(255, 66, 78)",
-																		marginTop: "5px",
+																		marginTop: "10px",
 																	}}
 																>
 																	{convertPrice(order?.price * order?.amount)}

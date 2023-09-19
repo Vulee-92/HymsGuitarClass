@@ -48,7 +48,8 @@ export const WrapperItemOrder = styled.div`
   display: flex;
   align-items: center;
   background: #fff;
-  margin-top: 12px;
+  margin-top: 23px;
+	  margin-bottom: 23px;
   @media (max-width: 800px) {
     display: flex;
   }
@@ -120,9 +121,11 @@ export const CustomCheckbox = styled(Checkbox)`
     padding: 0px !important;
     .ant-input-number-handler-wrap {
       display: none !important;
+			   width: 80px;
     }
     .ant-input-number-input {
 		font-family: Public Sans, sans-serif;
+		    padding: 0px !important;
       text-align: center;
     }
   }

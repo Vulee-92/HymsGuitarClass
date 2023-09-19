@@ -10,7 +10,8 @@ export default makeStyles(() => {
 			maxWidth: " 1140px",
 		},
 		    nameProduct: {
-      ...CStyles.txt_title_item,
+					...CStyles.txt_title_item,
+							marginTop: "10px",
     },
 		priceTitle: {
 			...CStyles.txt_title_item,
@@ -55,6 +56,7 @@ export default makeStyles(() => {
 			...CStyles.txt_title_item,
 			alignItems: "center",
 			display: "flex",
+					marginTop: "10px",
 		},
 		updateInfo: {
 		...CStyles.txt_title_item,
@@ -66,14 +68,14 @@ export default makeStyles(() => {
 			...CStyles.txt_title_item,
 			alignItems: "center",
 				display: "flex",
-						lineHeight: 1.3,
+						lineHeight: 1.5,
 				overflow: "hidden",
 				alignItems: " flex-start",
 				textOverflow: "ellipsis",
 				whiteSpace: "break-spaces",
 				fontSize: "13px",
-				marginBottom: "7px",
-						fontWeight: 400,
+				marginBottom: "10px",
+						fontWeight: 500,
 		},
 		btnAddCard: {
 			...CStyles.txt_title_item,
@@ -151,7 +153,7 @@ export default makeStyles(() => {
 			color: 'rgb(36, 36, 36)',
   fontWeight: 400,
 			fontSize: '13px',
-			marginBottom: "7px"
+			marginBottom: "10px",
 		}
 	};
 });

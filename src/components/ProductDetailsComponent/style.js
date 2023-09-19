@@ -67,14 +67,14 @@ export const WrapperQualityProduct = styled.div`
 
 export const WrapperInputNumber = styled(InputNumber)`
   &.ant-input-number.ant-input-number-sm {
-    width: 80px;
+    width: 50px;
 		font-size: 15px;
     border-top: none;
     border-bottom: none;
     padding: 0px !important;
     .ant-input-number-handler-wrap {
       display: none !important;
-			   width: 80px;
+			   width: 30px;
     }
     .ant-input-number-input {
 		font-family: Public Sans, sans-serif;

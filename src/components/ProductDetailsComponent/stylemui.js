@@ -31,7 +31,7 @@ export default makeStyles(() => {
     txtTilte: {
       ...CStyles.txt_body_item,
       color: "#434c55",
-      fontSize: "13px",
+      fontSize: "15px",
       fontWeight: 400,
       lineHeight: 1.7,
       textAlign: "left",

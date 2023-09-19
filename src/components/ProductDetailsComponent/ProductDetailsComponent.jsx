@@ -454,7 +454,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									Mô tả sản phẩm
 								</Typography>
 								<Typography
-									className={classes.txtTilte}
+									className={classes.txtTilte} style={{ textAlign: "left",fontSize: "15px" }}
 									dangerouslySetInnerHTML={{
 										__html: productDetails?.description,
 									}}
