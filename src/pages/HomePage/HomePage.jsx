@@ -66,6 +66,7 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+	console.log("data",products)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -174,7 +175,7 @@ const HomePage = () => {
 												return (
 													<div>
 														<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
 															{/* <ImageListItemBar position="below" title={product.name} /> */}
 														</ImageListItem>
 													</div>

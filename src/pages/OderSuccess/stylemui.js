@@ -65,7 +65,8 @@ export default makeStyles(() => {
       borderBottom: "3px solid #245c4f",
       marginLeft: "15px",
       marginRight: "15px",
-      marginBottom: "15px",
+			marginBottom: "15px",
+			    marginTop: "100px",
       textAlign: "center",
 		},
 			txtValueTotal: {

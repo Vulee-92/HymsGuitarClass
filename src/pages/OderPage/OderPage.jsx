@@ -883,7 +883,7 @@ const OrderPage = () => {
 									>
 										{convertPrice(totalPriceMemo)}
 									</Typography>
-									<Typography className={classes.txtValueTotal}>
+									<Typography className={classes.txtValueTotal} sx={{ textAlign: "right" }}>
 										(Đã bao gồm VAT nếu có)
 									</Typography>
 								</Typography>
@@ -1254,7 +1254,7 @@ const OrderPage = () => {
 												>
 													{convertPrice(totalPriceMemo)}
 												</span>
-												<span style={{ color: "#000",fontSize: "11px" }}>
+												<span style={{ color: "#000",fontSize: "11px",textAlign: "right" }}>
 													(Đã bao gồm VAT nếu có)
 												</span>
 											</span>

@@ -113,7 +113,7 @@ export const CustomCheckbox = styled(Checkbox)`
 `;
 	export const WrapperInputNumber = styled(InputNumber)`
   &.ant-input-number.ant-input-number-sm {
-    width: 50px;
+    width: 80px;
 		font-size: 15px;
     border-top: none;
     border-bottom: none;
