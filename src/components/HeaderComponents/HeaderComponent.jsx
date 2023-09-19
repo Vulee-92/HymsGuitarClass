@@ -409,7 +409,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 
 								) : (<></>)}
 								<MenuItem>
-									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Xem thêm</Typography>
+									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Trang</Typography>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
 									<Button className={classes.txtTilte} href="/" textAlign="center">{t('home')}</Button>

@@ -235,7 +235,7 @@ export default makeStyles(() => {
       ...CStyles.txt_title_item,
       color: "#434c55",
       fontSize: "15px",
-      fontWeight: 400,
+      fontWeight: 500,
       lineHeight: 1.7,
 		textAlign: "left",
 		justifyContent: "start",
