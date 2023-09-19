@@ -412,19 +412,19 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Trang</Typography>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/" textAlign="center">{t('home')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/')} textAlign="center">{t('home')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/product" textAlign="center">{t('product')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/product')} textAlign="center">{t('product')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/about" textAlign="center">{t('about')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/about')} textAlign="center">{t('about')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/contact" textAlign="center">{t('blog')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('blog')}</Button>
 								</MenuItem>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Button className={classes.txtTilte} href="/contact" textAlign="center">{t('contact')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('contact')}</Button>
 								</MenuItem>
 								<MenuItem>
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">{t('language')}</Typography>
@@ -485,40 +485,36 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									cursor: 'pointer',
 								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '150px' }} >HYMNS</Typography>
 							<Button
-								onClick={handleCloseNavMenu}
+								onClick={() => navigate('/')}
 								sx={{ color: "white",display: "block" }}
-								href="/"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('home')}
 							</Button>
 							<Button
-								onClick={handleCloseNavMenu}
+								onClick={() => navigate('/product')}
 								sx={{ color: "white",display: "block" }}
-								href="/product"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('product')}
 							</Button>
 							<Button
-								onClick={handleCloseNavMenu}
+								onClick={() => navigate('/contact')}
 								sx={{ color: "white",display: "block" }}
-								href="/contact"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('contact')}
 							</Button>
 							<Button
-								onClick={handleCloseNavMenu}
+								onClick={() => navigate('/blog')}
 								sx={{ color: "white",display: "block" }}
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('blog')}
 							</Button>
 							<Button
-								onClick={handleCloseNavMenu}
+								onClick={() => navigate('/about')}
 								sx={{ color: "white",display: "block" }}
-								href="/about"
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('about')}
