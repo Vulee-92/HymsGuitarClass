@@ -12,7 +12,7 @@ import styles from "./stylemui";
 import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialog,DialogActions,DialogContent,DialogTitle,Divider,Drawer,Fab,Grid,IconButton,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Rating,Snackbar,Stack,Typography,useMediaQuery } from "@mui/material";
 import "react-medium-image-zoom/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import Slider from "react-slick";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -590,24 +590,39 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 					<Dialog open={openDialog} onClose={handleCloseDialog}>
 						<Box sx={{ display: "flex",flexDirection: "row",justifyContent: "space-between" }} style={{ background: "rgb(36, 92, 79,0.1)" }}>
-							<DialogTitle className={classes.nameProduct}>Xem giỏ hàng!</DialogTitle>
+							<DialogTitle className={classes.nameProduct}>Giỏ hàng!</DialogTitle>
 							<DialogActions>
-								<Button onClick={handleCloseDialog} style={{ color: "#245c4f" }} sx={{ paddingRight: { xs: "-40px",xl: "0px",md: "0px" } }} autoFocus>
-									X
+								<Button onClick={handleCloseDialog} style={{ color: "#245c4f" }} sx={{ paddingRight: { xs: "0px",xl: "0px",md: "0px" } }} autoFocus>
+									<FontAwesomeIcon icon={faXmark} fade />
 								</Button>
 							</DialogActions>
 						</Box>
 						<DialogContent style={{ padding: "0px",boxShadow: "none" }}>
 							<Card style={{ padding: "none",boxShadow: "none" }} sx={{ display: "flex" }}>
-								<CardMedia component='img' sx={{ width: 70,height: 70 }} image={productDetails?.image} alt='Live from space album cover' />
+								<CardMedia component='img' sx={{ width: 70,height: 70 }} image={productDetails?.image} alt={productDetails?.image} />
 								<Box sx={{ display: "flex",flexDirection: "column" }}>
 									<CardContent sx={{ flex: "1 0 auto" }}>
-										<Typography className={classes.nameProduct} style={{ fontSize: "14px" }} component='div' variant='h5'>
-											{productDetails?.name}
-										</Typography>
-										<Typography className={classes.priceTitle} style={{ textAlign: "left",marginTop: "10px" }} variant='subtitle1' color='text.secondary' component='div'>
-											{productDetails?.price?.toLocaleString()}₫
-										</Typography>
+										<Box style={{ marginBottom: "10px" }}>
+											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 600,marginBottom: "10px" }} component='div' variant='h5'>
+												{productDetails?.name}
+											</Typography>
+											<Typography className={classes.priceTitle} style={{ fontSize: "14px",textAlign: "left",fontWeight: 500 }} >
+												{(productDetails?.price)?.toLocaleString()}₫
+											</Typography>
+										</Box>
+										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
+											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
+											<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "14px",fontWeight: 500,lineHeight: 1.5 }} >
+												{" "}{numProduct}
+											</Typography>
+										</Box>
+										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
+											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 400 }}>Tạm tính:</Typography>
+											<Typography className={classes.priceTitle} style={{ fontSize: "14px",textAlign: "left",fontWeight: 500 }} >
+												{(productDetails?.price * numProduct)?.toLocaleString()}₫
+											</Typography>
+										</Box>
+
 									</CardContent>
 									<Box sx={{ display: "flex",alignItems: "center",pl: 1,pb: 1 }}></Box>
 								</Box>
@@ -615,6 +630,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center",background: "rgb(36, 92, 79,0.1)" }}>
 								<div>
 									<Button
+										className={classes.nameProductInfo}
 										variant='contained'
 										style={{
 											background: "#245c4f",
@@ -694,7 +710,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</ImageList>
 						</div>
 					</Box>
-				</Container>
+				</Container >
 			</Loading >
 		</>
 	);

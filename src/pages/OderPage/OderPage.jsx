@@ -505,8 +505,8 @@ const OrderPage = () => {
 
 								<Box>
 									<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>
-										{" "}<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px",}}> Nhà  </span>
-										{" "}{`${user?.address} ${user?.city}`}{" "}
+										{" "}<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "13px",}}> Nhà  </span>
+										{"  "}{`${user?.address} ${user?.city}`}{" "}
 									</Typography>
 								</Box>
 							</WrapperInfo>
@@ -825,7 +825,7 @@ const OrderPage = () => {
 									}}
 								>
 									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
-									<Typography
+									<Typography className={classes.txtValueTotal}
 										style={{
 											color: "#000",
 											fontSize: "14px",
@@ -889,19 +889,23 @@ const OrderPage = () => {
 								</Typography>
 							</WrapperTotal>
 						</Grid>
-						<ModalComponent title='Cập nhật thông tin giao hàng' open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdateInforUser}>
+						<ModalComponent style={{ width: "100% !important" }} className={classes.updateInfo} title='Cập nhật thông tin' open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdateInforUser}>
 
 							<Loading isLoading={isLoading}>
 
 								<Form
+									className={classes.updateInfo}
 									name='basic'
 									labelCol={{ span: 4 }}
 									wrapperCol={{ span: 20 }}
+									wrapperRow={{ span: 20 }}
 									// onFinish={onUpdateUser}
 									autoComplete='on'
 									form={form}
+									style={{ fontFamily: 'Public Sans, sans-serif' }}
 								>
 									<Form.Item
+										style={{ fontFamily: 'Public Sans, sans-serif' }}
 										label='Name'
 										name='name'
 										rules={[
@@ -911,9 +915,10 @@ const OrderPage = () => {
 											},
 										]}
 									>
-										<InputComponent value={stateUserDetails["name"]} onChange={handleOnchangeDetails} name='name' />
+										<InputComponent className={classes.updateInfo} value={stateUserDetails["name"]} onChange={handleOnchangeDetails} name='name' />
 									</Form.Item>
 									<Form.Item
+										style={{ fontFamily: 'Public Sans, sans-serif' }}
 										label='City'
 										name='city'
 										rules={[
@@ -923,9 +928,10 @@ const OrderPage = () => {
 											},
 										]}
 									>
-										<InputComponent value={stateUserDetails["city"]} onChange={handleOnchangeDetails} name='city' />
+										<InputComponent className={classes.updateInfo} value={stateUserDetails["city"]} onChange={handleOnchangeDetails} name='city' />
 									</Form.Item>
 									<Form.Item
+										style={{ fontFamily: 'Public Sans, sans-serif' }}
 										label='Phone'
 										name='phone'
 										rules={[
@@ -935,10 +941,11 @@ const OrderPage = () => {
 											},
 										]}
 									>
-										<InputComponent value={stateUserDetails.phone} onChange={handleOnchangeDetails} name='phone' />
+										<InputComponent className={classes.updateInfo} value={stateUserDetails.phone} onChange={handleOnchangeDetails} name='phone' />
 									</Form.Item>
 
 									<Form.Item
+										style={{ fontFamily: 'Public Sans, sans-serif' }}
 										label='Adress'
 										name='address'
 										rules={[
@@ -948,7 +955,7 @@ const OrderPage = () => {
 											},
 										]}
 									>
-										<InputComponent value={stateUserDetails.address} onChange={handleOnchangeDetails} name='address' />
+										<InputComponent className={classes.updateInfo} value={stateUserDetails.address} onChange={handleOnchangeDetails} name='address' />
 									</Form.Item>
 								</Form>
 							</Loading>
@@ -1170,7 +1177,7 @@ const OrderPage = () => {
 
 											<Box >
 
-												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>      <span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px" }}>
+												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>      <span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "13px" }}>
 
 													Nhà
 												</span>   {" "}{`${user?.address} ${user?.city}`}{" "} </Typography>

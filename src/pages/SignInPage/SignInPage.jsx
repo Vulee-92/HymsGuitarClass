@@ -47,6 +47,7 @@ const SignInPage = () => {
 	const mutation = useMutationHooks((data) => UserService.loginUser(data));
 
 	const { data,isLoading,isSuccess } = mutation;
+	console.log("mutation",mutation)
 
 	const handleOnChangeEmail = (value) => setEmail(value);
 	const handleOnChangePassword = (value) => setPassword(value);
@@ -69,11 +70,13 @@ const SignInPage = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			if (location?.state) {
+			if (data.status === "OK" && location?.state) {
 				navigate(location?.state)
-			} else if (form) {
+			}
+			else if (data.status === "ERR") {
 				navigate('/login')
-			} else {
+			}
+			else if (data.status === "OK") {
 				navigate('/')
 			}
 			localStorage.setItem('access_token',JSON.stringify(data?.access_token))

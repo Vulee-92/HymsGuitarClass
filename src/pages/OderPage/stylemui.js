@@ -55,7 +55,13 @@ export default makeStyles(() => {
 			...CStyles.txt_title_item,
 			alignItems: "center",
 			display: "flex",
-},
+		},
+		updateInfo: {
+		...CStyles.txt_title_item,
+						lineHeight: 1.3,
+				fontSize: "13px",
+						fontWeight: 400,
+		},
 			nameProductCard: {
 			...CStyles.txt_title_item,
 			alignItems: "center",

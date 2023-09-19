@@ -1,4 +1,4 @@
-import React,{ Fragment,useEffect,useState } from "react";
+import React,{ Fragment,useEffect,useRef,useState } from "react";
 import {
 	MobileIcon,
 	Nav,
@@ -21,7 +21,7 @@ import { resetUser } from "../../redux/slides/userSlide";
 
 import { UserOutlined,ShoppingCartOutlined } from "@ant-design/icons";
 import ButttonInputSearch from "../ButttonInputSearch/ButttonInputSearch";
-import { useNavigate } from "react-router-dom";
+import { unstable_HistoryRouter,useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import * as UserService from "../../services/UserService";
 import AppBar from "@mui/material/AppBar";
@@ -61,7 +61,7 @@ import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
 import { ProductCartWidget } from "../../sections/@dashboard/products";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
-
+import { useHistory } from 'react-router-dom';
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const dispatch = useDispatch();
 	const [openProfile,setOpenProfile] = useState(false);
@@ -76,11 +76,22 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const [loading,setLoading] = useState(false);
 	const [isMobile,setMobile] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
-
 	const [isDrawerOpen,setIsDrawerOpen] = useState(false);
 	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
 
+	const [anchorEl,setAnchorEl] = useState(null);
 
+	const handleMouseOver = (event) => {
+		setAnchorEl(event.currentTarget);
+		setMenuOpen(true);
+	};
+
+	const handleClose = () => {
+		if (menuOpen) {
+			setAnchorEl(null);
+			setMenuOpen(false);
+		}
+	};
 	const handleNavigateLogin = () => {
 		navigate("/login");
 	};
@@ -118,16 +129,18 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 		setUserAvatar(user?.avatar);
 		setLoading(false);
 	},[user?.name,user?.avatar]);
-	const [anchorEl,setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
+	const [opens,setOpen] = useState(false);
+
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
+
+
+	const menuRef = React.useRef(null);
 	const [anchorElNav,setAnchorElNav] = React.useState(null);
 	const [anchorElUser,setAnchorElUser] = React.useState(null);
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+	const [menuOpen,setMenuOpen] = useState(false);
 	const [isOpenPopup,setIsOpenPopup] = useState(false)
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -165,7 +178,6 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	};
 
 
-
 	// };
 
 	const content = (
@@ -175,9 +187,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 				<Box
 					id="basic-button"
 					aria-controls={open ? "basic-menu" : undefined}
-					aria-haspopup="true"
+					aria-haspopup="menu"
 					aria-expanded={open ? "true" : undefined}
-					onClick={handleClick}
+					onMouseOver={handleMouseOver}
+
 				>
 					<Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>
 						{userName?.length ? userName : user?.email}
@@ -186,13 +199,9 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 				<Menu
 					id="basic-menu"
 					anchorEl={anchorEl}
-					open={open}
-					hover
+					open={Boolean(anchorEl)}
 					onClose={handleClose}
-					MenuListProps={{
-						"aria-labelledby": "basic-button",
-					}}
-					style={{ marginTop: '20px' }}
+					style={{ marginTop: "30px" }}
 				>
 					<Typography className={classes.txtInfoUser}>THÔNG TIN TÀI KHOẢN</Typography>
 					<MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilte}>Tài khoản của bạn </Typography></MenuItem>
