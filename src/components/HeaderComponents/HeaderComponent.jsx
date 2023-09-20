@@ -78,7 +78,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
 	const [isDrawerOpen,setIsDrawerOpen] = useState(false);
 	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
-
+	console.log("isDrawerOpen",isDrawerOpen)
 	const [anchorEl,setAnchorEl] = useState(null);
 
 	const handleMouseOver = (event) => {
@@ -321,7 +321,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={(event) => {
-									event.stopPropagation();
+									// event.stopPropagation();
 									setIsDrawerOpen(!isDrawerOpen);
 									setCurrentIcon(isDrawerOpen ? faBarsStaggered : faTimes);
 								}}
@@ -356,14 +356,19 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									{user?.access_token ? (
 										<>
 											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{ marginRight: "16px" }} />
-											<Typography className={classes.txtTilte} onClick={handleNavigateProfile}>
+											<Typography onClick={(event) => {
+												event.stopPropagation();
+												setIsDrawerOpen(!isDrawerOpen);
+												handleNavigateProfile()
+											}}
+												className={classes.txtTilte} >
 												{userName?.length ? userName : user?.email}
 											</Typography>
 										</>
 									) : (
 										<>
 											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" sx={{ marginRight: "10px" }} />
-											<Button onClick={handleNavigateLogin}
+											<Button onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen); handleNavigateLogin() }}
 												className={classes.txtTilte}
 											>
 												{t('sign_in')}
@@ -373,12 +378,13 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									)}
 
 								</MenuItem>
-								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }}>
+								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}>
 									<>
 										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{
 											marginRight: "0px",
 										}} />
-										<Button onClick={handleNavigateSignIn} className={classes.txtTilte}>
+										<Button onClose={() => setIsDrawerOpen(false)}
+											onClick={handleNavigateSignIn} className={classes.txtTilte}>
 											{t('sign_up')}
 										</Button>
 									</>
@@ -387,21 +393,24 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									<>
 										{/* <MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilte}>Tài khoản của bạn </Typography></MenuItem> */}
 										{user?.isAdmin && (
-											<MenuItem onClick={() => handleClickNavigate('admin')}>
-												<Typography className={classes.txtTilte}>
+											<MenuItem onClick={() => handleClickNavigate('admin')}
+											>
+												<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
 													quản lý
 												</Typography>
 											</MenuItem>
 										)}
-										<MenuItem onClick={() => handleClickNavigate(`my-order`)}>
+										<MenuItem onClick={() => handleClickNavigate(`my-order`)}
+										>
 											<FontAwesomeIcon icon={faTruckFast} fontSize="18px" color="#245c4f" style={{ marginRight: "10px" }} />
-											<Typography className={classes.txtTilte} >
+											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
 												Đơn hàng của bạn
 											</Typography>
 										</MenuItem>
-										<MenuItem onClick={() => handleClickNavigate()}>
+										<MenuItem onClick={() => handleClickNavigate()}
+										>
 											<FontAwesomeIcon icon={faRightFromBracket} fontSize="18px" color="#245c4f" style={{ marginRight: "14px",}} />
-											<Typography className={classes.txtTilte} >
+											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
 												Đăng xuất
 											</Typography>
 										</MenuItem>
@@ -411,19 +420,24 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								<MenuItem>
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Trang</Typography>
 								</MenuItem>
-								<MenuItem onClick={handleCloseNavMenu}>
+								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
+								>
 									<Button className={classes.txtTilte} onClick={() => navigate('/')} textAlign="center">{t('home')}</Button>
 								</MenuItem>
-								<MenuItem onClick={handleCloseNavMenu}>
+								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
+								>
 									<Button className={classes.txtTilte} onClick={() => navigate('/product')} textAlign="center">{t('product')}</Button>
 								</MenuItem>
-								<MenuItem onClick={handleCloseNavMenu}>
+								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
+								>
 									<Button className={classes.txtTilte} onClick={() => navigate('/about')} textAlign="center">{t('about')}</Button>
 								</MenuItem>
-								<MenuItem onClick={handleCloseNavMenu}>
+								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
+								>
 									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('blog')}</Button>
 								</MenuItem>
-								<MenuItem onClick={handleCloseNavMenu}>
+								<MenuItem onClick={(event) => { setIsDrawerOpen(!isDrawerOpen) }}
+								>
 									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('contact')}</Button>
 								</MenuItem>
 								<MenuItem>
@@ -643,7 +657,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 					</Toolbar>
 				</Container>
 			</AppBar >
-		</Container>
+		</Container >
 
 	);
 	// <Stack spacing={1}>

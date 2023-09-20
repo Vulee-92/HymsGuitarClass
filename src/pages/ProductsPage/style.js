@@ -379,6 +379,74 @@ export default makeStyles(() => {
       ...CStyles.txt_body_item,
       fontWeight: CStyles.fBold,
       cursor: "pointer",
+		},
+		   txtTitleBox: {
+      ...CStyles.txt_title_item,
+      fontSize: "38px",
+      fontWeight: 700,
+      lineHeight: 1.3,
+      position: "relative",
+      textAlign: "center",
+      zIndex: 10,
+      marginTop: "100px",
+      textTransform: "capitalize",
+      margin: 0,
+				 pointerEvents: "none",
+			marginBottom: "90px",
+
+      "@media (max-width: 550px)": {
+        fontSize: ".8rem",
+        marginTop: "50px",
+        textAlign: "center",
+				 },
+				"&::after": {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      bottom: "-30px",
+				left: '50%',
+			marginTop: "10px",
+      transform: 'translateX(-50%)',
+      width: '90px',
+      height: '6px',
+      backgroundColor: "#245c4f" // Màu đỏ của MUI
+    },
+		},
+			 	boxAnswer: {
+			margin: "10px 0px",
+			boxShadow: "none",
+			border: "1px solid #d6d6d4",
+			  "&:hover": {
+      backgroundColor: "#d6d6d4"
+      },
+		},
+					 txtTilte: {
+      ...CStyles.txt_body_item,
+      color: "#393939",
+      fontSize: "16px",
+      fontWeight: 700,
+      lineHeight: 1.7,
+      textAlign: "left",
+      fontSmooth: "antialiased !important",
+						 // marginBottom: "30px",
+			"@media (max-width: 550px)": {
+        fontSize: ".5rem",
+        textAlign: "left",
+				 },
+		},
+					 			 txtAnswer: {
+      ...CStyles.txt_body_item,
+      color: "#393939",
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: 1.7,
+      textAlign: "left",
+      fontSmooth: "antialiased !important",
+										 // marginBottom: "30px",
+			"@media (max-width: 550px)": {
+        fontSize: ".5rem",
+        textAlign: "left",
+				 },
     },
   };
 });

@@ -73,21 +73,34 @@ export default makeStyles(() => {
     txtTitleBox: {
       fontSize: "3em",
       fontWeight: 900,
-      lineHeight: 0.85,
+      lineHeight: "34px",
       position: "relative",
-      textAlign: "left",
+      textAlign: "center",
       zIndex: 10,
-      marginTop: "100px",
+			marginTop: "100px",
+			marginBottom: "20px",
       margin: 0,
       textTransform: "capitalize",
       pointerEvents: "none",
-
       "@media (max-width: 550px)": {
         fontSize: ".9rem",
         marginTop: "50px",
         textAlign: "center",
-      },
+			},
+			"&::after": {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      bottom: "-30px",
+				left: '50%',
+			marginTop: "10px",
+      transform: 'translateX(-50%)',
+      width: '90px',
+      height: '6px',
+      backgroundColor: "#245c4f" // Màu đỏ của MUI
     },
+		},
+		
     conTextCreate: {
       maxWidth: 720,
       margin: "auto",
@@ -113,11 +126,12 @@ export default makeStyles(() => {
     },
     txtTilte: {
       ...CStyles.txt_body_item,
-      color: "#6c7a87",
+      color: "#393939",
       marginTop: "1.45rem",
-      fontSize: "15px",
+      fontSize: "16px",
       fontWeight: 400,
-      marginBottom: "30px",
+			marginBottom: "30px",
+			lineHeight: 1.7
     },
     conInput: {
       ...CStyles.txt_body_item,

@@ -88,7 +88,7 @@ const HomePage = () => {
 	const settings = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 3,
+		slidesToShow: 4,
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 3000,
@@ -175,7 +175,7 @@ const HomePage = () => {
 												return (
 													<div>
 														<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,20)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
 															{/* <ImageListItemBar position="below" title={product.name} /> */}
 														</ImageListItem>
 													</div>
@@ -196,7 +196,7 @@ const HomePage = () => {
 								marginTop: "10px",
 							}}
 						>
-							<WrapperButtonMore
+							{/* <WrapperButtonMore
 								className={classes.ButtonAllPost}
 								textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 								type='outline'
@@ -214,7 +214,7 @@ const HomePage = () => {
 									color: products?.total === products?.data?.length && "#fff",
 								}}
 								onClick={() => setLimit((prev) => prev + 6)}
-							/>
+							/> */}
 						</Button>
 					</Container>
 
@@ -222,11 +222,11 @@ const HomePage = () => {
 						<ParallaxProvider>
 							<>
 								<Parallax speed={-5}>
-									<Container maxWidth='xl'>
-										<Box sx={{ width: "100%",maxWidth: 1900,paddingLeft: "30px",paddingRight: "30px" }}>
+									<Container maxWidth='md'>
+										<Box sx={{ width: "100%",maxWidth: 1334,paddingLeft: "30px",paddingRight: "30px" }}>
 											<Typography className={classes.txtTitleBox}>
 												{" "}
-												<AnimationComponent type='text' text='Giới thiệu' />
+												<AnimationComponent type='text' text='About Hymns' />
 											</Typography>
 
 											<AnimationComponent text='   Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao' className={classes.txtTilte} />
@@ -237,36 +237,13 @@ const HomePage = () => {
                     overline text
                   </Typography> */}
 										</Box>
-
-										<Box sx={{ flexGrow: 1 }}>
-											<Grid container spacing={2} columns={16}>
-												<Grid item xs={8}>
-													<ParallaxBannerw
-														layers={[
-															{ image: `${Assets.bgClass}`,speed: -20 },
-															// { image: `${Assets.bgClass}`, speed: -10 },
-														]}
-														className='aspect-[2/1]'
-													/>
-												</Grid>
-												<Grid item xs={8}>
-													<ParallaxBannerw
-														layers={[
-															{ image: `${Assets.bgClass}`,speed: -20 },
-															// { image: `${Assets.bgClass}`, speed: -10 },
-														]}
-														className='aspect-[2/1]'
-													/>
-												</Grid>
-											</Grid>
-										</Box>
 									</Container>
 								</Parallax>
 							</>
 						</ParallaxProvider>
 					</Container>
 
-					<Container maxWidth='2100px' style={{ marginTop: "100px" }}>
+					{/* <Container maxWidth='2100px' style={{ marginTop: "100px" }}>
 						<ParallaxProvider>
 							<>
 								<Parallax speed={-5}>
@@ -280,7 +257,7 @@ const HomePage = () => {
 								</Parallax>
 							</>
 						</ParallaxProvider>
-					</Container>
+					</Container> */}
 				</>
 			)}
 		</Loading>

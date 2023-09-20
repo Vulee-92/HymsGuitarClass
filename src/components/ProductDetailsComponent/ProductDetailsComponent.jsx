@@ -643,7 +643,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											textTransform: "capitalize",
 											fontWeight: "700",
 										}}
-										href='/order'
+										onClick={() => navigate('/order')}
 									>
 										Xem giỏ hàng
 									</Button>
