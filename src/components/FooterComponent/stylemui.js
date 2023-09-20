@@ -22,7 +22,7 @@ export default makeStyles(() => {
 			marginBottom: 10,
 			textTransform: "uppercase",
 			borderBottom: "1px solid #e9e6e0",
-			width: "50%",
+			width: "100%",
 			   paddingBottom: "10px",
     },
     footer: {
@@ -33,12 +33,12 @@ export default makeStyles(() => {
     txtTilte: {
       ...CStyles.txt_body_item,
       color: "#6c7a87",
-      marginTop: "1.45rem",
+      marginTop: "1rem",
 			fontSize: "14px",
 			color: "#e9e6e0",
 			fontWeight: 600,
 			lineHeight: 1.5,
-			marginBottom: 0,
+			marginBottom: "1.45rem",
 			cursor: "pointer",
 		},
 		txtTilteInsider: {
@@ -117,14 +117,14 @@ export default makeStyles(() => {
 			background: "#245c4f"
 		},
 		innerConnect: {
-			maxWidth: "1160px",
-			padding: "55px 40px",
+			padding: "55px 0px",
 			margin: "0 auto",
-			boxSizing: "border-box"
+			boxSizing: "border-box",
+			justifyContent: "center"
 		},
 		innerInsider: {
 				maxWidth: "1160px",
-			padding: "60px 40px",
+			padding: "60px 30px",
 			margin: "0 auto",
 			boxSizing: "border-box"
 		},
@@ -133,7 +133,7 @@ export default makeStyles(() => {
 			paddingBottom: "8px",
 			marginBottom: "30px",
 			color: "#e9e6e0",
-			fontSize: "30px",
+			fontSize: "35px",
 			borderBottom: "1px solid #e9e6e0"
 		},
 				txtFooterInsider: {

@@ -223,13 +223,11 @@ const HomePage = () => {
 							<>
 								<Parallax speed={-5}>
 									<Container maxWidth='md'>
-										<Box sx={{ width: "100%",maxWidth: 1334,paddingLeft: "30px",paddingRight: "30px" }}>
-											<Typography className={classes.txtTitleBox}>
-												{" "}
-												<AnimationComponent type='text' text='About Hymns' />
-											</Typography>
+										<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
 
-											<AnimationComponent text='   Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao' className={classes.txtTilte} />
+											<AnimationComponent type='text' text='About Hymns' className={classes.txtTitleBox} />
+
+											{/* <AnimationComponent text='   Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao' className={classes.txtTilte} /> */}
 											<Typography className={classes.txtTilte}>Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao</Typography>
 											<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Guitar Class sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Guitar Class cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
 											<Typography className={classes.txtTilte}>Ngoài ra, Hymns Guitar Class còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Guitar Class là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
@@ -259,8 +257,9 @@ const HomePage = () => {
 						</ParallaxProvider>
 					</Container> */}
 				</>
-			)}
-		</Loading>
+			)
+			}
+		</Loading >
 	);
 };
 

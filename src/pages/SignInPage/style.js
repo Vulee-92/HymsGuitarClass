@@ -142,15 +142,17 @@ export default makeStyles(() => {
       color: "#0b2238",
     },
     txtDesTitle: {
-      ...CStyles.txt_body_item,
-      textAlign: "center",
+      ...CStyles.txt_title_item,
+			textAlign: "center",
+			fontWeight: 500,
       marginTop: Configs.pH,
       color: Colors.bgLogin,
       fontSize: 18,
       cursor: "pointer",
     },
     txtTitleInput: {
-      ...CStyles.txt_title_item,
+			...CStyles.txt_title_item,
+				fontWeight: 500,
     },
     txtError: {
       ...CStyles.txt_error,

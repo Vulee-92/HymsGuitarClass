@@ -382,7 +382,7 @@ export default makeStyles(() => {
 		},
 		   txtTitleBox: {
       ...CStyles.txt_title_item,
-      fontSize: "38px",
+      fontSize: "40px",
       fontWeight: 700,
       lineHeight: 1.3,
       position: "relative",
@@ -395,7 +395,7 @@ export default makeStyles(() => {
 			marginBottom: "90px",
 
       "@media (max-width: 550px)": {
-        fontSize: ".8rem",
+        fontSize: "1.5rem",
         marginTop: "50px",
         textAlign: "center",
 				 },
@@ -423,28 +423,28 @@ export default makeStyles(() => {
 					 txtTilte: {
       ...CStyles.txt_body_item,
       color: "#393939",
-      fontSize: "16px",
+      fontSize: "25px",
       fontWeight: 700,
       lineHeight: 1.7,
       textAlign: "left",
       fontSmooth: "antialiased !important",
 						 // marginBottom: "30px",
 			"@media (max-width: 550px)": {
-        fontSize: ".5rem",
+        fontSize: "1rem",
         textAlign: "left",
 				 },
 		},
 					 			 txtAnswer: {
       ...CStyles.txt_body_item,
       color: "#393939",
-      fontSize: "16px",
+      fontSize: "25px",
       fontWeight: 400,
       lineHeight: 1.7,
       textAlign: "left",
       fontSmooth: "antialiased !important",
 										 // marginBottom: "30px",
 			"@media (max-width: 550px)": {
-        fontSize: ".5rem",
+        fontSize: "1rem",
         textAlign: "left",
 				 },
     },

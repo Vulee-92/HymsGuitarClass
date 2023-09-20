@@ -174,13 +174,13 @@ const SignInPage = () => {
 			<Grid container className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>
-						<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}>
+						<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "32px !important" } }}>
 							{t("sign_in")}
 						</Typography>
 						<Typography
 							onClick={handleNavigateSignUp}
 							className={classes.txtDesTitle}
-							sx={{ fontSize: { xs: "13px !important",xl: "16px" } }}
+							sx={{ fontSize: { xs: "14px !important",xl: "16px" } }}
 						>
 							{t("new_user_create_an_account")}
 						</Typography>
@@ -295,6 +295,7 @@ const SignInPage = () => {
 						)}
 						<Loading isLoading={isLoading}>
 							<CButton
+								className={classes.txtHeaderTitle}
 								title={t("sign_in")}
 								disabled={!email.length || !password.length}
 								onClick={onValidate}
