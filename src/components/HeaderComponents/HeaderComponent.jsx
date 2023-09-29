@@ -434,7 +434,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								</MenuItem>
 								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
 								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('blog')}</Button>
+									<Button className={classes.txtTilte} onClick={() => navigate('/blog')} textAlign="center">{t('blog')}</Button>
 								</MenuItem>
 								<MenuItem onClick={(event) => { setIsDrawerOpen(!isDrawerOpen) }}
 								>

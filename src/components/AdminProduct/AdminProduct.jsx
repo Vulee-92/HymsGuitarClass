@@ -48,6 +48,7 @@ import {
 } from "@mui/material";
 import { AvatarTable } from "../AdminUser/style";
 import { Label } from "@mui/icons-material";
+import CustomQuillComponent from "components/CustomQuillComponent/CustomQuillComponent";
 
 const AdminProduct = () => {
 	const [isModalOpen,setIsModalOpen] = useState(false);
@@ -673,7 +674,7 @@ const AdminProduct = () => {
 				<Button>
 					<FontAwesomeIcon icon={faPlus} onClick={showModal} />
 				</Button>
-				<TableComponent
+				{/* <TableComponent
 					handleDelteMany={handleDelteManyProducts}
 					columns={columns}
 					data={dataTable}
@@ -685,7 +686,14 @@ const AdminProduct = () => {
 							},
 						};
 					}}
-				/>
+				/> */}
+				<TableComponent forceRender handleDelteMany={handleDelteManyProducts} columns={columns} isLoading={isLoadingProducts} data={dataTable} onRow={(record,rowIndex) => {
+					return {
+						onClick: event => {
+							setRowSelected(record._id)
+						}
+					};
+				}} />
 				<ModalComponent
 					forceRender
 					title="Tạo sản phẩm mới"
@@ -780,8 +788,7 @@ const AdminProduct = () => {
 								name="description"
 							// rules={[{ required: true, message: 'Please input your Description!' }]}
 							>
-								<ReactQuill
-									theme="snow"
+								<CustomQuillComponent
 									value={stateProduct.description}
 									onChange={handleOnchangeCKeditorNew}
 								/>
@@ -955,8 +962,7 @@ const AdminProduct = () => {
 									{ required: true,message: "Please input your Description!" },
 								]}
 							>
-								<ReactQuill
-									theme="snow"
+								<CustomQuillComponent
 									value={stateProductDetails.description}
 									onChange={handleOnchangeCKeditor}
 								/>

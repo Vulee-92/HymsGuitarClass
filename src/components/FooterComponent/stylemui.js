@@ -66,7 +66,8 @@ export default makeStyles(() => {
   textAlign: "center",
   flexDirection: "column",
   aligncontent: "center",
-  alignItems: "center"
+			alignItems: "center",
+			cursor: "pointer !important",
 		},
     inputEmail: {
       ...CStyles.txt_body_item,
@@ -151,7 +152,8 @@ export default makeStyles(() => {
 	  textAlign: 'center',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+			justifyContent: 'center',
+		cursor: "pointer !important"
 		},
 	
 	blockHymnsInsider: {
