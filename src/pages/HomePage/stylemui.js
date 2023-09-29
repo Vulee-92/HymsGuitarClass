@@ -8,7 +8,7 @@ export default makeStyles(() => {
   return {
     container: {
       ...CStyles.center,
-      height: "100vh",
+      height: "70vh",
       backgroundImage: `url(${Assets.bgHome})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",

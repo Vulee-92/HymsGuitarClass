@@ -10,6 +10,7 @@ const SignUpPage = lazy(() => import("../pages/SignUpPage/SignUpPage"));
 const TypeProductPage = lazy(() => import("../pages/TypeProductPage/TypeProductPage"));
 const OrderSuccess = lazy(() => import("../pages/OderSuccess/OderSuccess"));
 const Profile = lazy(() => import("../pages/profile"));
+const BlogsPage = lazy(() => import("../pages/BlogUserPage/BlogUserPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage/AdminPage"));
 const Dashboard = lazy(() => import("../pages/Dashboard/DashboardAppPage"));
 const OrderPage = lazy(() => import("../pages/OderPage/OderPage"));
@@ -18,6 +19,8 @@ const MyOrderPage = lazy(() => import("../pages/MyOderPage/MyOderPage"));
 const DetailsOrderPage = lazy(() => import("../pages/DetailsOrderPage/DetailsOrderPage"));
 const ContactPage = lazy(() => import("../pages/ContactPage/ContactPage"));
 const AboutPage = lazy(() => import("../pages/AboutPage/AboutPage"));
+const BlogUserPage = lazy(() => import("../pages/BlogUserPage/BlogUserPage"));
+const BlogDetailsPage = lazy(() => import("../pages/BlogDetailPage/BlogDetailPage"));
 
 export const routes = [
   {
@@ -30,6 +33,11 @@ export const routes = [
   {
     path: "/profile",
     page: Profile,
+    isShowHeader: true,
+	},
+	  {
+    path: "/blog",
+    page: BlogUserPage,
     isShowHeader: true,
   },
   {
@@ -112,7 +120,13 @@ export const routes = [
     page: ProductDetailsPage,
     isShowHeader: true,
     isShowFooter: true,
-  },
+	},
+	{
+    path: "/blog-details/:id",
+    page: BlogDetailsPage,
+    isShowHeader: true,
+    isShowFooter: true,
+	},
   {
     path: "*",
     page: NotFoundPage,

@@ -47,7 +47,7 @@ const SignInPage = () => {
 	const mutation = useMutationHooks((data) => UserService.loginUser(data));
 
 	const { data,isLoading,isSuccess } = mutation;
-	console.log("mutation",mutation)
+	console.log("mutation",data)
 
 	const handleOnChangeEmail = (value) => setEmail(value);
 	const handleOnChangePassword = (value) => setPassword(value);

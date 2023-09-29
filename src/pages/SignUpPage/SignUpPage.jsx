@@ -82,7 +82,7 @@ const SignUpPage = () => {
 			password,
 			confirmPassword
 		})
-		console.log("mutation",mutation)
+		navigate('/login')
 	}
 	// has number
 	const hasNumber = (number) => new RegExp(/[0-9]/).test(number);

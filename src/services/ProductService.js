@@ -32,8 +32,8 @@ export const getAllProduct = async (search, limit) => {
     );
   }
 
-  const result = res.data;
-  cache.set(cacheKey, result); // Lưu kết quả vào bộ nhớ đệm
+	const result = res.data;
+		  cache.set(cacheKey, result); // Lưu kết quả vào bộ nhớ đệm
 
   return result;
 };
@@ -61,6 +61,7 @@ export const getDetailsProduct = async (id) => {
   );
   return res.data;
 };
+
 
 export const updateProduct = async (id, access_token, data) => {
   const res = await axiosJWT.put(

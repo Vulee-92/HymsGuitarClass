@@ -15,7 +15,7 @@ import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
@@ -155,48 +155,46 @@ const HomePage = () => {
 		color: theme.palette.text.secondary,
 	}));
 	return (
-		<Loading isLoading={isLoading || loading}>
+		// <Loading isLoading={isLoading || loading}>
+		<>
+
 			<Helmet>
 				<title> Hymns </title>
 			</Helmet>
-			{!isLoading && (
-				<>
-					<Box className={classes.container}></Box>
-					<Container maxWidth='lx' style={{ marginTop: "100px" }}>
-						<Box>
-							{/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
-							<AnimationComponent type='text' text='Latest Releases' className={classes.txtTitleBox} />
-							<div className={classes.sliderWrapper}>
-								<ImageList variant='masonry' cols={1} gap={8}>
-									<Suspense fallback={<div>Loading...</div>}>
+			<Box className={classes.container}></Box>
+			<Container maxWidth='lx' style={{ marginTop: "100px" }}>
+				<Box>
+					<Typography className={classes.txtTitleBox}>Latest Releases</Typography>
+					<div className={classes.sliderWrapper}>
+						<ImageList variant='masonry' cols={1} gap={8}>
+							<Suspense fallback={<div>Loading...</div>}>
 
-										<Slider {...settings} style={{ overflow: "hidden" }}>
-											{products?.data?.map((product,post,index) => {
-												return (
-													<div>
-														<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-															<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,20)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-															{/* <ImageListItemBar position="below" title={product.name} /> */}
-														</ImageListItem>
-													</div>
-												);
-											})}
-										</Slider>
-									</Suspense>
+								<Slider {...settings} style={{ overflow: "hidden" }}>
+									{products?.data?.map((product,post,index) => {
+										return (
+											<div>
+												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
+													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,20)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+												</ImageListItem>
+											</div>
+										);
+									})}
+								</Slider>
+							</Suspense>
 
-								</ImageList>
-							</div>
-						</Box>
-						<Button
-							sx={{ p: 3 }}
-							style={{
-								width: "100%",
-								display: "flex",
-								justifyContent: "center",
-								marginTop: "10px",
-							}}
-						>
-							{/* <WrapperButtonMore
+						</ImageList>
+					</div>
+				</Box>
+				<Button
+					sx={{ p: 3 }}
+					style={{
+						width: "100%",
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10px",
+					}}
+				>
+					{/* <WrapperButtonMore
 								className={classes.ButtonAllPost}
 								textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 								type='outline'
@@ -215,51 +213,24 @@ const HomePage = () => {
 								}}
 								onClick={() => setLimit((prev) => prev + 6)}
 							/> */}
-						</Button>
+				</Button>
+			</Container>
+
+			<Container maxWidth='md' style={{ marginTop: "50px",padding: 0 }}>
+				<>
+					<Container maxWidth='md' style={{ padding: 0 }}>
+						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
+							<Typography className={classes.txtTitleBox}>About Hymns</Typography>
+							<Typography className={classes.txtTilte}>Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao</Typography>
+							<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Guitar Class sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Guitar Class cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
+							<Typography className={classes.txtTilte}>Ngoài ra, Hymns Guitar Class còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Guitar Class là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
+						</Box>
 					</Container>
-
-					<Container maxWidth='xl' style={{ marginTop: "50px" }}>
-						<ParallaxProvider>
-							<>
-								<Parallax speed={-5}>
-									<Container maxWidth='md'>
-										<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
-
-											<AnimationComponent type='text' text='About Hymns' className={classes.txtTitleBox} />
-
-											{/* <AnimationComponent text='   Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao' className={classes.txtTilte} /> */}
-											<Typography className={classes.txtTilte}>Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao</Typography>
-											<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Guitar Class sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Guitar Class cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
-											<Typography className={classes.txtTilte}>Ngoài ra, Hymns Guitar Class còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Guitar Class là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
-											{/* <Typography variant="overline" display="block" gutterBottom>
-                    overline text
-                  </Typography> */}
-										</Box>
-									</Container>
-								</Parallax>
-							</>
-						</ParallaxProvider>
-					</Container>
-
-					{/* <Container maxWidth='2100px' style={{ marginTop: "100px" }}>
-						<ParallaxProvider>
-							<>
-								<Parallax speed={-5}>
-									<Box sx={{ flexGrow: 1 }}>
-										<Grid container spacing={2}>
-											<Grid item xs={12}>
-												<ParallaxBannerw style={{ height: "500px",background: "linear - gradient(0deg, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.86))" }} layers={[{ image: `${Assets.bgBanner}`,speed: -20 }]} className='aspect-[2/1]' />
-											</Grid>
-										</Grid>
-									</Box>
-								</Parallax>
-							</>
-						</ParallaxProvider>
-					</Container> */}
 				</>
-			)
-			}
-		</Loading >
+			</Container>
+
+		</>
+		// </Loading >
 	);
 };
 
