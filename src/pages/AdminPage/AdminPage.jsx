@@ -6,13 +6,11 @@ import HeaderComponent from '../../components/HeaderComponents/HeaderComponent';
 import AdminUser from '../../components/AdminUser/AdminUser';
 import AdminProduct from '../../components/AdminProduct/AdminProduct';
 import DashboardAppPage from '../Dashboard/DashboardAppPage';
-import BlogPage from '../AdminBlog/BlogPage';
 import SvgColor from "../../components/svg-color";
 import { StyledNavItem,StyledNavItemIcon } from '../../components/nav-section/styles';
 import { ListItemText } from '@mui/material';
 import { NavLink as RouterLink } from "react-router-dom";
 import OrderAdmin from '../../components/OrderAdmin/OrderAdmin';
-import AdminBlog from '../../components/AdminBlog/AdminBlog';
 const AdminPage = () => {
 
 	const renderPage = (key) => {
@@ -23,8 +21,6 @@ const AdminPage = () => {
 				return <AdminUser />;
 			case "product":
 				return <AdminProduct />;
-			case "blog":
-				return <AdminBlog />;
 			case 'orders':
 				return (
 					<OrderAdmin />
@@ -54,11 +50,6 @@ const AdminPage = () => {
 			"sản phẩm",
 			"product",
 			<SvgColor src={`/assets/icons/navbar/ic_cart.svg`} sx={{ height: 0.9 }} />
-		),
-		getItem(
-			"bài viết",
-			"blog",
-			<SvgColor src={`/assets/icons/navbar/ic_blog.svg`} sx={{ height: 0.9 }} />
 		),
 		getItem(
 			"đơn hàng",
