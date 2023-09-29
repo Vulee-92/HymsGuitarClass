@@ -2,7 +2,7 @@ import axios from "axios";
 import { axiosJWT } from "./UserService";
 import LRUCache from "lru-cache";
 
-const cache = new LRUCache({ max: 100, maxAge: 1000 * 60 * 10 }); // Lưu trữ tối đa 100 kết quả, mỗi kết quả được lưu trữ trong 10 phút
+const cache = new LRUCache({ max: 100,maxAge: 1000 * 60 * 10 }); // Lưu trữ tối đa 100 kết quả, mỗi kết quả được lưu trữ trong 10 phút
 
 // export const getAllBlog = async (search, limit) => {
 //     let res = {}
@@ -12,9 +12,9 @@ const cache = new LRUCache({ max: 100, maxAge: 1000 * 60 * 10 }); // Lưu trữ 
 // 			res = await axios.get(`${process.env.REACT_APP_API_URL}/blog/get-all-blog?limit=${limit}`)
 // 		}
 // 	console.log("res",res)
-	
+
 // 	return res.data
-	
+
 // }
 export const getAllBlog = async (search,limit) => {
 	const cacheKey = `${search}-${limit}`;
@@ -36,64 +36,64 @@ export const getAllBlog = async (search,limit) => {
 	}
 	const result = res.data;
 	console.log("result",result)
-	
-  cache.set(cacheKey, result); // Lưu kết quả vào bộ nhớ đệm
 
-  return result;
+	cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
+
+	return result;
 }
 
 export const getDetailsBlog = async (id) => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_API_URL}/blog/get-details/${id}`
+	const res = await axios.get(
+		`${process.env.REACT_APP_API_URL}/blog/get-details/${id}`
 	);
-	console.log("first", res?.data)
-  return res.data;
+	console.log("first",res?.data)
+	return res.data;
 };
 
 
 
 
-export const updateBlog = async (id, access_token, data) => {
-  const res = await axiosJWT.put(
-    `${process.env.REACT_APP_API_URL}/blog/update/${id}`,
-    data,
-    {
-      headers: {
-        token: `Bearer ${access_token}`,
-      },
-    }
-  );
-  return res.data;
+export const updateBlog = async (id,access_token,data) => {
+	const res = await axiosJWT.put(
+		`${process.env.REACT_APP_API_URL}/blog/update/${id}`,
+		data,
+		{
+			headers: {
+				token: `Bearer ${access_token}`,
+			},
+		}
+	);
+	return res.data;
 };
 
-export const deleteBlog = async (id, access_token) => {
-  const res = await axiosJWT.delete(
-    `${process.env.REACT_APP_API_URL}/blog/delete/${id}`,
-    {
-      headers: {
-        token: `Bearer ${access_token}`,
-      },
-    }
-  );
-  return res.data;
+export const deleteBlog = async (id,access_token) => {
+	const res = await axiosJWT.delete(
+		`${process.env.REACT_APP_API_URL}/blog/delete/${id}`,
+		{
+			headers: {
+				token: `Bearer ${access_token}`,
+			},
+		}
+	);
+	return res.data;
 };
 
-export const deleteManyBlog = async (data, access_token) => {
-  const res = await axiosJWT.post(
-    `${process.env.REACT_APP_API_URL}/blog/delete-many`,
-    data,
-    {
-      headers: {
-        token: `Bearer ${access_token}`,
-      },
-    }
-  );
-  return res.data;
+export const deleteManyBlog = async (data,access_token) => {
+	const res = await axiosJWT.post(
+		`${process.env.REACT_APP_API_URL}/blog/delete-many`,
+		data,
+		{
+			headers: {
+				token: `Bearer ${access_token}`,
+			},
+		}
+	);
+	return res.data;
 };
 
 export const getAllTypeBlog = async () => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_API_URL}/blog/get-all-type`
-  );
-  return res.data;
+	const res = await axios.get(
+		`${process.env.REACT_APP_API_URL}/blog/get-all-type`
+	);
+	return res.data;
 };
