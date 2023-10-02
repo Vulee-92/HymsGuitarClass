@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import { alpha,styled } from '@mui/material/styles';
 import { Box,Link,Card,Grid,Avatar,Typography,CardContent } from '@mui/material';
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgColor from '../../../components/svg-color';
-import Iconify from '../../../components/iconify';
 import { useNavigate } from 'react-router-dom';
+
 import styles from "./style";
 import LazyLoad from 'react-lazyload';
 // ----------------------------------------------------------------------
-
+import { Assets } from "../../../configs";
+import mask from "../../../assets/shape-avatar.svg";
 const StyledCardMedia = styled('div')({
 	position: 'relative',
 	paddingTop: 'calc(100% * 3 / 4)',
@@ -50,18 +49,18 @@ const StyledCover = styled('img')({
 	objectFit: 'cover',
 	position: 'absolute',
 	cursor: "pointer",
-	transform: "scale(0.7)",
+	// transform: "scale(0.7)",
 });
 
 // ----------------------------------------------------------------------
 
 BlogPostCard.propTypes = {
 	blog: PropTypes.object,
-	// index: PropTypes.number,
+	index: PropTypes.number,
 };
 
-export default function BlogPostCard({ blog }) {
-	const { id,image,title,description,category,comment,view,share,createdAt,index } = blog;
+export default function BlogPostCard({ blog,index }) {
+	const { id,image,title } = blog;
 	const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2;
 	const navigate = useNavigate();
@@ -73,7 +72,7 @@ export default function BlogPostCard({ blog }) {
 
 	return (
 		<Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-			<Card sx={{ position: 'relative' }}>
+			<Card sx={{ position: 'relative',borderRadius: "14px" }}>
 				<StyledCardMedia
 					sx={{
 						...((latestPostLarge || latestPost) && {
@@ -84,7 +83,7 @@ export default function BlogPostCard({ blog }) {
 								width: '100%',
 								height: '100%',
 								position: 'absolute',
-								bgcolor: (theme) => alpha(theme.palette.grey[900],0.72),
+								bgcolor: (theme) => alpha(theme.palette.grey[800],0.72),
 							},
 						}),
 						...(latestPostLarge && {
@@ -97,7 +96,7 @@ export default function BlogPostCard({ blog }) {
 				>
 					<SvgColor
 						color="paper"
-						src="/assets/icons/shape-avatar.svg"
+						src={mask}
 						sx={{
 							width: 80,
 							height: 36,
@@ -110,7 +109,7 @@ export default function BlogPostCard({ blog }) {
 					/>
 					<StyledAvatar
 						// alt={author.name}
-						// src={author.avatarUrl}
+						src={image}
 						sx={{
 							...((latestPostLarge || latestPost) && {
 								zIndex: 9,
@@ -136,23 +135,21 @@ export default function BlogPostCard({ blog }) {
 						}),
 					}}
 				>
-					<Typography gutterBottom variant="caption" sx={{ color: 'text.disabled',display: 'block' }}>
+					{/* <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled',display: 'block' }}>
 						{fDate(createdAt)}
-					</Typography>
+					</Typography> */}
 
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
-						color="inherit"
 						variant="subtitle2"
 						underline="hover"
-						sx={{
-							...(latestPostLarge && { typography: 'h5',height: 60 }),
-							...((latestPostLarge || latestPost) && {
-								color: 'common.white',
-							}),
+						className={classes.txtBlogTitle}
+						style={{
+							color: (latestPostLarge || latestPost) ? "#fff" : "#000"
 						}}
+
 					>
-						{title ? `${title.slice(0,30)}` : title}
+						{title ? `${title.slice(0,10	0)}` : title}
 					</StyledTitle>
 
 					<StyledInfo>

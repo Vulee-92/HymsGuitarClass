@@ -1,18 +1,5 @@
 import React,{ Fragment,useEffect,useRef,useState } from "react";
-import {
-	MobileIcon,
-	Nav,
-	NavContainer,
-	NavItem,
-	NavLinks,
-	NavLogo,
-	NavMenu,
-	WrapperContentPopup,
-	WrapperHeader,
-	WrapperHeaderAccout,
-	WrapperTextHeader,
-	WrapperTextHeaderSmall,
-} from "./style";
+
 import { Badge,Col,Popover } from "antd";
 import Button from "@mui/material/Button";
 import * as ProductService from "../../services/ProductService";
@@ -29,7 +16,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import { Assets,Configs,Keys } from "../../configs";
 import { styled } from "@mui/material/styles";
@@ -59,9 +45,6 @@ import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFa
 import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
-import { ProductCartWidget } from "../../sections/@dashboard/products";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
-import { useHistory } from 'react-router-dom';
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const dispatch = useDispatch();
 	const [openProfile,setOpenProfile] = useState(false);

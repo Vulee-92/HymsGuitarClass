@@ -16,6 +16,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BLogList from "sections/@dashboard/blog/BlogList";
 import { BlogPostCard } from "sections/@dashboard/blog";
+import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -121,14 +122,7 @@ const BlogUserPage = () => {
 				<title> Blog </title>
 			</Helmet>
 			< Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>
-					<Typical
-						steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
-						loop={Infinity}
-						wrapper="p"
-						className={classes.conTextCreate}
-					/>
-				</Typography>
+				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Blog" className={classes.conTextCreate} /></Typography>
 
 			</Box>
 			<Container maxWidth="xl">
