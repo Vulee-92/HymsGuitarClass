@@ -149,7 +149,7 @@ export default function BlogPostCard({ blog,index }) {
 						}}
 
 					>
-						{title ? `${title.slice(0,10	0)}` : title}
+						{title}
 					</StyledTitle>
 
 					<StyledInfo>

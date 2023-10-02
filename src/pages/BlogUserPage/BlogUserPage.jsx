@@ -125,7 +125,7 @@ const BlogUserPage = () => {
 				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Blog" className={classes.conTextCreate} /></Typography>
 
 			</Box>
-			<Container maxWidth="xl">
+			<Container maxWidth="lg">
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					<Grid item xs={12} sm={12} md={12} xl={12}>
 						<Item>
