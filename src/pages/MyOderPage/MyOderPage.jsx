@@ -53,9 +53,9 @@ const MyOderPage = () => {
 		if (isSuccessCancel && dataCancel?.status === 'OK') {
 			message.success()
 		} else if (isSuccessCancel && dataCancel?.status === 'ERR') {
-			message.error(dataCancel?.message)
+			// message.error(dataCancel?.message)
 		} else if (isErrorCancle) {
-			message.error()
+			// message.error()
 		}
 	},[isErrorCancle,isSuccessCancel])
 
@@ -84,7 +84,7 @@ const MyOderPage = () => {
 	}
 	return (
 		<Loading isLoading={isLoading}>
-			<Box style={{ with: '100%',height: '100vh',marginTop: '3rem',textAlign: 'center' }}>
+			<Box style={{ with: '100%',marginTop: '3rem',textAlign: 'center' }}>
 				<h4>Đơn hàng của tôi</h4>
 				<WrapperListOrder>
 					{data?.map((order) => {

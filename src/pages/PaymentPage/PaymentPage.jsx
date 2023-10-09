@@ -25,6 +25,7 @@ import MobileCartTotalPriceComponent from '../../components/MobileCartTotalPrice
 import { styled } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong,faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { LoadingButton } from '@mui/lab';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -411,22 +412,25 @@ const PaymentPage = () => {
 											/>
 										</div>
 									) : (
-										<div style={{ with: "100%",marginTop: "90px" }}>
-											<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
-										</div>
-										// <ButtonComponent
-										// 	onClick={() => handleAddOrder()}
-										// 	size={40}
-										// 	styleButton={{
-										// 		background: '#245c4f',
-										// 		height: '48px',
-										// 		width: '320px',
-										// 		border: 'none',
-										// 		borderRadius: '4px'
-										// 	}}
-										// 	textbutton={'Đặt hàng'}
-										// 	styleTextButton={{ color: '#fff',fontSize: '15px',fontWeight: '700' }}
-										// ></ButtonComponent>
+										<>
+
+											<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
+												<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
+											</Grid>
+											<LoadingButton variant="contained" color="primary"
+												onClick={() => handleAddOrder()}
+												style={{
+													background: '#245c4f',
+													height: '48px',
+													width: '93%',
+													border: 'none',
+													borderRadius: '4px',color: '#fff',fontSize: '15px',fontWeight: '700',
+													textTransform: "capitalize"
+												}}
+												sx={{ display: { xl: "flex !important",lg: "flex !important",md: "flex !important",xs: "none !important" } }}
+											>Đặt hàng</LoadingButton>
+										</>
+
 									)}
 
 								</WrapperRight>

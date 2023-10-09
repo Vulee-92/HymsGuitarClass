@@ -12,6 +12,7 @@ import LazyLoad from 'react-lazyload';
 // ----------------------------------------------------------------------
 import { Assets } from "../../../configs";
 import mask from "../../../assets/shape-avatar.svg";
+import { useState } from 'react';
 const StyledCardMedia = styled('div')({
 	position: 'relative',
 	paddingTop: 'calc(100% * 3 / 4)',
@@ -67,6 +68,11 @@ export default function BlogPostCard({ blog,index }) {
 	const classes = styles();
 	const handleDetailBlog = (id) => {
 		navigate(`/blog-details/${id}`);
+	};
+	const [isFirstLayout,setIsFirstLayout] = useState(true);
+
+	const toggleLayout = () => {
+		setIsFirstLayout(prevState => !prevState);
 	};
 
 

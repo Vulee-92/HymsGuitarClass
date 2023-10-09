@@ -1,7 +1,7 @@
 /** LIBRARY */
-import {makeStyles} from "@mui/styles";
-import {Assets, Configs} from "../../configs";
-import {Colors} from "../../utils/colors";
+import { makeStyles } from "@mui/styles";
+import { Assets,Configs } from "../../configs";
+import { Colors } from "../../utils/colors";
 import CStyles from "../../utils/common";
 
 export default makeStyles(() => {
@@ -9,21 +9,26 @@ export default makeStyles(() => {
 		container: {
 			maxWidth: " 1140px",
 		},
-		    nameProduct: {
-					...CStyles.txt_title_item,
-							marginTop: "10px",
-    },
+		nameProduct: {
+			...CStyles.txt_title_item,
+			marginTop: "10px",
+		},
+		nameProductTotal: {
+			...CStyles.txt_title_item,
+			display: "flex",alignItems: "center",
+
+		},
 		priceTitle: {
 			...CStyles.txt_title_item,
 			color: "#45cc8f",
 			textAlign: "right",
 		},
-			txtValueTotal: {
+		txtValueTotal: {
 			...CStyles.txt_body_item,
 			color: "rgb(36, 36, 36)",
 			fontSize: "14px",
-				fontWeight: 400,
-							lineHeight: 1.5,
+			fontWeight: 400,
+			lineHeight: 1.5,
 			marginBottom: "10px",
 			alignItems: "center",
 			overflow: "hidden",
@@ -40,88 +45,88 @@ export default makeStyles(() => {
 			fontWeight: 400,
 			marginBottom: 0,
 		},
-		  txtOrder: {
-      ...CStyles.txt_body_item,
-      color: "#245c4f",
-      fontSize: "18px",
-      fontWeight: 700,
-      paddingBottom: "10px",
-      borderBottom: "3px solid #245c4f",
-      marginLeft: "15px",
-      marginRight: "15px",
-      marginBottom: "15px",
-      textAlign: "center",
+		txtOrder: {
+			...CStyles.txt_body_item,
+			color: "#245c4f",
+			fontSize: "1.3rem",
+			fontWeight: 700,
+			paddingBottom: "10px",
+			borderBottom: "3px solid #245c4f",
+			marginLeft: "15px",
+			marginRight: "15px",
+			marginBottom: "15px",
+			textAlign: "center",
 		},
 		nameProduct: {
 			...CStyles.txt_title_item,
 			alignItems: "center",
 			display: "flex",
-					marginTop: "10px",
+			marginTop: "10px",
 		},
 		updateInfo: {
-		...CStyles.txt_title_item,
-						lineHeight: 1.3,
-				fontSize: "13px",
-						fontWeight: 400,
+			...CStyles.txt_title_item,
+			lineHeight: 1.3,
+			fontSize: "13px",
+			fontWeight: 400,
 		},
-			nameProductCard: {
+		nameProductCard: {
 			...CStyles.txt_title_item,
 			alignItems: "center",
-				display: "flex",
-						lineHeight: 1.5,
-				overflow: "hidden",
-				alignItems: " flex-start",
-				textOverflow: "ellipsis",
-				whiteSpace: "break-spaces",
-				fontSize: "13px",
-				marginBottom: "10px",
-						fontWeight: 500,
+			display: "flex",
+			lineHeight: 1.5,
+			overflow: "hidden",
+			alignItems: " flex-start",
+			textOverflow: "ellipsis",
+			whiteSpace: "break-spaces",
+			fontSize: "13px",
+			marginBottom: "10px",
+			fontWeight: 500,
 		},
 		btnAddCard: {
 			...CStyles.txt_title_item,
-				background: "#245c4f",
-											height: "44px",
-								width: "120px",
-											border: "none",
-											borderRadius: "4px",
+			background: "#245c4f",
+			height: "44px",
+			width: "120px",
+			border: "none",
+			borderRadius: "4px",
 
-											color: "#fff",
-											fontSize: "10px",
-											fontWeight: "600",
+			color: "#fff",
+			fontSize: "10px",
+			fontWeight: "600",
 			textTransform: "capitalize",
-												"&:hover": {
-							background: "#245c4f",
-											}
-			},
+			"&:hover": {
+				background: "#245c4f",
+			}
+		},
 		InfoHomeUser: {
-					...CStyles.txt_title_item,
-						lineHeight: 1.6,
-				overflow: "hidden",
-				alignItems: " flex-start",
-				textOverflow: "ellipsis",
-				whiteSpace: "break-spaces",
-				fontSize: "13px",
-				marginBottom: "7px",
-						fontWeight: 400,
-			},
+			...CStyles.txt_title_item,
+			lineHeight: 1.6,
+			overflow: "hidden",
+			alignItems: " flex-start",
+			textOverflow: "ellipsis",
+			whiteSpace: "break-spaces",
+			fontSize: "13px",
+			marginBottom: "7px",
+			fontWeight: 400,
+		},
 		nameAllProduct: {
-					alignItems: "center",
+			alignItems: "center",
 			display: "flex",
 			marginLeft: "10px",
-					...CStyles.txt_body_item,
+			...CStyles.txt_body_item,
 			color: "rgb(36, 36, 36)",
 			fontSize: "14px",
-				fontWeight: 500,
-							lineHeight: 1.5,
+			fontWeight: 500,
+			lineHeight: 1.5,
 			alignItems: "center",
 			overflow: "hidden",
 		},
 		BoxnameAllProduct: {
-	display: "flex",
+			display: "flex",
 			textAlign: "center",
 
 		},
-	
+
 		customSendEmail: {
 			backgroundColor: "#245c4f",
 			height: "40px",
@@ -151,7 +156,7 @@ export default makeStyles(() => {
 		},
 		txtNameTable: {
 			color: 'rgb(36, 36, 36)',
-  fontWeight: 400,
+			fontWeight: 400,
 			fontSize: '13px',
 			marginBottom: "10px",
 		}

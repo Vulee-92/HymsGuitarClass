@@ -3,18 +3,14 @@ import PropTypes from "prop-types";
 import React,{ Suspense,useEffect,useState } from "react";
 import { CustomCheckbox,Lable,WrapperCountOrder,WrapperInfo,WrapperItemOrder,WrapperLeft,WrapperListOrder,WrapperRight,WrapperStyleHeader,WrapperStyleHeaderDilivery,WrapperTotal } from "./style";
 import { DeleteOutlined,MinusOutlined,PlusOutlined } from "@ant-design/icons";
-
 import { WrapperInputNumber } from "../../components/ProductDetailsComponent/style";
-// import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useDispatch,useSelector } from "react-redux";
 import { decreaseAmount,increaseAmount,removeAllOrderProduct,removeOrderProduct,selectedOrder } from "../../redux/slides/orderSlide";
 import { convertPrice } from "../../utils";
 import { useMemo } from "react";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
-// import InputComponent from "../../components/InputComponent/InputComponent";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import * as UserService from "../../services/UserService";
-// import Loading from "../../components/LoadingComponent/Loading";
 import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useNavigate } from "react-router-dom";
@@ -440,7 +436,7 @@ const OrderPage = () => {
 		},
 	];
 	const steps = ["Mua","149k","200k"];
-	const isMobileDevice = window.innerWidth <= 768; // Kiểm tra thiết bị di động
+	const isMobileDevice = window.innerWidth <= 768;
 	return (
 		<>
 			<Helmet>
@@ -993,7 +989,7 @@ const OrderPage = () => {
 														<Link style={{}} underline='hover' color='inherit' href='/product'>
 															Thông tin tài khoản
 														</Link>
-														<Link sx={{ fontSize: "13px !important" }} className={classes.nameProduct}>
+														<Link sx={{ fontSize: "13px !important" }} className={classes.nameProductTotal}>
 															Phương thức thanh toán
 														</Link>
 													</Breadcrumbs>
@@ -1160,29 +1156,22 @@ const OrderPage = () => {
 										<WrapperInfo >
 											<Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }}>
 												<Grid item xs={8}>
-													<Typography style={{ color: 'rgb(128, 128, 137)',fontSize: '14px' }}>Giao tới</Typography>
+													<Typography style={{ color: 'rgb(128, 128, 137)',fontSize: '18px' }}>Giao tới</Typography>
 												</Grid>
 												<Grid item xs={8} style={{ textAlign: "right" }}>
-													<Typography>  <span
+													<Typography
 														onClick={handleChangeAddress}
-														style={{ color: "#245c4f",cursor: "pointer",fontSize: '14px',}}
-													>
+														style={{ color: "#245c4f",cursor: "pointer",fontSize: '18px' }}>
 														Thay đổi
-													</span></Typography>
+													</Typography>
 												</Grid>
 											</Grid>
-											{/* <Typography variant="h6" component="h2">
-                  {`${user?.name} ${user?.phone}`}{" "}
-                </Typography> */}
-
 											<Box >
-
-												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>      <span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "13px" }}>
-
-													Nhà
-												</span>   {" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
+												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '18px' }}>
+													<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "18px" }}>
+														Nhà
+													</span>{" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
 											</Box>
-
 										</WrapperInfo>
 										<WrapperInfo>
 											<div

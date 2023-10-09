@@ -235,7 +235,7 @@ const SignUpPage = () => {
 					{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
 					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Create an account" className={classes.conTextCreate} /></Typography>
 					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}>
-						<AnimationComponent type="text" text="Sign in" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
+						<AnimationComponent type="text" text="Sign up" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
 				</Grid>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard} sx={{ margin: { xs: "-180px 20px 400px 20px;",xl: "60px 0px 0px 0px",md: "60px 0px 0px 0px" } }}>
 					<AnimationComponent type="box">

@@ -218,7 +218,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 		i18n.changeLanguage(newLang);
 		Helpers.setDataStorage(Keys.lang,newLang);
 	};
-
+	useEffect(() => {
+		Helpers.setDataStorage(Keys.language,lang)
+		i18n.changeLanguage(lang);
+	},[]);
 
 	const LanguageSwitch = styled(Switch)(({ theme,lang }) => ({
 		width: 62,
@@ -291,7 +294,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	};
 	const settings = ["Profile","Account","Dashboard","Logout"];
 	return (
-		<Container maxWidth="md">
+		<Container maxWidth="lg">
 			<AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
 				<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
 					<Toolbar disableGutters style={{ display: "flex",justifyContent: "space-between",alignItems: 'center' }}>
@@ -453,7 +456,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								color: "inherit",
 								textDecoration: "none"
 								// cursor: 'pointer',
-							}} className={classes.hymnsName} style={{ justifyContent: "center",color: colorChange ? "#000" : "#fff",}} >HYMNS</Typography>
+							}} className={classes.hymnsName} style={{ justifyContent: "center",color: colorChange ? "#000" : "#fff",}} >HYMNS CENTER</Typography>
 						<Box sx={{
 							display: { xs: "block",md: "none" }
 						}}>
@@ -480,7 +483,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									color: "inherit",
 									textDecoration: "none",
 									cursor: 'pointer',
-								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '150px' }} >HYMNS</Typography>
+								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '150px' }} >HYMNS CENTER</Typography>
 							<Button
 								onClick={() => navigate('/')}
 								sx={{ color: "white",display: "block" }}
@@ -489,19 +492,20 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								{t('home')}
 							</Button>
 							<Button
+								onClick={() => navigate('/about')}
+								sx={{ color: "white",display: "block" }}
+								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+							>
+								{t('about')}
+							</Button>
+							<Button
 								onClick={() => navigate('/product')}
 								sx={{ color: "white",display: "block" }}
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
 								{t('product')}
 							</Button>
-							<Button
-								onClick={() => navigate('/contact')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('contact')}
-							</Button>
+
 							<Button
 								onClick={() => navigate('/blog')}
 								sx={{ color: "white",display: "block" }}
@@ -509,28 +513,29 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 							>
 								{t('blog')}
 							</Button>
+
 							<Button
-								onClick={() => navigate('/about')}
+								onClick={() => navigate('/contact')}
 								sx={{ color: "white",display: "block" }}
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
-								{t('about')}
+								{t('contact')}
 							</Button>
 						</Box>
-						{/* <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }} style={{ justifyContent: "space-between", alignItems: 'center' }}>
-            {!isHiddenSearch && (
-              <Col span={13}>
-                <ButttonInputSearch
-                  size="large"
-                  bordered={false}
-                  textbutton="Tìm kiếm"
-                  placeholder="input search text"
-                  onChange={onSearch}
-                  backgroundColorButton="#5a20c1"
-                />
-              </Col>
-            )}
-          </Box> */}
+						{/* <Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex" } }} style={{ justifyContent: "space-between",alignItems: 'center' }}>
+							{!isHiddenSearch && (
+								<Col span={13}>
+									<ButttonInputSearch
+										size="large"
+										bordered={false}
+										textbutton="Tìm kiếm"
+										placeholder="input search text"
+										onChange={onSearch}
+										backgroundColorButton="#5a20c1"
+									/>
+								</Col>
+							)}
+						</Box> */}
 						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex",justifyContent: "center",alignItems: 'center' } }} >
 							<Box>
 
@@ -591,7 +596,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 										<>
 											<>
 												<Popover trigger="click" open={isOpenPopup} >
-													<div style={{ cursor: 'pointer',maxWidth: 100,overflow: 'hidden',fontSize: '20px',}} >{content} </div>
+													<div style={{ cursor: 'pointer',maxWidth: 200,overflow: 'hidden',fontSize: '20px',}} >{content} </div>
 												</Popover>
 											</>
 										</>

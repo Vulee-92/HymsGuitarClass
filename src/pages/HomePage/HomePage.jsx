@@ -1,22 +1,20 @@
 import React,{ Suspense,useEffect,useRef,useState } from "react";
 import { WrapperButtonMore,WrapperTitle } from "./style";
-// import CardComponent from "../../components/CardComponent/CardComponent";
-import { Box,Button,Container,Grid,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Stack,Typography,styled } from "@mui/material";
+import { Box,Button,Card,CardContent,Container,Grid,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Stack,Typography,styled } from "@mui/material";
 import styles from "./stylemui";
-import { Assets } from "../../configs";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import Loading from "../../components/LoadingComponent/Loading";
 import { useDebounce } from "../../hooks/useDebounce";
-import { Parallax,ParallaxBanner,ParallaxProvider,useParallax } from "react-scroll-parallax";
+import { ParallaxBanner } from "react-scroll-parallax";
 import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
-import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
-import Typical from "react-typical";
+
+import * as BlogService from "../../services/BlogService";
+import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -33,6 +31,13 @@ const HomePage = () => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
 		const res = await ProductService.getAllProduct(search,limit);
+
+		return res;
+	};
+	const fetchBlogAll = async (context) => {
+		const limit = context?.queryKey && context?.queryKey[1];
+		const search = context?.queryKey && context?.queryKey[2];
+		const res = await BlogService.getAllBlog(search,limit);
 
 		return res;
 	};
@@ -60,13 +65,19 @@ const HomePage = () => {
 	const {
 		isLoading,
 		data: products,
-		isPreviousData,
 	} = useQuery(["products",limit,searchDebounce],fetchProductAll,{
 		retry: 3,
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("data",products)
+	const {
+		data: blogs,
+		isPreviousData
+	} = useQuery(["blogs",limit,searchDebounce],fetchBlogAll,{
+		retry: 3,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -123,7 +134,11 @@ const HomePage = () => {
 			},
 		],
 	};
+	const [reverseOrder,setReverseOrder] = useState(false);
 
+	const toggleOrder = () => {
+		setReverseOrder(!reverseOrder);
+	};
 	// const lastProduct = products?.data?.[products?.data?.length - 1]
 	// useEffect(() => {
 	//   if (refSearch.current) {
@@ -216,9 +231,9 @@ const HomePage = () => {
 				</Button>
 			</Container>
 
-			<Container maxWidth='md' style={{ marginTop: "50px",padding: 0 }}>
+			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
 				<>
-					<Container maxWidth='md' style={{ padding: 0 }}>
+					<Container maxWidth='lg' style={{ padding: 0 }}>
 						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
 							<Typography className={classes.txtTitleBox}>About Hymns</Typography>
 							<Typography className={classes.txtTilte}>Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao</Typography>
@@ -228,7 +243,52 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container>
+			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+				<Box>
+					<Typography className={classes.txtTitleBox}>Blog</Typography>
+					<Grid container spacing={2}>
+						{[0,1,2].map((row) => (
+							<Grid key={row} container item spacing={2}>
+								{blogs?.data?.slice(row * 3,(row + 1) * 3).reverse()
+									.map((post,index) => (
+										<ShopBLogCard key={post?.id} blog={post} index={index} />
+									))
+								}
 
+							</Grid>
+						))}
+					</Grid>
+				</Box>
+				<Button
+					sx={{ p: 3 }}
+					style={{
+						width: "100%",
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10px",
+					}}
+				>
+					<WrapperButtonMore
+						className={classes.ButtonAllPost}
+						textbutton={isPreviousData ? "Load more" : "Xem thêm"}
+						type='outline'
+						styleButton={{
+							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#245c4f"}`,
+							color: `${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#245c4f"}`,
+							width: "240px",
+							height: "38px",
+							borderRadius: "4px",
+							display: `${blogs?.total === blogs?.data?.length || blogs?.totalPage === 1 ? "none" : "block"}`,
+						}}
+						disabled={blogs?.total === blogs?.data?.length || blogs?.totalPage === 1}
+						styleTextButton={{
+							fontWeight: 500,
+							color: blogs?.total === blogs?.data?.length && "#fff",
+						}}
+						onClick={() => setLimit((prev) => prev + 2)}
+					/>
+				</Button>
+			</Container>
 		</>
 		// </Loading >
 	);
