@@ -334,7 +334,7 @@ export default makeStyles(() => {
 		txtTilteLight: {
 			...CStyles.txt_body_item,
 			color: "#fff",
-			fontSize: "16px",
+			fontSize: "14px",
 			fontWeight: 400,
 			textTransform: "capitalize",
 			marginRight: "10px",
@@ -343,7 +343,7 @@ export default makeStyles(() => {
 		txtTilteDark: {
 			...CStyles.txt_body_item,
 			color: "#000",
-			fontSize: "16px",
+			fontSize: "14px",
 			fontWeight: 400,
 			marginRight: "10px",
 			marginBottom: 0,

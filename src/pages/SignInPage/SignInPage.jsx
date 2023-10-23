@@ -2,6 +2,7 @@ import React,{ useEffect } from "react";
 import {
 	Box,
 	Grid,
+	Input,
 	InputAdornment,
 	Typography,
 } from "@mui/material";
@@ -47,7 +48,6 @@ const SignInPage = () => {
 	const mutation = useMutationHooks((data) => UserService.loginUser(data));
 
 	const { data,isLoading,isSuccess } = mutation;
-	console.log("mutation",data)
 
 	const handleOnChangeEmail = (value) => setEmail(value);
 	const handleOnChangePassword = (value) => setPassword(value);
@@ -67,7 +67,7 @@ const SignInPage = () => {
 			isShow: false,
 		},
 	});
-
+	console.log("formformform",form)
 	useEffect(() => {
 		if (isSuccess) {
 			if (data.status === "OK" && location?.state) {
@@ -94,6 +94,7 @@ const SignInPage = () => {
 		const storage = localStorage.getItem('refresh_token')
 		const refreshToken = JSON.parse(storage)
 		const res = await UserService.getDetailsUser(id,token)
+
 		dispatch(updateUser({ ...res?.data,access_token: token,refreshToken }))
 	}
 
@@ -107,6 +108,7 @@ const SignInPage = () => {
 			},
 		});
 	};
+
 	const onBlurFocusInput = (value,field) => {
 		setForm(prevState => ({
 			...prevState,
@@ -115,11 +117,11 @@ const SignInPage = () => {
 	};
 
 	/** FUNCTIONS */
-	const onChangeLanguage = (lang) => {
-		setLang(lang);
-		i18n.changeLanguage(lang);
-		Helpers.setDataStorage(Keys.lang,lang);
-	};
+	// const onChangeLanguage = (lang) => {
+	// 	setLang(lang);
+	// 	i18n.changeLanguage(lang);
+	// 	Helpers.setDataStorage(Keys.lang,lang);
+	// };
 
 	const handleNavigateSignUp = () => {
 		navigate("/sign-up");
@@ -134,40 +136,78 @@ const SignInPage = () => {
 			},
 		});
 	};
+
 	const handleSignIn = () => {
 		mutation.mutate({
-			email,
-			password,
+			email: form.email.value,
+			password: form.password.value,
 		});
 	};
+
+	// const onValidate = () => {
+	// 	let isError = false;
+	// 	let newForm = {
+	// 		email: { ...form.email,error: false,msg: "" },
+	// 		password: { ...form.password,error: false,msg: "" },
+	// 	};
+
+	// 	if (email.trim() === "") {
+	// 		isError = true;
+	// 		newForm.email.error = true;
+	// 		newForm.email.msg = t("txt_error_name_empty");
+	// 	}
+
+	// 	if (password.trim() === "") {
+	// 		isError = true;
+	// 		newForm.password.error = true;
+	// 		newForm.password.msg = t("txt_error_name_empty");
+	// 	}
+	// 	setForm(newForm);
+	// 	if (!isError) {
+	// 		handleSignIn();
+	// 		setForm({
+	// 			email: { ...form.email,value: "",error: false,msg: "" },
+	// 			password: { ...form.password,value: "",error: false,msg: "" },
+	// 		});
+	// 		setErrorMsg("");
+	// 	}
+
+	// };
 	const onValidate = () => {
-		let isError = false;
-		let newForm = {
-			email: { ...form.email,error: false,msg: "" },
-			password: { ...form.password,error: false,msg: "" },
-		};
+		setErrorMsg("");
+		setForm({
+			...form,
 
-		if (email.trim() === "") {
+			email: {
+				...form.email,
+				error: false,
+			},
+			password: {
+				...form.password,
+				error: false,
+			},
+
+		});
+
+		let isError = false,
+			newForm = { ...form };
+
+
+		if (form.email.value.trim() === "") {
 			isError = true;
-			newForm.email.error = true;
-			newForm.email.msg = t("txt_error_name_empty");
+			form.email.error = true;
+			form.email.msg = t("txt_error_name_empty");
 		}
-
-		if (password.trim() === "") {
+		if (form.password.value.trim() === "") {
 			isError = true;
-			newForm.password.error = true;
-			newForm.password.msg = t("txt_error_name_empty");
-		}
-		setForm(newForm);
-		if (!isError) {
-			handleSignIn();
-			setForm({
-				email: { ...form.email,value: "",error: false,msg: "" },
-				password: { ...form.password,value: "",error: false,msg: "" },
-			});
-			setErrorMsg("");
+			form.password.error = true;
+			form.password.msg = "txt_error_access_code_empty";
 		}
 
+		if (isError) {
+			return setForm(newForm);
+		}
+		handleSignIn();
 	};
 	return (
 		<Box className={classes.container}>
@@ -180,7 +220,7 @@ const SignInPage = () => {
 						<Typography
 							onClick={handleNavigateSignUp}
 							className={classes.txtDesTitle}
-							sx={{ fontSize: { xs: "14px !important",xl: "16px" } }}
+							sx={{ fontSize: { xs: "14px !important",xl: "18px" } }}
 						>
 							{t("new_user_create_an_account")}
 						</Typography>
@@ -189,7 +229,7 @@ const SignInPage = () => {
 							<Box className={classes.conItemInput}>
 								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t("email")}</Typography>
 
-								<InputForm
+								<Input
 									style={{
 										border:
 											!form.email.isFocus &&
@@ -203,7 +243,7 @@ const SignInPage = () => {
 									className={classes.conInput}
 									fullWidth
 									placeholder={t("email")}
-									value={email}
+									value={form.email.value}
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
@@ -218,9 +258,9 @@ const SignInPage = () => {
 											/>
 										</InputAdornment>
 									}
-									onChange={handleOnChangeEmail}
-									// onChange={(event) => onChangeInput(event,"email")}
-									// disabled={loading}
+									// onChange={handleOnChangeEmail}
+									onChange={(event) => onChangeInput(event,"email")}
+									disabled={loading}
 									onFocus={() => onBlurFocusInput(true,"email")}
 									onBlur={() => onBlurFocusInput(false,"email")}
 								/>
@@ -229,7 +269,7 @@ const SignInPage = () => {
 								<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>
 									{t("password")}
 								</Typography>
-								<InputForm
+								<Input
 									style={{
 										border:
 											!form.password.isFocus &&
@@ -243,9 +283,9 @@ const SignInPage = () => {
 									className={classes.conInput}
 									fullWidth
 									placeholder={t("password")}
-									value={password}
-									onChange={handleOnChangePassword}
-									// onChange={(event) => onChangeInput(event,"password")}
+									value={form.password.value}
+									// onChange={handleOnChangePassword}
+									onChange={(event) => onChangeInput(event,"password")}
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
@@ -282,15 +322,21 @@ const SignInPage = () => {
 									}}
 								/>
 							</Box>
+
 						</Box>
 						<Box className={classes.conMsg}>
 							<Typography className={classes.txtError}>
 								{t(errorMsg)}
 							</Typography>
 						</Box>
-						{data?.status === "ERR" && (
+						{/* {data?.status === "ERR" && (
 							<span style={{ color: "red" }}>
 								{(form.email.msg = t("txt_error_name_empty"))}
+							</span>
+						)} */}
+						{data?.status === "ERR_EMAIL" && (
+							<span >
+								{(<Typography style={{ color: "red" }} className={classes.conInput}>Tài khoản của bạn chưa được xác minh</Typography>)}
 							</span>
 						)}
 						<Loading isLoading={isLoading}>
@@ -299,7 +345,7 @@ const SignInPage = () => {
 								title={t("sign_in")}
 								disabled={!email.length || !password.length}
 								onClick={onValidate}
-								// loading={loading}
+								// loading={isLoading}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
 										onValidate();

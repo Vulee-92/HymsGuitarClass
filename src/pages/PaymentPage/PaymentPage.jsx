@@ -2,12 +2,10 @@ import { Form,Radio } from 'antd'
 import React,{ useEffect,useState } from 'react'
 import { Lable,WrapperInfo,WrapperLeft,WrapperRadio,WrapperRight,WrapperTotal } from './style';
 
-import ButtonComponent from '../../components/ButtonComponent/ButtonComponent';
 import { useDispatch,useSelector } from 'react-redux';
 import { convertPrice } from '../../utils';
 import { useMemo } from 'react';
-import ModalComponent from '../../components/ModalComponent/ModalComponent';
-import InputComponent from '../../components/InputComponent/InputComponent';
+
 import { useMutationHooks } from '../../hooks/useMutationHook';
 import * as  UserService from '../../services/UserService'
 import * as OrderService from '../../services/OrderService'
@@ -19,29 +17,44 @@ import { removeAllOrderProduct } from '../../redux/slides/orderSlide';
 import { PayPalButton } from "react-paypal-button-v2";
 import * as PaymentService from '../../services/PaymentService'
 import { Assets } from "../../configs";
-import { Box,Breadcrumbs,Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,Paper,Slide,Typography } from "@mui/material";
+import { Box,Breadcrumbs,Button,Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Grid,MenuItem,Modal,Paper,Select,Slide,TextField,Typography } from "@mui/material";
 import styles from "./stylemui";
 import MobileCartTotalPriceComponent from '../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent';
-import { styled } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong,faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { LoadingButton } from '@mui/lab';
+import ModalUserComponent from 'components/ModalUserComponent/ModalUserComponent';
+import useUpdateUserMutation from 'hooks/useUpdateUserMutation';
+import { useMutation,useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import InputComponent from 'components/InputComponent/InputComponent';
+import ModalComponent from 'components/ModalComponent/ModalComponent';
+import ProfileScreen from 'pages/profile';
+import UpdateUserComponent from 'components/UpdateUserComponent';
 
-
-const Item = styled(Paper)(({ theme }) => ({
-	textAlign: 'center',
-}));
 const PaymentPage = () => {
 	const order = useSelector((state) => state.order)
 	const user = useSelector((state) => state.user)
-
+	console.log("useruseruseruseruseruser",user)
+	const [localUserInfo,setLocalUserInfo] = useState(user);
+	useEffect(() => {
+		// Theo dõi thay đổi của thông tin người dùng từ Redux Store
+		setLocalUserInfo(user); // Cập nhật state local khi thông tin người dùng thay đổi
+	},[user]);
+	console.log("localUserInfo",localUserInfo)
 	const [delivery,setDelivery] = useState('fast')
 	const [payment,setPayment] = useState('later_money','bank')
 	const navigate = useNavigate()
 	const [sdkReady,setSdkReady] = useState(false)
 	const classes = styles();
 	const [isOpenModalUpdateInfo,setIsOpenModalUpdateInfo] = useState(false)
+
+
+	const handleClose = () => {
+		setIsOpenModalUpdateInfo(false);
+	};
 	const [stateUserDetails,setStateUserDetails] = useState({
+		id: '',
 		name: '',
 		phone: '',
 		address: '',
@@ -59,6 +72,7 @@ const PaymentPage = () => {
 	useEffect(() => {
 		if (isOpenModalUpdateInfo) {
 			setStateUserDetails({
+				id: user.id,
 				city: user?.city,
 				name: user?.name,
 				address: user?.address,
@@ -136,22 +150,26 @@ const PaymentPage = () => {
 			)
 		}
 	}
+
 	const mutationUpdate = useMutationHooks(
-		(data) => {
-			const { id,
-				token,
-				...rests } = data
-			const res = UserService.updateUser(
-				id,
-				{ ...rests },token)
-			return res
+		async (data) => {
+			const { id,token,...rests } = data;
+			try {
+				const res = await UserService.updateUser(id,{ ...rests },token);
+				return res; // Đảm bảo rằng bạn trả về dữ liệu từ hàm này
+			} catch (error) {
+				throw error; // Ném lỗi nếu có lỗi xảy ra
+			}
 		},
-	)
+	);
+	const { handleUpdateUser,isLoadingUpdateUser } = useUpdateUserMutation();
+	const mutationUpdateUser = useMutation(selectedUserId => handleUpdateUser(selectedUserId));
 
 
-	console.log('mutationAddOrder',mutationAddOrder)
 
-	const { isLoading,data } = mutationUpdate
+	const { isLoading,data,isSuccessUpdateUser } = mutationUpdate
+	const { data: userDetails } = useQuery('userDetails',mutationUpdate);
+
 	const { data: dataAdd,isLoading: isLoadingAddOrder,isSuccess,isError } = mutationAddOrder
 
 	useEffect(() => {
@@ -179,6 +197,7 @@ const PaymentPage = () => {
 
 	const handleCancleUpdate = () => {
 		setStateUserDetails({
+			id: '',
 			name: '',
 			email: '',
 			phone: '',
@@ -209,18 +228,147 @@ const PaymentPage = () => {
 		)
 	}
 
+	// const handleUpdateUsers = async () => {
+	// 	console.log("user?.id",user?.id)
+	// 	try {
+	// 		const { name,address,city,phone } = stateUserDetails
+	// 		console.log("stateUserDetails",stateUserDetails)
+	// 		if (name && address && city && phone) {
+	// 			mutationUpdate.mutate({ id: user?.id,token: user?.access_token,...stateUserDetails },{
+	// 				onSuccess: () => {
+	// 					dispatch(updateUser({ name,address,city,phone }))
+	// 					setIsOpenModalUpdateInfo(false)
+	// 				}
+	// 			})
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 		// Xử lý lỗi nếu cần
+	// 	}
+	// };
 
-	const handleUpdateInforUser = () => {
-		const { name,address,city,phone } = stateUserDetails
-		if (name && address && city && phone) {
-			mutationUpdate.mutate({ id: user?.id,token: user?.access_token,...stateUserDetails },{
-				onSuccess: () => {
-					dispatch(updateUser({ name,address,city,phone }))
-					setIsOpenModalUpdateInfo(false)
-				}
-			})
+	// const handleUpdateUsers = async (selectedUserId) => {
+	// 	console.log("user?.id",selectedUserId);
+
+	// 	try {
+	// 		await mutationUpdate.mutateAsync(selectedUserId._id,{
+	// 			onSuccess: () => {
+	// 				dispatch(updateUser(selectedUserId._id));
+	// 				setIsOpenModalUpdateInfo(false);
+	// 			},
+	// 		});
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 		// Xử lý lỗi nếu cần
+	// 	}
+	// };
+	// const handleGetDetailsUser = async (id,token) => {
+	// 	let storageRefreshToken = localStorage.getItem("refresh_token");
+	// 	const refreshToken = JSON.parse(storageRefreshToken);
+	// 	const res = await UserService.getDetailsUser(id,token);
+	// 	dispatch(
+	// 		updateUser({
+	// 			...res?.data,
+	// 			access_token: token,
+	// 			refreshToken: refreshToken,
+	// 		})
+	// 	);
+	// };
+	// const queryUser = useQuery({
+	// 	queryKey: ["users"],
+	// 	queryFn: handleGetDetailsUser,
+	// });
+
+	const handleUpdateUsers = async (selectedUserId) => {
+		try {
+			await mutationUpdateUser.mutateAsync(selectedUserId);
+			// Khi bạn muốn làm mới trang
+			// window.location.reload();
+
+
+			// queryUser.refetch();
+			// toast.success(`Cập nhật thành công`);
+
+		} catch (error) {
+			console.error(error);
+			// Xử lý lỗi nếu cần
 		}
-	}
+	};
+	const handleChange = (e) => {
+		const { name,value } = e.target;
+		setStateUserDetails({ ...stateUserDetails,[name]: value });
+		setErrors({ ...errors,[name]: value.trim() === '' });
+		// Gọi hàm để lấy danh sách thành phố
+	};
+
+	const handleUpdateInforUser = async () => {
+		if (
+			user.name &&
+			user.address &&
+			user.city &&
+			user.phone
+		) {
+			try {
+				const updatedUser = await mutationUpdate.mutate({
+					id: user?.id,
+					token: user?.access_token,
+					name: user?.name,
+					phone: user?.phone,
+					city: user?.city,
+					address: user?.address,
+				});
+				console.log("updatedUser",updatedUser)
+				dispatch(updateUser(updatedUser));
+			} catch (error) {
+				// Xử lý lỗi tại đây nếu cần
+				console.error(error);
+			}
+		}
+	};
+	// const handleUpdateInforUser = new Promise(async (resolve,reject) => {
+	// 	try {
+	// 		const updatedUser = await mutationUpdate.mutate({
+	// 			id: user?.id,
+	// 			token: user?.access_token,
+	// 			name: user?.name,
+	// 			phone: user?.phone,
+	// 			city: user?.city,
+	// 			address: user?.address,
+	// 		});
+
+	// 		// Sau khi cập nhật, gọi dispatch để cập nhật trạng thái Redux
+	// 		dispatch(updateUser(updatedUser));
+
+	// 		resolve(updatedUser);
+	// 	} catch (error) {
+	// 		reject(error);
+	// 	}
+	// });
+
+
+
+
+
+	const handleGetDetailsUser = async (id,token) => {
+		const res = await UserService.getDetailsUser(id,token);
+		dispatch(updateUser({ ...res?.data,access_token: token }));
+	};
+
+	useEffect(() => {
+		if (isSuccessUpdateUser) {
+			message.success();
+			setTimeout(() => {
+				handleGetDetailsUser(user?.id,user?.access_token);
+			},500); // Chờ 200 mili giây trước khi gọi
+		} else if (isError) {
+			message.error();
+		}
+	},[isSuccess,isError]);
+
+
+
+
+
 
 	const handleOnchangeDetails = (e) => {
 		setStateUserDetails({
@@ -255,6 +403,16 @@ const PaymentPage = () => {
 			setSdkReady(true)
 		}
 	},[])
+	const [errors,setErrors] = useState({
+		_id: false,
+		name: false,
+		city: false,
+		email: false,
+		isAdmin: false,
+		address: false,
+		phone: false,
+		password: false,
+	});
 
 	return (
 
@@ -371,10 +529,10 @@ const PaymentPage = () => {
 											</Grid>
 											<Box >
 
-												<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}><span className={classes.txtValueTotal} style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "12px" }}>
+												<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '16px' }}><span className={classes.txtValueTotal} style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "16px" }}>
 
 													Nhà
-												</span> {' '}{`${user?.address} ${user?.city}`}{" "} </Typography>
+												</span>{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "}  </Typography>
 											</Box>
 										</WrapperInfo>
 										<WrapperInfo>
@@ -438,48 +596,7 @@ const PaymentPage = () => {
 
 						</Grid>
 					</Box>
-					<ModalComponent title="Cập nhật thông tin giao hàng" open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdateInforUser}>
-						<Loading isLoading={isLoading}>
-							<Form
-								name="basic"
-								labelCol={{ span: 4 }}
-								wrapperCol={{ span: 20 }}
-								// onFinish={onUpdateUser}
-								autoComplete="on"
-								form={form}
-							>
-								<Form.Item
-									label="Name"
-									name="name"
-									rules={[{ required: true,message: 'Please input your name!' }]}
-								>
-									<InputComponent value={stateUserDetails['name']} onChange={handleOnchangeDetails} name="name" />
-								</Form.Item>
-								<Form.Item
-									label="City"
-									name="city"
-									rules={[{ required: true,message: 'Please input your city!' }]}
-								>
-									<InputComponent value={stateUserDetails['city']} onChange={handleOnchangeDetails} name="city" />
-								</Form.Item>
-								<Form.Item
-									label="Phone"
-									name="phone"
-									rules={[{ required: true,message: 'Please input your  phone!' }]}
-								>
-									<InputComponent value={stateUserDetails.phone} onChange={handleOnchangeDetails} name="phone" />
-								</Form.Item>
-
-								<Form.Item
-									label="Adress"
-									name="address"
-									rules={[{ required: true,message: 'Please input your  address!' }]}
-								>
-									<InputComponent value={stateUserDetails.address} onChange={handleOnchangeDetails} name="address" />
-								</Form.Item>
-							</Form>
-						</Loading>
-					</ModalComponent>
+					<UpdateUserComponent open={isOpenModalUpdateInfo} handleClose={handleClose} />
 				</Loading>
 			</div >
 		</>

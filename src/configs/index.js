@@ -52,7 +52,7 @@ export const Assets = {
 	logoUser: require("../assets/images/logo/user.png"),
 	class: require("../assets/class.jpg"),
 	bgBlog: require("../assets/shape-avatar.svg"),
-
+	logoEmail: require("../assets/images/logo/gmail.png"),
 	// /** ICON */
 };
 

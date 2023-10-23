@@ -6,8 +6,8 @@ import App from "./App";
 import "antd/dist/antd";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { persistor, store } from "./redux/store";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { persistor,store } from "./redux/store";
+import { QueryClientProvider,QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PersistGate } from "redux-persist/integration/react";
 // import "slick-carousel/slick/slick.css";
@@ -15,14 +15,14 @@ import { PersistGate } from "redux-persist/integration/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>
+	<QueryClientProvider client={queryClient}>
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<App />
+			</PersistGate>
+		</Provider>
+		<ReactQueryDevtools initialIsOpen={false} />
+	</QueryClientProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

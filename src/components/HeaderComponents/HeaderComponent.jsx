@@ -45,9 +45,9 @@ import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFa
 import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
+
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const dispatch = useDispatch();
-	const [openProfile,setOpenProfile] = useState(false);
 	const navigate = useNavigate();
 	const classes = styles();
 	const { t } = useTranslation();
@@ -57,11 +57,9 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	const [search,setSearch] = useState("");
 	const [userAvatar,setUserAvatar] = useState("");
 	const [loading,setLoading] = useState(false);
-	const [isMobile,setMobile] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
 	const [isDrawerOpen,setIsDrawerOpen] = useState(false);
 	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
-	console.log("isDrawerOpen",isDrawerOpen)
 	const [anchorEl,setAnchorEl] = useState(null);
 
 	const handleMouseOver = (event) => {
@@ -109,59 +107,24 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 	useEffect(() => {
 		setLoading(true);
 		setUserName(user?.name);
-		setUserAvatar(user?.avatar);
+		// setUserAvatar(user?.avatar);
 		setLoading(false);
-	},[user?.name,user?.avatar]);
+	},[user?.name]);
+
 	const open = Boolean(anchorEl);
-	const [opens,setOpen] = useState(false);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
 
 
-	const menuRef = React.useRef(null);
-	const [anchorElNav,setAnchorElNav] = React.useState(null);
+
+
 	const [anchorElUser,setAnchorElUser] = React.useState(null);
 	const [menuOpen,setMenuOpen] = useState(false);
 	const [isOpenPopup,setIsOpenPopup] = useState(false)
-	const handleOpenNavMenu = (event) => {
-		setAnchorElNav(event.currentTarget);
-	};
-	const handleOpenUserMenu = (event) => {
-		setAnchorElUser(event.currentTarget);
-	};
 
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
-	};
-	const fetchProductAll = async (context) => {
-		const limit = context?.queryKey && context?.queryKey[1];
-		const search = context?.queryKey && context?.queryKey[2];
-		const res = await ProductService.getAllProduct(search,limit);
-
-		return res;
-	};
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
 
-	const {
-		isLoading,
-		data: products,
-	} = useQuery([],fetchProductAll,{
-		retry: 3,
-		retryDelay: 100,
-		keepPreviousData: true,
-	});
-	const onChangeLanguage = (lang) => {
-		setLang(lang);
-		i18n.changeLanguage(lang);
-		Helpers.setDataStorage(Keys.lang,lang);
-	};
 
-
-	// };
 
 	const content = (
 
@@ -292,11 +255,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 		setSearch(e.target.value);
 		dispatch(searchProduct(e.target.value));
 	};
-	const settings = ["Profile","Account","Dashboard","Logout"];
 	return (
-		<Container maxWidth="lg">
+		<Container maxWidth="xl">
 			<AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
-				<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
+				<Container width={{ md: "xs",xl: "xl",lg: "xs" }} style={{ overflow: "hidden" }}>
 					<Toolbar disableGutters style={{ display: "flex",justifyContent: "space-between",alignItems: 'center' }}>
 
 
@@ -473,6 +435,11 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 							}
 						</Box>
 
+
+
+
+
+						{/* CHO DESKTOP */}
 						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex" } }} style={{ justifyContent: "space-between",alignItems: 'center' }}>
 							<Typography
 								href="/"
@@ -483,7 +450,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 									color: "inherit",
 									textDecoration: "none",
 									cursor: 'pointer',
-								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '150px' }} >HYMNS CENTER</Typography>
+								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '250px' }} >HYMNS CENTER</Typography>
 							<Button
 								onClick={() => navigate('/')}
 								sx={{ color: "white",display: "block" }}
@@ -628,7 +595,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								}
 							</MenuItem>
 
-							<MenuItem>
+							{/* <MenuItem>
 								<FormControlLabel
 									control={
 										<LanguageSwitch
@@ -638,7 +605,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 										/>
 									}
 								/>
-							</MenuItem>
+							</MenuItem> */}
 						</Box>
 
 
@@ -648,201 +615,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 		</Container >
 
 	);
-	// <Stack spacing={1}>
-	//   {
-	//     !products ? (
-	//       <Skeleton sx={{ height: '100%' }} animation="wave" variant="rectangular" />
-	//     ) : (
-	//       <div>
 
 
-	//         <Fragment>
-	//           <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset', padding: '0px' }}>
-	//             <AppBar className={
-	//               colorChange ? classes.colorChangeDark : classes.colorChangeLight
-	//             }>
-	//               <NavContainer style={{ alignItems: "center" }}>
-	//                 <Col span={3} >
-	//                   <Typography
-	//                     href="/"
-
-	//                     sx={{
-	//                       // display: { xs: "flex", md: "none" },
-	//                       fontFamily: "monospace",
-	//                       fontWeight: 700,
-	//                       letterSpacing: '.3rem',
-	//                       color: "inherit",
-	//                       textDecoration: "none",
-	//                       // cursor: 'pointer',
-	//                     }} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff", }} >HYMNS</Typography>
-
-
-
-	//                 </Col>
-	//                 <Col>
-	//                   <Button className={classes.mobile_menu_icon} >
-	//                     {isMobile ? (
-	//                       <FontAwesomeIcon icon={faX} />
-	//                     ) : (
-	//                       <FontAwesomeIcon icon={faX} />
-	//                     )}
-	//                   </Button>
-	//                 </Col>
-	//                 <Col className={isMobile ? classes.nav_link_mobile : classes.nav_link} span={5} style={{ gap: '54px', alignItems: 'center' }}>
-	//                   <NavMenu>
-	//                     <NavItem>
-	//                       <NavLinks href="/" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400", width: "100%" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>    {t("navbar_home")}</Typography></NavLinks>
-	//                     </NavItem>
-	//                     <NavItem>
-	//                       <NavLinks href="/about" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400", width: "100%" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>About</Typography></NavLinks>
-	//                     </NavItem>
-	//                     <NavItem>
-	//                       <NavLinks href="/products" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400", width: "100%" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Khoá học</Typography></NavLinks>
-	//                     </NavItem>
-	//                     <NavItem>
-	//                       <NavLinks href="/products" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400", width: "100%" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Product</Typography></NavLinks>
-	//                     </NavItem>
-	//                     <NavItem>
-	//                       <NavLinks href="/contact" style={{ marginRight: "3rem", fontSize: "20px", fontWeight: "400", width: "100%" }}>  <Typography className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}>Contact</Typography></NavLinks>
-	//                     </NavItem>
-
-	//                   </NavMenu>
-
-	//                 </Col>
-
-	//                 <Col span={4} style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-	//                   <Loading isLoading={loading}>
-	//                     <WrapperHeaderAccout>
-	//                       {/* {!isHiddenSearch && (
-	//                   <Col span={13}>
-	//                     <ButttonInputSearch
-	//                       size="large"
-	//                       bordered={false}
-	//                       textbutton="Tìm kiếm"
-	//                       placeholder="input search text"
-	//                       onChange={onSearch}
-	//                       backgroundColorButton="#5a20c1"
-	//                     />
-	//                   </Col>
-	//                 )} */}
-	//                       {userAvatar ? (
-	//                         // <img src={userAvatar} alt="avatar" style={{
-	//                         //   height: '20px',
-	//                         //   width: '20px',
-	//                         //   borderRadius: '50%',
-	//                         //   objectFit: 'cover'
-	//                         // }} />
-	//                         <img src={Assets.logoUser} alt="avatar" style={{
-	//                           height: '20px',
-	//                           width: '20px',
-	//                           borderRadius: '50%',
-	//                           objectFit: 'cover'
-	//                         }} />
-	//                       ) : (
-	//                         <></>
-	//                       )}
-	//                       {user?.access_token ? (
-	//                         <>
-	//                           <>
-	//                             <Popover trigger="click" open={isOpenPopup} >
-	//                               <div style={{ cursor: 'pointer', maxWidth: 100, overflow: 'hidden', fontSize: '20px', }} >{content} </div>
-	//                             </Popover>
-	//                           </>
-	//                         </>
-	//                       ) : (
-	//                         <Box onClick={handleNavigateLogin}>
-	//                           <Button
-	//                             className={classes.btnLoginHeader}
-	//                             variant="contained"
-	//                             size="medium"
-	//                           >
-	//                             Login
-	//                           </Button>
-	//                         </Box>
-	//                       )}
-	//                     </WrapperHeaderAccout>
-	//                   </Loading>
-
-	//                   {!isHiddenCart && user.access_token && (
-	//                     <div onClick={() => navigate('/order')} style={{ cursor: 'pointer', display: 'float' }}>
-	//                       <Badge count={order?.orderItems?.length} size="small">
-	//                         <ShoppingCartOutlined style={{ fontSize: '20px', paddingRight: '5px', color: colorChange ? "#000" : "#fff" }} />
-
-	//                       </Badge>
-	//                       {/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
-	//                     </div>
-
-	//                   )
-	//                   }
-	//                   <FormControlLabel
-	//                     control={
-	//                       <LanguageSwitch
-	//                         sx={{ m: 1 }}
-	//                         checked={lang === 'en'}
-	//                         onClick={handleLanguageChange}
-	//                       />
-	//                     }
-	//                   />
-	//                 </Col>
-	//               </NavContainer>
-	//             </AppBar>
-	//           </WrapperHeader>
-	//         </Fragment>
-	//         <WrapperHeader>
-	//           {/* <ProfileScreen open={openProfile} onClose={() => setOpenProfile(false)} /> */}
-	//           <Col span={6}>
-	//             <WrapperTextHeader>Hymns</WrapperTextHeader>
-	//           </Col>
-	//           <Col span={12}>
-	//             {/* <ButttonInputSearch
-	//         size="large"
-	//         bordered={false}
-	//         textbutton="Tìm kiếm"
-	//         placeholder="input search text"
-	//       onChange={onSearch}
-	//       backgroundColorButton="#5a20c1"
-	//       /> */}
-	//           </Col>
-	//           {/* <Col span={6} style={{ display: 'flex', gap: '20px' }}>
-	//       <Loading isLoading={loading}>
-	//         <WrapperHeaderAccout>
-	//           {userAvatar ? (
-	//             <img src={userAvatar} alt="avatar" style={{
-	//               height: '30px',
-	//               width: '30px',
-	//               borderRadius: '50%',
-	//               objectFit: 'cover'
-	//             }} />
-	//           ) : (
-	//             <div></div>
-	//           )}
-	//           {user?.access_token ? (
-	//             <>
-	//               <Popover trigger="click">
-	//                 <div>{content}</div>
-	//               </Popover>
-	//             </>
-	//           ) : (
-	//             <div onClick={handleNavigateLogin}>
-	//               <Button className={classes.btnLoginHeader} variant="contained" size="medium">
-	//                 Login
-	//               </Button>
-	//             </div>
-	//           )}
-
-	//         </WrapperHeaderAccout>
-	//       </Loading>
-	//       <div>
-
-	//       </div>
-	//     </Col> */}
-	//         </WrapperHeader>
-	//       </div >
-	//     )
-	//   }
-
-	// </Stack >
-	// );
 };
 
 export default HeaderComponent;

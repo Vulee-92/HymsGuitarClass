@@ -8,14 +8,12 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			marginTop: "50px !important",
-			marginBottom: "10px !important",
-			backgroundImage: `url(${Assets.bgProduct})`,
+			height: "20vh",
+			backgroundImage: `url(${Assets.bgSheet})`,
+			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
-			backgroundSize: "cover",
-			height: "70vh",
-			// maxHeight: "40vh",
+			display: "fixed",
 		},
 		conModal: {
 			...CStyles.shadow,
@@ -31,14 +29,6 @@ export default makeStyles(() => {
 			height: "100%",
 			marginBottom: "5%",
 			marginTop: "5%",
-		},
-		conTextCreate: {
-			...CStyles.txt_header_title,
-			// color: Colors.da,
-			fontSize: 60,
-			textAlign: "left",
-			fontWeight: 600,
-			color: "#000",
 		},
 		conHeader: {
 			...CStyles.center,
@@ -72,6 +62,15 @@ export default makeStyles(() => {
 			display: "none",
 			cursor: "pointer",
 		},
+		conTextCreate: {
+			...CStyles.txt_header_title,
+			// color: Colors.da,
+			fontSize: 40,
+			textAlign: "center",
+			fontWeight: 600,
+			color: "#fff",
+			marginTop: "110px"
+		},
 		conIconPen: {
 			position: "absolute",
 			top: "50%",
@@ -80,7 +79,7 @@ export default makeStyles(() => {
 		},
 		conContent: {
 			marginTop: 32,
-			padding: `0px 64px`,
+			padding: Configs.pH,
 		},
 		conInput: {
 			...CStyles.rowAliCen,
@@ -218,9 +217,7 @@ export default makeStyles(() => {
 				display: "none",
 			},
 		},
-		conContent: {
-			...CStyles.rowJusCen,
-		},
+
 		conCard: {
 			maxWidth: 720,
 			margin: "auto",
@@ -339,13 +336,9 @@ export default makeStyles(() => {
 			...CStyles.txt_header_title,
 			// color: Colors.da,
 			fontSize: 32,
-			marginTop: "20px",
-			textAlign: "left",
+			textAlign: "center",
 			fontWeight: 600,
 			color: "#0b2238",
-			paddingBottom: "10px",
-			borderBottom: "1px solid #0b2238",
-			width: "60px",
 		},
 		txtDesTitle: {
 			...CStyles.txt_body_item,
@@ -379,74 +372,6 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			fontWeight: CStyles.fBold,
 			cursor: "pointer",
-		},
-		txtTitleBox: {
-			...CStyles.txt_title_item,
-			fontSize: "35px",
-			fontWeight: 700,
-			lineHeight: 1.3,
-			position: "relative",
-			textAlign: "center",
-			zIndex: 10,
-			marginTop: "100px",
-			textTransform: "capitalize",
-			margin: 0,
-			pointerEvents: "none",
-			marginBottom: "30px",
-
-			"@media (max-width: 550px)": {
-				fontSize: "1.3rem",
-				marginTop: "50px",
-				textAlign: "center",
-			},
-			"&::after": {
-				content: '""',
-				display: 'block',
-				position: 'absolute',
-				bottom: "-15px",
-				left: '50%',
-				marginTop: "10px",
-				transform: 'translateX(-50%)',
-				width: '90px',
-				height: '6px',
-				backgroundColor: "#245c4f" // Màu đỏ của MUI
-			},
-		},
-		boxAnswer: {
-			margin: "10px 0px",
-			boxShadow: "none",
-			border: "1px solid #d6d6d4",
-			"&:hover": {
-				backgroundColor: "#d6d6d4"
-			},
-		},
-		txtTilte: {
-			...CStyles.txt_body_item,
-			color: "#393939",
-			fontSize: "16px",
-			fontWeight: 700,
-			lineHeight: 1.7,
-			textAlign: "left",
-			fontSmooth: "antialiased !important",
-			// marginBottom: "30px",
-			"@media (max-width: 550px)": {
-				fontSize: ".8rem",
-				textAlign: "left",
-			},
-		},
-		txtAnswer: {
-			...CStyles.txt_body_item,
-			color: "#393939",
-			fontSize: "16px",
-			fontWeight: 400,
-			lineHeight: 1.7,
-			textAlign: "left",
-			fontSmooth: "antialiased !important",
-			// marginBottom: "30px",
-			"@media (max-width: 550px)": {
-				fontSize: ".8rem",
-				textAlign: "left",
-			},
 		},
 	};
 });

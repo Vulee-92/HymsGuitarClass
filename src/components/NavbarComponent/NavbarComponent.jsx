@@ -1,140 +1,140 @@
-import { Checkbox, Rate, } from "antd";
-import React, { useEffect, useState } from "react";
+import { Checkbox,Rate,} from "antd";
+import React,{ useEffect,useState } from "react";
 import {
-  WrapperTextPrice,
-  WrapperTextValue,
+	WrapperTextPrice,
+	WrapperTextValue,
 } from "./style";
 import * as ProductService from "../../services/ProductService";
 import { useQuery } from "@tanstack/react-query";
 import TypeProduct from "../../components/TypeProduct/TypeProduct";
 import { useNavigate } from "react-router-dom";
-import { Typography, Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { Typography,Accordion,AccordionDetails,AccordionSummary } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styles from "./stylemui";
 const NavbarComponent = () => {
-  const onChange = () => { };
-  const [typeProducts, setTypeProducts] = useState([])
-  const fetchProductAll = async () => {
-    const res = await ProductService.getAllProduct();
-    return res;
-  };
-  const classes = styles();
-  const navigate = useNavigate();
-  const fetchAllTypeProduct = async () => {
-    const res = await ProductService.getAllTypeProduct()
-    if (res?.status === 'OK') {
-      setTypeProducts(res?.data)
-    }
-    console.log("data", res?.data)
-  }
+	const onChange = () => { };
+	const [typeProducts,setTypeProducts] = useState([])
+	const fetchProductAll = async () => {
+		const res = await ProductService.getAllProduct();
+		return res;
+	};
+	const classes = styles();
+	const navigate = useNavigate();
+	const fetchAllTypeProduct = async () => {
+		const res = await ProductService.getAllTypeProduct()
+		if (res?.status === 'OK') {
+			setTypeProducts(res?.data)
+		}
+		console.log("data",res?.data)
+	}
 
-  const handleAllClick = () => {
-    // setTypeProduct(null);
-    navigate("/product"); // cập nhật đường dẫn trên route khi chọn nút "All"
-  };
+	const handleAllClick = () => {
+		// setTypeProduct(null);
+		navigate("/product"); // cập nhật đường dẫn trên route khi chọn nút "All"
+	};
 
-  const renderAllButton = () => {
-    return (
-      <Typography onClick={handleAllClick}>All</Typography>
-    );
-  };
-
-
-
-  const { isLoading, data: products, isPreviousData } = useQuery(
-    ["products"],
-    fetchProductAll,
-    {
-      retry: 3,
-      retryDelay: 100,
-      keepPreviousData: true,
-    }
-  );
-  console.log('productList', products)
-  useEffect(() => {
-    fetchAllTypeProduct()
-  }, [])
+	const renderAllButton = () => {
+		return (
+			<Typography onClick={handleAllClick}>All</Typography>
+		);
+	};
 
 
 
-  const renderContent = (type, options) => {
-    switch (type) {
-      case "text":
-        return options.map((option) => {
-          return <WrapperTextValue>{option}</WrapperTextValue>;
-        });
-      case "checkbox":
-        return (
-          <Checkbox.Group
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-            onChange={onChange}
-          >
-            {options.map((option) => {
-              return (
-                <Checkbox style={{ marginLeft: 0 }} value={option.value}>
-                  {option.label}
-                </Checkbox>
-              );
-            })}
-          </Checkbox.Group>
-        );
-      case "star":
-        return options.map((option) => {
-          return (
-            <div style={{ dispaly: "flex" }}>
-              <Rate
-                style={{ fontSize: "12px" }}
-                disabled
-                defaultValue={option}
-              />
-              <span> {`tu ${option}  sao`}</span>
-            </div>
-          );
-        });
-      case "price":
-        return options.map((option) => {
-          return <WrapperTextPrice>{option}</WrapperTextPrice>;
-        });
-      default:
-        return {};
-    }
-  };
+	const { isLoading,data: products,isPreviousData } = useQuery(
+		["products"],
+		fetchProductAll,
+		{
+			retry: 3,
+			retryDelay: 100,
+			keepPreviousData: true,
+		}
+	);
+	console.log('productList',products)
+	useEffect(() => {
+		fetchAllTypeProduct()
+	},[])
 
-  return (
 
-    <div>
-      <Accordion style={{ margin: "0px", boxShadow: "none" }}>
-        <AccordionSummary style={{ marginTop: "0px" }}
-          expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.BoxTilte}
-        >
-          <Typography className={classes.txtTilte}>Loại sản phẩm</Typography>
-        </AccordionSummary>
-        <AccordionDetails style={{ boxShadow: "none" }}>
-          {/* <Typography className={classes.txtTilteItem} sx={{ paddingBottom: 1 }} onClick={handleAllClick}>Tất cả</Typography> */}
-          <Typography className={classes.txtTilteItem}>
-            {typeProducts.map((item) => {
-              return (
-                <>
-                  <TypeProduct className={classes.txtTilteItem} products={item.type} count={item.count} name={item.type} key={item.type} />
-                </>
-              )
-            })}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
 
-    </div>
+	const renderContent = (type,options) => {
+		switch (type) {
+			case "text":
+				return options.map((option) => {
+					return <WrapperTextValue>{option}</WrapperTextValue>;
+				});
+			case "checkbox":
+				return (
+					<Checkbox.Group
+						style={{
+							width: "100%",
+							display: "flex",
+							flexDirection: "column",
+							gap: "12px",
+						}}
+						onChange={onChange}
+					>
+						{options.map((option) => {
+							return (
+								<Checkbox style={{ marginLeft: 0 }} value={option.value}>
+									{option.label}
+								</Checkbox>
+							);
+						})}
+					</Checkbox.Group>
+				);
+			case "star":
+				return options.map((option) => {
+					return (
+						<div style={{ dispaly: "flex" }}>
+							<Rate
+								style={{ fontSize: "12px" }}
+								disabled
+								defaultValue={option}
+							/>
+							<span> {`tu ${option}  sao`}</span>
+						</div>
+					);
+				});
+			case "price":
+				return options.map((option) => {
+					return <WrapperTextPrice>{option}</WrapperTextPrice>;
+				});
+			default:
+				return {};
+		}
+	};
 
-  );
+	return (
+
+		<div>
+			<Accordion style={{ margin: "0px",boxShadow: "none" }}>
+				<AccordionSummary style={{ marginTop: "0px" }}
+					expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
+					aria-controls="panel1a-content"
+					id="panel1a-header"
+					className={classes.BoxTilte}
+				>
+					<Typography className={classes.txtTilte}>Loại sản phẩm</Typography>
+				</AccordionSummary>
+				<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
+					{/* <Typography className={classes.txtTilteItem} sx={{ paddingBottom: 1 }} onClick={handleAllClick}>Tất cả</Typography> */}
+					<Typography className={classes.txtTilteItem}>
+						{typeProducts.map((item) => {
+							return (
+								<>
+									<TypeProduct className={classes.txtTilteItem} products={item.type} count={item.count} name={item.type} key={item.type} />
+								</>
+							)
+						})}
+					</Typography>
+				</AccordionDetails>
+			</Accordion>
+
+		</div>
+
+	);
 };
 
 export default NavbarComponent;

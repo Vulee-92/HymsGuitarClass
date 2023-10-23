@@ -17,43 +17,18 @@ import { useNavigate } from "react-router-dom";
 import StepComponent from "../../components/StepComponent/StepComponent";
 import { Box,Breadcrumbs,Button,Container,Grid,Link,Snackbar,Stack,Step,StepConnector,StepLabel,Stepper,Typography,stepConnectorClasses } from "@mui/material";
 import styles from "./stylemui";
-import Item from "antd/es/list/Item";
 import { styled } from "@mui/styles";
 
-import { StepIconProps } from "@mui/material/StepIcon";
 import { Check,Label } from "@mui/icons-material";
-import TableComponent from "components/TableComponent/TableComponent";
-import { AvatarTable } from "components/AdminUser/style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import { Helmet } from "react-helmet-async";
+import UpdateUserComponent from "components/UpdateUserComponent";
 const ButtonComponent = React.lazy(() => import('../../components/ButtonComponent/ButtonComponent'));
 const Loading = React.lazy(() => import('../../components/LoadingComponent/Loading'));
 const InputComponent = React.lazy(() => import('../../components/InputComponent/InputComponent'));
 const MobileCartTotalPriceComponent = React.lazy(() => import('../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent'));
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
-	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-		top: 10,
-		left: "calc(-50% + 16px)",
-		right: "calc(50% + 16px)",
-	},
-	[`&.${stepConnectorClasses.active}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			borderColor: "#784af4",
-		},
-	},
-	[`&.${stepConnectorClasses.completed}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			borderColor: "#784af4",
-		},
-	},
-	[`& .${stepConnectorClasses.line}`]: {
-		// borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-		borderTopWidth: 3,
-		borderRadius: 1,
-	},
-}));
+
 
 const QontoStepIconRoot = styled("div")(({ theme,ownerState }) => ({
 	// color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -100,58 +75,29 @@ QontoStepIcon.propTypes = {
 	completed: PropTypes.bool,
 };
 
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-		top: 22,
-	},
-	[`&.${stepConnectorClasses.active}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			backgroundImage: "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
-		},
-	},
-	[`&.${stepConnectorClasses.completed}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			backgroundImage: "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
-		},
-	},
-	[`& .${stepConnectorClasses.line}`]: {
-		height: 3,
-		border: 0,
-		backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
-		borderRadius: 1,
-	},
-}));
 
-const ColorlibStepIconRoot = styled("div")(({ theme,ownerState }) => ({
-	backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
-	zIndex: 1,
-	color: "#fff",
-	width: 50,
-	height: 50,
-	display: "flex",
-	borderRadius: "50%",
-	justifyContent: "center",
-	alignItems: "center",
-	...(ownerState.active && {
-		backgroundImage: "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
-		boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-	}),
-	...(ownerState.completed && {
-		backgroundImage: "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
-	}),
-}));
+
 
 const OrderPage = () => {
 	// Sử dụng useSelector để lấy state từ Redux store
 	const order = useSelector((state) => state.order);
 	const user = useSelector((state) => state.user);
-
+	console.log("user",user)
 	// Sử dụng styles để tạo các class CSS cho component
 	const classes = styles();
-
+	const [email,setEmail] = useState("");
+	const [name,setName] = useState("");
+	const [phone,setPhone] = useState("");
+	const [password,setPassword] = useState("");
+	const [city,setCity] = useState("");
+	const [address,setAddress] = useState("");
+	const [avatar,setAvatar] = useState("");
 	// Sử dụng useState để lưu trữ các giá trị cần thiết cho component
 	const [listChecked,setListChecked] = useState([]);
 	const [isOpenModalUpdateInfo,setIsOpenModalUpdateInfo] = useState(false);
+	const handleClose = () => {
+		setIsOpenModalUpdateInfo(false);
+	};
 	const [stateUserDetails,setStateUserDetails] = useState({
 		name: "",
 		phone: "",
@@ -218,6 +164,19 @@ const OrderPage = () => {
 		form.setFieldsValue(stateUserDetails);
 	},[form,stateUserDetails]);
 
+
+
+	// useEffect(() => {
+	// 	setEmail(user?.email);
+	// 	setName(user?.name);
+	// 	setCity(user?.city);
+	// 	setPhone(user?.phone);
+	// 	setPassword(user?.password);
+	// 	setAddress(user?.address);
+	// 	setAvatar(user?.avatar);
+	// },[user]);
+
+
 	useEffect(() => {
 		if (isOpenModalUpdateInfo) {
 			setStateUserDetails({
@@ -252,7 +211,6 @@ const OrderPage = () => {
 		}
 		return 0;
 	},[order]);
-	const [rowSelected,setRowSelected] = useState("");
 	const diliveryPriceMemo = useMemo(() => {
 		if (priceMemo >= 20000 && priceMemo < 500000) {
 			return 10000;
@@ -274,13 +232,14 @@ const OrderPage = () => {
 	};
 
 	const handleAddCard = () => {
-		if (!order?.orderItemsSlected?.length) {
-			message.error("Vui lòng chọn sản phẩm");
-		} else if (!user?.phone || !user.address || !user.name || !user.city) {
-			setIsOpenModalUpdateInfo(true);
-		} else {
-			navigate("/payment");
-		}
+		navigate("/payment");
+		// if (!order?.orderItemsSlected?.length) {
+		// 	message.error("Vui lòng chọn sản phẩm");
+		// } else if (!user?.phone || !user.address || !user.name || !user.city) {
+		// 	setIsOpenModalUpdateInfo(true);
+		// } else {
+		// 	navigate("/payment");
+		// }
 	};
 
 	const mutationUpdate = useMutationHooks((data) => {
@@ -288,8 +247,13 @@ const OrderPage = () => {
 		const res = UserService.updateUser(id,{ ...rests },token);
 		return res;
 	});
-
-	const { isLoading,data } = mutationUpdate;
+	const mutation = useMutationHooks(
+		(data) => {
+			const { id,access_token,...rests } = data;
+			UserService.updateUser(id,rests,access_token);
+		}
+	)
+	const { data,isLoading,isSuccess,isError } = mutation;
 
 	const handleCancleUpdate = () => {
 		setStateUserDetails({
@@ -301,120 +265,61 @@ const OrderPage = () => {
 		form.resetFields();
 		setIsOpenModalUpdateInfo(false);
 	};
-	const handleUpdateInforUser = () => {
-		const { name,address,city,phone } = stateUserDetails;
-		if (name && address && city && phone) {
-			mutationUpdate.mutate(
-				{
-					id: user?.id,
-					token: user?.access_token,
-					...stateUserDetails,
+	// const handleUpdate = () => {
+	// 	const { name,address,city,phone } = stateUserDetails;
+	// 	if (name && address && city && phone) {
+	// 		mutationUpdate.mutate(
+	// 			{
+	// 				id: user?.id,
+	// 				token: user?.access_token,
+	// 				...stateUserDetails,
+	// 			},
+	// 			{
+	// 				onSuccess: () => {
+	// 					dispatch(updateUser({ name,address,city,phone }));
+	// 					setIsOpenModalUpdateInfo(false);
+	// 				},
+	// 			}
+	// 		);
+	// 	}
+	// };
+
+	const handleUpdate = () => {
+		mutation.mutate({
+			id: user?.id,
+			name: user?.name,
+			email: user?.email,
+			phone,
+			address,
+			// password,
+			city,
+			avatar,
+			token: user?.access_token,
+		},
+			{
+				onSuccess: () => {
+					dispatch(updateUser({ name,address,city,phone }));
+					setIsOpenModalUpdateInfo(false);
 				},
-				{
-					onSuccess: () => {
-						dispatch(updateUser({ name,address,city,phone }));
-						setIsOpenModalUpdateInfo(false);
-					},
-				}
-			);
-		}
+			}
+		);
 	};
-	const columns = [
-		{
-			title: "Name",
-			key: "avatarName",
-			render: (record) => (
-				<Stack direction='row' alignItems='center'>
-					<AvatarTable size={40} alt={record.image} src={record.image} />
-					<Typography variant='subtitle2' noWrap>
-						{record.name}
-					</Typography>
-				</Stack>
-			),
-		},
-		{
-			title: "Price",
-			dataIndex: "price",
-			sorter: (a,b) => a.price - b.price,
-			filters: [
-				{
-					text: ">= 50",
-					value: ">=",
-				},
-				{
-					text: "<= 50",
-					value: "<=",
-				},
-			],
-			onFilter: (value,record) => {
-				if (value === ">=") {
-					return record.price >= 50;
-				}
-				return record.price <= 50;
-			},
-		},
-		{
-			title: "Rating",
-			dataIndex: "rating",
-			render: (value) => {
-				return value > 1 && value < 3 ? (
-					<Label color={"error"}>
-						<Typography color={"error"}>{value}</Typography>
-					</Label>
-				) : value > 3 && value < 4 ? (
-					<Label color={"success"}>
-						<Typography color={"success"}>{value}</Typography>
-					</Label>
-				) : (
-					<Label background={"#000"}>
-						<Typography color={"primary"}>{value}</Typography>
-					</Label>
-				);
-			},
-			sorter: (a,b) => a.rating - b.rating,
-			filters: [
-				{
-					text: ">= 3",
-					value: ">=",
-				},
-				{
-					text: "<= 3",
-					value: "<=",
-				},
-			],
-			onFilter: (value,record) => {
-				if (value === ">=") {
-					return Number(record.rating) >= 3;
-				}
-				return Number(record.rating) <= 3;
-			},
-		},
-		{
-			title: "Type",
-			dataIndex: "type",
-		},
-		// {
-		//   title: "Action",
-		//   dataIndex: "action",
-		//   key: "x",
-		//   render: () => (
-		//     <Dropdown menu={{ items }} trigger={["click"]}>
-		//       <Box onClick={(e) => e.preventDefault()}>
-		//         <Space>
-		//           <Icon
-		//             sx={{ color: "#000", cursor: "pointer" }}
-		//             component={MoreVertIcon}
-		//           />
-		//         </Space>
-		//       </Box>
-		//     </Dropdown>
-		//   ),
-		// },
-	];
-	const dataTable = order?.orderItems?.map((product) => {
-		return { ...product,key: product._id };
-	});
-	console.log("dataTable",dataTable);
+	const handleGetDetailsUser = async (id,token) => {
+		const res = await UserService.getDetailsUser(id,token);
+		dispatch(updateUser({ ...res?.data,access_token: token }));
+	};
+	useEffect(() => {
+		if (isSuccess) {
+			message.success();
+			setTimeout(() => {
+				handleGetDetailsUser(user?.id,user?.access_token);
+			},500); // Chờ 200 mili giây trước khi gọi
+		} else if (isError) {
+			message.error();
+		}
+	},[isSuccess,isError]);
+
+
 	const handleOnchangeDetails = (e) => {
 		setStateUserDetails({
 			...stateUserDetails,
@@ -435,7 +340,6 @@ const OrderPage = () => {
 			description: "Trên 500.000 VND",
 		},
 	];
-	const steps = ["Mua","149k","200k"];
 	const isMobileDevice = window.innerWidth <= 768;
 	return (
 		<>
@@ -502,7 +406,7 @@ const OrderPage = () => {
 								<Box>
 									<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>
 										{" "}<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "13px",}}> Nhà  </span>
-										{"  "}{`${user?.address} ${user?.city}`}{" "}
+										{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "}
 									</Typography>
 								</Box>
 							</WrapperInfo>
@@ -719,7 +623,7 @@ const OrderPage = () => {
 															fontSize: "14px",
 														}}
 													>
-														Giao tới
+														{/* Giao tới */}
 													</Typography>
 												</Grid>
 												<Grid item xs={8} style={{ textAlign: "right" }}>
@@ -760,7 +664,7 @@ const OrderPage = () => {
 													>
 														Nhà
 													</span>{" "}
-													{`${user?.address} ${user?.city}`}{" "}
+													{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "}
 												</Typography>
 											</Box>
 										</Grid>
@@ -885,7 +789,8 @@ const OrderPage = () => {
 								</Typography>
 							</WrapperTotal>
 						</Grid>
-						<ModalComponent style={{ width: "100% !important" }} className={classes.updateInfo} title='Cập nhật thông tin' open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdateInforUser}>
+						<UpdateUserComponent open={isOpenModalUpdateInfo} handleClose={handleClose} />
+						{/* <ModalComponent style={{ width: "100% !important" }} className={classes.updateInfo} title='Cập nhật thông tin' open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdate}>
 
 							<Loading isLoading={isLoading}>
 
@@ -955,7 +860,7 @@ const OrderPage = () => {
 									</Form.Item>
 								</Form>
 							</Loading>
-						</ModalComponent>
+						</ModalComponent> */}
 					</div>
 				</>
 			) : (
@@ -1170,7 +1075,7 @@ const OrderPage = () => {
 												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '18px' }}>
 													<span style={{ fontWeight: "bold",color: "#245c4f",fontStyle: "italic",fontSize: "18px" }}>
 														Nhà
-													</span>{" "}{`${user?.address} ${user?.city}`}{" "} </Typography>
+													</span>{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "} </Typography>
 											</Box>
 										</WrapperInfo>
 										<WrapperInfo>
@@ -1272,11 +1177,12 @@ const OrderPage = () => {
 								</WrapperRight>
 							</div>
 						</div >
-						<ModalComponent
+						<UpdateUserComponent open={isOpenModalUpdateInfo} handleClose={handleClose} />
+						{/* <ModalComponent
 							title="Cập nhật thông tin giao hàng"
 							open={isOpenModalUpdateInfo}
 							onCancel={handleCancleUpdate}
-							onOk={handleUpdateInforUser}
+							onOk={handleUpdate}
 						>
 							<Loading isLoading={isLoading}>
 								<Form
@@ -1336,7 +1242,7 @@ const OrderPage = () => {
 									</Form.Item>
 								</Form>
 							</Loading>
-						</ModalComponent>
+						</ModalComponent> */}
 					</div >
 				</>
 			)

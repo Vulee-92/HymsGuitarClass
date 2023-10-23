@@ -49,10 +49,16 @@ const ProfileScreen = () => {
 
 	const [address,setAddress] = useState("");
 	const [avatar,setAvatar] = useState("");
-	const mutation = useMutationHooks((data) => {
-		const { id,access_token,...rests } = data;
-		UserService.updateUser(id,rests,access_token);
-	});
+	// const mutation = useMutationHooks((data) => {
+	// 	const { id,access_token,...rests } = data;
+	// 	UserService.updateUser(id,rests,access_token);
+	// });
+	const mutation = useMutationHooks(
+		(data) => {
+			const { id,access_token,...rests } = data;
+			UserService.updateUser(id,rests,access_token);
+		}
+	)
 	const [loading,setLoading] = useState(false);
 	const [errorMsg,setErrorMsg] = useState("");
 
@@ -67,24 +73,19 @@ const ProfileScreen = () => {
 		setAvatar(user?.avatar);
 	},[user]);
 
-	useEffect(() => {
-		if (isSuccess) {
-			message.success();
-			handleGetDetailsUser(user?.id,user?.access_token);
-		} else if (isError) {
-			message.error();
-		}
-	},[isSuccess,isError]);
+
 
 	const handleGetDetailsUser = async (id,token) => {
 		const res = await UserService.getDetailsUser(id,token);
 		dispatch(updateUser({ ...res?.data,access_token: token }));
 	};
+
+
 	const handleUpdate = () => {
 		mutation.mutate({
 			id: user?.id,
 			name: form.name.value,
-			email: form.email.value,
+			// email: form.email.value,q
 			phone,
 			address,
 			password,
@@ -93,15 +94,26 @@ const ProfileScreen = () => {
 		});
 	};
 
+	useEffect(() => {
+		if (isSuccess) {
+			message.success();
+			setTimeout(() => {
+				handleGetDetailsUser(user?.id,user?.access_token);
+			},500); // Chờ 200 mili giây trước khi gọi
+		} else if (isError) {
+			message.error();
+		}
+	},[isSuccess,isError]);
+
 	const [form,setForm] = useState({
 		name: {
-			value: "",
+			value: user?.name,
 			isFocus: false,
 			msg: "",
 			error: false,
 		},
 		email: {
-			value: "",
+			value: user?.email,
 			isFocus: false,
 			msg: "",
 			error: false,
@@ -151,10 +163,10 @@ const ProfileScreen = () => {
 				...form.name,
 				error: false,
 			},
-			email: {
-				...form.email,
-				error: false,
-			},
+			// email: {
+			// 	...form.email,
+			// 	error: false,
+			// },
 			password: {
 				...form.password,
 				error: false,
@@ -169,11 +181,11 @@ const ProfileScreen = () => {
 			form.name.error = true;
 			form.name.msg = t("txt_error_name_empty");
 		}
-		if (form.email.value.trim() === "") {
-			isError = true;
-			form.email.error = true;
-			form.email.msg = t("txt_error_name_empty");
-		}
+		// if (form.email.value.trim() === "") {
+		// 	isError = true;
+		// 	form.email.error = true;
+		// 	form.email.msg = t("txt_error_name_empty");
+		// }
 		if (form.password.value.trim() === "") {
 			isError = true;
 			form.password.error = true;
@@ -262,25 +274,25 @@ const ProfileScreen = () => {
 									className={classes.conInput}
 									fullWidth
 									placeholder={t("email")}
+									disabled
 									value={form.email.value}
-									startAdornment={
-										<InputAdornment position="start">
-											<FontAwesomeIcon
-												icon={faAddressCard}
-												fontSize={20}
-												color={
-													form.email.isFocus || form.email.value.trim() !== ""
-														? Colors.bgLogin
-														: Colors.bgLogin
-												}
-												className={classes.conIconInput}
-											/>
-										</InputAdornment>
-									}
-									onChange={(event) => onChangeInput(event,"email")}
-									disabled={loading}
-									onFocus={() => onBlurFocusInput(true,"email")}
-									onBlur={() => onBlurFocusInput(false,"email")}
+								// startAdornment={
+								// 	<InputAdornment position="start">
+								// 		<FontAwesomeIcon
+								// 			icon={faAddressCard}
+								// 			fontSize={20}
+								// 			color={
+								// 				form.email.isFocus || form.email.value.trim() !== ""
+								// 					? Colors.bgLogin
+								// 					: Colors.bgLogin
+								// 			}
+								// 			className={classes.conIconInput}
+								// 		/>
+								// 	</InputAdornment>
+								// }
+								// onChange={(event) => onChangeInput(event,"email")}
+								// onFocus={() => onBlurFocusInput(true,"email")}
+								// onBlur={() => onBlurFocusInput(false,"email")}
 								/>
 							</Box>
 							<Box className={classes.conItemInput}>

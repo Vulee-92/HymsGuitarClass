@@ -137,18 +137,18 @@ const ProductsPage = () => {
 			<Helmet>
 				<title> Product </title>
 			</Helmet>
-			< Box className={classes.container}>
+			{/* < Box className={classes.container}> */}
 
-				<Typography className={classes.conTextCreate}>
-					<Typical
-						steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
-						loop={Infinity}
-						wrapper="p"
-						className={classes.conTextCreate}
-					/>
-				</Typography>
+			{/* <Typography className={classes.conTextCreate}>
+				<Typical
+					steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
+					loop={Infinity}
+					wrapper="p"
+					className={classes.conTextCreate}
+				/>
+			</Typography> */}
 
-			</Box>
+			{/* </Box> */}
 			{/* <Box>
               {typeProducts.map((item) => {
                 return (
@@ -156,8 +156,19 @@ const ProductsPage = () => {
                 )
               })}
             </Box> */}
-			<Container maxWidth="lg">
+			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
+				{/* <Grid item xs={12} sm={3} xl={12} md={3} spacing={2} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+					<Typography className={classes.conTextCreate}>
+						<Typical
+							steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
+							loop={Infinity}
+							wrapper="p"
+							className={classes.conTextCreate}
+						/>
+					</Typography>
+				</Grid> */}
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+
 					<Grid item xs={12} sm={3} md={3} spacing={2} >
 						<Item >
 							<NavbarComponent />

@@ -12,13 +12,15 @@ import styles from './style';
 import { Helpers } from '../../utils/helpers'
 import { Assets,Configs,Keys } from '../../configs'
 import CButton from '../../components/CButton';
-import { Box,FormControl,Grid,Typography } from '@mui/material'
+import { Box,FormControl,Grid,Input,InputAdornment,Typography } from '@mui/material'
 import { Colors } from '../../utils/colors'
-import { faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faEye,faEyeSlash,faLock } from '@fortawesome/free-solid-svg-icons'
 import AnimationComponent from 'components/AnimationComponent/AnimationComponent'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const SignUpPage = () => {
 	const [isShowPassword,setIsShowPassword] = useState(false)
+	const [name,setName] = useState('');
 	const [email,setEmail] = useState('');
 	const [password,setPassword] = useState('');
 	const [confirmPassword,setConfirmPassword] = useState('');
@@ -27,16 +29,16 @@ const SignUpPage = () => {
 	const classes = styles();
 	const [level,setLevel] = useState();
 	const [lang,setLang] = useState(i18n.language);
-	const handleOnChangeEmail = (value) => {
-		setEmail(value)
-	}
+	const [errorMsg,setErrorMsg] = useState("");
+
 
 	const mutation = useMutationHooks(
 		data => UserService.signupUser(data)
 	)
 
 	const { data,isLoading,isSuccess,isError } = mutation
-	console.log("mutation",data)
+
+	console.log("isError",isSuccess,isError)
 	useEffect(() => {
 		if (isSuccess) {
 			message.success()
@@ -49,6 +51,12 @@ const SignUpPage = () => {
 
 
 	const [form,setForm] = useState({
+		name: {
+			value: '',
+			isFocus: false,
+			msg: '',
+			error: false
+		},
 		email: {
 			value: '',
 			isFocus: false,
@@ -61,8 +69,16 @@ const SignUpPage = () => {
 			msg: '',
 			error: false,
 			isShow: false,
+		},
+		confirmPassword: {
+			value: '',
+			isFocus: false,
+			msg: '',
+			error: false,
+			isShow: false,
 		}
 	});
+	console.log("form",form)
 	/** FUNCTIONS */
 	const onChangeLanguage = (lang) => {
 		setLang(lang)
@@ -74,15 +90,17 @@ const SignUpPage = () => {
 		navigate('/login')
 	}
 	const handleOnchangeConfirmPassword = (value) => {
+		const temp = strengthIndicator(value);
+		setLevel(strengthColor(temp));
 		setConfirmPassword(value)
 	}
 	const handleSignUp = () => {
 		mutation.mutate({
-			email,
-			password,
-			confirmPassword
+			name: form.name.value,
+			email: form.email.value,
+			password: form.password.value,
+			confirmPassword: form.confirmPassword.value,
 		})
-		navigate('/login')
 	}
 	// has number
 	const hasNumber = (number) => new RegExp(/[0-9]/).test(number);
@@ -119,9 +137,25 @@ const SignUpPage = () => {
 			password: {
 				...form.password,
 				isShow: !form.password.isShow
+			},
+			confirmPassword: {
+				...form.confirmPassword,
+				isShow: !form.confirmPassword.isShow
 			}
 		})
 	}
+	const onChangeInput = (event,field) => {
+		const temp = strengthIndicator(event.target.value);
+		setForm({
+			...form,
+			[field]: {
+				...form[field],
+				value: event.target.value,
+			}
+		});
+		setLevel(strengthColor(temp))
+
+	};
 
 	const handleOnChangePassword = (value) => {
 		const temp = strengthIndicator(value);
@@ -137,204 +171,314 @@ const SignUpPage = () => {
 			}
 		})
 	}
+	const onValidate = () => {
+		setErrorMsg("");
+		setForm({
+			...form,
+			name: {
+				...form.name,
+				error: false,
+			},
+			email: {
+				...form.email,
+				error: false,
+			},
+			password: {
+				...form.password,
+				error: false,
+			},
+			confirmPassword: {
+				...form.confirmPassword,
+				error: false,
+			},
+
+		});
+
+		let isError = false,
+			newForm = { ...form };
+		if (form.name.value.trim() === "") {
+			isError = true;
+			form.name.error = true;
+			form.name.msg = t("txt_error_name_empty");
+		}
+		if (form.email.value.trim() === "") {
+			isError = true;
+			form.email.error = true;
+			form.email.msg = t("txt_error_name_empty");
+		}
+		if (form.password.value.trim() === "") {
+			isError = true;
+			form.password.error = true;
+			form.password.msg = "txt_error_access_code_empty";
+		}
+		if (form.confirmPassword.value.trim() === "") {
+			isError = true;
+			form.confirmPassword.error = true;
+			form.confirmPassword.msg = "txt_error_access_code_empty";
+		}
+		if (form.confirmPassword.value !== form.password.value) {
+			isError = true;
+			form.confirmPassword.error = true;
+			form.confirmPassword.msg = "Mật khẩu không giống";
+		}
+		if (isError) {
+			return setForm(newForm);
+		}
+		handleSignUp();
+	};
 
 	const navigate = useNavigate()
 	const handleNavigateSignIn = () => {
 		navigate('/verify')
 	}
+
+	useEffect(() => {
+		if (isSuccess) {
+			message.success(t("thành cônng"));
+			handleNavigateSignIn();
+		} else if (isError) {
+			message.error(errorMsg);
+		}
+	},[isSuccess,isError]);
 	return (
-		//   <div>
-		//   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.53)', height: '100vh' }}>
-		//     <div style={{ width: '800px', height: '445px', borderRadius: '6px', background: '#fff', display: 'flex' }}>
-		//       <WrapperContainerLeft>
-		//         <h1> Xin chao</h1>
-		//         <p>Dang nhap vao tao tai khoan</p>
-		//         <InputForm style={{ marginBottom: '10px' }} placeholder="abc@gmail.com" value={email} onChange={handleOnChangeEmail}  />
-		//         <div style={{ position: 'relative' }}>
-		//         <span
-		//           onClick={() => setIsShowPassword(!isShowPassword)}
-		//           style={{
-		//             zIndex: 10,
-		//             position: 'absolute',
-		//             top: '4px',
-		//             right: '8px'
-		//           }}
-		//         >{
-		//             isShowPassword ? (
-		//               <EyeFilled />
-		//             ) : (
-		//               <EyeInvisibleFilled />
-		//             )
-		//           }
-		//         </span>
-		//         <InputForm
-		//           placeholder="password"
-		//           type={isShowPassword ? "text" : "password"}
-		//           value={password}
-		//           onChange={handleOnChangePassword}
-		//         />
-		//         </div>
-		//         <div style={{ position: 'relative' }}>
-		//           <span
-		//             onClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)}
-		//             style={{
-		//               zIndex: 10,
-		//               position: 'absolute',
-		//               top: '4px',
-		//               right: '8px'
-		//             }}
-		//           >{
-		//               isShowConfirmPassword ? (
-		//                 <EyeFilled />
-		//               ) : (
-		//                 <EyeInvisibleFilled />
-		//               )
-		//             }
-		//           </span>
-		//           <InputForm placeholder="comfirm password" type={isShowConfirmPassword ? "text" : "password"}
-		//             value={confirmPassword} onChange={handleOnchangeConfirmPassword}
-		//           />
-		//         </div>
-		//         {data?.status === 'ERR' && <span>{data?.message}</span>}
-		//           <Loading isLoading={isLoading}>
-		//         <ButtonComponent
-		//         disabled={!email.length || !password.length || !confirmPassword.length}
-		//         onClick={handleSignUp}
-		//           size={40}
-		//           styleButton={{
-		//             background: "rgb(255, 57, 69)",
-		//             height: "48px",
-		//             width: "220px",
-		//             border: "none",
-		//             borderRadius: "4px",
-		//           }}
-		//           // onClick={handleAddOrderProduct}
-		//           textbutton={"Dang ky"}
-		//           styleTextButton={{
-		//             color: "#fff",
-		//             fontSize: "15px",
-		//             fontWeight: "700",
-		//           }}
-		//         ></ButtonComponent>
-		//            </Loading>
-		//           <p><WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
-		//       <p>Ban da có tài khoản? <WrapperTextLight onClick={handleNavigateSignIn}>Dang nhap</WrapperTextLight></p>
-		//       </WrapperContainerLeft>
-		//       <WrapperContainerRight>
-		//       <Image src={imageLogo} preview={false} alt="iamge-logo" height="203px" width="203px" />
-		//       <h4>Mua sắm tại LTTD</h4>
-		//       </WrapperContainerRight>
-		//     </div>
-		//   </div>
-		// </div>
 		<Box className={classes.container}>
 
 			<Grid container className={classes.conContent} spacing={5}>
 
 				<Grid item xs={12} sm={6} lg={4} my={30} >
-					{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
-					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Create an account" className={classes.conTextCreate} /></Typography>
-					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUp}>  <AnimationComponent type="text" text="Already have an account? " className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}>
-						<AnimationComponent type="text" text="Sign up" className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
+					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text={t("sign_up")} className={classes.conTextCreate} /></Typography>
+					<Typography onClick={handleNavigateSignUp} className={classes.txtDesTitleSignUpLight}>  <AnimationComponent type="text" text={t("txt_alrealy_account")} className={classes.txtDesTitleSignUp} /><Typography className={classes.txtDesTitleSignUpLight}>
+						<AnimationComponent type="text" text={t("sign_in")} className={classes.txtDesTitleSignUpLight} /></Typography></Typography>
 				</Grid>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard} sx={{ margin: { xs: "-180px 20px 400px 20px;",xl: "60px 0px 0px 0px",md: "60px 0px 0px 0px" } }}>
 					<AnimationComponent type="box">
 						<Box className={classes.conSignUp}>
-							<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}><AnimationComponent type="text" text="Sign in" className={classes.txtSignUp} /></Typography>
-							{/* <Box className={classes.imgLogo} component={'img'} src={Assets.logo} alt="logo"/> */}
+							<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "24px !important" } }}><AnimationComponent type="text" text={t("sign_up")} className={classes.txtSignUp} /></Typography>
 							<Box className={classes.conForm}>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('email')}</Typography>
-									<InputForm style={{ border: !form.email.isFocus && `2px solid ${form.email.error ? Colors.secondary : form.email.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t("name")}</Typography>
+
+									<Input
+										style={{
+											border:
+												!form.name.isFocus &&
+												`2px solid ${form.name.error
+													? Colors.secondary
+													: form.name.value.trim() !== ""
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
 										className={classes.conInput}
-										// fullWidth
-										placeholder={t('email')}
-										// startAdornment={
-										//   <InputAdornment position='start'>
-										//     <FontAwesomeIcon icon={faAddressCard} fontSize={20} color={form.email.isFocus || form.email.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-										//   </InputAdornment>
-										// }
-										// disabled={loading}
-										onFocus={() => onBlurFocusInput(true,'email')}
-										onBlur={() => onBlurFocusInput(false,'email')}
-										value={email} onChange={handleOnChangeEmail}
+										fullWidth
+										placeholder={t("name")}
+										value={form.name.value}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													// icon={faAddressCard}
+													fontSize={20}
+													color={
+														form.name.isFocus || form.name.value.trim() !== ""
+															? Colors.bgLogin
+															: Colors.bgLogin
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
+										}
+										// onChange={handleOnChangename}
+										onChange={(event) => onChangeInput(event,"name")}
+										onFocus={() => onBlurFocusInput(true,"name")}
+										onBlur={() => onBlurFocusInput(false,"name")}
 									/>
 								</Box>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('password')}</Typography>
-									<InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t("email")}</Typography>
+
+									<Input
+										style={{
+											border:
+												!form.email.isFocus &&
+												`2px solid ${form.email.error
+													? Colors.secondary
+													: form.email.value.trim() !== ""
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
 										className={classes.conInput}
-										// fullWidth
-										placeholder={t('password')}
-
-										// startAdornment={
-										//   <InputAdornment position='start'>
-										//     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-										//   </InputAdornment>
-										// }
-
-										// endAdornment={
-										//   <InputAdornment position='end'>
-										//     <FontAwesomeIcon
-										icon={form.password.isShow ? faEye : faEyeSlash}
-										fontSize={20}
-										value={password}
-										type={isShowPassword ? "text" : "password"}
-										onChange={handleOnChangePassword}
-										color={Colors.primary}
-										// className={classes.conIconInputRight}
-										onClick={onChangeTypePassword}
+										fullWidth
+										placeholder={t("email")}
+										value={form.email.value}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													// icon={faAddressCard}
+													fontSize={20}
+													color={
+														form.email.isFocus || form.email.value.trim() !== ""
+															? Colors.bgLogin
+															: Colors.bgLogin
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
+										}
+										// onChange={handleOnChangename}
+										onChange={(event) => onChangeInput(event,"email")}
+										onFocus={() => onBlurFocusInput(true,"email")}
+										onBlur={() => onBlurFocusInput(false,"email")}
 									/>
-									{/* </InputAdornment> */}
-									{/* } */}
-									{/* type={form.password.isShow ? 'text' : 'password'}
-              // disabled={loading}
-              onFocus={() => onBlurFocusInput(true, 'password')}
-              onBlur={() => onBlurFocusInput(false, 'password')} */}
-									{/* onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  // onValidate()
-                }
-              }} */}
-									{/* /> */}
 								</Box>
 								<Box className={classes.conItemInput}>
-									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('password')}</Typography>
+									<Typography className={classes.txtTitleInput}>
+										{t("password")}
+									</Typography>
+									<Input
+										style={{
+											border:
+												!form.password.isFocus &&
+												`2px solid ${form.password.error
+													? Colors.secondary
+													: form.password.value.trim() !== ""
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
+										className={classes.conInput}
+										fullWidth
+										placeholder={t("password")}
+										value={form.password.value}
+										onChange={(event) => onChangeInput(event,"password")}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													// icon={faLock}
+													fontSize={20}
+													color={
+														form.password.isFocus ||
+															form.password.value.trim() !== ""
+															? Colors.bgLogin
+															: Colors.placeHolder
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
+										}
+										endAdornment={
+											<InputAdornment position="end">
+												<FontAwesomeIcon
+													icon={form.password.isShow ? faEye : faEyeSlash}
+													fontSize={20}
+													color={Colors.bgLogin}
+													className={classes.conIconInputRight}
+													onClick={onChangeTypePassword}
+												/>
+											</InputAdornment>
+										}
+										type={form.password.isShow ? "text" : "password"}
+										onFocus={() => onBlurFocusInput(true,"password")}
+										onBlur={() => onBlurFocusInput(false,"password")}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												onValidate();
+											}
+										}}
+									/>
+								</Box>
+								<Box className={classes.conItemInput}>
+									<Typography className={classes.txtTitleInput}>
+										{t("confirm_password")}
+									</Typography>
+									<Input
+										style={{
+											border:
+												!form.confirmPassword.isFocus &&
+												`2px solid ${form.confirmPassword.error
+													? Colors.secondary
+													: form.confirmPassword.value.trim() !== ""
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
+										className={classes.conInput}
+										fullWidth
+										placeholder={t("confirm_password")}
+										value={form.confirmPassword.value}
+										onChange={(event) => onChangeInput(event,"confirmPassword")}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													// icon={faLock}
+													fontSize={20}
+													color={
+														form.confirmPassword.isFocus ||
+															form.confirmPassword.value.trim() !== ""
+															? Colors.bgLogin
+															: Colors.placeHolder
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
+										}
+										endAdornment={
+											<InputAdornment position="end">
+												<FontAwesomeIcon
+													icon={form.confirmPassword.isShow ? faEye : faEyeSlash}
+													fontSize={20}
+													color={Colors.bgLogin}
+													className={classes.conIconInputRight}
+													onClick={onChangeTypePassword}
+												/>
+											</InputAdornment>
+										}
+										type={form.confirmPassword.isShow ? "text" : "confirmPassword"}
+										onFocus={() => onBlurFocusInput(true,"confirmPassword")}
+										onBlur={() => onBlurFocusInput(false,"confirmPassword")}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												onValidate();
+											}
+										}}
+									/>
+								</Box>
+								{/* <Box className={classes.conItemInput}>
+									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('confirm_password')}</Typography>
 									<InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
 										className={classes.conInput}
-										// fullWidth
-										placeholder={t('password')}
+										fullWidth
+										placeholder={t('confirm_password')}
 
-										// startAdornment={
-										//   <InputAdornment position='start'>
-										//     <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
-										//   </InputAdornment>
-										// }
+										startAdornment={
+										  <InputAdornment position='start'>
+										    <FontAwesomeIcon          icon={faLock}  fontSize={20} color={form.password.isFocus || form.password.value.trim() !== '' ? Colors.primary : Colors.placeHolder} className={classes.conIconInput} />
+										  </InputAdornment>
+										}
 
-										// endAdornment={
-										//   <InputAdornment position='end'>
-										//     <FontAwesomeIcon
+										endAdornment={
+										  <InputAdornment position='end'>
+										    <FontAwesomeIcon
 										icon={form.password.isShow ? faEye : faEyeSlash}
 										fontSize={20}
 										value={confirmPassword}
-
 										onChange={handleOnchangeConfirmPassword}
 										color={Colors.primary}
-									// className={classes.conIconInputRight}
+										className={classes.conIconInputRight}
+										type={form.password.isShow ? 'text' : 'password'}
+										onFocus={() => onBlurFocusInput(true,'password')}
+										onBlur={() => onBlurFocusInput(false,'password')}
 									/>
-									{/* </InputAdornment> */}
-									{/* } */}
-									{/* type={form.password.isShow ? 'text' : 'password'}
-              // disabled={loading}
-              onFocus={() => onBlurFocusInput(true, 'password')}
-              onBlur={() => onBlurFocusInput(false, 'password')} */}
-									{/* onKeyDown={(e) => {
+									</InputAdornment>
+								} 
+
+									onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   // onValidate()
                 }
-              }} */}
-									{/* /> */}
-								</Box>
+              }} 
+									 /> 
+								</Box> */}
 							</Box>
 							<FormControl fullWidth sx={{ mt: 2 }}>
 								<Grid container spacing={2} alignItems="center">
@@ -350,48 +494,23 @@ const SignUpPage = () => {
 							</FormControl>
 							<Typography className={classes.txtDesTitle} sx={{ fontSize: { xs: "13px !important" } }}>{t('txt_agree')}</Typography>
 
-							{/* <Box className={classes.conMsg}> */}
-							{/* <Typography className={classes.txtError}>{t(errorMsg)}</Typography> */}
-							{/* <Typography className={classes.txtForgot}>{t('for_ta_click_here')}</Typography> */}
-							{/* </Box> */}
-							{/* onClick={onPressJoinClassTa}  */}
-							{data?.status === 'ERR' && <span>{data?.message}</span>}
+							{/* {form.confirmPassword.value !== form.password.value && (
+								<span style={{ color: "red" }}>
+									{(form.confirmPassword.msg = t("txt_error_name_empty"))}
+								</span>
+							)} */}
 							<Loading isLoading={isLoading}>
 								<CButton
-									disabled={!email.length || !password.length}
+									disabled={!email.length || !password.length || !name.length || !confirmPassword.length}
 									title={t('create_account')}
-									onClick={handleSignUp}
+									// onClick={handleSignUp}
 
-								// onClick={onValidate}
+									onClick={onValidate}
 								// loading={loading}
 								/>
 							</Loading>
-							{/* <Box className={classes.conTitleLoginMethod}>
-          <Box className={classes.conLine} />
-          <Typography className={classes.txtTitleLoginMethod}>{t('txt_login_another')}</Typography>
-          <Box className={classes.conLine} />
-        </Box>
-
-        <Button fullWidth className={classes.conBtnGoogle} 
-          disabled={loading}
-          onClick={onClick}
-        >
-          <Box className={classes.imgLogoGoogle} component={'img'} src={Assets.logoGoogle} />
-          <Typography className={classes.txtBtnGoogle}>{t('sign_in_with_google')}</Typography>
-        </Button> */}
-
 							<Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_alrealy_account')}  <span className={classes.txtBtnRegister}>{t('sign_in')}</span></Typography>
-							{/* 
-            <Box className={classes.conLanguage}>
-              <Box className={classes.conLanguageItem} component={'img'} src={Assets.vnFlag}
-                style={{ opacity: lang === Configs.language.vi ? 1 : .5 }}
-                onClick={() => onChangeLanguage(Configs.language.vi)}
-              />
-              <Box className={classes.conLanguageItem} component={'img'} src={Assets.usFlag}
-                style={{ opacity: lang === Configs.language.en ? 1 : .5 }}
-                onClick={() => onChangeLanguage(Configs.language.en)}
-              />
-            </Box> */}
+
 						</Box>
 					</AnimationComponent>
 

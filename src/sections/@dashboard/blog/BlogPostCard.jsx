@@ -77,8 +77,9 @@ export default function BlogPostCard({ blog,index }) {
 
 
 	return (
+
 		<Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-			<Card sx={{ position: 'relative',borderRadius: "14px" }}>
+			<Card sx={{ position: 'relative',borderRadius: "14px" }} className={classes.boxCard}>
 				<StyledCardMedia
 					sx={{
 						...((latestPostLarge || latestPost) && {
