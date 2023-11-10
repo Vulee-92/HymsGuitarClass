@@ -15,7 +15,7 @@ export default makeStyles(() => {
 			textAlign: "center",
 			fontWeight: 600,
 			color: "#0b2238",
-			fontSize: "24px",
+			fontSize: "1.5rem",
 			height: "70px",
 			minHeight: "62.4px",
 			overflow: "hidden",

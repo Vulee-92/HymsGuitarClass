@@ -46,7 +46,7 @@ import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
 
-const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
+const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const classes = styles();
@@ -303,7 +303,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								<MenuItem>
 									{user?.access_token ? (
 										<>
-											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{ marginRight: "16px" }} />
+											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" style={{ marginRight: "16px" }} />
 											<Typography onClick={(event) => {
 												event.stopPropagation();
 												setIsDrawerOpen(!isDrawerOpen);
@@ -315,7 +315,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 										</>
 									) : (
 										<>
-											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" sx={{ marginRight: "10px" }} />
+											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" sx={{ marginRight: "10px" }} />
 											<Button onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen); handleNavigateLogin() }}
 												className={classes.txtTilte}
 											>
@@ -328,7 +328,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								</MenuItem>
 								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}>
 									<>
-										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#245c4f" style={{
+										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" style={{
 											marginRight: "0px",
 										}} />
 										<Button onClose={() => setIsDrawerOpen(false)}
@@ -350,14 +350,14 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 										)}
 										<MenuItem onClick={() => handleClickNavigate(`my-order`)}
 										>
-											<FontAwesomeIcon icon={faTruckFast} fontSize="18px" color="#245c4f" style={{ marginRight: "10px" }} />
+											<FontAwesomeIcon icon={faTruckFast} fontSize="18px" color="#212B36" style={{ marginRight: "10px" }} />
 											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
 												Đơn hàng của bạn
 											</Typography>
 										</MenuItem>
 										<MenuItem onClick={() => handleClickNavigate()}
 										>
-											<FontAwesomeIcon icon={faRightFromBracket} fontSize="18px" color="#245c4f" style={{ marginRight: "14px",}} />
+											<FontAwesomeIcon icon={faRightFromBracket} fontSize="18px" color="#212B36" style={{ marginRight: "14px",}} />
 											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
 												Đăng xuất
 											</Typography>
@@ -422,17 +422,17 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 						<Box sx={{
 							display: { xs: "block",md: "none" }
 						}}>
-							{!isHiddenCart && user.access_token && (
-								<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
-									<Badge count={order?.orderItems?.length} size="small">
-										<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
+							{/* {!isHiddenCart && user.access_token && ( */}
+							<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
+								<Badge count={order?.orderItems?.length} size="small">
+									<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
 
-									</Badge>
-									{/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
-								</div>
-
+								</Badge>
+								{/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
+							</div>
+							{/* 
 							)
-							}
+							} */}
 						</Box>
 
 
@@ -503,8 +503,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								</Col>
 							)}
 						</Box> */}
-						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex",justifyContent: "center",alignItems: 'center' } }} >
-							<Box>
+						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex",xl: "flex" },justifyContent: "center",alignItems: 'center' }} >
+							<Box >
 
 								{userAvatar ? (
 
@@ -582,17 +582,17 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = false }) => {
 								</Tooltip>
 							</MenuItem>
 							<MenuItem>
-								{!isHiddenCart && user.access_token && (
-									<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
-										<Badge count={order?.orderItems?.length} size="small">
-											<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
+								{/* {!isHiddenCart && user.access_token && ( */}
+								<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
+									<Badge count={order?.orderItems?.length} size="small">
+										<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
 
-										</Badge>
-										{/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
-									</div>
+									</Badge>
+									{/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
+								</div>
 
-								)
-								}
+								{/* )
+								} */}
 							</MenuItem>
 
 							{/* <MenuItem>

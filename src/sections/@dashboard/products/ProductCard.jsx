@@ -51,9 +51,9 @@ export default function ShopProductCard({ product }) {
 									zIndex: 9,
 									top: 16,
 									background: "none",
-									border: "1px solid #245c4f",
+									border: "1px solid #212B36",
 									right: 16,
-									color: "#245c4f",
+									color: "#212B36",
 									position: "absolute",
 									textTransform: "",
 								}}
@@ -116,56 +116,6 @@ export default function ShopProductCard({ product }) {
 						</Stack>
 					</Stack>
 				</Card>
-				{/* <Card>
-          <Box sx={{ pt: "100%", position: "relative" }}>
-            {status && (
-              <Label
-                variant="filled"
-                color={(status === "sale" && "error") || "info"}
-                sx={{
-                  zIndex: 9,
-                  top: 16,
-                  right: 16,
-                  position: "absolute",
-                  textTransform: "uppercase",
-                }}
-              >
-                {status}
-              </Label>
-            )}
-            <StyledProductImg alt={name} />
-          </Box>
-
-          <Stack spacing={2} sx={{ p: 3 }}>
-            <Link color="inherit" underline="hover">
-              <Typography variant="subtitle2" noWrap>
-                {name}
-              </Typography>
-            </Link>
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <ColorPreview colors={colors} />
-              <Typography variant="subtitle1">
-                <Typography
-                  component="span"
-                  variant="body1"
-                  sx={{
-                    color: "text.disabled",
-                    textDecoration: "line-through",
-                  }}
-                >
-                  {priceSale && fCurrency(priceSale)}
-                </Typography>
-                &nbsp;
-                {fCurrency(price)}
-              </Typography>
-            </Stack>
-          </Stack>
-        </Card> */}
 			</>
 		</>
 	);

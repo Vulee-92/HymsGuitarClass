@@ -32,7 +32,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const user = useSelector((state) => state.user);
 	const order = useSelector((state) => state.order);
 	const classes = styles();
-	const [limit,setLimit] = useState(6);
+	const [limit,setLimit] = useState(12);
 	const [showFab,setShowFab] = useState(false);
 	const searchProduct = useSelector((state) => state?.product?.search);
 	const searchDebounce = useDebounce(searchProduct,100);
@@ -67,6 +67,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 		return res;
 	};
+	const fetchProductAllAccessories = async () => {
+		const accessoriesRes = await ProductService.getProductType('Acoustic Guitars',0,10);
+		return accessoriesRes;
+	};
 	const fetchGetDetailsProduct = async (context) => {
 		const id = context?.queryKey && context?.queryKey[1];
 		if (id) {
@@ -95,29 +99,31 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	};
 
 	const handleAddOrderProduct = () => {
-		if (!user?.id) {
-			navigate("/login",{ state: location?.pathname });
+		// if (!user?.id) {
+		// 	navigate("/login",{ state: location?.pathname });
+		// } else {
+		// setOpen(true);
+		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
+		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
+			dispatch(
+				addOrderProduct({
+					orderItem: {
+						name: productDetails?.name,
+						amount: numProduct,
+						type: productDetails?.type,
+						fee: productDetails?.fee,
+						image: productDetails?.image,
+						price: productDetails?.price,
+						product: productDetails?._id,
+						discount: productDetails?.discount,
+						countInstock: productDetails?.countInStock,
+					},
+				})
+			);
 		} else {
-			setOpen(true);
-			const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
-			if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
-				dispatch(
-					addOrderProduct({
-						orderItem: {
-							name: productDetails?.name,
-							amount: numProduct,
-							image: productDetails?.image,
-							price: productDetails?.price,
-							product: productDetails?._id,
-							discount: productDetails?.discount,
-							countInstock: productDetails?.countInStock,
-						},
-					})
-				);
-			} else {
-				setErrorLimitOrder(true);
-			}
+			setErrorLimitOrder(true);
 		}
+		// }
 		handleCartClick();
 		setOpenDialog(true);
 	};
@@ -147,6 +153,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+
+
+	const {
+		data: productsAccessory,
+		isPreviousDatas,
+	} = useQuery(["productsAccessory"],fetchProductAllAccessories,{
+		retry: 2,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
+	console.log("productsAccessory",productsAccessory)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -202,7 +219,44 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			},
 		],
 	};
-
+	const settingsAccess = {
+		dots: true,
+		infinite: true,
+		slidesToShow: 2,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 3000,
+		cssEase: "linear",
+		pauseOnHover: true,
+		centerPadding: "60px",
+		nextArrow: <SampleNextArrow />,
+		prevArrow: <SamplePrevArrow />,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+					infinite: true,
+					dots: true,
+				},
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				},
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+				},
+			},
+		],
+	};
 	const handleToggleDrawer = () => {
 		setOpen1(!open1);
 	};
@@ -274,7 +328,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											className={classes.nameProductInfo}
 											variant='contained'
 											style={{
-												background: "#245c4f",
+												background: "#212B36",
 												height: "48px",
 												width: "160px",
 												border: "none",
@@ -292,7 +346,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert className={classes.nameProductInfo} style={{ border: "1px solid #245c4f",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
+													<Alert className={classes.nameProductInfo} style={{ border: "1px solid #212B36",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
 														Đã thêm vào giỏ hàng!
 													</Alert>
 												</Snackbar>
@@ -348,7 +402,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											className={classes.nameProductInfo}
 											variant='contained'
 											style={{
-												background: "#245c4f",
+												background: "#212B36",
 												height: "48px",
 												width: "200px",
 												textTransform: "capitalize",
@@ -365,7 +419,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert style={{ border: "1px solid #245c4f",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
+													<Alert style={{ border: "1px solid #212B36",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
 														Đã thêm vào giỏ hàng!
 													</Alert>
 												</Snackbar>
@@ -496,26 +550,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											{productDetails?.price?.toLocaleString()}₫
 										</Typography>
 									</WrapperPriceProduct>
-									{/* <Typography className={classes.nameProduct} style={{ padding: '10px 16px ' }}>
-                    {productDetails?.name} */}
-									{/* // <Stack spacing={1}>
-                  //   <Rating name="size-small" defaultValue={productDetails?.rating} size="small" />
-                  // </Stack> */}
-
-									{/* Da ban {productDetails?.countInStock}+ */}
-									{/* </Typography> */}
-									{/* <Rate
-                  allowHalf
-                  defaultValue={productDetails?.rating}
-                  value={productDetails?.rating}
-
-                /> */}
-
-									{/* <Box style={{ padding: '10px 16px ' }}>
-                <Typography className={classes.nameProduct}>Giao đến </Typography>
-                <Typography className="address">{user?.address}</Typography>
-                <Typography className={classes.nameProduct}>Đổi địa chỉ</Typography>
-              </Box> */}
 								</Box>
 
 								<Box style={{ padding: "10px 16px ",display: "flex" }}>
@@ -555,7 +589,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											color='primary'
 											aria-label='Mua hàng'
 											style={{
-												background: "#245c4f",
+												background: "#212B36",
 												height: "48px",
 												width: "100%",
 												textTransform: "capitalize",
@@ -569,56 +603,90 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										>
 											Thêm vào giỏ hàng
 										</Button>
-										{errorLimitOrder && <div style={{ color: "red" }}>San pham het hang</div>}
+										{errorLimitOrder && <div style={{ color: "red" }}>Sản phẩm hết hàng</div>}
 									</div>
 								</div>
 								<Box sx={{ display: "flex",paddingLeft: "16px" }}>
-									<FontAwesomeIcon icon={faBox} style={{ color: "#245c4f",marginRight: "15px",fontSize: "16px" }} />
+									<FontAwesomeIcon icon={faBox} style={{ color: "#212B36",marginRight: "15px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Còn hàng</Typography>
 								</Box>
 								<Box sx={{ display: "flex",paddingTop: "5px",paddingLeft: "16px" }}>
-									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#245c4f",marginRight: "10px",fontSize: "16px" }} />
+									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển cho mọi đơn hàng trong khu vực nội thành TP. Tam Kỳ</Typography>
 								</Box>
 								<Box sx={{ display: "flex",paddingTop: "5px",paddingLeft: "16px" }}>
-									<FontAwesomeIcon icon={faTruck} style={{ color: "#245c4f",marginRight: "10px",fontSize: "16px" }} />
+									<FontAwesomeIcon icon={faTruck} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Hỗ trợ vận chuyển toàn quốc</Typography>
 								</Box>
 							</Paper>
 						</Grid>
 					</Grid>
 
+
+					{showFab && (
+						<Fab
+							sx={{
+								position: "fixed",
+								display: "flex",
+							}}
+							color='primary'
+							onClick={handleAddOrderProduct}
+						>
+							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
+								<div>
+									<Button
+										className={classes.nameProductInfo}
+										variant='contained'
+										style={{
+											background: "#212B36",
+											height: "48px",
+											width: "100%",
+											border: "none",
+											borderRadius: "4px",
+											color: "#fff",
+											fontSize: "15px",
+											fontWeight: "700",
+										}}
+										onClick={handleAddOrderProduct}
+									>
+										Thêm vào giỏ hàng
+									</Button>
+									{errorLimitOrder && <div style={{ color: "red" }}>Sản phẩm hết hàng</div>}
+								</div>
+							</div>
+						</Fab>
+					)}
 					<Dialog open={openDialog} onClose={handleCloseDialog}>
 						<Box sx={{ display: "flex",flexDirection: "row",justifyContent: "space-between" }} style={{ background: "rgb(36, 92, 79,0.1)" }}>
 							<DialogTitle className={classes.nameProduct}>Giỏ hàng!</DialogTitle>
 							<DialogActions>
-								<Button onClick={handleCloseDialog} style={{ color: "#245c4f" }} sx={{ paddingRight: { xs: "0px",xl: "0px",md: "0px" } }} autoFocus>
+								<Button onClick={handleCloseDialog} style={{ color: "#212B36" }} sx={{ paddingRight: { xs: "0px",xl: "0px",md: "0px" } }} autoFocus>
 									<FontAwesomeIcon icon={faXmark} fade />
 								</Button>
 							</DialogActions>
 						</Box>
 						<DialogContent style={{ padding: "0px",boxShadow: "none" }}>
 							<Card style={{ padding: "none",boxShadow: "none" }} sx={{ display: "flex" }}>
-								<CardMedia component='img' sx={{ width: 70,height: 70 }} image={productDetails?.image} alt={productDetails?.image} />
+								<CardMedia component='img' sx={{ width: "30%",height: "30%" }} image={productDetails?.image} alt={productDetails?.image} />
 								<Box sx={{ display: "flex",flexDirection: "column" }}>
 									<CardContent sx={{ flex: "1 0 auto" }}>
 										<Box style={{ marginBottom: "10px" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 600,marginBottom: "10px" }} component='div' variant='h5'>
+											<Typography className={classes.nameProduct} style={{ fontSize: "1.5rem",fontWeight: 600,marginBottom: "10px" }} component='div' variant='h5'>
 												{productDetails?.name}
 											</Typography>
-											<Typography className={classes.priceTitle} style={{ fontSize: "14px",textAlign: "left",fontWeight: 500 }} >
+											<Typography className={classes.priceTitle} style={{ fontSize: "1.5rem",textAlign: "left",fontWeight: 500 }} >
 												{(productDetails?.price)?.toLocaleString()}₫
 											</Typography>
 										</Box>
 										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
-											<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "14px",fontWeight: 500,lineHeight: 1.5 }} >
+											<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
+											<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "1rem",fontWeight: 500,lineHeight: 1.5 }} >
 												{" "}{numProduct}
 											</Typography>
 										</Box>
 										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "14px",fontWeight: 400 }}>Tạm tính:</Typography>
-											<Typography className={classes.priceTitle} style={{ fontSize: "14px",textAlign: "left",fontWeight: 500 }} >
+											<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400 }}>Tạm tính:</Typography>
+											<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500 }} >
 												{(productDetails?.price * numProduct)?.toLocaleString()}₫
 											</Typography>
 										</Box>
@@ -633,7 +701,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										className={classes.nameProductInfo}
 										variant='contained'
 										style={{
-											background: "#245c4f",
+											background: "#212B36",
 											height: "48px",
 											width: "100%",
 											border: "none",
@@ -653,49 +721,34 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										</Typography>
 									)}
 								</div>
+								<hr style={{ margin: "60px 0" }} />
+								<Box style={{ margin: "60px 0" }}>
+									<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
+									<div className={classes.sliderWrapper}>
+										<ImageList variant='masonry' cols={1} gap={8}>
+											<Slider {...settingsAccess} style={{ overflow: "hidden" }}>
+												{productsAccessory?.data?.map((product,post,index) => {
+													return (
+														<div>
+															<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
+																<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+															</ImageListItem>
+														</div>
+													);
+												})}
+											</Slider>
+										</ImageList>
+									</div>
+								</Box>
 							</div>
+
 						</DialogContent>
 					</Dialog>
-					{showFab && (
-						<Fab
-							sx={{
-								position: "fixed",
-								display: "flex",
-							}}
-							color='primary'
-							onClick={handleAddOrderProduct}
-						>
-							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
-								<div>
-									<Button
-										className={classes.nameProductInfo}
-										variant='contained'
-										style={{
-											background: "#245c4f",
-											height: "48px",
-											width: "100%",
-											border: "none",
-											borderRadius: "4px",
-											color: "#fff",
-											fontSize: "15px",
-											fontWeight: "700",
-										}}
-										onClick={handleAddOrderProduct}
-									>
-										Thêm vào giỏ hàng
-									</Button>
-									{errorLimitOrder && <div style={{ color: "red" }}>San pham het hang</div>}
-								</div>
-							</div>
-						</Fab>
-					)}
 					<hr style={{ margin: "60px 0" }} />
 					<Box style={{ margin: "60px 0" }}>
-						{/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
 						<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
 						<div className={classes.sliderWrapper}>
 							<ImageList variant='masonry' cols={1} gap={8}>
-								{/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
 								<Slider {...settings} style={{ overflow: "hidden" }}>
 									{products?.data?.map((product,post,index) => {
 										return (

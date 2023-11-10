@@ -23,14 +23,15 @@ function App() {
 	const [isLoading,setIsLoading] = useState(false);
 	const user = useSelector((state) => state.user);
 	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
+	console.log("firisLoggedInst",isLoggedIn)
 	// ...
 
-	if (!isLoggedIn) {
+
+	if (!isLoggedIn && localStorage.getItem("access_token") === null) { // Sửa điều kiện kiểm tra
 		localStorage.removeItem('access_token'); // Xóa token từ Local Storage
 		// Có thể xóa các thông tin khác từ Local Storage nếu cần
 		localStorage.removeItem('refresh_token');
 		localStorage.removeItem('persist:root');
-
 	}
 	// ...
 

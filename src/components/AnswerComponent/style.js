@@ -382,7 +382,7 @@ export default makeStyles(() => {
 		},
 		txtTitleBox: {
 			...CStyles.txt_title_item,
-			fontSize: "35px",
+			fontSize: "2rem",
 			fontWeight: 700,
 			lineHeight: 1.3,
 			position: "relative",

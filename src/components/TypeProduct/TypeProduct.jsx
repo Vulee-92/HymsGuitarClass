@@ -3,17 +3,10 @@ import { styled } from "@mui/styles";
 import React,{ useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Item = styled(Paper)(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	textAlign: 'center',
-	color: theme.palette.text.secondary,
-}));
-
 export const TypeProduct = ({ name,products,count }) => {
 	const navigate = useNavigate();
 	const [checked,setChecked] = useState(false);
+	const [checkedTypes,setCheckedTypes] = useState([]);
 
 	const handleNavigateType = (type) => {
 		navigate(
@@ -27,27 +20,26 @@ export const TypeProduct = ({ name,products,count }) => {
 	const handleNavigate = () => {
 		navigate(
 			`/product`,
-
 		);
 	};
-
-	const handleCheckboxChange = () => {
-		setChecked(!checked);
-	};
-
-	const filteredProducts = checked
-		? { name }
-		: products;
 
 	const handleTypeClick = () => {
 		if (checked) {
 			setChecked(false);
-			handleNavigate()
+			handleNavigate();
 		} else {
 			setChecked(true);
 			handleNavigateType(name);
+
+			// Xóa checkbox cũ khỏi danh sách
+			const newCheckedTypes = checkedTypes.filter((type) => type !== name);
+
+			// Cập nhật giá trị của biến trạng thái
+			setCheckedTypes(newCheckedTypes);
 		}
 	};
+
+
 
 	return (
 		<Box style={{ padding: "10px 0px",cursor: "pointer" }}>

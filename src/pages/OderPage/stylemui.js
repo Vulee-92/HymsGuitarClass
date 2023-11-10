@@ -18,6 +18,21 @@ export default makeStyles(() => {
 			display: "flex",alignItems: "center",
 
 		},
+		txtNumberPrice: {
+			...CStyles.txt_title_item,
+			color: "#242424",
+			fontSize: "1rem",
+			fontWeight: 400,
+
+		},
+		ConWrapperLeft: {
+			backgroundColor: "rgb(255,255,255)",
+			color: "rgb(33,43,54)",
+			transition: "box - shadow 300ms cubic - bezier(0.4,0,0.2,1) 0ms",
+			overflow: "hidden",
+			boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+			borderRadius: "16px",
+		},
 		priceTitle: {
 			...CStyles.txt_title_item,
 			color: "#45cc8f",
@@ -29,7 +44,7 @@ export default makeStyles(() => {
 			fontSize: "14px",
 			fontWeight: 400,
 			lineHeight: 1.5,
-			marginBottom: "10px",
+			marginLeft: "10px",
 			alignItems: "center",
 			overflow: "hidden",
 		},
@@ -47,11 +62,11 @@ export default makeStyles(() => {
 		},
 		txtOrder: {
 			...CStyles.txt_body_item,
-			color: "#245c4f",
-			fontSize: "1.3rem",
+			color: "#212B36",
+			fontSize: "2rem",
 			fontWeight: 700,
 			paddingBottom: "10px",
-			borderBottom: "3px solid #245c4f",
+			borderBottom: "3px solid #212B36",
 			marginLeft: "15px",
 			marginRight: "15px",
 			marginBottom: "15px",
@@ -84,7 +99,7 @@ export default makeStyles(() => {
 		},
 		btnAddCard: {
 			...CStyles.txt_title_item,
-			background: "#245c4f",
+			background: "#212B36",
 			height: "44px",
 			width: "120px",
 			border: "none",
@@ -95,7 +110,7 @@ export default makeStyles(() => {
 			fontWeight: "600",
 			textTransform: "capitalize",
 			"&:hover": {
-				background: "#245c4f",
+				background: "#212B36",
 			}
 		},
 		InfoHomeUser: {
@@ -128,7 +143,7 @@ export default makeStyles(() => {
 		},
 
 		customSendEmail: {
-			backgroundColor: "#245c4f",
+			backgroundColor: "#212B36",
 			height: "40px",
 			width: "40px",
 			marginLeft: "10px",
@@ -159,6 +174,30 @@ export default makeStyles(() => {
 			fontWeight: 400,
 			fontSize: '13px',
 			marginBottom: "10px",
+		},
+		customLoadingButton: {
+			backgroundColor: '#212B36',
+			color: 'white',
+			padding: '10px 20px',
+			width: '130%',
+			border: 'none',
+			borderRadius: '5px',
+			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
+				// CSS cho trạng thái loading
+				'&.MuiButton-label': {
+					visibility: 'hidden',
+				},
+				'& .MuiCircularProgress-root': {
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					marginTop: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+					marginLeft: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+				},
+				"&:hover": {
+					backgroundColor: '#245c4f'
+				}
+			},
 		}
 	};
 });

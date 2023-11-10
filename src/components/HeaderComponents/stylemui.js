@@ -203,12 +203,18 @@ export default makeStyles(() => {
 		},
 		btnLoginHeader: {
 			...CStyles.btn_login,
-			// fontWeight: CStyles.fBold,
 			marginTop: "0px",
-			backgroundColor: Colors.bgLogin,
+			backgroundColor: "#808080",
 			cursor: "pointer",
+			color: "#000",
 			textTransform: "capitalize",
+			transition: "background-color 0.3s, color 0.3s", /* Thêm transition */
+			"&:hover": {
+				backgroundColor: "#fff", /* Đổi màu nền khi hover */
+				color: "#000", /* Đổi màu chữ khi hover */
+			},
 		},
+
 		btnLoginSuccess: {
 			...CStyles.btn_login,
 			// fontWeight: CStyles.fBold,
@@ -272,11 +278,11 @@ export default makeStyles(() => {
 		},
 		txtTitleNNavBar: {
 			...CStyles.txt_body_item,
-			color: "#245c4f",
+			color: "#212B36",
 			fontSize: "16px",
 			fontWeight: 700,
 			paddingBottom: "10px",
-			borderBottom: "1px solid #245c4f",
+			borderBottom: "1px solid #212B36",
 			textAlign: "center",
 			textTransform: "uppercase",
 		},

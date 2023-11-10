@@ -31,7 +31,7 @@ export default makeStyles(() => {
 			width: "30px",
 			color: "#fff",
 			fontSize: "20px",
-			backgroundColor: "#245c4f",
+			backgroundColor: "#212B36",
 			borderRadius: "50%",
 			boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
 			zIndex: 100000,
@@ -49,7 +49,7 @@ export default makeStyles(() => {
 			transform: "translateY(-50%)",
 			height: "30px",
 			width: "30px",
-			backgroundColor: "#245c4f",
+			backgroundColor: "#212B36",
 			borderRadius: "50%",
 			boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
 			zIndex: 100000,
@@ -97,7 +97,7 @@ export default makeStyles(() => {
 				transform: 'translateX(-50%)',
 				width: '90px',
 				height: '6px',
-				backgroundColor: "#245c4f", // Màu đỏ của MUI
+				backgroundColor: "#212B36", // Màu đỏ của MUI
 			},
 		},
 

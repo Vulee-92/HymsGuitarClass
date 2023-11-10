@@ -1,96 +1,452 @@
-import React from 'react'
-import { Lable,WrapperInfo,WrapperTotal,WrapperValue,WrapperCountOrder,WrapperItemOrder,WrapperItemOrderInfo } from './style';
+import React,{ useMemo,useState } from 'react'
+import { Lable,WrapperInfo,WrapperTotal,WrapperValue,WrapperCountOrder,WrapperItemOrder,WrapperItemOrderInfo,WrapperRadio } from './style';
 import Loading from '../../components/LoadingComponent/Loading';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Navigate,useLocation,useNavigate,useParams } from 'react-router-dom';
 import { orderContant } from '../../contant';
 import { convertPrice } from '../../utils';
-import { Container,Box,Typography,Grid,Card } from '@mui/material';
+import { Container,Box,Typography,Grid,Card,Badge,CardMedia,CardContent,Link } from '@mui/material';
 import styles from "./stylemui";
-
-
+import { Assets } from 'configs';
+import * as OrderService from '../../services/OrderService'
+import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
+import { LoadingButton } from '@mui/lab';
 const OrderSucess = () => {
+	const params = useParams()
+	const { id } = params
 	const location = useLocation()
 	const { state } = location
+	const [isProcessing,setIsProcessing] = useState(false);
+	const user = useSelector((state) => state.user)
 	const classes = styles();
+	const delay = (ms) => new Promise((resolve) => setTimeout(resolve,ms));
+	const fetchDataWithDelay = async () => {
+		await delay(200); // Chờ 200 milliseconds trước khi gọi
+		const res = await OrderService.getDetailsOrder(id,state?.token);
+		return res.data;
+	};
+	const navigate = useNavigate();
+	const handleToProduct = () => {
+		setIsProcessing(true);
+		setTimeout(() => {
+			navigate("/product");
+			setIsProcessing(false);
+		},1000);
+	};
+
+	// Sau đó, bạn sử dụng fetchDataWithDelay khi khởi tạo useQuery
+	const queryOrder = useQuery(
+		{ queryKey: ['orders-details'],queryFn: fetchDataWithDelay },
+		{ enabled: id }
+	);
+	const { isLoading,data } = queryOrder;
+
+	console.log("dataaaaa",data)
+	const priceMemo = useMemo(() => {
+		const result = data?.orderItems?.reduce((total,cur) => {
+			return total + ((cur.price * cur.amount))
+		},0)
+		return result
+	},[data])
+	const priceDiscountMemo = useMemo(() => {
+		const result = data?.orderItems?.reduce((total,cur) => {
+			const totalDiscount = cur.discount ? cur.discount : 0
+			return total + (priceMemo * (totalDiscount * cur.amount) / 100)
+		},0)
+		if (Number(result)) {
+			return result
+		}
+		return 0
+	},[data])
+
+
+	const status =
+		data?.isPaid === false && data?.isDelivered === false
+			? "Chờ xử lý"
+			: data?.isPaid === true && data?.isDelivered === false
+				? "Hymns đang chuẩn bị hàng & vận chuyển đến cho bạn"
+				: data?.isPaid === true && data?.isDelivered === true
+					? "Vận chuyển hoàn thành"
+					: "Đang vận chuyển";
+
+
+	const checkOrderStatus = (data) => {
+		if (!data) return '';
+
+		const { paymentMethod,isPaid,isDelivered,orderStatus } = data;
+
+		if (orderStatus === false) {
+			if (!isPaid && !isDelivered) {
+				return 'Đơn hàng của bạn đã được huỷ';
+			}
+		} else if (paymentMethod === 'later_money') {
+			if (!isPaid && !isDelivered) {
+				return 'Đơn hàng đã được xác nhận - Thanh toán khi nhận hàng';
+			} else if (!isPaid && isDelivered) {
+				return 'Đơn hàng của bạn đang trên đường vận chuyển, thanh toán khi nhận hàng';
+			} else if (isPaid && !isDelivered) {
+				return "Hymns đang chuẩn bị hàng & vận chuyển đến cho bạn";
+			} else if (isPaid && isDelivered) {
+				return 'Đơn hàng của bạn đã được giao thành công';
+			}
+		} else if (paymentMethod === 'bank') {
+			if (!isPaid && !isDelivered) {
+				return 'Đơn hàng đã được xác nhận - Vui lòng thanh toán';
+			} else if (isPaid && !isDelivered) {
+				return "Hymns đang chuẩn bị hàng & vận chuyển đến cho bạn";
+			} else if (isPaid && isDelivered) {
+				return "Đơn hàng của bạn đã được giao thành công";
+			}
+		}
+
+		return ''; // Trường hợp còn lại
+	};
+
+
+	const orderStatus = checkOrderStatus(data);
+	const checkOrderStatusTxt = (data) => {
+		if (!data) return '';
+
+		const { paymentMethod,isPaid,isDelivered,orderStatus } = data;
+
+		if (orderStatus === false) {
+			if (!isPaid && !isDelivered) {
+				return `Đơn hàng ${data?.codeOrder} của bạn đã được huỷ`;
+			}
+		} else if (paymentMethod === 'later_money') {
+			if (!isPaid && !isDelivered) {
+				return `Đặt hàng thành công, đơn hàng ${data?.codeOrder}`;
+			} else if (!isPaid && isDelivered) {
+				return `Đơn hàng ${data?.codeOrder} của bạn đang trên đường vận chuyển, thanh toán khi nhận hàng`;
+			} else if (isPaid && !isDelivered) {
+				return `Thanh toán hoàn tất, đơn hàng ${data?.codeOrder}`;
+			} else if (isPaid && isDelivered) {
+				return `Đơn hàng ${data?.codeOrder} của bạn đã được giao thành công`;
+			}
+		} else if (paymentMethod === 'bank') {
+			if (!isPaid && !isDelivered) {
+				return `Đặt hàng thành công, đơn hàng ${data?.codeOrder}`;
+			} else if (isPaid && !isDelivered) {
+				return `Thanh toán hoàn tất, đơn hàng ${data?.codeOrder}`;
+			} else if (isPaid && isDelivered) {
+				return `Đơn hàng ${data?.codeOrder} của bạn đã được giao thành công`;
+			}
+		}
+
+		return ''; // Trường hợp còn lại
+	};
+
+
+	const orderStatusTxt = checkOrderStatusTxt(data);
+
+
 	return (
-		<Container maxWidth="xl">
-			<Box style={{ marginTop: '3rem',textAlign: 'center' }}>
-				<Typography className={classes.txtOrder}>Đặt hàng thành công</Typography>
 
-				<Grid container spacing={2} sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
-					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} >
-						<Card>
-							{state.orders?.map((order,index) => (
-								<div key={index} style={{ borderBottom: "2px solid #d6d6d4",marginTop: 20 }}>
-									<div style={{ display: 'flex',alignItems: 'center',gap: '4px' }}>
-										<img src={order.image} alt={order.name} style={{ width: '77px',height: '79px',objectFit: 'cover',borderRight: '1px solid #f5f5f5' }} />
-										<Typography className={classes.txtValueTotal}>		{order?.name}</Typography>
-
-									</div>
-									<WrapperInfo>
-										<div style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-											<Typography className={classes.txtValueTotal}>
-												Giá tiền
-											</Typography>
-											<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(order?.price)}</Typography>
-										</div>
-										<div style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-											<Typography className={classes.txtValueTotal}>
-												Số lượng
-											</Typography>
-											<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}> {order?.amount}</Typography>
-										</div>
-									</WrapperInfo>
-
-								</div>
-							))}
-						</Card>
-
+		<>
+			<Loading isLoading={isLoading}>
+				<Helmet>
+					<title>	 Hymns Center - Đặt hàng thành công</title>
+				</Helmet>
+				<Grid container sx={{ height: "100% !important" }}>
+					<Grid
+					>
 					</Grid>
-					<Grid item xs={12} sm={12} md={12} lg={4} xl={4} sx={{ padding: "0px",marginLeft: { xs: "0px",md: "-16px",sm: "-16px" },margin: { xs: "0px" } }}>
-						<Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ padding: "0px",marginLeft: { xs: "0px",md: "-16px",sm: "-16px" },margin: { xs: "0px" } }}>
-							<Card style={{ paddingTop: 30 }}>
+					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+						height: '100%',
+						backgroundColor: "#fff",
+						marginTop: "30px"
+					}}>
 
-								<WrapperInfo>
-									<div>
-										<Lable><Typography className={classes.nameProduct}>Phương thức giao hàng</Typography></Lable>
-										<WrapperValue>
-											<Typography className={classes.txtValueTotal} style={{ color: '#ea8500',fontWeight: 'bold',display: 'flex',paddingBottom: "5px" }}>{orderContant.delivery[state?.delivery]}</Typography>
-											<Typography className={classes.txtValueTotal}>Giao hàng tiết kiệm</Typography>
+						<Box className={classes.WrapperLeft}>
 
-										</WrapperValue>
-									</div>
-								</WrapperInfo>
-								<WrapperInfo>
-									<div>
-										<Lable>   <Typography className={classes.nameProduct}>Phương thức thanh toán</Typography></Lable>
-										<WrapperValue>
-											<Typography className={classes.txtValueTotal}>	{orderContant.payment[state?.payment]}</Typography>
+							<Box>
+								<Typography
+									href="/"
 
-										</WrapperValue>
-									</div>
-								</WrapperInfo>
-							</Card>
-						</Grid>
-						<Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ padding: "0px",marginLeft: { xs: "0px",md: "-16px",sm: "-16px" },margin: { xs: "0px" } }} style={{ borderBottom: "2px solid #d6d6d4",marginTop: 20 }}>
-							<Card style={{ padding: 30 }}>
-								<Grid style={{ display: "flex",justifyContent: "space-between" }}>
-									<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
-									<span style={{ display: 'flex',flexDirection: 'column' }}>
-										<Typography className={classes.numValueTotal} style={{ color: '#245c4f',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(state?.totalPriceMemo)}</Typography>
-										<Typography className={classes.numValueTotal}>(Đã bao gồm VAT nếu có)</Typography>
-									</span>
+									style={{
+
+										flexGrow: 1,
+										fontFamily: "monospace",
+										fontWeight: 700,
+										fontSize: "2.5rem",
+										color: "#333333",
+										letterSpacing: '1rem',
+										color: "inherit",
+										textDecoration: "none"
+										// cursor: 'pointer',
+									}} className={classes.hymnsName} >HYMNS CENTER</Typography>
+								<Typography style={{ paddingRight: "10px",lineHeight: 1.5 }} className={classes.txtShipping}>
+									{/* {data?.orderStatus === false
+										? `Huỷ đơn hàng ${data?.codeOrder}`
+										: data?.isPaid && data?.isDelivered
+											? `Đơn hàng của bạn đã được giao hoàn thành!`
+											: `Đặt hàng thành công! Mã đơn hàng ${data?.codeOrder}`} */}
+									{orderStatusTxt}
+								</Typography>
+
+								<Grid sx={{ display: "flex",alignItems: "center" }}>
+
+									<Typography style={{ paddingRight: "10px" }} className={classes.txtShipping}>Cảm ơn, {data?.shippingAddress?.fullName}</Typography>
+									<svg xmlns="http://www.w3.org/2000/svg"
+										id="Layer_1"
+										data-name="Layer 1"
+										viewBox="0 0 24 24"
+										width="35"
+										height="35"
+										fill="#A18C4F"><path d="m18.756,8.048c.193.197.191.514-.006.708l-5.325,5.244c-.686.671-1.568,1.007-2.45,1.007-.873,0-1.747-.329-2.43-.988l-2.296-2.264c-.196-.194-.198-.51-.005-.707.196-.197.512-.199.708-.005l2.292,2.26c.974.941,2.505.937,3.48-.018l5.324-5.243c.195-.193.513-.191.707.005Zm5.244,3.952c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-1,0c0-6.065-4.935-11-11-11S1,5.935,1,12s4.935,11,11,11,11-4.935,11-11Z" />
+									</svg>
 								</Grid>
 
-							</Card>
+								<Box className={classes.BoxInfoOrder}>
+									<Typography className={classes.txtShipping}>Thông tin khách hàng của Hymns</Typography>
+									<Grid container sx={{ padding: "3px" }}>
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Liên hệ</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ color: "#333333" }}>
+													{data?.shippingAddress?.fullName}
+													{" "}
+													({data?.shippingAddress?.email})
 
-						</Grid>
+												</Typography>
+											</Grid>
+										</Grid>
+
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Giao đến</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>	{data?.shippingAddress?.address}{", "}</Typography>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>{data?.shippingAddress?.ward}{", "}{data?.shippingAddress?.city}{", "}</Typography>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>	{data?.shippingAddress?.province}</Typography>
+											</Grid>
+										</Grid>
+									</Grid>
+
+
+									<Grid container sx={{ padding: "3px",borderTop: '1px solid #e6e6e6' }}>
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Phương thức thanh toán</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>{data?.paymentMethod === "bank" ? "Chuyển khoản qua ngân hàng" : "Thanh toán tiền mặt khi nhận hàng (COD)"}</Typography>
+											</Grid>
+										</Grid>
+
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Phương thức vận chuyển</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>
+													{data?.shippingMethod === "fast"
+														? orderContant.delivery.fast
+														: data?.shippingMethod === "gojek"
+															? orderContant.delivery.gojek
+															: orderContant.delivery.fastTK}
+												</Typography>
+
+											</Grid>
+										</Grid>
+									</Grid>
+
+									<Grid container sx={{ padding: "3px",borderTop: '1px solid #e6e6e6' }}>
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Trạng thái thanh toán</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>	{data?.isPaid === false ? "Chưa thanh toán" : "Đã thanh toán"}</Typography>
+											</Grid>
+										</Grid>
+
+										<Grid item xs={12} xl={6}>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser}>Trạng thái vận chuyển</Typography>
+											</Grid>
+											<Grid item xs={12}>
+												<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>	{status}</Typography>
+											</Grid>
+
+										</Grid>
+									</Grid>
+								</Box>
+								<Box className={classes.BoxInfoOrder}>
+									<Typography className={classes.txtShipping}>
+										{
+											orderStatus
+										}
+									</Typography>
+
+									<Grid container sx={{ padding: "3px",borderTop: '1px solid #e6e6e6' }}>
+										<Grid item xs={12} xl={12}>
+											{(data?.isPaid && data?.isDelivered && data?.paymentMethod === 'bank' && data?.orderStatus) ? (
+												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+													</Typography>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+													</Typography>
+												</Box>
+											) : (data?.paymentMethod === 'bank' && !data?.isPaid && !data?.isDelivered && data?.orderStatus) ? (
+												<div>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Ngân hàng: Vietcombank chi nhánh Quảng Nam
+													</Typography>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Chủ tài khoản: Lê Bùi Thanh Vũ
+													</Typography>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Số tài khoản: 9986320932
+													</Typography>
+													<Box style={{ color: "#333333",display: "flex",alignItems: "center" }}>
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															Nội dung chuyển khoản:{"   "}
+														</Typography><Typography className={classes.txtInfoBank}> Tên + mã đơn hàng</Typography>
+													</Box>
+
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333",paddingBottom: "10px" }}>
+														Ghi chú: Đơn hàng của bạn sẽ được chuyển đi sau khi quá trình thanh toán hoàn tất!
+													</Typography>
+													<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+														</Typography>
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+														</Typography>
+													</Box>
+												</div>
+											) : (data?.paymentMethod === 'bank' && data?.isPaid && !data?.isDelivered && data?.orderStatus) ? (
+												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+													<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+														</Typography>
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+														</Typography>
+													</Box>
+												</Box>
+											) : (data?.orderStatus === false) ? (
+												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Đơn hàng đã bị huỷ.
+													</Typography>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Mọi thắc mắc xin vui lòng liên hệ: hymnsguitarclass@gmail.com hoặc 0986 32 09 32 (Vũ - Zalo)
+													</Typography>
+												</Box>
+
+											) : (
+												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+													</Typography>
+													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+														Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+													</Typography>
+												</Box>
+											)}
+										</Grid>
+
+									</Grid>
+								</Box>
+							</Box>
+
+							<Box>
+
+							</Box>
+
+							<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+								onClick={() => handleToProduct()}
+								className={classes.customLoadingButton}
+								sx={{ display: { xl: "flex !important",lg: "flex !important",md: "flex !important",xs: "none !important" } }}
+							>Tiếp tục mua hàng</LoadingButton>
+						</Box>
+
 					</Grid>
-				</Grid>
-			</Box>
-		</Container>
 
+					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{ backgroundColor: "rgb(247, 248, 250)",borderLeft: "1px solid #e6e6e6" }}>
+						<Box className={classes.WrapperRight}>
+							<Box sx={{ width: { xs: "300px",xl: "500px" } }}>
+
+								<Box>
+									{data?.orderItems?.map((order,index) => (
+										< Card style={{ padding: "none !important",boxShadow: "none",backgroundColor: "rgb(247, 248, 250)" }} sx={{ display: "flex" }}>
+											<Badge
+												badgeContent={order?.amount} // Đặt nội dung badge là số lượng từ 'order'
+												color="success" // Màu của badge
+												overlap="circular" // Chồng lên tấm hình
+												anchorOrigin={{
+													vertical: 'top',
+													horizontal: 'right',
+												}} // Vị trí của badge
+											>
+												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image} alt={order?.image} />
+											</Badge>
+											<Box sx={{ display: "flex",flexDirection: "column",marginLeft: "10px" }}>
+												<CardContent style={{ flex: "1 0 auto",padding: "10px 0px 0px 0px" }}>
+													<Box style={{ marginBottom: "10px" }}>
+														<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 600,marginBottom: "10px" }} component='Box' >
+															{order?.name}
+														</Typography>
+														<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
+															{(order?.price * order?.amount)?.toLocaleString()}₫
+														</Typography>
+													</Box>
+
+
+												</CardContent>
+											</Box>
+										</Card>
+									))}
+								</Box>
+								<WrapperInfo>
+
+									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+										<Typography className={classes.txtValueTotal}>Tạm tính</Typography>
+										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceMemo)}</Typography>
+									</Box>
+									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+										<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
+										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
+									</Box>
+									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+										<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
+										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(data?.shippingPrice)}</Typography>
+									</Box>
+								</WrapperInfo>
+								<WrapperTotal>
+									<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
+									<Typography style={{ display: 'flex',flexDirection: 'column' }}>
+										<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(data?.totalPrice)}</Typography>
+										<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
+									</Typography>
+								</WrapperTotal>
+								{
+
+
+									(data?.isPaid === false && data?.isDelivered === false && data?.paymentMethod === 'bank' && data?.orderStatus) && (
+										<Box className={classes.boxTotal}>
+											<Box sx={{ width: { xs: "200px",xl: '350px' },height: 'auto',margin: "0 auto" }} component={'img'} src={Assets.bankOrder} alt="logo" />
+										</Box>
+									)
+								}
+							</Box>
+						</Box>
+					</Grid>
+				</Grid >
+			</Loading >
+		</>
 
 	)
 }

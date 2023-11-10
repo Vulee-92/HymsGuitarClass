@@ -22,6 +22,7 @@ const BlogUserPage = lazy(() => import("../pages/BlogUserPage/BlogUserPage"));
 const BlogDetailsPage = lazy(() => import("../pages/BlogDetailPage/BlogDetailPage"));
 const VerifyEmailPage = lazy(() => import("../pages/VerifyEmailPage/VerifyEmailPage"));
 const VerifyEmailSuccessPage = lazy(() => import("../pages/VerifyEmailSuccessPage/VerifyEmailSuccessPage"));
+const ConfirmPaymentPage = lazy(() => import("../pages/ConfirmPaymentPage/ConfirmPaymentPage"));
 export const routes = [
 	{
 		path: "/",
@@ -78,12 +79,18 @@ export const routes = [
 	{
 		path: "/payment",
 		page: PaymentPage,
-		isShowHeader: true,
+		// isShowHeader: true,
 	},
 	{
-		path: "/order-success",
+		path: "/payment-ship",
+		page: ConfirmPaymentPage,
+		// isShowHeader: true,
+	},
+
+	{
+		path: "/order-success/:id",
 		page: OrderSuccess,
-		isShowHeader: true,
+		// isShowHeader: true,
 	},
 	{
 		path: "/product/:type?",

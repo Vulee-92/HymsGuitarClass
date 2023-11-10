@@ -214,8 +214,8 @@ const HomePage = () => {
 								textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 								type='outline'
 								styleButton={{
-									border: `1px solid ${products?.total === products?.data?.length ? "#f5f5f5" : "#245c4f"}`,
-									color: `${products?.total === products?.data?.length ? "#f5f5f5" : "#245c4f"}`,
+									border: `1px solid ${products?.total === products?.data?.length ? "#f5f5f5" : "#212B36"}`,
+									color: `${products?.total === products?.data?.length ? "#f5f5f5" : "#212B36"}`,
 									width: "240px",
 									height: "38px",
 									borderRadius: "4px",
@@ -273,8 +273,8 @@ const HomePage = () => {
 						textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 						type='outline'
 						styleButton={{
-							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#245c4f"}`,
-							color: `${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#245c4f"}`,
+							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
+							color: `${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
 							width: "240px",
 							height: "38px",
 							borderRadius: "4px",

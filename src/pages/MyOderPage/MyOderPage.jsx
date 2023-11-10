@@ -25,7 +25,7 @@ const MyOderPage = () => {
 	})
 	const { isLoading,data } = queryOrder
 	const handleDetailsOrder = (id) => {
-		navigate(`/details-order/${id}`,{
+		navigate(`/order-success/${id}`,{
 			state: {
 				token: state?.token
 			}
@@ -110,18 +110,23 @@ const MyOderPage = () => {
 										>{convertPrice(order?.totalPrice)}</span>
 									</div>
 									<div style={{ display: 'flex',gap: '10px' }}>
-										<ButtonComponent
-											onClick={() => handleCanceOrder(order)}
-											size={40}
-											styleButton={{
-												height: '36px',
-												border: '1px solid #9255FD',
-												borderRadius: '4px'
-											}}
-											textbutton={'Hủy đơn hàng'}
-											styleTextButton={{ color: '#9255FD',fontSize: '14px' }}
-										>
-										</ButtonComponent>
+										{order.isPaid === true ? (
+											<></>
+										) : (
+											<ButtonComponent
+												onClick={() => handleCanceOrder(order)}
+												size={40}
+												styleButton={{
+													height: '36px',
+													border: '1px solid #9255FD',
+													borderRadius: '4px'
+												}}
+												textbutton={'Hủy đơn hàng'}
+												styleTextButton={{ color: '#9255FD',fontSize: '14px' }}
+											>
+											</ButtonComponent>
+										)}
+
 										<ButtonComponent
 											onClick={() => handleDetailsOrder(order?._id)}
 											size={40}

@@ -48,16 +48,6 @@ const ProductsPage = () => {
 	};
 	const searchProduct = useSelector((state) => state?.product?.search);
 	const searchDebounce = useDebounce(searchProduct,500);
-	// const fetchProductAll = async () => {
-	//   const res = await ProductService.getAllProduct();
-	//   return res;
-	// };
-	const fetchAllTypeProduct = async () => {
-		const res = await ProductService.getProductType()
-		if (res?.status === 'OK') {
-			setTypeProducts(res?.data)
-		}
-	}
 	const fetchProductAll = async (page,limit) => {
 		setLoading(true);
 		let res;
@@ -103,7 +93,6 @@ const ProductsPage = () => {
 			keepPreviousData: true,
 		}
 	);
-	console.log("productsproductsproducts",products)
 
 	useEffect(() => {
 		if (state) {
@@ -126,19 +115,11 @@ const ProductsPage = () => {
 		// status: sample(["new", "new", "", ""]),
 		...product,
 	})).filter(product => state ? product.type === state : true);
-	console.log("productList",products)
 	return (
 		<>
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
-			{/* <Loading isLoading={isLoading} > */}
-
-			<Helmet>
-				<title> Product </title>
-			</Helmet>
-			{/* < Box className={classes.container}> */}
-
 			{/* <Typography className={classes.conTextCreate}>
 				<Typical
 					steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
@@ -147,85 +128,19 @@ const ProductsPage = () => {
 					className={classes.conTextCreate}
 				/>
 			</Typography> */}
-
-			{/* </Box> */}
-			{/* <Box>
-              {typeProducts.map((item) => {
-                return (
-                  <TypeProduct name={item} key={item} />
-                )
-              })}
-            </Box> */}
-			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
-				{/* <Grid item xs={12} sm={3} xl={12} md={3} spacing={2} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-					<Typography className={classes.conTextCreate}>
-						<Typical
-							steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
-							loop={Infinity}
-							wrapper="p"
-							className={classes.conTextCreate}
-						/>
-					</Typography>
-				</Grid> */}
+			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-
-					<Grid item xs={12} sm={3} md={3} spacing={2} >
-						<Item >
-							<NavbarComponent />
-						</Item>
+					<Grid item xs={12} sm={3} md={3} xl={3} spacing={2} >
+						<NavbarComponent />
 					</Grid>
-					<Grid item xs={12} sm={9} md={9}>
-						<Item>
-
-							<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
-							{/* 
-                    <AnimationComponent type="text" text="Product" className={classes.txtHeaderTitle} />
-                    <Grid container spacing={2}>
-                      {searchDebounce === ""
-                        ? productList?.map((products) => (
-                          <Grid sx={{ mt: "20px" }} item xs={12} sm={6} md={6} key={products.id} style={{ maxWidth: "100%" }}>
-                            <ProductList products={[products]} />
-                          </Grid>
-                        ))
-                        : productList
-                          ?.filter((pro) =>
-                            pro?.name?.toLowerCase()?.includes(searchDebounce?.toLowerCase())
-                          )
-                        .map((products) => (
-                          <Grid sx={{ m: "20px" }} item xs={12} sm={6} md={6} key={products.id} style={{ maxWidth: "100%" }}>
-                            <ProductList products={[products]} />
-                          </Grid>
-                        ))
-                      }
-                    </Grid>
-                    <Stack
-                      direction="row"
-                      flexWrap="wrap-reverse"
-                      alignItems="center"
-                      justifyContent="flex-end"
-                      sx={{ mb: 5 }}
-                    >
-                      <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-                        <ProductFilterSidebar
-                          openFilter={openFilter}
-                          onOpenFilter={handleOpenFilter}
-                          onCloseFilter={handleCloseFilter}
-                        />
-                        <ProductSort />
-                      </Stack>
-                    </Stack>
-                    <ProductCartWidget /> */}
-
-						</Item>
+					<Grid item xs={12} sm={9} md={9} xl={9}>
+						<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
 					</Grid>
-
 				</Grid>
 			</Container>
 			<Container maxWidth="lg">
 				<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 					<Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: { xl: " 10px 30px",xs: "0px 10px" } }}>
-
-
 						<div>
 							<Typography className={classes.txtTitleBox}>Các câu hỏi thường gặp</Typography>
 
@@ -254,7 +169,6 @@ const ProductsPage = () => {
 					</Grid>
 				</Grid>
 			</Container >
-			{/* </Loading> */}
 		</>
 
 	);

@@ -20,13 +20,13 @@ export default makeStyles(() => {
 		},
 		conCard: {
 			maxWidth: 900,
-			margin: "auto",
-			backgroundColor: '#ffffff',
-			backgroundColor: Colors.adminMeetingColor,
-			borderRadius: Configs.br,
-			borderRadius: '8px',
-			padding: '0.3rem',
-			boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
+			backgroundColor: "rgb(255,255,255)",
+			color: "rgb(33,43,54)",
+			transition: "box - shadow 300ms cubic - bezier(0.4,0,0.2,1) 0ms",
+			overflow: "hidden",
+			boxShadow: "0px 18px 28px rgba(0,0,0,0.15), 0px 0px 1px rgba(0,0,0,0.31)",
+			borderRadius: "16px",
+			padding: "80px 24px 40px",
 		},
 		conInfo: {
 			maxWidth: 720,
@@ -90,7 +90,7 @@ export default makeStyles(() => {
 			},
 		},
 		conBtn: {
-			backgroundColor: ({ bgColor }) => bgColor,
+			backgroundColor: "#fff",
 			borderRadius: 8,
 			marginTop: Configs.pH,
 			height: 48,
@@ -98,10 +98,12 @@ export default makeStyles(() => {
 			...CStyles.txt_btn,
 			textTransform: 'none',
 			paddingLeft: Configs.pH,
-			color: "#fff",
+			border: "1px solid #f5f5f5",
+			color: "#000",
 			paddingRight: Configs.pH,
 			"&:hover": {
-				backgroundColor: ({ bgColor }) => bgColor,
+				backgroundColor: "#212B36",
+				color: "#fff",
 				opacity: .9
 			}
 		},
@@ -221,31 +223,20 @@ export default makeStyles(() => {
 			fontSize: 18,
 			cursor: "pointer",
 		},
-		txtTitleInput: {
-			...CStyles.txt_title_item,
-			fontWeight: 400,
-		},
-		txtError: {
-			...CStyles.txt_error,
-		},
-		txtForgot: {
-			...CStyles.txt_body_item,
-			color: Colors.primary,
-			cursor: "pointer",
-		},
-		txtTitleLoginMethod: {
-			...CStyles.txt_body_item,
-			margin: `0px ${Configs.pH}px`,
-		},
-		txtRegister: {
-			...CStyles.txt_body_item,
-			textAlign: "center",
-			marginTop: 48,
-		},
-		txtBtnRegister: {
-			...CStyles.txt_body_item,
-			fontWeight: CStyles.fBold,
-			cursor: "pointer",
-		},
+		conButton: {
+			display: 'flex',
+			justifyContent: 'space-evenly',
+			backgroundColor: "#fff",
+			padding: "0px 0px 0px 10px",
+			borderTopLeftRadius: "10px",
+			borderTopRightRadius: "10px",
+			borderBottomRightRadius: "5px",
+			borderBottomLeftRadius: "5px",
+			transition: "background-color 0.3s, color 0.3s",
+			"&:hover": {
+				backgroundColor: "#fff",
+				color: "#000",
+			}
+		}
 	};
 });
