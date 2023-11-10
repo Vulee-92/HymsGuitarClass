@@ -18,10 +18,11 @@ import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
+
 const HomePage = () => {
 	const searchProduct = useSelector((state) => state?.product?.search);
 	const searchDebounce = useDebounce(searchProduct,100);
-	const [limit,setLimit] = useState(4);
+	const [limit,setLimit] = useState(6);
 	const classes = styles();
 	const [loading,setLoading] = useState(false);
 	const { t } = useTranslation();
@@ -179,7 +180,7 @@ const HomePage = () => {
 			<Box className={classes.container}></Box>
 			<Container maxWidth='lx' style={{ marginTop: "100px" }}>
 				<Box>
-					<Typography className={classes.txtTitleBox}>Latest Releases</Typography>
+					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
 						<ImageList variant='masonry' cols={1} gap={8}>
 							<Suspense fallback={<div>Loading...</div>}>
@@ -235,7 +236,7 @@ const HomePage = () => {
 				<>
 					<Container maxWidth='lg' style={{ padding: 0 }}>
 						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
-							<Typography className={classes.txtTitleBox}>About Hymns</Typography>
+							<Typography className={classes.txtTitleBox}>Về Hymns Center</Typography>
 							<Typography className={classes.txtTilte}>Trung tâm dạy đàn guitar Hymns Guitar Class - Nơi học đàn chuyên nghiệp từ cơ bản đến nâng cao</Typography>
 							<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Guitar Class sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Guitar Class cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
 							<Typography className={classes.txtTilte}>Ngoài ra, Hymns Guitar Class còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Guitar Class là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
@@ -245,13 +246,14 @@ const HomePage = () => {
 			</Container>
 			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
 				<Box>
-					<Typography className={classes.txtTitleBox}>Blog</Typography>
+					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2}>
 						{[0,1,2].map((row) => (
-							<Grid key={row} container item spacing={2}>
+
+							< Grid key={row} container item spacing={2} >
 								{blogs?.data?.slice(row * 3,(row + 1) * 3).reverse()
 									.map((post,index) => (
-										<ShopBLogCard key={post?.id} blog={post} index={index} />
+										<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
 									))
 								}
 
@@ -269,13 +271,12 @@ const HomePage = () => {
 					}}
 				>
 					<WrapperButtonMore
-						className={classes.ButtonAllPost}
 						textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 						type='outline'
 						styleButton={{
 							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
-							color: `${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
-							width: "240px",
+							color: `${blogs?.total === blogs?.data?.length ? "#000" : "#212B36"}`,
+							width: "180px",
 							height: "38px",
 							borderRadius: "4px",
 							display: `${blogs?.total === blogs?.data?.length || blogs?.totalPage === 1 ? "none" : "block"}`,
@@ -283,12 +284,12 @@ const HomePage = () => {
 						disabled={blogs?.total === blogs?.data?.length || blogs?.totalPage === 1}
 						styleTextButton={{
 							fontWeight: 500,
-							color: blogs?.total === blogs?.data?.length && "#fff",
+							color: blogs?.total === blogs?.data?.length && "#000",
 						}}
 						onClick={() => setLimit((prev) => prev + 2)}
 					/>
 				</Button>
-			</Container>
+			</Container >
 		</>
 		// </Loading >
 	);

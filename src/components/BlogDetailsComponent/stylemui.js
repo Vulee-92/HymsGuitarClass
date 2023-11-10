@@ -14,7 +14,10 @@ export default makeStyles(() => {
 		nameProduct: {
 			...CStyles.txt_title_item,
 			alignItems: "center",
+			textAlign: "center",
 			display: "flex",
+			justifyContent: "center",
+			fontSize: "3rem"
 		},
 		nameProductInfo: {
 			...CStyles.txt_title_item,
@@ -31,7 +34,7 @@ export default makeStyles(() => {
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#434c55",
-			fontSize: "15px",
+			fontSize: "1rem",
 			fontWeight: 400,
 			lineHeight: 1.7,
 			textAlign: "left",

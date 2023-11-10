@@ -42,6 +42,22 @@ export default makeStyles(() => {
 			padding: "0px 24px 40px",
 
 		},
+		WrapperRight: {
+			width: '100%', // Đặt chiều rộng là 100% mặc định
+
+			// Media Query để thay đổi chiều rộng tùy thuộc vào kích thước màn hình
+			'@media (min-width: 600px)': {
+				width: '600px', // Đối với màn hình rộng hơn hoặc bằng 600px
+			},
+
+			backgroundColor: "#fff",
+			color: "rgb(33,43,54)",
+			transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+			overflow: "hidden",
+			borderRadius: "16px",
+			padding: "0px 24px 0px",
+		},
+
 		txtValueTotal: {
 			...CStyles.txt_body_item,
 			color: "rgb(36, 36, 36)",

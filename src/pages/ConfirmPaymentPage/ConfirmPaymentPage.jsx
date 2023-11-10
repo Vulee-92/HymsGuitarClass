@@ -23,17 +23,9 @@ import MobileCartTotalPriceComponent from '../../components/MobileCartTotalPrice
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong,faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { LoadingButton } from '@mui/lab';
-import ModalUserComponent from 'components/ModalUserComponent/ModalUserComponent';
 import useUpdateUserMutation from 'hooks/useUpdateUserMutation';
 import { useMutation,useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import InputComponent from 'components/InputComponent/InputComponent';
-import ModalComponent from 'components/ModalComponent/ModalComponent';
-import ProfileScreen from 'pages/profile';
-import UpdateUserComponent from 'components/UpdateUserComponent';
-import UpdateUserComponentPayment from 'components/UpdateUserComponentPayment';
-import { fa } from '@faker-js/faker';
-import Typical from 'react-typical';
+
 const ConfirmPaymentPage = () => {
 	const order = useSelector((state) => state.order)
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
@@ -638,6 +630,9 @@ const ConfirmPaymentPage = () => {
 										<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '13px',textAlign: "right",cursor: 'pointer' }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Quay lại</Typography>
 									</Typography>
 								</WrapperTotal>
+								<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
+									<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
+								</Grid>
 							</Box>
 							{payment === 'paypal' && sdkReady ? (
 								<Box style={{ width: '320px' }}>

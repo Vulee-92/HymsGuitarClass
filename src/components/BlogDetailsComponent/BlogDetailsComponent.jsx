@@ -187,44 +187,29 @@ const BlogDetailPage = ({ idBlog }) => {
 					textAlign: '-webkit-center',marginTop: '0px',
 					borderBottom: { xl: "1px solid #d6d6d4",xs: "none",md: "1px solid #d6d6d4" },
 					display: "flex",justifyContent: "center",
-					// backgroundColor: "#f4f4f2"
 				}
 			} >
-				<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
-					<Grid container spacing={2}>
 
-						<Grid sx={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" },flexDirection: { xl: "column-reverse",lg: "column-reverse" } }} item sm={12} md={12} lg={12} xl={12} style={{ height: "fit-content",margin: "16px",padding: "0px" }}>
-
-						</Grid>
-					</Grid>
-				</Container>
 			</Box>
 			<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
 
 
-				<Typography sx={{ display: { xs: "flex",xl: "flex",lg: "none",md: "none",sm: "none" },borderBottom: { xs: "2px solid #d6d6d4",xl: "none" },paddingBottom: { xs: "10px" },marginTop: { xs: 0,xl: "16px",lg: "16px",md: "16px" },}} style={{ marginBottom: "16px",textAlign: "left" }} className={classes.nameProductMobile}>
-					{blogDetails?.title}
-				</Typography>
+
 
 				<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 					<Grid item xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: "10px" }}>
+						<Typography className={classes.nameProduct}>
+							{blogDetails?.title}
+						</Typography>
 						<Paper style={{ boxShadow: "none" }}>
-							<Typography sx={{ margin: "0 !important",textAlign: { xs: "left" } }} className={classes.txtTitleBox}>
-								Mô tả sản phẩm
-							</Typography>
 							<Typography
-								className={classes.txtTilte} style={{ textAlign: "left",fontSize: "15px" }}
+								className={classes.txtTilte}
 								dangerouslySetInnerHTML={{
 									__html: blogDetails?.description,
 								}}
 							></Typography>
 						</Paper>
 						<hr style={{ marginBottom: "60px" }} />
-
-
-					</Grid>
-					<Grid container spacing={2} sx={{ width: "100%",justifyContent: { xs: "center" },marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },marginTop: { xs: "0px",xl: "40px" },paddingLeft: { xs: "0px !important",xl: "0px" } }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "fit-content" }}>
-
 					</Grid>
 				</Grid>
 

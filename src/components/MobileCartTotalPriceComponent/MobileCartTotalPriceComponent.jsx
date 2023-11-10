@@ -14,7 +14,7 @@ const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOr
 	const location = useLocation();
 
 	useEffect(() => {
-		if (location.pathname === "/order" || location.pathname === "/payment") {
+		if (location.pathname === "/order" || location.pathname === "/payment" || location.pathname === "/payment-ship") {
 			setOpen(true);
 		} else {
 			setOpen(false);
@@ -42,15 +42,6 @@ const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOr
 				style={{ overflow: "hidden",padding: "0px" }}
 			>
 				<Grid container
-				// sx={{
-				// 	display: "flex",
-				// 	flexDirection: "row",
-				// 	justifyContent: {
-				// 		xs: "space-between",
-				// 		md: "end",
-				// 		xl: "end",
-				// 	},
-				// }}
 				>
 					<Grid item xs={7}>
 						<Typography

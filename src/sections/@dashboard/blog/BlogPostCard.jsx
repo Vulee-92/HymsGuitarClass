@@ -60,8 +60,8 @@ BlogPostCard.propTypes = {
 	index: PropTypes.number,
 };
 
-export default function BlogPostCard({ blog,index }) {
-	const { id,image,title } = blog;
+export default function BlogPostCard({ blog,index,id }) {
+	const { image,title } = blog;
 	const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2;
 	const navigate = useNavigate();
@@ -171,8 +171,6 @@ export default function BlogPostCard({ blog,index }) {
 								}),
 							}}
 						>
-							{/* <Iconify icon={info.icon} sx={{ width: 16,height: 16,mr: 0.5 }} /> */}
-							{/* <Typography variant="caption">{fShortenNumber(info.number)}</Typography> */}
 						</Box>
 					</StyledInfo>
 				</CardContent>
