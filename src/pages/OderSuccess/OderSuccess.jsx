@@ -12,6 +12,7 @@ import * as OrderService from '../../services/OrderService'
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { LoadingButton } from '@mui/lab';
+import confetti from 'canvas-confetti';
 const OrderSucess = () => {
 	const params = useParams()
 	const { id } = params
@@ -24,6 +25,11 @@ const OrderSucess = () => {
 	const fetchDataWithDelay = async () => {
 		await delay(200); // Chờ 200 milliseconds trước khi gọi
 		const res = await OrderService.getDetailsOrder(id,state?.token);
+		confetti({
+			particleCount: 100,
+			spread: 70,
+			origin: { y: 0.6 },
+		});
 		return res.data;
 	};
 	const navigate = useNavigate();

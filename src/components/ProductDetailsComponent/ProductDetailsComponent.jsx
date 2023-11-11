@@ -22,6 +22,9 @@ import { ShoppingCart } from "@mui/icons-material";
 import ImageZoom from "react-image-zooom";
 import { Helmet } from "react-helmet-async";
 import { bottom } from "@popperjs/core";
+import Gallery from 'react-image-gallery';
+import ReactImageMagnify from "react-image-magnify";
+import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	// const classess = useStyles({ isMobile });
@@ -42,7 +45,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [isZoomed,setIsZoomed] = useState(false);
 	const [zoomPosition,setZoomPosition] = useState({ x: 0,y: 0 });
 
-
+	const [images,setImages] = useState([]);
 
 	const [isCartOpen,setIsCartOpen] = useState(false);
 
@@ -262,22 +265,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	};
 	const cartButtonRef = useRef(null);
 
-	// useEffect(() => {
-	//   const handleScroll = () => {
-	//     if (cartButtonRef.current) {
-	//       const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
-	//       if (cartButtonTop < 0) {
-	//         setIsCartOpen(true);
-	//       } else {
-	//         setIsCartOpen(false);
-	//       }
-	//     }
-	//   };
-	//   window.addEventListener('scroll', handleScroll);
-	//   return () => {
-	//     window.removeEventListener('scroll', handleScroll);
-	//   };
-	// }, []);
 	useEffect(() => {
 		const handleScroll = () => {
 			const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
@@ -294,6 +281,14 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	},[]);
 
 
+	useEffect(() => {
+		// Fetch or set your images asynchronously
+		const fetchedImages = [
+			productDetails?.image
+		];
+
+		setImages(fetchedImages);
+	},[]);
 	return (
 		<>
 
@@ -491,7 +486,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 
 						<Box className={classes.galleryProduct}>
-							<ImageZoom key={productDetails?.image} src={productDetails?.image} alt='A image to apply the ImageZoom plugin' zoom='200' />
+							{/* <ImageZoom key={productDetails?.image} src={images?.map(image => ({ src: image }))} alt='A image to apply the ImageZoom plugin' zoom='200' /> */}
+							<ImageCarouselZoom data={productDetails?.image} />
+
+
 						</Box>
 					</Grid>
 

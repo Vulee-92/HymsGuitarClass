@@ -21,10 +21,7 @@ export default makeStyles(() => {
 			...CStyles.txt_title_item,
 			color: "#333333",
 			fontSize: "1.3rem",
-			fontWeight: 600,
-			marginBottom: "10px",
-			marginTop: "10px",
-			lineHeight: 1.5
+			fontWeight: 500,
 		},
 		txtTilte: {
 			...CStyles.txt_body_item,
