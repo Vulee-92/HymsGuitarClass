@@ -9,6 +9,7 @@ import { styled } from '@mui/styles';
 import styles from "./style";
 import CButton from 'components/CButton';
 import Typical from 'react-typical';
+import confetti from 'canvas-confetti';
 const StyledContent = styled('div')(({ theme }) => ({
 	maxWidth: 480,
 	margin: '0 auto',
@@ -27,19 +28,6 @@ const VerifyEmailSuccessPage = () => {
 
 	const navigate = useNavigate();
 	let { userId,code } = useParams();
-	// useEffect(() => {
-	// 	let isMounted = true; // Sử dụng biến này để kiểm tra xem component có còn tồn tại không
-	// 	UserService.verifyUser(userId,code)
-	// 		.then(response => {
-	// 			if (isMounted && response) {
-	// 				setShowButton(true);
-	// 			}
-	// 		})
-	// 		.catch(error => {
-	// 			console.error(error);
-	// 		});
-	// 	return () => { isMounted = false }; // Clean up khi component unmount
-	// },[userId,code]);
 	useEffect(() => {
 		let isMounted = true;
 		setTimeout(() => {
@@ -52,10 +40,13 @@ const VerifyEmailSuccessPage = () => {
 					setShowButton(true);
 
 					const countdownInterval = setInterval(() => {
+
 						setCountdown(prev => prev - 1);
+
 					},1000);
 
 					setTimeout(() => {
+
 						navigate('/');
 					},countdown * 1000);
 
@@ -109,6 +100,19 @@ const VerifyEmailSuccessPage = () => {
 							initial={{ y: 0,opacity: 0 }}
 							animate={{ y: 100,opacity: 1 }}
 							transition={{ duration: 0.5,delay: 1 }}
+							onAnimationComplete={() => {
+								// Thêm hiệu ứng pháo bông khi animation hoàn thành
+								confetti({
+									particleCount: 300,
+									spread: 100,
+									decay: 0.9,
+									gravity: 3,
+									ticks: 1000,
+									scalar: 1,
+									origin: { x: 0.5,y: 0.5 }, // Điều chỉnh giá trị x để đặt vị trí bắn ở góc màn hình trái
+								});
+
+							}}
 						>
 							<Box textAlign="center">
 								<Typography className={classes.txtTilteInfoContact}  >

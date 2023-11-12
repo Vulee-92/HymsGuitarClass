@@ -26,9 +26,13 @@ const OrderSucess = () => {
 		await delay(200); // Chờ 200 milliseconds trước khi gọi
 		const res = await OrderService.getDetailsOrder(id,state?.token);
 		confetti({
-			particleCount: 100,
-			spread: 70,
-			origin: { y: 0.6 },
+			particleCount: 300,
+			spread: 100,
+			decay: 0.9,
+			gravity: 3,
+			ticks: 1000,
+			scalar: 1,
+			origin: { x: 0.5,y: 0.5 },
 		});
 		return res.data;
 	};

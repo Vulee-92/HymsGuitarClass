@@ -15,6 +15,15 @@ export default makeStyles(() => {
 			overflowY: "auto",
 			padding: Configs.pH,
 		},
+		boxCard: {
+			maxWidth: "100%",
+			margin: '0 auto',
+			display: 'flex',
+			height: "100vh",
+			justifyContent: 'center',
+			flexDirection: 'column',
+			alignItems: "center",
+		},
 		conContent: {
 			...CStyles.rowJusCen,
 		},
@@ -42,7 +51,7 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			color: "#434c55",
 			marginTop: "1.45rem",
-			fontSize: "18px",
+			fontSize: "1rem",
 			fontWeight: 400,
 			lineHeight: 2,
 			textAlign: "left",
@@ -210,7 +219,7 @@ export default makeStyles(() => {
 		txtHeaderTitle: {
 			...CStyles.txt_header_title,
 			// color: Colors.da,
-			fontSize: 32,
+			fontSize: "2rem",
 			textAlign: "center",
 			fontWeight: 600,
 			color: "#0b2238",
