@@ -317,10 +317,10 @@ const OrderSucess = () => {
 													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
 														Số tài khoản: 9986320932
 													</Typography>
-													<Box style={{ color: "#333333",display: "flex",alignItems: "center" }}>
+													<Box style={{ color: "#333333" }}>
 														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-															Nội dung chuyển khoản:{"   "}
-														</Typography><Typography className={classes.txtInfoBank}> Tên + mã đơn hàng</Typography>
+															Nội dung chuyển khoản:{"   "}<b>Tên + mã đơn hàng</b>
+														</Typography>
 													</Box>
 
 													<Typography className={classes.txtInfoOrder} style={{ color: "#333333",paddingBottom: "10px" }}>

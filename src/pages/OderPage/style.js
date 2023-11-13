@@ -54,10 +54,10 @@ export const WrapperItemOrder = styled.div`
   display: flex;
   align-items: center;
   background: #fff;
+	margin: 10px 0px 10px 0px;
   border-bottom: 1px solid #d6d6d4;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  padding: 20px;
   @media (max-width: 800px) {
     display: flex;
   }

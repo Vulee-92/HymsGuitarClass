@@ -8,8 +8,9 @@ import { convertPrice } from "utils";
 import { useTheme } from "@mui/styles";
 import { useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
-const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOrderProduct }) => {
+const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOrderProduct,isProcessing }) => {
 	const [open,setOpen] = useState(false);
 	const location = useLocation();
 
@@ -61,14 +62,12 @@ const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOr
 						alignItems: 'center',
 						justifyContent: 'center'
 					}}>
-
-						<Button
-							className={classes.btnAddCard}
-
+						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 							onClick={handleAddOrderProduct}
-						>
-							{name}
-						</Button>
+							className={classes.btnAddCard}
+						>				{name}
+						</LoadingButton>
+
 					</Grid>
 				</Grid>
 			</Container>

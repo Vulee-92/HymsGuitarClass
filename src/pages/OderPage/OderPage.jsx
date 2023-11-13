@@ -370,9 +370,9 @@ const OrderPage = () => {
 			{isMobileDevice ? (
 				<>
 					<Suspense fallback={<div>...loading</div>}>
-						<div style={{ with: "100%" }} >
-							<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} />
-						</div>
+						<Box style={{ with: "100%" }} >
+							<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddCard} classes={classes} loading={isProcessing} />
+						</Box>
 					</Suspense>
 					<div style={{ with: "100%",marginTop: "100px" }}>
 						<Typography className={classes.txtOrder}>Giỏ hàng</Typography>
@@ -392,10 +392,10 @@ const OrderPage = () => {
 								<Grid item xs={12}>
 									<div role='presentation'>
 										<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "11px" }}>
-											<Typography style={{ fontSize: "13px" }} underline='hover' color='inherit' href='/order' className={classes.nameProduct}	>
+											<Typography style={{ fontSize: ".8rem",marginTop: "0px !important" }} underline='hover' color='inherit' href='/order' className={classes.nameProduct}	>
 												Giỏ hàng
 											</Typography>
-											<Typography className={classes.txtValueTotal} style={{ fontSize: "13px",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} underline='hover' href='/payment'>
+											<Typography className={classes.txtValueTotal} style={{ fontSize: ".8rem",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} underline='hover' href='/payment'>
 												Phương thức thanh toán & giao hàng
 											</Typography>
 
@@ -436,7 +436,7 @@ const OrderPage = () => {
 
 							>
 								<CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length}></CustomCheckbox>
-								<Box sx={{ display: { xs: "flex",xl: "none" },justifyContent: "space-between",width: "100%",marginTop: "30px" }}>
+								<Box sx={{ display: { xs: "flex",xl: "none" },justifyContent: "space-between",width: "100%" }}>
 									<Typography className={classes.nameAllProduct} > Tất cả ({order.orderItems.length} sản phẩm)</Typography>
 									<DeleteOutlined style={{ cursor: "pointer" }} onClick={handleRemoveAllOrder} />
 
@@ -581,6 +581,7 @@ const OrderPage = () => {
 																		fontSize: "15px",
 																		color: "rgb(255, 66, 78)",
 																		marginTop: "10px",
+																		marginBottom: "10px",
 																	}}
 																>
 																	{convertPrice(order?.price * order?.amount)}
