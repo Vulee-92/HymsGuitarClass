@@ -25,6 +25,7 @@ import { bottom } from "@popperjs/core";
 import Gallery from 'react-image-gallery';
 import ReactImageMagnify from "react-image-magnify";
 import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
+import { LoadingButton } from "@mui/lab";
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	// const classess = useStyles({ isMobile });
@@ -44,7 +45,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [openDialog,setOpenDialog] = useState(false);
 	const [isZoomed,setIsZoomed] = useState(false);
 	const [zoomPosition,setZoomPosition] = useState({ x: 0,y: 0 });
-
+	const [isProcessing,setIsProcessing] = useState(false);
 	const [images,setImages] = useState([]);
 
 	const [isCartOpen,setIsCartOpen] = useState(false);
@@ -102,10 +103,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	};
 
 	const handleAddOrderProduct = () => {
-		// if (!user?.id) {
-		// 	navigate("/login",{ state: location?.pathname });
-		// } else {
-		// setOpen(true);
+		setIsProcessing(true);
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
 			dispatch(
@@ -121,11 +119,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						discount: productDetails?.discount,
 						countInstock: productDetails?.countInStock,
 					},
+
 				})
+
 			);
+
 		} else {
+
 			setErrorLimitOrder(true);
 		}
+		setIsProcessing(false);
+
 		// }
 		handleCartClick();
 		setOpenDialog(true);
@@ -292,10 +296,11 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	return (
 		<>
 
-			<Loading isLoading={isLoading}>
-				<Helmet>
-					<title>{productDetails?.name}</title>
-				</Helmet>
+			{/* <Loading isLoading={isLoading}> */}
+			< Helmet >
+				<title>{productDetails?.name}</title>
+			</Helmet>
+			{products && (
 				<div>
 					<Drawer
 						sx={{
@@ -319,9 +324,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								</Typography>
 								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 									<div>
-										<Button
+										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 											className={classes.nameProductInfo}
-											variant='contained'
 											style={{
 												background: "#212B36",
 												height: "48px",
@@ -337,7 +341,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											onClick={handleAddOrderProduct}
 										>
 											Thêm vào giỏ hàng
-										</Button>
+										</LoadingButton>
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
@@ -361,6 +365,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						</Container>
 					</Drawer>
 				</div>
+			)}
+			{products && (
+
 				<Box sx={
 					{
 						textAlign: '-webkit-center',marginTop: '0px',
@@ -393,9 +400,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											<Typography className={classes.priceTitle}>{productDetails?.price?.toLocaleString()}₫</Typography>
 											<Typography className={classes.txtTilte}>Bao gồm thuế. Miễn phí vận chuyển cho mọi đơn hàng!</Typography>
 										</Box>
-										<Button
+										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 											className={classes.nameProductInfo}
-											variant='contained'
 											style={{
 												background: "#212B36",
 												height: "48px",
@@ -410,7 +416,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											onClick={handleAddOrderProduct}
 										>
 											Thêm vào giỏ hàng
-										</Button>
+										</LoadingButton>
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
@@ -436,6 +442,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						</Grid>
 					</Container>
 				</Box>
+			)}
+			{products && (
 				<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
 
 					{/* <Divider variant="middle" style={{ display: { xs: "none", xl: "flex", lg: "flex", md: "none", sm: "none" } }} /> */}
@@ -501,12 +509,12 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 					<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 						<Grid item xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: "10px" }}>
-							<Paper style={{ boxShadow: "none" }}>
+							<Paper style={{ boxShadow: "none",paddingRight: "10px" }}>
 								<Typography sx={{ margin: "0 !important",textAlign: { xs: "left" } }} className={classes.txtTitleBox}>
 									Mô tả sản phẩm
 								</Typography>
 								<Typography
-									className={classes.txtTilte} style={{ textAlign: "left",fontSize: "15px" }}
+									className={classes.txtTilte}
 									dangerouslySetInnerHTML={{
 										__html: productDetails?.description,
 									}}
@@ -541,8 +549,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</div>
 						</Grid>
 						<Grid container spacing={2} sx={{ width: "100%",justifyContent: { xs: "center" },marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },marginTop: { xs: "0px",xl: "40px" },paddingLeft: { xs: "0px !important",xl: "0px" } }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "fit-content" }}>
-							<Paper style={{ background: "rgb(36, 92, 79,0.1)",boxShadow: "none",margin: "0.425rem",padding: "5px" }}>
-								<Box sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "column",lg: "column" } }}>
+							<Paper style={{
+								background: "rgb(36, 92, 79,0.1)",padding: "5px",borderBottom: "0px",
+								borderTop: "2px solid #454F5B",
+								borderRadius: "9px",
+								boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
+								"&:hover": {
+									boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+									transition: "boxShadow 0.3s ease -in -out 0s"
+								},
+							}}>
+								<Box className={classes.txtPrice} >
 									<WrapperPriceProduct style={{ padding: "10px 16px ",background: "rgb(36, 92, 79,0.01)" }}>
 										<Typography className={classes.nameProduct} style={{ textAlign: "left",fontSize: "32px" }}>
 											{productDetails?.price?.toLocaleString()}₫
@@ -578,41 +595,43 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									</Box>
 								</Box>
 
-								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
-									<div>
-										<Button
-											className={classes.nameProductInfo}
-											variant='contained'
-											ref={cartButtonRef}
-											color='primary'
-											aria-label='Mua hàng'
-											style={{
-												background: "#212B36",
-												height: "48px",
-												width: "100%",
-												textTransform: "capitalize",
-												border: "none",
-												borderRadius: "4px",
-												color: "#fff",
-												fontSize: "15px",
-												fontWeight: "700",
-											}}
-											onClick={handleAddOrderProduct}
-										>
-											Thêm vào giỏ hàng
-										</Button>
-										{errorLimitOrder && <div style={{ color: "red" }}>Sản phẩm hết hàng</div>}
-									</div>
-								</div>
-								<Box sx={{ display: "flex",paddingLeft: "16px" }}>
-									<FontAwesomeIcon icon={faBox} style={{ color: "#212B36",marginRight: "15px",fontSize: "16px" }} />
-									<Typography className={classes.nameProductInfo}>Còn hàng</Typography>
+								<Box style={{ alignItems: "center",gap: "12px",padding: "10px 16px",textAlign: "center" }}>
+									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+										className={classes.nameProductInfo}
+
+										ref={cartButtonRef}
+										color='primary'
+										aria-label='Mua hàng'
+										style={{
+											background: errorLimitOrder ? "#CCCCCC" : "#212B36",
+											height: "48px",
+											width: "100%",
+											textTransform: "capitalize",
+											border: "none",
+											borderRadius: "4px",
+											color: errorLimitOrder ? "#B22222" : "#fff !important",
+											fontSize: "15px",
+											fontWeight: "700",
+										}}
+										onClick={handleAddOrderProduct}
+										disabled={errorLimitOrder}
+									>
+										<Typography className={classes.nameProductInfo}>{!errorLimitOrder ? <Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700",}}> Thêm vào giỏ hàng</Typography> : <Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}> Hết hàng</Typography>}</Typography>
+									</LoadingButton>
 								</Box>
-								<Box sx={{ display: "flex",paddingTop: "5px",paddingLeft: "16px" }}>
+								{(!errorLimitOrder
+									&&
+									<Box className={classes.boxInfoShipping}>
+										<FontAwesomeIcon icon={faBox} style={{ color: "#212B36",marginRight: "15px",fontSize: "16px" }} />
+										<Typography className={classes.nameProductInfo}>{!errorLimitOrder ? "Còn hàng" : <Typography style={{ color: "#B22222" }}> Hết hàng</Typography>}</Typography>
+									</Box>
+								)}
+
+								<Box className={classes.boxInfoShipping} >
 									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
-									<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển cho mọi đơn hàng trong khu vực nội thành TP. Tam Kỳ</Typography>
+									<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển nội thành TP. Tam Kỳ</Typography>
 								</Box>
-								<Box sx={{ display: "flex",paddingTop: "5px",paddingLeft: "16px" }}>
+								<Box className={classes.boxInfoShipping}>
 									<FontAwesomeIcon icon={faTruck} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Hỗ trợ vận chuyển toàn quốc</Typography>
 								</Box>
@@ -630,11 +649,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							color='primary'
 							onClick={handleAddOrderProduct}
 						>
-							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
+							<div style={{ alignItems: "center",gap: "12px",padding: "10px 16px",textAlign: "center" }}>
 								<div>
-									<Button
+									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 										className={classes.nameProductInfo}
-										variant='contained'
 										style={{
 											background: "#212B36",
 											height: "48px",
@@ -648,20 +666,22 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										onClick={handleAddOrderProduct}
 									>
 										Thêm vào giỏ hàng
-									</Button>
-									{errorLimitOrder && <div style={{ color: "red" }}>Sản phẩm hết hàng</div>}
+									</LoadingButton>
+									{errorLimitOrder && <Typography className={classes.nameProductInfo} style={{ color: "red" }}>Sản phẩm hết hàng</Typography>}
 								</div>
 							</div>
 						</Fab>
 					)}
-					<Dialog open={openDialog} onClose={handleCloseDialog}>
+					<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
 						<Box sx={{ display: "flex",flexDirection: "row",justifyContent: "space-between" }} style={{ background: "rgb(36, 92, 79,0.1)" }}>
-							<DialogTitle className={classes.nameProduct}>Giỏ hàng!</DialogTitle>
-							<DialogActions>
-								<Button onClick={handleCloseDialog} style={{ color: "#212B36" }} sx={{ paddingRight: { xs: "0px",xl: "0px",md: "0px" } }} autoFocus>
+							<DialogTitle style={{ width: "90%" }} className={classes.nameProduct}>Sản phẩm đã được thêm vào giỏ hàng!</DialogTitle>
+
+							<DialogActions style={{ width: '100%',position: 'absolute',top: 0,right: 0 }}>
+								<Button onClick={handleCloseDialog} style={{ color: '#212B36',padding: '8px',marginRight: '8px' }}>
 									<FontAwesomeIcon icon={faXmark} fade />
 								</Button>
 							</DialogActions>
+
 						</Box>
 						<DialogContent style={{ padding: "0px",boxShadow: "none" }}>
 							<Card style={{ padding: "none",boxShadow: "none" }} sx={{ display: "flex" }}>
@@ -762,7 +782,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						</div>
 					</Box>
 				</Container >
-			</Loading >
+			)}
+			{/* </Loading > */}
+
+
 		</>
 	);
 };

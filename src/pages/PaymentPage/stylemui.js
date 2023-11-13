@@ -37,7 +37,6 @@ export default makeStyles(() => {
 			color: "rgb(33,43,54)",
 			transition: "box - shadow 300ms cubic - bezier(0.4,0,0.2,1) 0ms",
 			overflow: "hidden",
-			// boxShadow: "0px 18px 28px rgba(0,0,0,0.15), 0px 0px 1px rgba(0,0,0,0.31)",
 			borderRadius: "16px",
 			padding: "0px 24px 40px",
 
@@ -50,12 +49,12 @@ export default makeStyles(() => {
 				width: '600px', // Đối với màn hình rộng hơn hoặc bằng 600px
 			},
 
-			backgroundColor: "#fff",
 			color: "rgb(33,43,54)",
 			transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
 			overflow: "hidden",
 			borderRadius: "16px",
-			padding: "0px 24px 0px",
+			padding: "30px 24px 0px",
+			backgroundColor: "rgb(247, 248, 250)"
 		},
 
 		txtValueTotal: {
@@ -162,9 +161,10 @@ export default makeStyles(() => {
 			backgroundColor: '#212B36',
 			color: 'white',
 			padding: '10px 20px',
-			width: '90%',
+			width: '100%',
 			border: 'none',
 			borderRadius: '5px',
+			textTransform: "capitalize",
 			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
 				// CSS cho trạng thái loading
 				'&.MuiButton-label': {

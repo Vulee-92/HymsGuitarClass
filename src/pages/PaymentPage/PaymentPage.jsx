@@ -398,7 +398,6 @@ const PaymentPage = () => {
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{
 						display: 'flex',
 						justifyContent: 'flex-end',
-						height: '100%',
 						backgroundColor: "#fff",
 						marginTop: "30px"
 					}}>
@@ -416,6 +415,9 @@ const PaymentPage = () => {
 										color: "#333333",
 										letterSpacing: '1rem',
 										color: "inherit",
+										height: '100%',
+										backgroundColor: "#fff",
+										marginTop: "30px",
 										textDecoration: "none"
 										// cursor: 'pointer',
 									}} className={classes.hymnsName} >HYMNS CENTER</Link>
@@ -487,7 +489,7 @@ const PaymentPage = () => {
 								onClick={() => handleAddOrder()}
 								className={classes.customLoadingButton}
 								sx={{ display: { xl: "flex !important",lg: "flex !important",md: "flex !important",xs: "none !important" } }}
-							>Đặt hàng</LoadingButton>
+							>Tiếp tục</LoadingButton>
 						</Box>
 					</Grid>
 

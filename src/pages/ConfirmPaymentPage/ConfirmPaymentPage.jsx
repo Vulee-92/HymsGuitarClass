@@ -428,7 +428,6 @@ const ConfirmPaymentPage = () => {
 					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{
 						display: 'flex',
 						justifyContent: 'flex-end',
-						height: '100%',
 						backgroundColor: "#fff",
 						marginTop: "30px"
 					}}>

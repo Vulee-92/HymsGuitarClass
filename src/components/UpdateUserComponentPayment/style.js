@@ -79,6 +79,7 @@ export default makeStyles(() => {
 		},
 		conContent: {
 			marginTop: 0,
+			height: "100%"
 		},
 		conInput: {
 			...CStyles.rowAliCen,
@@ -224,6 +225,7 @@ export default makeStyles(() => {
 			maxWidth: "100%",
 			width: "100%",
 			margin: "auto",
+			height: "100%",
 			padding: "0px !important",
 			borderRadius: Configs.br,
 		},

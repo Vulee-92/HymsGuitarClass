@@ -16,10 +16,17 @@ export default makeStyles(() => {
 			alignItems: "center",
 			display: "flex",
 		},
+		txtPrice: {
+			display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "column",lg: "column" }
+		},
+		boxInfoShipping: {
+			display: "flex",padding: "10px 16px",alignItems: "center"
+		},
 		nameProductInfo: {
 			...CStyles.txt_title_item,
 			alignItems: "center",
 			display: "flex",
+			fontSize: "1rem",
 			fontWeight: 400,
 			lineHeight: 1.7,
 		},
@@ -31,7 +38,7 @@ export default makeStyles(() => {
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#434c55",
-			fontSize: "15px",
+			fontSize: "1rem",
 			fontWeight: 400,
 			lineHeight: 1.7,
 			textAlign: "left",
@@ -98,7 +105,7 @@ export default makeStyles(() => {
 		},
 		txtTitleBox: {
 			...CStyles.txt_title_item,
-			fontSize: "22px",
+			fontSize: "2rem",
 			fontWeight: 700,
 			lineHeight: 1.3,
 			position: "relative",
@@ -110,8 +117,8 @@ export default makeStyles(() => {
 			pointerEvents: "none",
 
 			"@media (max-width: 550px)": {
-				fontSize: ".9rem",
-				marginTop: "50px",
+				fontSize: "1.5rem",
+				marginTop: "70px",
 				textAlign: "left",
 			},
 		},
