@@ -8,12 +8,14 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			height: "70vh",
-			backgroundImage: `url(${Assets.bgHome})`,
+			marginTop: "40px",
+			height: "50vh",
+			width: "100%",
+			// backgroundImage: `url(${Assets.bgHome1})`,
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
-			display: "fixed",
+
 			maxHeight: "100%",
 		},
 		sliderWrapper: {

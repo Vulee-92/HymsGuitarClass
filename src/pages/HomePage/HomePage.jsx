@@ -15,6 +15,8 @@ import { Helmet } from "react-helmet-async";
 
 import * as BlogService from "../../services/BlogService";
 import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
+import { Assets } from "../../configs";
+import ImageCarousel from "components/ImageCarousel/ImageCarousel";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -97,13 +99,25 @@ const HomePage = () => {
 		);
 	}
 
+
+
+	const images = [
+		{ mobile: Assets.bgHomeM1,default: Assets.bgHome1 },
+		{ mobile: Assets.bgHomeM2,default: Assets.bgHome2 },
+		{ mobile: Assets.bgHomeM3,default: Assets.bgHome3 },
+		{ mobile: Assets.bgHomeM4,default: Assets.bgHome4 },
+		{ mobile: Assets.bgHomeM5,default: Assets.bgHome5 },
+		{ mobile: Assets.bgHomeM6,default: Assets.bgHome6 },
+		// Thêm các đối tượng hình ảnh khác nếu cần
+	];
+
 	const settings = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 4,
+		slidesToShow: 5,
 		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 3000,
+		// autoplay: true,
+		// autoplaySpeed: 3000,
 		cssEase: "linear",
 		pauseOnHover: true,
 		centerPadding: "60px",
@@ -177,7 +191,9 @@ const HomePage = () => {
 			<Helmet>
 				<title> Hymns </title>
 			</Helmet>
-			<Box className={classes.container}></Box>
+			<Box >
+				<ImageCarousel images={images} />
+			</Box>
 			<Container maxWidth='lx' style={{ marginTop: "100px" }}>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
