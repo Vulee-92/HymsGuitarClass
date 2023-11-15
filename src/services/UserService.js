@@ -93,7 +93,14 @@ export const verifyUser = async (userId,verificationCode) => {
 	}
 };
 
+export const forgotPassword = async (data) => {
+	const res = await axios.post(
+		`${process.env.REACT_APP_API_URL}/user/forgot-password`,
+		data
+	);
 
+	return res.data;
+};
 export const getAllUser = async (access_token) => {
 	const res = await axiosJWT.get(
 		`${process.env.REACT_APP_API_URL}/user/getAll`,

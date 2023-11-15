@@ -32,6 +32,9 @@ const FooterComponent = () => {
 	const goToAbout = () => {
 		navigate("/about");
 	}
+	const goToNews = () => {
+		navigate("/blog");
+	}
 	const goToContact = () => {
 		navigate("/contact");
 	}
@@ -80,21 +83,70 @@ const FooterComponent = () => {
 					component="footer"
 					className={classes.footer}
 				>
-					<Box className={classes.blockHymnsInsider}>
-						<Box className={classes.innerInsider}>
+					{/* <Box className={classes.blockFooterConnect}>
+						<Box className={classes.container}>
 							<Grid container>
-								<Grid item xs={12} sm={4} xl={6} >
+								<Grid item xs={12} sm={12} xl={4} md={4} >
 									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
-										Become a Hymns Insider
+										Trở thành thành viên đặc biệt của Hymns
 									</Typography>
 									<Box onClick={goToSignIn}>
 										<Button
 											className={classes.btnLoginHeader}
 										>
-											Sign Up
+											Đăng ký
+										</Button>
+
+									</Box>
+								</Grid>
+								<Grid item xs={12} sm={12} xl={4} md={4} >
+									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
+										Trở thành thành viên đặc biệt của Hymns
+									</Typography>
+									<Box onClick={goToSignIn}>
+										<Button
+											className={classes.btnLoginHeader}
+										>
+											Đăng ký
+										</Button>
+
+									</Box>
+								</Grid>
+								<Grid item xs={12} sm={12} xl={4} md={4} >
+									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
+										Trở thành thành viên đặc biệt của Hymns
+									</Typography>
+									<Box onClick={goToSignIn}>
+										<Button
+											className={classes.btnLoginHeader}
+										>
+											Đăng ký
+										</Button>
+
+									</Box>
+								</Grid>
+
+								<Grid item xs={12} sm={2} xl={6}>
+
+								</Grid>
+							</Grid>
+						</Box>
+					</Box> */}
+					<Box className={classes.blockHymnsInsider}>
+						<Box className={classes.innerInsider}>
+							<Grid container>
+								<Grid item xs={12} sm={12} xl={7} md={12} >
+									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
+										Trở thành thành viên đặc biệt của Hymns
+									</Typography>
+									<Box onClick={goToSignIn}>
+										<Button
+											className={classes.btnLoginHeader}
+										>
+											Đăng ký
 										</Button>
 										<Typography className={classes.txtTilteInsider}>
-											Subscribe now for emails with guitar giveaways and prizes, cool deals, guitar news and more from Hymns Guitars!
+											"Đăng ký ngay để nhận các email với cơ hội nhận giải thưởng đàn guitar, ưu đãi hấp dẫn, tin tức về guitar và nhiều hơn nữa từ Hymns Center!"
 										</Typography>
 									</Box>
 								</Grid>
@@ -116,9 +168,9 @@ const FooterComponent = () => {
 								}}>
 									<Typography className={classes.txtFooterConnect
 									} sx={{ fontSize: {} }}>
-										Connect With Us
+										Kết nối với Hymns
 									</Typography>
-									<Grid item xs={12} sm={4} xl={8} >
+									<Grid item xs={12} sm={12} xl={8} md={12} >
 										<Grid container sx={{ justifyContent: { xl: "flex-start",md: "flex-start",xs: "center" } }}>
 											<Grid item xs={12} sm={2} xl={4} sx={{ maxWidth: { xl: "13% !important",xs: "30%" } }}>
 												<Link className={classes.IconConnect} href="https://www.facebook.com/hymnsguitarclass/" target="_blank">
@@ -189,6 +241,9 @@ const FooterComponent = () => {
 									</Typography>
 									<Typography className={classes.txtTilte} onClick={goToProduct}>
 										Sản phẩm
+									</Typography>
+									<Typography className={classes.txtTilte} onClick={goToNews}>
+										Tin tức
 									</Typography>
 									<Typography className={classes.txtTilte} onClick={goToContact}>
 										Liên hệ

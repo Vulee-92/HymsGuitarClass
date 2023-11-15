@@ -78,7 +78,7 @@ export default function ShopProductCard({ product }) {
 									className={classes.txtHeaderTitle}
 									onClick={() => handleDetailsProduct(id)}
 								>
-									{name ? `${name.slice(0,30)}` : name}
+									{name ? `${name.slice(0,300)}` : name}
 								</Typography>
 							</Link>
 						</LazyLoad>

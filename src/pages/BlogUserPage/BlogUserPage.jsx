@@ -1,4 +1,4 @@
-import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails } from "@mui/material";
+import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Button } from "@mui/material";
 import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BLogList from "sections/@dashboard/blog/BlogList";
 import { BlogPostCard } from "sections/@dashboard/blog";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
-
+import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
+import { WrapperButtonMore } from "pages/HomePage/style";
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 	...theme.typography.body2,
@@ -30,7 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const BlogUserPage = () => {
 
 	const classes = styles();
-	const [limit,setLimit] = useState(30);
+	const [limit,setLimit] = useState(6);
 	const searchBlog = useSelector((state) => state?.blog?.search);
 	const searchDebounce = useDebounce(searchBlog,500);
 	// const fetchProductAll = async () => {
@@ -134,7 +135,44 @@ const BlogUserPage = () => {
 								{/* <BlogPostCard blog={blogList} /> */}
 								{/* ))} */}
 							</Grid>
-							<BLogList blogs={blogList} />
+							<Grid container spacing={2}>
+								< Grid container item spacing={2} >
+									{blogs?.data?.map((post,index) => (
+										<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
+									))
+									}
+
+								</Grid>
+							</Grid>
+							<Button
+								sx={{ p: 3 }}
+								style={{
+									width: "100%",
+									display: "flex",
+									justifyContent: "center",
+									marginTop: "10px",
+								}}
+							>
+								<WrapperButtonMore
+									textbutton={isPreviousData ? "Load more" : "Xem thêm"}
+									type='outline'
+									styleButton={{
+										border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
+										color: `${blogs?.total === blogs?.data?.length ? "#000" : "#212B36"}`,
+										width: "180px",
+										height: "38px",
+										borderRadius: "4px",
+										display: `${blogs?.total === blogs?.data?.length || blogs?.totalPage === 1 ? "none" : "block"}`,
+									}}
+									disabled={blogs?.total === blogs?.data?.length || blogs?.totalPage === 1}
+									styleTextButton={{
+										fontWeight: 500,
+										color: blogs?.total === blogs?.data?.length && "#000",
+									}}
+									onClick={() => setLimit((prev) => prev + 2)}
+								/>
+							</Button>
+							{/* <BLogList blogs={blogList} /> */}
 						</Item>
 					</Grid>
 				</Grid>

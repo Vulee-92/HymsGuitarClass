@@ -90,7 +90,7 @@ export default function BlogPostCard({ blog,index,id }) {
 								width: '100%',
 								height: '100%',
 								position: 'absolute',
-								bgcolor: (theme) => alpha(theme.palette.grey[800],0.72),
+								// bgcolor: (theme) => alpha(theme.palette.grey[800],0.72),
 							},
 						}),
 						...(latestPostLarge && {

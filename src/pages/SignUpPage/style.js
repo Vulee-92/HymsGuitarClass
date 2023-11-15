@@ -8,7 +8,7 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			height: "800px",
+			height: "100vh",
 			backgroundImage: `url(${Assets.bgHome})`,
 			backgroundSize: "100% ",
 			backgroundRepeat: "no-repeat",
@@ -35,9 +35,10 @@ export default makeStyles(() => {
 			padding: "0px !important",
 			boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
 			color: Colors.white,
-			fontSize: 32,
+			fontSize: "2rem",
 			textAlign: "center",
-			fontWeight: 600,
+			cursor: "pointer",
+			fontWeight: 500,
 		},
 		conSignUp: {
 			padding: 25,
@@ -178,7 +179,8 @@ export default makeStyles(() => {
 			...CStyles.txt_title_item,
 			color: " #ffffff !important",
 			fontSize: "1rem",
-			fontWeight: "600",
+			fontWeight: "500",
+			cursor: "pointer",
 			marginBottom: "1.25rem",
 			maxWidth: 720,
 			margin: "auto",

@@ -9,7 +9,6 @@ export default makeStyles(() => {
 		container: {
 			...CStyles.center,
 			marginTop: "40px",
-			height: "50vh",
 			width: "100%",
 			// backgroundImage: `url(${Assets.bgHome1})`,
 			backgroundSize: "cover",

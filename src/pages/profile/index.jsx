@@ -13,15 +13,13 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faEye,
-	faEyeSlash,
-	faAddressCard,
-	faLock,
-} from "@fortawesome/free-solid-svg-icons";
+import moment from 'moment';
+import 'moment/locale/vi'; // Import ngôn ngữ tiếng Việt của Moment.js
+
 /** COMMON */
 // import { useDispatch, useSelector } from 'react-redux'
 import * as UserService from "../../services/UserService";
+import * as OrderService from '../../services/OrderService'
 import * as message from "../../components/Message/Message";
 
 import CStyles from "../../utils/common/index";
@@ -35,18 +33,27 @@ import { updateUser } from "../../redux/slides/userSlide";
 import Loading from "../../components/LoadingComponent/Loading";
 import CButton from "../../components/CButton";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import { Assets } from "configs";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { useLocation,useNavigate } from "react-router-dom";
+import OrderTable from "components/FooterComponent/TableOrderComponent/TableOrderComponent";
+import { useQuery } from "@tanstack/react-query";
 
 const ProfileScreen = () => {
+	const navigate = useNavigate()
+	const location = useLocation()
+	const { state } = location
+	console.log("state",state)
 	const classes = styles();
 	const { t } = useTranslation();
-	// const dispatch = useDispatch();
-	// const user = useSelector((state) => state.user.data);
+	console.log(state)
+
 	const user = useSelector((state) => state.user);
+	console.log("user",user)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");
 	const [password,setPassword] = useState("");
-
 	const [address,setAddress] = useState("");
 	const [avatar,setAvatar] = useState("");
 	// const mutation = useMutationHooks((data) => {
@@ -61,7 +68,6 @@ const ProfileScreen = () => {
 	)
 	const [loading,setLoading] = useState(false);
 	const [errorMsg,setErrorMsg] = useState("");
-
 	const dispatch = useDispatch();
 	const { data,isLoading,isSuccess,isError } = mutation;
 	useEffect(() => {
@@ -86,10 +92,7 @@ const ProfileScreen = () => {
 			id: user?.id,
 			name: form.name.value,
 			// email: form.email.value,q
-			phone,
-			address,
-			password,
-			avatar,
+			password: form.password.value,
 			access_token: user?.access_token,
 		});
 	};
@@ -119,7 +122,7 @@ const ProfileScreen = () => {
 			error: false,
 		},
 		password: {
-			value: "",
+			value: user?.password,
 			isFocus: false,
 			msg: "",
 			error: false,
@@ -154,6 +157,9 @@ const ProfileScreen = () => {
 			},
 		});
 	};
+	const handleToChangePassword = () => {
+		navigate("/change-password")
+	}
 
 	const onValidate = () => {
 		setErrorMsg("");
@@ -197,7 +203,18 @@ const ProfileScreen = () => {
 		handleUpdate();
 	};
 	/** LIFE CYCLE */
+	const formattedTime = moment(user?.createdAt).locale('vi');
 
+	let timeOfDay;
+	const hour = formattedTime.hour();
+
+	if (hour >= 6 && hour < 12) {
+		timeOfDay = <Typography>am</Typography>;
+	} else if (hour >= 12 && hour < 18) {
+		timeOfDay = 'pm';
+	} else {
+		timeOfDay = 'pm';
+	}
 	/** RENDER */
 	return (
 		// <Modal
@@ -214,171 +231,61 @@ const ProfileScreen = () => {
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>
-						<Typography className={classes.txtHeaderTitle}>
-						</Typography>
-						<Box className={classes.conForm}>
-							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
-									{t("name")}
-								</Typography>
-								<Input
-									style={{
-										border:
-											!form.name.isFocus &&
-											`2px solid ${form.name.error
-												? Colors.secondary
-												: form.name.value.trim() !== ""
-													? Colors.success
-													: "transparent"
-											}`,
-									}}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("name")}
-									value={form?.name?.value}
-									startAdornment={
-										<InputAdornment position="start">
-											<FontAwesomeIcon
-												icon={faAddressCard}
-												fontSize={20}
-												color={
-													form.name.isFocus || form.name.value.trim() !== ""
-														? Colors.bgLogin
-														: Colors.bgLogin
-												}
-												className={classes.conIconInput}
-											/>
-										</InputAdornment>
-									}
-									onChange={(event) => onChangeInput(event,"name")}
-									disabled={loading}
-									onFocus={() => onBlurFocusInput(true,"name")}
-									onBlur={() => onBlurFocusInput(false,"name")}
-								/>
-							</Box>
-							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
-									{t("email")}
-								</Typography>
-								<Input
-									style={{
-										border:
-											!form.email.isFocus &&
-											`2px solid ${form.email.error
-												? Colors.secondary
-												: form.email.value.trim() !== ""
-													? Colors.success
-													: "transparent"
-											}`,
-									}}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("email")}
-									disabled
-									value={form.email.value}
-								// startAdornment={
-								// 	<InputAdornment position="start">
-								// 		<FontAwesomeIcon
-								// 			icon={faAddressCard}
-								// 			fontSize={20}
-								// 			color={
-								// 				form.email.isFocus || form.email.value.trim() !== ""
-								// 					? Colors.bgLogin
-								// 					: Colors.bgLogin
-								// 			}
-								// 			className={classes.conIconInput}
-								// 		/>
-								// 	</InputAdornment>
-								// }
-								// onChange={(event) => onChangeInput(event,"email")}
-								// onFocus={() => onBlurFocusInput(true,"email")}
-								// onBlur={() => onBlurFocusInput(false,"email")}
-								/>
-							</Box>
-							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
-									{t("password")}
-								</Typography>
-								<Input
-									style={{
-										border:
-											!form.password.isFocus &&
-											`2px solid ${form.password.error
-												? Colors.secondary
-												: form.password.value.trim() !== ""
-													? Colors.success
-													: "transparent"
-											}`,
-									}}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("password")}
-									value={form.password.value}
-									onChange={(event) => onChangeInput(event,"password")}
-									startAdornment={
-										<InputAdornment position="start">
-											<FontAwesomeIcon
-												icon={faLock}
-												fontSize={20}
-												color={
-													form.password.isFocus ||
-														form.password.value.trim() !== ""
-														? Colors.bgLogin
-														: Colors.placeHolder
-												}
-												className={classes.conIconInput}
-											/>
-										</InputAdornment>
-									}
-									endAdornment={
-										<InputAdornment position="end">
-											<FontAwesomeIcon
-												icon={form.password.isShow ? faEye : faEyeSlash}
-												fontSize={20}
-												color={Colors.bgLogin}
-												className={classes.conIconInputRight}
-												onClick={onChangeTypePassword}
-											/>
-										</InputAdornment>
-									}
-									type={form.password.isShow ? "text" : "password"}
-									onFocus={() => onBlurFocusInput(true,"password")}
-									onBlur={() => onBlurFocusInput(false,"password")}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											onValidate();
-										}
-									}}
-								/>
-							</Box>
-						</Box>
-						<Box className={classes.conMsg}>
-							<Typography className={classes.txtError}>
-								{t(errorMsg)}
-							</Typography>
-						</Box>
-						{data?.status === "ERR" && (
-							<span style={{ color: "red" }}>
-								{(form.email.msg = t("txt_error_name_empty"))}
-							</span>
-						)}
-						<Loading isLoading={isLoading}>
+						<Grid container>
+							<Grid item xs={12} sm={6} lg={4} xl={1}>
+								<img src={Assets.logoUser} alt="avatar" style={{
+									height: '50px',
+									width: '50px',
+									borderRadius: '50%',
 
-							<CButton style={{ fullWidth: "30%" }}
-								// disabled={!name.length || !email.length || !password.length}
-								title={t('save')}
-								onClick={onValidate}
-								onKeyDown={(e) => {
-									if (e.key === "Enter") {
-										onValidate();
-									}
-								}}
-							/>
-						</Loading>
+									objectFit: 'cover'
+								}} />
+							</Grid>
+							<Grid item xs={12} sm={6} lg={4} xl={7} >
+								<Typography className={classes.txtTitleInput}>
+									<strong style={{ color: "#0b2238" }}>{user?.name}</strong>
+								</Typography>
+								<Typography className={classes.txtTitleInput}>
+									<strong style={{ color: "#0b2238" }}>Email:</strong> {user?.email}
+								</Typography>
+								<Typography className={classes.txtTitleInput}>
+									<strong style={{ color: "#0b2238" }}>Thành viên từ:</strong> {formattedTime.format(`DD [tháng] M, YYYY, h`)}
+									{timeOfDay}
+									{timeOfDay !== 'pm' && <Typography>{timeOfDay}</Typography>}
+								</Typography>
+							</Grid>
+							<Grid item xs={12} sm={6} lg={4} xl={4} sx={{ display: "flex",alignItems: "center",justifyContent: "flex-end" }}>
+								<Typography className={classes.txtTitleInput} onClick={handleToChangePassword}>
+									<FontAwesomeIcon
+										icon={faLock}
+										fontSize={20}
+										color={"#436E67"}
+										className={classes.conIconInput}
+									/>Thay đổi thông tin
+								</Typography>
+							</Grid>
+						</Grid>
 
 
 					</Box>
 				</Grid>
+				<Typography className={classes.txtHeaderTitle}> Đơn hàng</Typography>
+				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
+					<Box className={classes.conLogin}>
+						<Grid container>
+							<Grid item xs={12} sm={6} lg={4} xl={12} sx={{ display: "flex",alignItems: "center",justifyContent: "flex-start" }}>
+								<Typography className={classes.txtTitleInputOrderNew} onClick={handleToChangePassword}>
+									Đơn hàng mới nhất
+								</Typography>
+							</Grid>
+						</Grid>
+
+
+					</Box>
+					<OrderTable />
+
+				</Grid>
+
 			</Grid>
 		</Loading>
 	);

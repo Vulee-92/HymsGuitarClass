@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const NavbarComponent = React.lazy(() => import('components/NavbarComponent/NavbarComponent'));
+const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
 const PRODUCT_COLOR = [
 	"#00AB55",
 	"#000000",
@@ -130,10 +130,10 @@ const ProductsPage = () => {
 			</Typography> */}
 			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-					<Grid item xs={12} sm={3} md={3} xl={3} spacing={2} >
+					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
 						<NavbarComponent />
 					</Grid>
-					<Grid item xs={12} sm={9} md={9} xl={9}>
+					<Grid item xs={12} sm={12} md={9} xl={9}>
 						<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
 					</Grid>
 				</Grid>

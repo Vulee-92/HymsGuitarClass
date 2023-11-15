@@ -3,7 +3,7 @@ import * as ProductService from "../../services/ProductService";
 import { useQuery } from "@tanstack/react-query";
 import TypeProduct from "../../components/TypeProduct/TypeProduct";
 import { useNavigate } from "react-router-dom";
-import { Typography,Accordion,AccordionDetails,AccordionSummary } from "@mui/material";
+import { Typography,Accordion,AccordionDetails,AccordionSummary,useMediaQuery } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styles from "./stylemui";
@@ -33,11 +33,15 @@ const NavbarComponent = () => {
 	useEffect(() => {
 		fetchAllTypeProduct()
 	},[])
-
+	// Sử dụng useMediaQuery để xác định kích thước màn hình
+	const isDesktop = useMediaQuery('(min-width:899px)');
 	return (
 
 		<div>
-			<Accordion style={{ margin: "0px",boxShadow: "none" }} defaultExpanded>
+			<Accordion
+				style={{ margin: "0px",boxShadow: "none" }}
+				expanded={isDesktop}
+			>
 				<AccordionSummary style={{ marginTop: "0px" }}
 					expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
 					aria-controls="panel1a-content"

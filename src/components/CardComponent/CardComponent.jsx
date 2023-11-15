@@ -11,19 +11,8 @@ const CardComponent = (props,post,index) => {
 		image,
 		name,
 		price,
-		type,
-		// rating,
-		// type,
-		// discount,
-		selled,
-		// createdAt,
 		id,
-		// cover,
-		// title,
-		view,
-		comment,
-		share,
-		// author,
+
 	} = props;
 	const navigate = useNavigate();
 	const handleDetailsProduct = (id) => {
@@ -36,7 +25,7 @@ const CardComponent = (props,post,index) => {
 	return (
 		<section className="content" id="Explore">
 			<img onClick={() => handleDetailsProduct(id)} style={{
-				maxHeight: '25em',
+				maxHeight: '18em',
 				display: 'block',
 				position: 'relative',
 				top: 0,
@@ -44,8 +33,8 @@ const CardComponent = (props,post,index) => {
 				cursor: 'pointer',
 				transform: 'translate3d(-50%, 0, 0)'
 			}} src={image} alt="img 01" />
-			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name ? `${name.slice(0,70)}` : name}</Typography>
-			{/* <Typography className={classes.txtPrice} style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography> */}
+			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name}</Typography>
+			<Typography className={classes.txtPrice} style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
 		</section>
 	);
 }

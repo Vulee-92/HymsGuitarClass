@@ -23,6 +23,10 @@ const BlogDetailsPage = lazy(() => import("../pages/BlogDetailPage/BlogDetailPag
 const VerifyEmailPage = lazy(() => import("../pages/VerifyEmailPage/VerifyEmailPage"));
 const VerifyEmailSuccessPage = lazy(() => import("../pages/VerifyEmailSuccessPage/VerifyEmailSuccessPage"));
 const ConfirmPaymentPage = lazy(() => import("../pages/ConfirmPaymentPage/ConfirmPaymentPage"));
+const ForgotPassordPage = lazy(() => import("../pages/ForgotPassordPage/ForgotPassordPage"));
+const SendEmailForgotPasswordSuccess = lazy(() => import("../pages/SendEmailForgotPasswordSuccess/SendEmailForgotPasswordSuccess"));
+const ChangePassword = lazy(() => import("../pages/ChangePassword/ChangePassword"));
+
 export const routes = [
 	{
 		path: "/",
@@ -36,6 +40,12 @@ export const routes = [
 		page: Profile,
 		isShowHeader: true,
 	},
+	{
+		path: "/change-password",
+		page: ChangePassword,
+		isShowHeader: true,
+	},
+
 	{
 		path: "/verify/:userId/:code",
 		page: VerifyEmailSuccessPage,
@@ -110,6 +120,19 @@ export const routes = [
 		isShowHeader: true,
 		isShowFooter: true,
 	},
+	{
+		path: "/recover-password",
+		page: ForgotPassordPage,
+		isShowHeader: true,
+		isShowFooter: true,
+	},
+	{
+		path: "/recover-password/sent",
+		page: VerifyEmailPage,
+		// isShowHeader: true,
+		// isShowFooter: true,
+	},
+
 	{
 		path: "/sign-up",
 		page: SignUpPage,

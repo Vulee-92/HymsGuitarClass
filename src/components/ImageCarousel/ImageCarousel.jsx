@@ -26,12 +26,11 @@ const ImageCarousel = ({ images }) => {
 							<img
 								style={{
 									marginTop: "60px",
-									height: "50vh",
-									width: "100%",
+									height: "40vh",
+									width: "100vw",
 									backgroundSize: "cover",
 									backgroundRepeat: "no-repeat",
 									borderBottom: "1px solid #d6d6d4",
-									maxHeight: "100%",
 								}}
 								src={image.mobile}
 								alt={`Mobile Slide ${index + 1}`}

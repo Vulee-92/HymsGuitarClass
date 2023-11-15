@@ -13,21 +13,22 @@ import { Box } from '@mui/system';
 const MyOderPage = () => {
 	const location = useLocation()
 	const { state } = location
+	console.log(state)
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
 	const fetchMyOrder = async () => {
-		const res = await OrderService.getOrderByUserId(state?.id,state?.token)
+		const res = await OrderService.getOrderByUserId(user?.id,user?.access_token)
 		return res.data
 	}
 
 	const queryOrder = useQuery({ queryKey: ['orders'],queryFn: fetchMyOrder },{
-		enabled: state?.id && state?.token
+		enabled: user?.id && user?.access_token
 	})
 	const { isLoading,data } = queryOrder
 	const handleDetailsOrder = (id) => {
 		navigate(`/order-success/${id}`,{
-			state: {
-				token: state?.token
+			user: {
+				token: user?.access_token
 			}
 		})
 	}

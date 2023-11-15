@@ -5,23 +5,31 @@ import styles from "./style";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import { Parallax,ParallaxProvider } from "react-scroll-parallax";
 import { Assets } from "configs";
+import ImageCarousel from "components/ImageCarousel/ImageCarousel";
 
 const AboutPage = () => {
 	const classes = styles();
+
+	const images = [
+		{ mobile: Assets.bgHomeM2,default: Assets.bgHome2 },
+		{ mobile: Assets.bgHomeM4,default: Assets.bgHome4 },
+		{ mobile: Assets.bgHomeM5,default: Assets.bgHome5 },
+		{ mobile: Assets.bgHomeM6,default: Assets.bgHome6 },
+		// Thêm các đối tượng hình ảnh khác nếu cần
+	];
 	return (
 		<>
 
-			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="About" className={classes.conTextCreate} />
+			<ImageCarousel images={images} />
+			{/* <Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="About" className={classes.conTextCreate} />
 					<Typography className={classes.txtAboutInfo}>  <AnimationComponent type="text" text="Know more about my career" className={classes.txtAboutInfo} /></Typography>
-				</Typography>
+				</Typography> */}
 
-			</Box>
-			<Container maxWidth="md" style={{ marginTop: '100px' }}>
+			<Container maxWidth="lg" style={{ marginTop: '100px' }}>
 				<ParallaxProvider>
 					<>
 						<Parallax speed={-5}>
-							<Container maxWidth="md">
+							<Container maxWidth="lg">
 								<Box sx={{ width: '100%' }} >
 									<AnimationComponent type="text" text="HYMNS" className={classes.txtHeaderTitle} />
 									<Typography className={classes.txtTilte}>
@@ -34,7 +42,7 @@ const AboutPage = () => {
 
 									<Box sx={{ flexGrow: 1 }}>
 
-										<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.class} alt="logo" />
+										<Box sx={{ width: "100%",height: "600px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.class} alt="logo" />
 
 									</Box>
 									<AnimationComponent type="text" text="Cửa hàng guitar online" className={classes.txtHeaderTitle} />
@@ -50,10 +58,10 @@ const AboutPage = () => {
 									<Box sx={{ flexGrow: 1 }}>
 										<Grid container spacing={2} columns={16}>
 											<Grid item xs={8}>
-												<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
+												<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgHomeM1} alt="logo" />
 											</Grid>
 											<Grid item xs={8}>
-												<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
+												<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgHomeM6} alt="logo" />
 											</Grid>
 										</Grid>
 									</Box>
@@ -63,7 +71,7 @@ const AboutPage = () => {
 										HYMNS không chỉ là một lớp học đàn guitar và shop đàn online, mà còn là một cộng đồng yêu âm nhạc. HYMNS mong muốn mang lại cho các bạn yêu thích âm nhạc một môi trường học tập và trải nghiệm thú vị.</Typography>
 									<Box sx={{ flexGrow: 1 }}>
 
-										<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgProduct} alt="logo" />
+										<Box sx={{ width: "100%",height: "470px",objectFit: 'cover',borderRadius: '8px',textAlign: "center" }} component={'img'} src={Assets.bgHome2} alt="logo" />
 
 									</Box>
 

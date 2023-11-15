@@ -116,7 +116,6 @@ export default makeStyles(() => {
 		conIconInputRight: {
 			paddingLeft: 16,
 			cursor: "pointer",
-			color: "#436E67"
 		},
 		conFooter: {
 			marginTop: 32,
@@ -218,14 +217,41 @@ export default makeStyles(() => {
 				display: "none",
 			},
 		},
-
+		customLoadingButton: {
+			backgroundColor: '#212B36',
+			color: 'white',
+			padding: '10px 20px',
+			width: '100%',
+			border: 'none',
+			borderRadius: '5px',
+			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
+				// CSS cho trạng thái loading
+				'&.MuiButton-label': {
+					visibility: 'hidden',
+				},
+				'& .MuiCircularProgress-root': {
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					marginTop: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+					marginLeft: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+				},
+				"&:hover": {
+					backgroundColor: '#245c4f'
+				}
+			},
+		},
 		conCard: {
-			maxWidth: 1100,
+			maxWidth: 720,
 			margin: "auto",
 			padding: "0px !important",
-			backgroundColor: "#f7f8fa",
 			borderRadius: Configs.br,
-
+			backgroundColor: "#fff",
+			boxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
+			WebkitBoxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
+			MozBoxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
+			OBoxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
+			MsBoxShadow: "0px 50px 70px -10px rgba(11, 34, 56, 0.05) !important",
 		},
 		conLogin: {
 			padding: 32,
@@ -276,7 +302,6 @@ export default makeStyles(() => {
 		},
 		conIconInput: {
 			paddingRight: 8,
-			cursor: "pointer",
 		},
 		conIconInputRight: {
 			paddingLeft: Configs.pH,
@@ -337,9 +362,7 @@ export default makeStyles(() => {
 		txtHeaderTitle: {
 			...CStyles.txt_header_title,
 			// color: Colors.da,
-			fontSize: 32,
-			marginTop: "60px",
-			marginBottom: "60px",
+			fontSize: "1.5rem",
 			textAlign: "center",
 			fontWeight: 600,
 			color: "#0b2238",
@@ -354,17 +377,6 @@ export default makeStyles(() => {
 		},
 		txtTitleInput: {
 			...CStyles.txt_title_item,
-			fontWeight: 400,
-			lineHeight: 2,
-			color: "#0b2238",
-			cursor: "pointer",
-		},
-		txtTitleInputOrderNew: {
-			...CStyles.txt_title_item,
-			fontWeight: 400,
-			lineHeight: 2,
-			color: "#6c7a87",
-			cursor: "pointer",
 		},
 		txtError: {
 			...CStyles.txt_error,

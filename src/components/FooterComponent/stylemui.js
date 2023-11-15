@@ -17,7 +17,7 @@ export default makeStyles(() => {
 		nameProduct: {
 			...CStyles.txt_title_item,
 			color: "#e9e6e0",
-			fontSize: 18,
+			fontSize: "1.2rem",
 			fontWeight: 700,
 			marginBottom: 10,
 			textTransform: "uppercase",
@@ -27,16 +27,16 @@ export default makeStyles(() => {
 		},
 		footer: {
 			paddingTop: "5rem",
-			paddingBottom: '40px'
+			// paddingBottom: '40px'
 			// paddingBottom: "4rem",
 		},
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#6c7a87",
 			marginTop: "1rem",
-			fontSize: "14px",
+			fontSize: "1rem",
 			color: "#e9e6e0",
-			fontWeight: 600,
+			fontWeight: 500,
 			lineHeight: 1.5,
 			marginBottom: "1.45rem",
 			cursor: "pointer",
@@ -45,7 +45,7 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			color: "#6c7a87",
 			marginTop: "1rem",
-			fontSize: "16px",
+			fontSize: "1rem",
 			color: "#e9e6e0",
 			fontWeight: 500,
 			lineHeight: 1.5,
@@ -56,7 +56,7 @@ export default makeStyles(() => {
 			color: "#6c7a87",
 			marginTop: ".45rem",
 			color: "#e9e6e0",
-			fontSize: "13px",
+			fontSize: "1rem",
 			fontWeight: 600,
 			marginBottom: 0,
 			cursor: "pointer",

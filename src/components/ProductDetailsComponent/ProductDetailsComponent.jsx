@@ -229,7 +229,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const settingsAccess = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 2,
+		slidesToShow: 1,
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 3000,
@@ -242,8 +242,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			{
 				breakpoint: 1024,
 				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
+					slidesToShow: 1,
+					slidesToScroll: 1,
 					infinite: true,
 					dots: true,
 				},
@@ -252,7 +252,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 				breakpoint: 768,
 				settings: {
 					slidesToShow: 2,
-					slidesToScroll: 2,
+					slidesToScroll: 1,
 				},
 			},
 			{
@@ -672,7 +672,79 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</div>
 						</Fab>
 					)}
-					<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
+					<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="xs" fullWidth>
+						<DialogTitle style={{ background: "rgb(36, 92, 79,0.1)" }}>
+							<Grid container spacing={2} style={{ alignItems: "center" }} >
+								<Grid item xs={10} sm={10} xl={11}>
+									<Typography className={classes.nameProduct}>Đã thêm vào giỏ hàng</Typography>
+								</Grid>
+								<Grid item xs={2} sm={2} xl={1}>
+									<IconButton edge="end" color="inherit" onClick={handleCloseDialog} aria-label="close">
+										<FontAwesomeIcon icon={faXmark} fade />
+									</IconButton>
+								</Grid>
+							</Grid>
+						</DialogTitle>
+						<DialogContent style={{ marginTop: "20px" }}>
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={4} xl={4}>
+									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image} alt={productDetails?.image} />
+								</Grid>
+								<Grid item xs={12} sm={8} xl={8}>
+									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",fontWeight: 600,marginBottom: "10px" }}>{productDetails?.name}</Typography>
+									<Typography className={classes.priceTitle} style={{ fontSize: "1.2rem",textAlign: "left",fontWeight: 500 }}>	{(productDetails?.price)?.toLocaleString()}₫</Typography>
+									<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
+										<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
+										<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "1rem",fontWeight: 500,lineHeight: 1.5 }} >
+											{" "}{numProduct}
+										</Typography>
+									</Box>
+									<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
+										<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400 }}>Tạm tính:</Typography>
+										<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500 }} >
+											{(productDetails?.price * numProduct)?.toLocaleString()}₫
+										</Typography>
+									</Box>
+								</Grid>
+							</Grid>
+						</DialogContent>
+						<DialogActions style={{ background: "rgb(36, 92, 79,0.1)",padding: "22px" }}>
+							<Button onClick={handleCloseDialog} className={classes.nameProductInfo}
+								variant='contained'
+								style={{
+									background: "#212B36",
+									height: "48px",
+									width: "100%",
+									border: "none",
+									borderRadius: "4px",
+									color: "#fff",
+									fontSize: "1rem",
+									textTransform: "capitalize",
+									fontWeight: "700",
+								}}>
+								Tiếp tục mua sắm
+							</Button>
+							<Button
+								className={classes.nameProductInfo}
+								variant='contained'
+								style={{
+									background: "#212B36",
+									height: "48px",
+									width: "100%",
+									border: "none",
+									borderRadius: "4px",
+									color: "#fff",
+									fontSize: "1rem",
+									textTransform: "capitalize",
+									fontWeight: "700",
+								}}
+								onClick={() => navigate('/order')}
+							>
+								Xem giỏ hàng
+							</Button>
+						</DialogActions>
+					</Dialog>
+					{/* <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
 						<Box sx={{ display: "flex",flexDirection: "row",justifyContent: "space-between" }} style={{ background: "rgb(36, 92, 79,0.1)" }}>
 							<DialogTitle style={{ width: "90%" }} className={classes.nameProduct}>Sản phẩm đã được thêm vào giỏ hàng!</DialogTitle>
 
@@ -683,7 +755,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</DialogActions>
 
 						</Box>
-						<DialogContent style={{ padding: "0px",boxShadow: "none" }}>
+						<DialogContent >
 							<Card style={{ padding: "none",boxShadow: "none" }} sx={{ display: "flex" }}>
 								<CardMedia component='img' sx={{ width: "30%",height: "30%" }} image={productDetails?.image} alt={productDetails?.image} />
 								<Box sx={{ display: "flex",flexDirection: "column" }}>
@@ -710,35 +782,38 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										</Box>
 
 									</CardContent>
-									<Box sx={{ display: "flex",alignItems: "center",pl: 1,pb: 1 }}></Box>
+									<Box sx={{ display: "flex",alignItems: "center",pl: 1,pb: 1 }}>
+										<div>
+											<Button
+												className={classes.nameProductInfo}
+												variant='contained'
+												style={{
+													background: "#212B36",
+													height: "48px",
+													width: "100%",
+													border: "none",
+													borderRadius: "4px",
+													color: "#fff",
+													fontSize: "15px",
+													textTransform: "capitalize",
+													fontWeight: "700",
+												}}
+												onClick={() => navigate('/order')}
+											>
+												Xem giỏ hàng
+											</Button>
+											{errorLimitOrder && (
+												<Typography className={classes.nameProduct} style={{ color: "red",textAlign: "center",fontWeight: 300,marginTop: "10px" }}>
+													Sản phẩm hiện đang hết hàng
+												</Typography>
+											)}
+										</div>
+									</Box>
 								</Box>
+
 							</Card>
 							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center",background: "rgb(36, 92, 79,0.1)" }}>
-								<div>
-									<Button
-										className={classes.nameProductInfo}
-										variant='contained'
-										style={{
-											background: "#212B36",
-											height: "48px",
-											width: "100%",
-											border: "none",
-											borderRadius: "4px",
-											color: "#fff",
-											fontSize: "15px",
-											textTransform: "capitalize",
-											fontWeight: "700",
-										}}
-										onClick={() => navigate('/order')}
-									>
-										Xem giỏ hàng
-									</Button>
-									{errorLimitOrder && (
-										<Typography className={classes.nameProduct} style={{ color: "red",textAlign: "center",fontWeight: 300,marginTop: "10px" }}>
-											Sản phẩm hiện đang hết hàng
-										</Typography>
-									)}
-								</div>
+
 								<hr style={{ margin: "60px 0" }} />
 								<Box style={{ margin: "60px 0" }}>
 									<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
@@ -761,7 +836,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</div>
 
 						</DialogContent>
-					</Dialog>
+					</Dialog> */}
 					<hr style={{ margin: "60px 0" }} />
 					<Box style={{ margin: "60px 0" }}>
 						<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />

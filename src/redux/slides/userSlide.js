@@ -6,6 +6,7 @@ const initialState = {
 	phone: "",
 	address: "",
 	avatar: "",
+	password: "",
 	province: "",
 	ward: "",
 	access_token: "",
@@ -13,6 +14,7 @@ const initialState = {
 	isAdmin: false,
 	city: "",
 	refreshToken: "",
+	createdAt: ""
 };
 
 export const userSlide = createSlice({
@@ -26,9 +28,11 @@ export const userSlide = createSlice({
 				access_token = "",
 				address = "",
 				phone = "",
+				password = "",
 				province = "",
 				ward = "",
 				avatar = "",
+				createdAt = "",
 				_id = "",
 				isAdmin,
 				city = "",
@@ -36,9 +40,11 @@ export const userSlide = createSlice({
 			} = action.payload;
 			state.name = name;
 			state.email = email;
+			state.password = password;
 			state.address = address;
 			state.phone = phone;
 			state.avatar = avatar;
+			state.createdAt = createdAt;
 			state.province = province;
 			state.ward = ward;
 			state.id = _id;
@@ -51,10 +57,12 @@ export const userSlide = createSlice({
 			state.name = "";
 			state.email = "";
 			state.address = "";
+			state.password = "";
 			state.phone = "";
 			state.province = "";
 			state.ward = "";
 			state.avatar = "";
+			state.createdAt = "";
 			state.id = "";
 			state.access_token = "";
 			state.isAdmin = false;

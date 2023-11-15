@@ -206,7 +206,7 @@ const HomePage = () => {
 										return (
 											<div>
 												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,20)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,200)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
 												</ImageListItem>
 											</div>
 										);

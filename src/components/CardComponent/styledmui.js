@@ -17,7 +17,7 @@ export default makeStyles(() => {
 			color: "#0b2238",
 			fontSize: "1.5rem",
 			height: "70px",
-			minHeight: "62.4px",
+			minHeight: "30px",
 			overflow: "hidden",
 			overflowWrap: "break-word",
 			paddingBottom: "5px",

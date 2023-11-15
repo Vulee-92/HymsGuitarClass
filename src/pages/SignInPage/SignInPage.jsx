@@ -173,6 +173,9 @@ const SignInPage = () => {
 	// 	}
 
 	// };
+	const recoverPassword = () => {
+		navigate("/recover-password")
+	}
 	const onValidate = () => {
 		setErrorMsg("");
 		setForm({
@@ -210,9 +213,12 @@ const SignInPage = () => {
 		handleSignIn();
 	};
 	return (
-		<Box className={classes.container}>
+		<>
+			<Box className={classes.container}>
+			</Box>
+
 			<Grid container className={classes.conContent}>
-				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
+				<Grid item xs={12} sm={6} lg={4} xl={3} className={classes.conCard}>
 					<Box className={classes.conLogin}>
 						<Typography className={classes.txtHeaderTitle} sx={{ fontSize: { xs: "32px !important" } }}>
 							{t("sign_in")}
@@ -247,8 +253,8 @@ const SignInPage = () => {
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
-												icon={faAddressCard}
-												fontSize={20}
+												// icon={faAddressCard}
+												// fontSize={20}
 												color={
 													form.email.isFocus || form.email.value.trim() !== ""
 														? Colors.bgLogin
@@ -289,8 +295,8 @@ const SignInPage = () => {
 									startAdornment={
 										<InputAdornment position="start">
 											<FontAwesomeIcon
-												icon={faLock}
-												fontSize={20}
+												// icon={faLock}
+												// fontSize={20}
 												color={
 													form.password.isFocus ||
 														form.password.value.trim() !== ""
@@ -325,6 +331,9 @@ const SignInPage = () => {
 
 						</Box>
 						<Box className={classes.conMsg}>
+							<Typography className={classes.txtForgot} onClick={recoverPassword}>Quên mật khẩu?</Typography>
+						</Box>
+						<Box className={classes.conMsg}>
 							<Typography className={classes.txtError}>
 								{t(errorMsg)}
 							</Typography>
@@ -356,7 +365,8 @@ const SignInPage = () => {
 					</Box>
 				</Grid>
 			</Grid>
-		</Box>
+		</>
+
 	);
 };
 
