@@ -92,7 +92,16 @@ export const verifyUser = async (userId,verificationCode) => {
 		throw error;
 	}
 };
-
+export const resetPassword = async (id,token,data) => {
+	try {
+		const res = await axios.post(
+			`${process.env.REACT_APP_API_URL}/user/reset-password/${id}/${token}`,data
+		);
+		return res.data;
+	} catch (error) {
+		throw error;
+	}
+};
 export const forgotPassword = async (data) => {
 	const res = await axios.post(
 		`${process.env.REACT_APP_API_URL}/user/forgot-password`,

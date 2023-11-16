@@ -32,6 +32,7 @@ import { updateUser } from "../../redux/slides/userSlide";
 import CButton from "../../components/CButton";
 /** STYLES */
 import styles from "./style";
+import { LoadingButton } from "@mui/lab";
 
 
 const SignInPage = () => {
@@ -348,7 +349,16 @@ const SignInPage = () => {
 								{(<Typography style={{ color: "red" }} className={classes.conInput}>Tài khoản của bạn chưa được xác minh</Typography>)}
 							</span>
 						)}
-						<Loading isLoading={isLoading}>
+						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading} onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								onValidate();
+							}
+						}}
+							onClick={() => onValidate()}
+							className={classes.customLoadingButton}
+						>{t("sign_in")}</LoadingButton>
+
+						{/* <Loading isLoading={isLoading}>
 							<CButton
 								className={classes.txtHeaderTitle}
 								title={t("sign_in")}
@@ -361,7 +371,7 @@ const SignInPage = () => {
 									}
 								}}
 							/>
-						</Loading>
+						</Loading> */}
 					</Box>
 				</Grid>
 			</Grid>

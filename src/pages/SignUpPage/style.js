@@ -213,5 +213,32 @@ export default makeStyles(() => {
 			fontWeight: CStyles.fBold,
 			cursor: "pointer",
 		},
+		customLoadingButton: {
+			...CStyles.txt_body_item,
+			backgroundColor: '#212B36',
+			color: 'white',
+			padding: '10px 20px',
+			width: '100%',
+			marginTop: 10,
+			border: 'none',
+			borderRadius: '5px',
+			textTransform: "capitalize",
+			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
+				// CSS cho trạng thái loading
+				'&.MuiButton-label': {
+					visibility: 'hidden',
+				},
+				'& .MuiCircularProgress-root': {
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					marginTop: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+					marginLeft: '-12px', // Chỉnh sửa để canh giữa vòng xoay
+				},
+				"&:hover": {
+					backgroundColor: '#245c4f'
+				}
+			},
+		},
 	};
 });

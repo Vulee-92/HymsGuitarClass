@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import CButton from "../../components/CButton";
 /** STYLES */
 import styles from "./style";
+import { LoadingButton } from "@mui/lab";
 
 
 const ForgotPassordPage = () => {
@@ -197,8 +198,16 @@ const ForgotPassordPage = () => {
 						<Box className={classes.conMsg}>
 							<Typography className={classes.txtForgot} onClick={handleLogin}>Đăng nhập?</Typography>
 						</Box>
+						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading} onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								onValidate();
+							}
+						}}
+							onClick={() => onValidate()}
+							className={classes.customLoadingButton}
+						>Gửi</LoadingButton>
 
-						<Loading isLoading={isLoading}>
+						{/* <Loading isLoading={isLoading}>
 							<CButton
 								className={classes.txtHeaderTitle}
 								title={"Gửi"}
@@ -211,7 +220,7 @@ const ForgotPassordPage = () => {
 									}
 								}}
 							/>
-						</Loading>
+						</Loading> */}
 
 					</Box>
 				</Grid>

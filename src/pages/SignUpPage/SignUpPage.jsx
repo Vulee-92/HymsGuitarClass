@@ -18,6 +18,7 @@ import { faEye,faEyeSlash,faLock } from '@fortawesome/free-solid-svg-icons'
 import AnimationComponent from 'components/AnimationComponent/AnimationComponent'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LoadingButton } from '@mui/lab'
 const SignUpPage = () => {
 	const [isShowPassword,setIsShowPassword] = useState(false)
 	const [name,setName] = useState('');
@@ -433,7 +434,7 @@ const SignUpPage = () => {
 												/>
 											</InputAdornment>
 										}
-										type={form.confirmPassword.isShow ? "text" : "confirmPassword"}
+										type={form.confirmPassword.isShow ? "text" : "password"}
 										onFocus={() => onBlurFocusInput(true,"confirmPassword")}
 										onBlur={() => onBlurFocusInput(false,"confirmPassword")}
 										onKeyDown={(e) => {
@@ -499,16 +500,14 @@ const SignUpPage = () => {
 									{(form.confirmPassword.msg = t("txt_error_name_empty"))}
 								</span>
 							)} */}
-							<Loading isLoading={isLoading}>
-								<CButton
-									disabled={!email.length || !password.length || !name.length || !confirmPassword.length}
-									title={t('create_account')}
-									// onClick={handleSignUp}
-
-									onClick={onValidate}
-								// loading={loading}
-								/>
-							</Loading>
+							<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading} onKeyDown={(e) => {
+								if (e.key === "Enter") {
+									onValidate();
+								}
+							}}
+								onClick={() => onValidate()}
+								className={classes.customLoadingButton}
+							>{t("sign_up")}</LoadingButton>
 							<Typography onClick={handleNavigateSignUp} className={classes.txtRegister}>{t('txt_alrealy_account')}  <span className={classes.txtBtnRegister}>{t('sign_in')}</span></Typography>
 
 						</Box>

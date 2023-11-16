@@ -1,4 +1,5 @@
 
+
 import { lazy } from "react";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
@@ -26,6 +27,8 @@ const ConfirmPaymentPage = lazy(() => import("../pages/ConfirmPaymentPage/Confir
 const ForgotPassordPage = lazy(() => import("../pages/ForgotPassordPage/ForgotPassordPage"));
 const SendEmailForgotPasswordSuccess = lazy(() => import("../pages/SendEmailForgotPasswordSuccess/SendEmailForgotPasswordSuccess"));
 const ChangePassword = lazy(() => import("../pages/ChangePassword/ChangePassword"));
+const ResetPasswordPage = lazy(() => import("../pages/ResetPasswordPage/ResetPasswordPage"));
+const ResetPasswordDonePage = lazy(() => import("../pages/ResetPasswordDonePage/ResetPasswordDonePage"));
 
 export const routes = [
 	{
@@ -45,10 +48,19 @@ export const routes = [
 		page: ChangePassword,
 		isShowHeader: true,
 	},
-
 	{
 		path: "/verify/:userId/:code",
 		page: VerifyEmailSuccessPage,
+	},
+	{
+		path: "/reset-password/:id/:tokenReset",
+		page: ResetPasswordPage,
+		isShowHeader: true,
+	},
+	{
+		path: "/reset-password/done",
+		page: ResetPasswordDonePage,
+		isShowHeader: true,
 	},
 	{
 		path: "/verify",
