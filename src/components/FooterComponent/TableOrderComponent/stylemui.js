@@ -9,7 +9,6 @@ export default makeStyles(() => {
 		priceTitle: {
 			...CStyles.txt_title_item,
 			color: "#45cc8f",
-			textAlign: "right",
 		},
 		nameProduct: {
 			...CStyles.txt_title_item,
@@ -91,6 +90,12 @@ export default makeStyles(() => {
 			color: "#0b2238",
 			cursor: "pointer",
 		},
+		txtInfoOrder: {
+			...CStyles.txt_body_item,
+			color: "#0b2238",
+			fontWeight: 500,
+			cursor: "pointer",
+		},
 		txtTilteBank: {
 			...CStyles.txt_body_item,
 			color: "#000",
@@ -166,12 +171,13 @@ export default makeStyles(() => {
 			fontSize: "0.7rem",
 		},
 		customLoadingButton: {
+			...CStyles.txt_body_item,
 			backgroundColor: '#212B36',
 			color: 'white',
-			padding: '10px 20px',
-			width: '60%',
+			padding: '10px 15px',
+			width: '80%',
 			border: 'none',
-			borderRadius: '5px',
+			borderRadius: '10px',
 			textTransform: "capitalize",
 			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
 				// CSS cho trạng thái loading

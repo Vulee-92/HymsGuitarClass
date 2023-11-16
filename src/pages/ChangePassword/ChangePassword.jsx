@@ -34,7 +34,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { updateUser } from "../../redux/slides/userSlide";
 import Loading from "../../components/LoadingComponent/Loading";
 import CButton from "../../components/CButton";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 
@@ -198,7 +198,7 @@ const ChangePassword = () => {
 		// >
 		<>
 			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="My Account" className={classes.conTextCreate} /></Typography>
+				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thay đổi thông tin" className={classes.conTextCreate} /></Typography>
 			</Box>
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
@@ -375,7 +375,6 @@ const ChangePassword = () => {
 						}}
 							onClick={() => onValidate()}
 							className={classes.customLoadingButton}
-							sx={{ display: { xl: "flex !important",lg: "flex !important",md: "flex !important",xs: "none !important" } }}
 						>Cập nhập</LoadingButton>
 					</Box>
 				</Grid>

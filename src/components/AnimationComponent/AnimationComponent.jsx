@@ -109,7 +109,7 @@ const AnimationComponent = ({ text,className,children,type,threshold,rootMargin 
 		<div ref={ref}>
 			{type === 'text' ? (
 				<div className='w-full mx-auto py-2 flex items-center  text-center'>
-					<motion.p className={`${className}`} variants={animation} initial="initial" animate={controls} style={{ fontSize: "1.5rem" }}>
+					<motion.p className={`${className}`} variants={animation} initial="initial" animate={controls} style={{ fontSize: "2rem" }}>
 						{text.split(" ").map((word,index) =>
 							<motion.span style={{ fontSize: "1.5rem" }} key={word + '-' + index} className="inline-block" variants={singelWordssss} initial="initial" animate="animate">{word}&nbsp;</motion.span>
 						)}

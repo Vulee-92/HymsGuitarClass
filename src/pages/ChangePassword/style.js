@@ -9,11 +9,14 @@ export default makeStyles(() => {
 		container: {
 			...CStyles.center,
 			height: "40vh",
-			backgroundImage: `url(${Assets.bgSheet})`,
+			backgroundImage: `url(${Assets.bgHome})`,
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
 			display: "fixed",
+			padding: Configs.pH,
+			width: "100%",
+			backgroundPosition: "0px -300px",// Đảm bảo chiều rộng là 100%
 		},
 		conModal: {
 			...CStyles.shadow,
@@ -65,11 +68,11 @@ export default makeStyles(() => {
 		conTextCreate: {
 			...CStyles.txt_header_title,
 			// color: Colors.da,
-			fontSize: 40,
+			fontSize: "4rem",
 			textAlign: "center",
 			fontWeight: 600,
 			color: "#fff",
-			marginTop: "110px"
+			marginTop: "10%"
 		},
 		conIconPen: {
 			position: "absolute",

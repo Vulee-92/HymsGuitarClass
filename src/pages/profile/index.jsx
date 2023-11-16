@@ -226,7 +226,7 @@ const ProfileScreen = () => {
 
 		<Loading isLoading={isLoading || loading}>
 			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="My Account" className={classes.conTextCreate} /></Typography>
+				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thông tin tài khoản" className={classes.conTextCreate} /></Typography>
 			</Box>
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>

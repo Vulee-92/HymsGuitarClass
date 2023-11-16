@@ -22,6 +22,8 @@ import moment from 'moment';
 import 'moment/locale/vi';
 import { LoadingButton } from '@mui/lab';
 import styles from "./stylemui";
+import { convertPrice } from 'utils';
+import PDFDownloadButton from 'components/HTMLToPDFComponent/PdfViewer';
 function createData(orderId,date,customer,totalAmount,status,items) {
 	return {
 		orderId,
@@ -73,66 +75,74 @@ function OrderRow(props) {
 						{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 					</IconButton>
 				</TableCell>
-				<TableCell component="th" scope="row" className={classes.txtForgot}>
+				<TableCell className={classes.txtInfoOrder}>
 					{order.codeOrder}
 				</TableCell>
-				<TableCell className={classes.txtForgot}>	{formattedTime.format(`DD [tháng] M, YYYY, h`)}
-					{timeOfDay}
-					{timeOfDay !== 'pm' && <Typography>{timeOfDay}</Typography>}</TableCell>
-				<TableCell align="right" className={classes.txtForgot}>{order.totalPrice}</TableCell>
-				<TableCell>{order.isPaid ? <Typography className={classes.txtForgot}>Đã thanh toán</Typography> : <Typography className={classes.txtError}>Chưa thanh toán</Typography>}</TableCell>
-				<TableCell>		<LoadingButton fullWidth size="large" type="submit" variant="contained" isLoading={queryOrder?.isLoading}
+				<TableCell className={classes.txtInfoOrder}>	{formattedTime.format(`DD [/] M, YYYY`)}
+				</TableCell>
+				<TableCell align="right" className={classes.txtInfoOrder}>{convertPrice(order?.totalPrice)}</TableCell>
+				<TableCell>{order.isPaid ? <Typography className={classes.txtForgot}>Đã thanh toán</Typography> : <Typography className={classes.txtError}>Chờ thanh toán</Typography>}</TableCell>
+				<TableCell align="center" >		<LoadingButton fullWidth size="large" type="submit" variant="contained" isLoading={queryOrder?.isLoading}
 					className={classes.customLoadingButton}
 					onClick={() => handleDetailsOrder(order?._id)}
-					sx={{ display: { xl: "flex !important",lg: "flex !important",md: "flex !important",xs: "none !important" } }}
-				>Chi tiết</LoadingButton></TableCell>
+				>Chi tiết</LoadingButton>
+				</TableCell>
+				{/* <TableCell align="center" className={classes.txtInfoOrder}>
+					<PDFDownloadButton order={order} />
+				</TableCell> */}
 			</TableRow>
 			<TableRow>
 				<TableCell style={{ paddingBottom: 0,paddingTop: 0 }} colSpan={6}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 1 }}>
-							<Typography className={classes.txtForgot}>
-								Chi tiết
+							<Typography className={classes.nameProduct}>
+								Tóm tắt
 							</Typography>
 							<Table size="small" aria-label="order items">
 								<TableHead>
 									<TableRow>
-										<TableCell></TableCell>
 										<TableCell className={classes.txtForgot}>Tên</TableCell>
-										<TableCell className={classes.txtForgot}>Số lượng</TableCell>
+										<TableCell className={classes.txtForgot} align="center">Số lượng</TableCell>
 										<TableCell className={classes.txtForgot} align="right">Thành tiền</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
 									{order?.orderItems?.map((item) => (
-										<TableRow key={item?.name}>
-											<TableCell component="th" scope="row">
+										<TableRow key={item?.name} sx={{ maxWidth: 20 }}>
+											{/* <TableCell component="th" scope="row" sx={{ maxWidth: 20 }}>
 												<img
 													src={item.image}
 													style={{
-														width: "77px",
-														height: "79px",
+														width: "50px",
+														height: "50px",
 														objectFit: "cover",
 													}}
 												/>
-											</TableCell>
-											<TableCell className={classes.txtForgot}>{item.name}</TableCell>
-											<TableCell className={classes.txtForgot} align="right">{item.amount}</TableCell>
-											<TableCell className={classes.txtForgot} align="right">{item.price}</TableCell>
+											</TableCell> */}
+											<TableCell className={classes.txtInfoOrder} style={{ display: "flex",alignItems: "center",fontSize: "10px" }}>
+												<img
+													src={item.image}
+													style={{
+														width: "50px",
+														height: "50px",
+														objectFit: "cover",
+													}} />
+												{item.name.slice(0,10)}</TableCell>
+											<TableCell className={classes.txtInfoOrder} align="center">{item.amount}</TableCell>
+											<TableCell className={classes.txtInfoOrder} align="right" >{convertPrice(item.price)}</TableCell>
 										</TableRow>
 									))}
-									<TableRow>
-										<TableCell rowSpan={3} />
-										<TableCell className={classes.txtForgot} colSpan={1}>Tổng</TableCell>
-										<TableCell className={classes.txtForgot} align="right">{order?.itemsPrice}</TableCell>
+									<TableRow sx={{ maxWidth: 20 }}>
+										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Tổng</TableCell>
+										<TableCell className={classes.txtForgot} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.itemsPrice)}</TableCell>
 									</TableRow>
 									<TableRow>
-										<TableCell className={classes.txtForgot} colSpan={1}>Vận chuyển</TableCell>
-										<TableCell className={classes.txtForgot} align="right">{order?.shippingPrice}</TableCell>
+										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Vận chuyển</TableCell>
+										<TableCell className={classes.txtForgot} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.shippingPrice)}</TableCell>
 									</TableRow>
 									<TableRow>
-										<TableCell className={classes.txtForgot} colSpan={1}>Tổng tiền</TableCell>
-										<TableCell className={classes.txtForgot} align="right">{order?.totalPrice}</TableCell>
+										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Tổng tiền</TableCell>
+										<TableCell className={classes.priceTitle} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.totalPrice)}</TableCell>
 									</TableRow>
 								</TableBody>
 							</Table>
@@ -215,7 +225,7 @@ export default function OrderTable() {
 	const { isLoading: isLoadingCancel,isSuccess: isSuccessCancel,isError: isErrorCancle,data: dataCancel } = mutation
 
 	return (
-		<TableContainer component={Paper}>
+		<TableContainer component={Paper} style={{ boxShadow: "none" }}>
 			<Table aria-label="order table">
 				<TableHead>
 					<TableRow>
@@ -224,13 +234,16 @@ export default function OrderTable() {
 						<TableCell className={classes.txtForgot}>Ngày mua</TableCell>
 						<TableCell className={classes.txtForgot} align="right">Tổng tiền</TableCell>
 						<TableCell className={classes.txtForgot}>Trạng thái</TableCell>
-						<TableCell className={classes.txtForgot}>Xem</TableCell>
+						<TableCell align="center" className={classes.txtForgot}>Xem</TableCell>
+						{/* <TableCell align="center" className={classes.txtForgot}>Download</TableCell> */}
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{data?.map((order) => (
-						<OrderRow key={order?._id} order={order} queryOrder={queryOrder} user={user} />
-					))}
+					{data
+						?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+						.map((order) => (
+							<OrderRow key={order?._id} order={order} queryOrder={queryOrder} user={user} />
+						))}
 
 				</TableBody>
 			</Table>
