@@ -10,10 +10,12 @@ export default makeStyles(() => {
 			...CStyles.center,
 			marginTop: "40px",
 			width: "100%",
-			// backgroundImage: `url(${Assets.bgHome1})`,
+			height: "50vh",
+			backgroundImage: `url(${Assets.bgHome})`,
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
+			backgroundPosition: "0px -620px",
 
 			maxHeight: "100%",
 		},

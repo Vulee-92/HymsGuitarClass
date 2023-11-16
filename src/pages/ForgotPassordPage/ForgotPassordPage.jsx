@@ -8,19 +8,14 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import i18n from "../../utils/languages/i18n";
 import { Colors } from "../../utils/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useLocation,useNavigate } from "react-router-dom";
 import * as UserService from "../../services/UserService";
 import { useMutationHooks } from "../../hooks/useMutationHook";
-import Loading from "../../components/LoadingComponent/Loading";
 // import * as message from '../../components/Message/Message'
-import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
-/** COMPONENTS */
-import CButton from "../../components/CButton";
+
 /** STYLES */
 import styles from "./style";
 import { LoadingButton } from "@mui/lab";
@@ -31,14 +26,10 @@ const ForgotPassordPage = () => {
 	const classes = styles();
 	const [loading,setLoading] = useState(false);
 	const navigate = useNavigate();
-	const [email,setEmail] = useState("");
-	const [password,setPassword] = useState("");
-	const [lang,setLang] = useState(i18n.language);
 	const [errorMsg,setErrorMsg] = useState("");
 	const mutation = useMutationHooks((data) => UserService.forgotPassword(data));
 
 	const { data,isLoading,isSuccess } = mutation;
-	console.log("mutation",mutation)
 
 
 	const [form,setForm] = useState({
@@ -207,20 +198,7 @@ const ForgotPassordPage = () => {
 							className={classes.customLoadingButton}
 						>Gửi</LoadingButton>
 
-						{/* <Loading isLoading={isLoading}>
-							<CButton
-								className={classes.txtHeaderTitle}
-								title={"Gửi"}
-								disabled={!email.length || !password.length}
-								onClick={onValidate}
-								// loading={isLoading}
-								onKeyDown={(e) => {
-									if (e.key === "Enter") {
-										onValidate();
-									}
-								}}
-							/>
-						</Loading> */}
+
 
 					</Box>
 				</Grid>

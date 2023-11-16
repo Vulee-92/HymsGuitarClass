@@ -8,33 +8,38 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			backgroundImage: `url(${Assets.bgHome6})`,
+			backgroundImage: `url(${Assets.bgHome})`,
 
 			marginTop: "40px",
 			height: "50vh",
 			width: "100%",
-			// backgroundImage: `url(${Assets.bgHome1})`,
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
+			backgroundPosition: "0px -620px",
+
 
 			maxHeight: "100%",
 			'@media (max-width: 767px)': {
-				backgroundImage: `url(${Assets.bgHomeM6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 			'@media (min-width: 768px) and (max-width: 1509px)': {
-				backgroundImage: `url(${Assets.bgHomeM6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 			'@media (min-width: 1510px)': {
-				backgroundImage: `url(${Assets.bgHome6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 		},
 		conContent: {
 			...CStyles.rowJusCen,
 			padding: Configs.pH,
+		},
+		conErorr: {
+			...CStyles.txt_body_item,
+			color: "#CE3030"
 		},
 		conCard: {
 			maxWidth: 600,
@@ -204,7 +209,7 @@ export default makeStyles(() => {
 			color: 'white',
 			padding: '10px 20px',
 			width: '100%',
-			marginTop: 10,
+			marginTop: 20,
 			border: 'none',
 			borderRadius: '5px',
 			textTransform: "capitalize",

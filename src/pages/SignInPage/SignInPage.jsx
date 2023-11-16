@@ -50,6 +50,9 @@ const SignInPage = () => {
 
 	const { data,isLoading,isSuccess } = mutation;
 
+
+
+
 	const handleOnChangeEmail = (value) => setEmail(value);
 	const handleOnChangePassword = (value) => setPassword(value);
 
@@ -143,8 +146,13 @@ const SignInPage = () => {
 			email: form.email.value,
 			password: form.password.value,
 		});
-	};
 
+	};
+	if (data?.status === "ERR") { // Sửa điều kiện kiểm tra
+		localStorage.removeItem('access_token'); // Xóa token từ Local Storage
+		// Có thể xóa các thông tin khác từ Local Storage nếu cần
+		localStorage.removeItem('refresh_token');
+	}
 	// const onValidate = () => {
 	// 	let isError = false;
 	// 	let newForm = {
@@ -333,12 +341,14 @@ const SignInPage = () => {
 						</Box>
 						<Box className={classes.conMsg}>
 							<Typography className={classes.txtForgot} onClick={recoverPassword}>Quên mật khẩu?</Typography>
+							{data?.status === "ERR" && (
+								<span >
+									{(<Typography className={classes.conErorr}>Email hoặc mật khẩu chưa đúng!</Typography>)}
+								</span>
+							)}
 						</Box>
-						<Box className={classes.conMsg}>
-							<Typography className={classes.txtError}>
-								{t(errorMsg)}
-							</Typography>
-						</Box>
+
+
 						{/* {data?.status === "ERR" && (
 							<span style={{ color: "red" }}>
 								{(form.email.msg = t("txt_error_name_empty"))}
@@ -349,6 +359,7 @@ const SignInPage = () => {
 								{(<Typography style={{ color: "red" }} className={classes.conInput}>Tài khoản của bạn chưa được xác minh</Typography>)}
 							</span>
 						)}
+
 						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading} onKeyDown={(e) => {
 							if (e.key === "Enter") {
 								onValidate();

@@ -43,13 +43,11 @@ const ImageCarousel = ({ images }) => {
 						<LazyLoad height={200} offset={100}>
 							<img
 								style={{
-									marginTop: "60px",
-									height: "50vh",
-									width: "100%",
+									height: "60vh",
+									overflowY: "auto",
 									backgroundSize: "cover",
 									backgroundRepeat: "no-repeat",
 									borderBottom: "1px solid #d6d6d4",
-									maxHeight: "100%",
 								}}
 								src={image.default}
 								alt={`Desktop Slide ${index + 1}`}
@@ -65,7 +63,7 @@ const ImageCarousel = ({ images }) => {
 									marginTop: "60px",
 									height: "50vh",
 									width: "100%",
-									backgroundSize: "cover",
+									// backgroundSize: "cover",
 									backgroundRepeat: "no-repeat",
 									borderBottom: "1px solid #d6d6d4",
 									maxHeight: "100%",
