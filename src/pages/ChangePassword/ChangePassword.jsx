@@ -83,15 +83,17 @@ const ChangePassword = () => {
 		dispatch(updateUser({ ...res?.data,access_token: token }));
 	};
 
-
 	const handleUpdate = () => {
+		const newPassword = form.password.value;
+
 		mutation.mutate({
 			id: user?.id,
 			name: form.name.value,
-			password: form.password.value,
+			password: newPassword || user?.password,
 			access_token: user?.access_token,
 		});
 	};
+
 
 	useEffect(() => {
 		if (isSuccess && !isLoading) {
