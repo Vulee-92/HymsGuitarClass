@@ -8,7 +8,7 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			backgroundImage: `url(${Assets.bgHome6})`,
+			backgroundImage: `url(${Assets.bgHome})`,
 
 			marginTop: "40px",
 			height: "50vh",
@@ -20,15 +20,15 @@ export default makeStyles(() => {
 
 			maxHeight: "100%",
 			'@media (max-width: 767px)': {
-				backgroundImage: `url(${Assets.bgHomeM6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 			'@media (min-width: 768px) and (max-width: 1509px)': {
-				backgroundImage: `url(${Assets.bgHomeM6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 			'@media (min-width: 1510px)': {
-				backgroundImage: `url(${Assets.bgHome6})`,
+				backgroundImage: `url(${Assets.bgHome})`,
 				width: "100vw",
 			},
 		},
