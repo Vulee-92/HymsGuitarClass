@@ -35,7 +35,6 @@ const ChangePassword = () => {
 	console.log("id,tokenReset",id,tokenReset)
 	const { t } = useTranslation();
 
-	const [password,setPassword] = useState("");
 	const [confirmPassword,setConfirmPassword] = useState('');
 	const mutation = useMutationHooks(
 		(data) => {
@@ -47,7 +46,24 @@ const ChangePassword = () => {
 
 	const { data,isLoading,isSuccess,isError } = mutation;
 
+	const [password,setPassword] = useState('');
+	const [error,setError] = useState('');
 
+	const checkPassword = () => {
+		const uppercaseRegex = /[A-Z]/;
+		const digitRegex = /\d/;
+		const specialCharRegex = /[!@#$%^&*()-_+=<>?/\\]/;
+
+		if (!uppercaseRegex.test(form.confirmPassword.value)) {
+			setError('Mật khẩu phải có ít nhất một chữ cái đầu in hoa.');
+		} else if (!digitRegex.test(form.confirmPassword.value)) {
+			setError('Mật khẩu phải có ít nhất một số.');
+		} else if (!specialCharRegex.test(form.confirmPassword.value)) {
+			setError('Mật khẩu phải có ít nhất một ký tự đặc biệt.');
+		} else {
+			setError('');
+		}
+	};
 
 
 
@@ -135,6 +151,7 @@ const ChangePassword = () => {
 				error: false,
 			},
 		});
+		checkPassword();
 
 		let isError = false,
 			newForm = { ...form };

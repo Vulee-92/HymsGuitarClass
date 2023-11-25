@@ -201,23 +201,27 @@ const HomePage = () => {
 				<Box>
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
-						<ImageList variant='masonry' cols={1} gap={8}>
-							<Suspense fallback={<div>Loading...</div>}>
+						{isLoading ? (
+							<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Đang khởi chạy server, vui lòng đợi...</Typography>
+						) : (
+							<ImageList variant='masonry' cols={1} gap={8}>
+								<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
+									<Slider {...settings} style={{ overflow: "hidden" }}>
+										{products?.data?.map((product,post,index) => {
+											return (
+												<div>
+													<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
+														<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,200)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+													</ImageListItem>
+												</div>
+											);
+										})}
+									</Slider>
+								</Suspense>
 
-								<Slider {...settings} style={{ overflow: "hidden" }}>
-									{products?.data?.map((product,post,index) => {
-										return (
-											<div>
-												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,200)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-												</ImageListItem>
-											</div>
-										);
-									})}
-								</Slider>
-							</Suspense>
+							</ImageList>
+						)}
 
-						</ImageList>
 					</div>
 				</Box>
 				<Button

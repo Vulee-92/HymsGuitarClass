@@ -121,6 +121,9 @@ const SignUpPage = () => {
 		if (count < 6) return { label: `${t('strong')}`,color: 'success.dark' };
 		return { label: `${t('weak')}`,color: 'error.main' };
 	};
+	const [error,setError] = useState('');
+
+
 
 	// password strength indicator
 	const strengthIndicator = (number) => {
@@ -194,9 +197,10 @@ const SignUpPage = () => {
 			},
 
 		});
-
 		let isError = false,
 			newForm = { ...form };
+
+
 		if (form.name.value.trim() === "") {
 			isError = true;
 			form.name.error = true;
@@ -225,9 +229,38 @@ const SignUpPage = () => {
 		if (isError) {
 			return setForm(newForm);
 		}
-		handleSignUp();
+		// Kiểm tra điều kiện mật khẩu
+		const passwordValidationResult = checkPassword(form.password.value);
+		if (passwordValidationResult) {
+			setError(passwordValidationResult);
+		} else {
+			// Nếu không có lỗi, tiến hành xử lý đăng ký
+			setError('');
+			handleSignUp();
+			// Gọi hàm handleSignUp() ở đây
+		}
 	};
+	const checkPassword = (password) => {
+		const uppercaseRegex = /[A-Z]/;
+		const digitRegex = /\d/;
+		const specialCharRegex = /[!@#$%^&*()-_+=<>?/\\]/;
+		if (password.length < 8) {
+			return "Mật khẩu phải có ít nhất 8 ký tự.";
+		}
+		if (!uppercaseRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một chữ cái đầu in hoa.";
+		}
 
+		if (!digitRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một số.";
+		}
+
+		if (!specialCharRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một ký tự đặc biệt.";
+		}
+
+		return "";
+	};
 	const navigate = useNavigate()
 	const handleNavigateSignIn = () => {
 		navigate('/verify')
@@ -444,6 +477,7 @@ const SignUpPage = () => {
 										}}
 									/>
 								</Box>
+								{error && <Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>{error}</Typography>}
 								{/* <Box className={classes.conItemInput}>
 									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('confirm_password')}</Typography>
 									<InputForm style={{ border: !form.password.isFocus && `2px solid ${form.password.error ? Colors.secondary : form.password.value.trim() !== '' ? Colors.success : 'transparent'}` }}
@@ -490,6 +524,8 @@ const SignUpPage = () => {
 										<Typography className={classes.txtStrongPassword} sx={{ fontSize: { xs: "13px !important" } }}>
 											{level?.label}
 										</Typography>
+									</Grid>
+									<Grid item>
 									</Grid>
 								</Grid>
 							</FormControl>
