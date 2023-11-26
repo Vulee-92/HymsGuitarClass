@@ -385,7 +385,7 @@ const OrderSucess = () => {
 
 					</Grid>
 
-					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{ backgroundColor: "rgb(247, 248, 250)",borderLeft: "1px solid #e6e6e6" }}>
+					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{ backgroundColor: "rgb(247, 248, 250)",borderLeft: "1px solid #e6e6e6",height: "100vh" }}>
 						<Box className={classes.WrapperRight}>
 							<Box sx={{ width: { xs: "300px",xl: "500px" } }}>
 

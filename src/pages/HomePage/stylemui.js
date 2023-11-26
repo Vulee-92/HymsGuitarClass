@@ -153,6 +153,16 @@ export default makeStyles(() => {
 			marginBottom: "30px",
 			lineHeight: 2
 		},
+		txtTilteLoading: {
+			...CStyles.txt_body_item,
+			color: "#393939",
+			marginTop: "30px",
+			fontSize: "18px",
+			textAlign: "center",
+			fontWeight: 500,
+			marginBottom: "30px",
+			lineHeight: 2
+		},
 		conInput: {
 			...CStyles.txt_body_item,
 			display: "flex",

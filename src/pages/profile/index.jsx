@@ -36,7 +36,7 @@ import AnimationComponent from "components/AnimationComponent/AnimationComponent
 import { Assets } from "configs";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useLocation,useNavigate } from "react-router-dom";
-import OrderTable from "components/FooterComponent/TableOrderComponent/TableOrderComponent";
+import OrderTable from "../../components/FooterComponent/TableOrderComponent/TableOrderComponent";
 import { useQuery } from "@tanstack/react-query";
 
 const ProfileScreen = () => {

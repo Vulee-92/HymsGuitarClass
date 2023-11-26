@@ -185,7 +185,6 @@ const BlogDetailPage = ({ idBlog }) => {
 			<Box sx={
 				{
 					textAlign: '-webkit-center',marginTop: '0px',
-					borderBottom: { xl: "1px solid #d6d6d4",xs: "none",md: "1px solid #d6d6d4" },
 					display: "flex",justifyContent: "center",
 				}
 			} >
@@ -201,7 +200,7 @@ const BlogDetailPage = ({ idBlog }) => {
 						<Typography className={classes.nameProduct}>
 							{blogDetails?.title}
 						</Typography>
-						<Paper style={{ boxShadow: "none" }}>
+						<Paper style={{ boxShadow: "none",maxWidth: "100%" }}>
 							<Typography
 								className={classes.txtTilte}
 								dangerouslySetInnerHTML={{
@@ -209,11 +208,9 @@ const BlogDetailPage = ({ idBlog }) => {
 								}}
 							></Typography>
 						</Paper>
-						<hr style={{ marginBottom: "60px" }} />
 					</Grid>
 				</Grid>
 
-				<hr style={{ margin: "60px 0" }} />
 				<Box style={{ margin: "60px 0" }}>
 					{/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
 					<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />

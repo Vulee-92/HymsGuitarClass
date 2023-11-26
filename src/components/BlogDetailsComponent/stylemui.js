@@ -31,6 +31,7 @@ export default makeStyles(() => {
 			alignItems: "left",
 			fontSize: "22px",
 		},
+		// Thêm quy tắc mới cho thẻ <img> trong txtTilte
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#434c55",
@@ -39,8 +40,19 @@ export default makeStyles(() => {
 			lineHeight: 1.7,
 			textAlign: "left",
 			fontSmooth: "antialiased !important",
-			// marginBottom: "30px",
+			"p": {
+				marginBottom: "30px",
+			},
+			"& img": {
+				width: "100%",
+				height: "auto",
+				maxWidth: "100%", // Chiều rộng không vượt quá 100%
+				borderRadius: "5%",
+				boxShadow: "0px 18px 28px rgba(0,0,0,0.15), 0px 0px 1px rgba(0,0,0,0.31)",
+			},
+
 		},
+
 		myGrid: {
 			textAlign: "center",
 			display: "flex",

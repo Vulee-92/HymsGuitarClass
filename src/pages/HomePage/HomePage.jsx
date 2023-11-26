@@ -18,6 +18,7 @@ import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
 import { Assets } from "../../configs";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
+import Typical from "react-typical";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -151,7 +152,8 @@ const HomePage = () => {
 		],
 	};
 	const [reverseOrder,setReverseOrder] = useState(false);
-
+	// Lấy bài viết mới nhất đưa lên đầu
+	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
 	const toggleOrder = () => {
 		setReverseOrder(!reverseOrder);
 	};
@@ -202,7 +204,18 @@ const HomePage = () => {
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
 						{isLoading ? (
-							<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Đang khởi chạy server, vui lòng đợi...</Typography>
+							<Typical
+								steps={[
+									'Xin chào!, bạn vui lòng đợi trong giây lát...',1000,
+									'Server free có thể "ngủ gật" một chút.',1000,
+									'Nhưng đừng lo, nó sẽ tỉnh giấc ngay thôi!',500,
+									'Chúc bạn có một ngày thật tuyệt vời! ☕️🌟',500
+								]}
+								loop={Infinity}
+								wrapper="span"
+								className={classes.txtTilteLoading}
+								style={{ textAlign: "center",willChange: "transform" }}
+							/>
 						) : (
 							<ImageList variant='masonry' cols={1} gap={8}>
 								<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
@@ -255,6 +268,7 @@ const HomePage = () => {
 				</Button>
 			</Container>
 
+
 			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
 				<>
 					<Container maxWidth='lg' style={{ padding: 0 }}>
@@ -272,14 +286,10 @@ const HomePage = () => {
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2}>
 						{[0,1,2].map((row) => (
-
-							< Grid key={row} container item spacing={2} >
-								{blogs?.data?.slice(row * 3,(row + 1) * 3).reverse()
-									.map((post,index) => (
-										<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
-									))
-								}
-
+							<Grid key={row} container item spacing={2}>
+								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
+									<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
+								))}
 							</Grid>
 						))}
 					</Grid>
