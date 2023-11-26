@@ -54,12 +54,13 @@ export const WrapperItemOrder = styled.div`
   display: flex;
   align-items: center;
   background: #fff;
-	margin: 10px 0px 10px 0px;
+	margin: 10px 25px 10px 20px;
   border-bottom: 1px solid #d6d6d4;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   @media (max-width: 800px) {
     display: flex;
+			margin: 10px 0px 10px 0px;
   }
 `;
 export const Lable = styled.span`

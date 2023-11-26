@@ -158,7 +158,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 							</Typography>
 						</MenuItem>
 					)}
-					<MenuItem onClick={() => handleClickNavigate(`my-order`)}>
+					<MenuItem onClick={() => handleClickNavigate(`profile`)}>
 						<Typography className={classes.txtTilte}>
 							Đơn hàng của bạn
 						</Typography>

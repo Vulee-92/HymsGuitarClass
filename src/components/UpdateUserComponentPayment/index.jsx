@@ -609,7 +609,7 @@ const UpdateUserComponentPayment = ({
 											}
 										>
 											<MenuItem value={shippingAddress?.province || ""}>
-												{shippingAddress?.province || t("province")}
+												{shippingAddress?.province || "Tỉnh"}
 											</MenuItem>
 											{provinces.map((province) => (
 												<MenuItem
@@ -652,8 +652,8 @@ const UpdateUserComponentPayment = ({
 												</InputAdornment>
 											}
 										>
-											<MenuItem value={shippingAddress.ward || ""}>
-												{shippingAddress.ward || t("province")}
+											<MenuItem value={shippingAddress?.ward || ""}>
+												{shippingAddress?.ward || "Phường/Xã"}
 											</MenuItem>
 											{wards?.map((ward) => (
 												<MenuItem
@@ -730,7 +730,7 @@ const UpdateUserComponentPayment = ({
 											}
 										>
 											<MenuItem value={shippingAddress?.city || ""}>
-												{shippingAddress?.city || t("province")}
+												{shippingAddress?.city || "Thành phố"}
 											</MenuItem>
 											{citys?.map((city) => (
 												<MenuItem

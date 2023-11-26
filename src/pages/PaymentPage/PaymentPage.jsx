@@ -23,7 +23,7 @@ import { LoadingButton } from '@mui/lab';
 import useUpdateUserMutation from 'hooks/useUpdateUserMutation';
 import { useMutation,useQuery } from '@tanstack/react-query';
 import 'react-toastify/dist/ReactToastify.css';
-import UpdateUserComponentPayment from 'components/UpdateUserComponentPayment';
+import UpdateUserComponentPayment from '../../components/UpdateUserComponentPayment';
 
 const PaymentPage = () => {
 	const order = useSelector((state) => state.order)

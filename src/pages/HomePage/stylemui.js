@@ -8,16 +8,33 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			marginTop: "40px",
-			width: "100%",
-			height: "50vh",
 			backgroundImage: `url(${Assets.bgHome})`,
+
+			marginTop: "40px",
+			height: "50vh",
+			width: "100%",
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
 			padding: Configs.pH,
-			backgroundPosition: "0px -620px",
+
 
 			maxHeight: "100%",
+			'@media (max-width: 767px)': {
+				backgroundImage: `url(${Assets.bgHome})`,
+				width: "100vw",
+				backgroundPosition: "0px 20px",
+			},
+			'@media (min-width: 768px) and (max-width: 1509px)': {
+				backgroundImage: `url(${Assets.bgHome})`,
+				width: "100vw",
+				backgroundPosition: "0px 20px",
+			},
+			'@media (min-width: 1510px)': {
+				backgroundImage: `url(${Assets.bgHome})`,
+				width: "100vw",
+				backgroundPosition: "0px -620px",
+
+			},
 		},
 		sliderWrapper: {
 			position: "relative",
