@@ -5,7 +5,9 @@ import {
 	Grid,
 	Input,
 	InputAdornment,
+	Tooltip,
 	Typography,
+	tooltipClasses,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +29,23 @@ import { useDispatch,useSelector } from "react-redux";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate,useParams } from "react-router-dom";
-
+import { styled } from "@mui/styles";
+import PasswordCheckerComponent from "components/PasswordCheckerComponent/PasswordCheckerComponent";
+const LightTooltip = styled(({ className,...props }) => (
+	<Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+	[`& .${tooltipClasses.tooltip}`]: {
+		backgroundColor: "#fff",
+		color: 'rgba(0, 0, 0, 0.87)',
+		// boxShadow: theme.shadows[1],
+		fontSize: 11,
+		borderBottom: "0px",
+		borderTop: "2px solid #454F5B",
+		borderRadius: "9px",
+		boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+		transition: "boxShadow 0.3s ease -in -out 0s"
+	},
+}));
 const ChangePassword = () => {
 	const classes = styles();
 	const navigate = useNavigate();
@@ -191,13 +209,13 @@ const ChangePassword = () => {
 		// >
 		<>
 			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thay đổi thông tin" className={classes.conTextCreate} /></Typography>
+				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thay đổi mật khẩu" className={classes.conTextCreate} /></Typography>
 			</Box>
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>
 						<Typography className={classes.txtHeaderTitle}>
-							Điền vào biểu mẫu để thay đổi thông tin của bạn.
+							Điền vào biểu mẫu để thay đổi mật khẩu của bạn
 						</Typography>
 						<Box className={classes.conForm}>
 
@@ -206,62 +224,66 @@ const ChangePassword = () => {
 								<Typography className={classes.txtTitleInput}>
 									{t("password")}
 								</Typography>
-								<Input
-									style={{
-										border:
-											!form.password.isFocus &&
-											`2px solid ${form.password.error
-												? Colors.secondary
-												: form.password.value
-													? Colors.success
-													: "transparent"
-											}`,
-									}}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("password")}
-									value={form.password.value}
-									onChange={(event) => onChangeInput(event,"password")}
-									startAdornment={
-										<InputAdornment position="start">
-											<FontAwesomeIcon
-												// icon={faLock}
-												fontSize={20}
-												color={
-													form.password.isFocus ||
-														form.password.value
-														? Colors.bgLogin
-														: Colors.placeHolder
-												}
-												className={classes.conIconInput}
-											/>
-										</InputAdornment>
-									}
-									endAdornment={
-										<InputAdornment position="end">
-											<FontAwesomeIcon
-												icon={form.password.isShow ? faEye : faEyeSlash}
-												fontSize={20}
-												color={Colors.bgLogin}
-												className={classes.conIconInputRight}
-												onClick={onChangeTypePassword}
-											/>
-										</InputAdornment>
-									}
-									type={form.password.isShow ? "text" : "password"}
-									onFocus={() => onBlurFocusInput(true,"password")}
-									onBlur={() => onBlurFocusInput(false,"password")}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											onValidate();
+								<LightTooltip sx={{ background: '#000',color: '#fff' }}
+									arrow title={<PasswordCheckerComponent password={form.password.value} />} placement="left">
+									<Input
+										style={{
+											border:
+												!form.password.isFocus &&
+												`2px solid ${form.password.error
+													? Colors.secondary
+													: form.password.value
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
+										className={classes.conInput}
+										fullWidth
+										placeholder={t("password")}
+										value={form.password.value}
+										onChange={(event) => onChangeInput(event,"password")}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													// icon={faLock}
+													fontSize={20}
+													color={
+														form.password.isFocus ||
+															form.password.value
+															? Colors.bgLogin
+															: Colors.placeHolder
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
 										}
-									}}
-								/>
+										endAdornment={
+											<InputAdornment position="end">
+												<FontAwesomeIcon
+													icon={form.password.isShow ? faEye : faEyeSlash}
+													fontSize={20}
+													color={Colors.bgLogin}
+													className={classes.conIconInputRight}
+													onClick={onChangeTypePassword}
+												/>
+											</InputAdornment>
+										}
+										type={form.password.isShow ? "text" : "password"}
+										onFocus={() => onBlurFocusInput(true,"password")}
+										onBlur={() => onBlurFocusInput(false,"password")}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												onValidate();
+											}
+										}}
+									/>
+								</LightTooltip>
 							</Box>
 							<Box className={classes.conItemInput}>
 								<Typography className={classes.txtTitleInput}>
 									{t("confirm_password")}
 								</Typography>
+
 								<Input
 									style={{
 										border:

@@ -9,7 +9,9 @@ import {
 	Input,
 	InputAdornment,
 	Modal,
+	Tooltip,
 	Typography,
+	tooltipClasses,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,6 +39,23 @@ import CButton from "../../components/CButton";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
+import PasswordCheckerComponent from "components/PasswordCheckerComponent/PasswordCheckerComponent";
+import { styled } from "@mui/styles";
+const LightTooltip = styled(({ className,...props }) => (
+	<Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+	[`& .${tooltipClasses.tooltip}`]: {
+		backgroundColor: "#fff",
+		color: 'rgba(0, 0, 0, 0.87)',
+		// boxShadow: theme.shadows[1],
+		fontSize: 11,
+		borderBottom: "0px",
+		borderTop: "2px solid #454F5B",
+		borderRadius: "9px",
+		boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+		transition: "boxShadow 0.3s ease -in -out 0s"
+	},
+}));
 
 const ChangePassword = () => {
 	const classes = styles();
@@ -76,7 +95,7 @@ const ChangePassword = () => {
 		setAvatar(user?.avatar);
 	},[user]);
 
-
+	const [error,setError] = useState('');
 
 	const handleGetDetailsUser = async (id,token) => {
 		const res = await UserService.getDetailsUser(id,token);
@@ -185,9 +204,38 @@ const ChangePassword = () => {
 		if (isError) {
 			return setForm(newForm);
 		}
-		handleUpdate();
+		// Kiểm tra điều kiện mật khẩu
+		const passwordValidationResult = checkPassword(form.password.value);
+		if (passwordValidationResult) {
+			setError(passwordValidationResult);
+		} else {
+			// Nếu không có lỗi, tiến hành xử lý đăng ký
+			setError('');
+			handleUpdate();
+			// Gọi hàm handleSignUp() ở đây
+		}
 	};
+	const checkPassword = (password) => {
+		const uppercaseRegex = /[A-Z]/;
+		const digitRegex = /\d/;
+		const specialCharRegex = /[!@#$%^&*()-_+=<>?/\\]/;
+		if (password.length < 8) {
+			return "Mật khẩu phải có ít nhất 8 ký tự.";
+		}
+		if (!uppercaseRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một chữ cái đầu in hoa.";
+		}
 
+		if (!digitRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một số.";
+		}
+
+		if (!specialCharRegex.test(password)) {
+			return "Mật khẩu phải có ít nhất một ký tự đặc biệt.";
+		}
+
+		return "";
+	};
 	/** LIFE CYCLE */
 
 	/** RENDER */
@@ -292,59 +340,64 @@ const ChangePassword = () => {
 								<Typography className={classes.txtTitleInput}>
 									{t("password")}
 								</Typography>
-								<Input
-									style={{
-										border:
-											!form.password.isFocus &&
-											`2px solid ${form.password.error
-												? Colors.secondary
-												: form.password.value
-													? Colors.success
-													: "transparent"
-											}`,
-									}}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("password")}
-									value={form.password.value}
-									onChange={(event) => onChangeInput(event,"password")}
-									startAdornment={
-										<InputAdornment position="start">
-											<FontAwesomeIcon
-												icon={faLock}
-												fontSize={20}
-												color={
-													form.password.isFocus ||
-														form.password.value
-														? Colors.bgLogin
-														: Colors.placeHolder
-												}
-												className={classes.conIconInput}
-											/>
-										</InputAdornment>
-									}
-									endAdornment={
-										<InputAdornment position="end">
-											<FontAwesomeIcon
-												icon={form.password.isShow ? faEye : faEyeSlash}
-												fontSize={20}
-												color={Colors.bgLogin}
-												className={classes.conIconInputRight}
-												onClick={onChangeTypePassword}
-											/>
-										</InputAdornment>
-									}
-									type={form.password.isShow ? "text" : "password"}
-									onFocus={() => onBlurFocusInput(true,"password")}
-									onBlur={() => onBlurFocusInput(false,"password")}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											onValidate();
+								<LightTooltip
+									arrow title={<PasswordCheckerComponent password={form.password.value} />} sx={{ placement: { xs: "top",xl: "left",md: "left",lg: "left" } }}>
+
+									<Input
+										style={{
+											border:
+												!form.password.isFocus &&
+												`2px solid ${form.password.error
+													? Colors.secondary
+													: form.password.value
+														? Colors.success
+														: "transparent"
+												}`,
+										}}
+										className={classes.conInput}
+										fullWidth
+										placeholder={t("password")}
+										value={form.password.value}
+										onChange={(event) => onChangeInput(event,"password")}
+										startAdornment={
+											<InputAdornment position="start">
+												<FontAwesomeIcon
+													icon={faLock}
+													fontSize={20}
+													color={
+														form.password.isFocus ||
+															form.password.value
+															? Colors.bgLogin
+															: Colors.placeHolder
+													}
+													className={classes.conIconInput}
+												/>
+											</InputAdornment>
 										}
-									}}
-								/>
+										endAdornment={
+											<InputAdornment position="end">
+												<FontAwesomeIcon
+													icon={form.password.isShow ? faEye : faEyeSlash}
+													fontSize={20}
+													color={Colors.bgLogin}
+													className={classes.conIconInputRight}
+													onClick={onChangeTypePassword}
+												/>
+											</InputAdornment>
+										}
+										type={form.password.isShow ? "text" : "password"}
+										onFocus={() => onBlurFocusInput(true,"password")}
+										onBlur={() => onBlurFocusInput(false,"password")}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												onValidate();
+											}
+										}}
+									/>
+								</LightTooltip>
 							</Box>
 						</Box>
+						{/* {error && <Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>{error}</Typography>} */}
 						<Box className={classes.conMsg}>
 							<Typography className={classes.txtError}>
 								{t(errorMsg)}
