@@ -351,7 +351,7 @@ const OrderSucess = () => {
 														Đơn hàng đã bị huỷ.
 													</Typography>
 													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														Mọi thắc mắc xin vui lòng liên hệ: hymnsguitarclass@gmail.com hoặc 0986 32 09 32 (Vũ - Zalo)
+														Mọi thắc mắc xin vui lòng liên hệ: hymnscenter@gmail.com hoặc 0986 32 09 32 (Vũ - Zalo)
 													</Typography>
 												</Box>
 
