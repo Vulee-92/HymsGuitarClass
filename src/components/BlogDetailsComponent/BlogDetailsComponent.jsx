@@ -74,7 +74,6 @@ const BlogDetailPage = ({ idBlog }) => {
 			}
 		}
 	};
-	console.log("idBlog",idBlog)
 
 	const { isLoading,data: blogDetails } = useQuery(
 		["blogs",idBlog],
@@ -91,7 +90,6 @@ const BlogDetailPage = ({ idBlog }) => {
 	// 	return <p>No blog details available.</p>;
 	// }
 
-	console.log("blogDetails",blogDetails)
 
 	// const { isLoading,data: blogDetails } = useQuery(["blog-details",idBlog],fetchGetDetailsBlog,{ enabled: !!idBlog });
 	// useEffect(() => {

@@ -61,7 +61,6 @@ const BlogUserPage = () => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
 		const res = await BlogService.getAllBlog(search,limit);
-		console.log("blogDetails",res)
 
 		return res;
 	};
@@ -97,7 +96,6 @@ const BlogUserPage = () => {
 	// if (isLoading) {
 	// 	return <div>Loading...</div>;
 	// }
-	console.log("blogsblogsblogsblogsblogs",blogs)
 	// useEffect(() => {
 	// 	if (state) {
 	// 		fetchProductType(state,panigate.page,panigate.limit);
@@ -113,7 +111,6 @@ const BlogUserPage = () => {
 		// status: sample(["new", "new", "", ""]),
 		...blog,
 	}));
-	console.log("blogs",blogList)
 	return (
 		<>
 

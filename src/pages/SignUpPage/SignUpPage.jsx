@@ -39,7 +39,6 @@ const SignUpPage = () => {
 
 	const { data,isLoading,isSuccess,isError } = mutation
 
-	console.log("isError",isSuccess,isError)
 	useEffect(() => {
 		if (isSuccess) {
 			message.success()
@@ -79,7 +78,6 @@ const SignUpPage = () => {
 			isShow: false,
 		}
 	});
-	console.log("form",form)
 	/** FUNCTIONS */
 	const onChangeLanguage = (lang) => {
 		setLang(lang)

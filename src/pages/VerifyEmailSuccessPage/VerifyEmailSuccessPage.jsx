@@ -10,6 +10,7 @@ import styles from "./style";
 import CButton from 'components/CButton';
 import Typical from 'react-typical';
 import confetti from 'canvas-confetti';
+import { useSelector } from 'react-redux';
 const StyledContent = styled('div')(({ theme }) => ({
 	maxWidth: 480,
 	margin: '0 auto',
@@ -25,6 +26,14 @@ const VerifyEmailSuccessPage = () => {
 	const [showLoader,setShowLoader] = useState(true);
 	const [showTransition,setShowTransition] = useState(false);
 
+	const user = useSelector((state) => state.user);
+	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
+	// ...
+
+	if (!localStorage.getItem("access_token") || !localStorage.getItem("refresh_token")) {
+		localStorage.removeItem('access_token');
+		localStorage.removeItem('refresh_token');
+	}
 
 	const navigate = useNavigate();
 	let { userId,code } = useParams();

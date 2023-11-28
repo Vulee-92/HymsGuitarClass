@@ -23,7 +23,6 @@ function App() {
 	const [isLoading,setIsLoading] = useState(false);
 	const user = useSelector((state) => state.user);
 	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
-	console.log("firisLoggedInst",isLoggedIn)
 	// ...
 
 
@@ -71,7 +70,6 @@ function App() {
 			if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
 				refreshTokenCount++; // tăng giá trị của biến refreshTokenCount lên
 				if (refreshTokenCount > 1) {
-					console.log("API refresh_token được gọi quá nhiều lần!");
 				}
 
 				const data = await UserService.refreshToken(refreshToken);

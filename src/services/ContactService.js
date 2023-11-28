@@ -5,7 +5,6 @@ export const createContacts = async (data) => {
 		`${process.env.REACT_APP_API_URL}/contact/create-contact`,
 		data
 	);
-	console.log(res);
 	return res.data;
 };
 export const signupUser = async (data) => {

@@ -170,7 +170,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("productsAccessory",productsAccessory)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (

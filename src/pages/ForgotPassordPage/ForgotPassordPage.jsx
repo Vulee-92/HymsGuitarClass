@@ -41,7 +41,6 @@ const ForgotPassordPage = () => {
 		},
 
 	});
-	console.log("formformform",form)
 
 
 

@@ -31,9 +31,7 @@ const ConfirmPaymentPage = () => {
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
 	const params = useParams();
 	const { id } = params;
-	console.log('orderorderorderorder:',order?.orderItemsSlected?.fee);
 	const user = useSelector((state) => state.user)
-	console.log("user",user)
 	const [emailUser,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phoneUser,setPhone] = useState("");
@@ -220,56 +218,7 @@ const ConfirmPaymentPage = () => {
 		)
 	}
 
-	// const handleUpdateUsers = async () => {
-	// 	console.log("user?.id",user?.id)
-	// 	try {
-	// 		const { name,address,city,phone } = stateUserDetails
-	// 		console.log("stateUserDetails",stateUserDetails)
-	// 		if (name && address && city && phone) {
-	// 			mutationUpdate.mutate({ id: user?.id,token: user?.access_token,...stateUserDetails },{
-	// 				onSuccess: () => {
-	// 					dispatch(updateUser({ name,address,city,phone }))
-	// 					setIsOpenModalUpdateInfo(false)
-	// 				}
-	// 			})
-	// 		}
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 		// Xử lý lỗi nếu cần
-	// 	}
-	// };
 
-	// const handleUpdateUsers = async (selectedUserId) => {
-	// 	console.log("user?.id",selectedUserId);
-
-	// 	try {
-	// 		await mutationUpdate.mutateAsync(selectedUserId._id,{
-	// 			onSuccess: () => {
-	// 				dispatch(updateUser(selectedUserId._id));
-	// 				setIsOpenModalUpdateInfo(false);
-	// 			},
-	// 		});
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 		// Xử lý lỗi nếu cần
-	// 	}
-	// };
-	// const handleGetDetailsUser = async (id,token) => {
-	// 	let storageRefreshToken = localStorage.getItem("refresh_token");
-	// 	const refreshToken = JSON.parse(storageRefreshToken);
-	// 	const res = await UserService.getDetailsUser(id,token);
-	// 	dispatch(
-	// 		updateUser({
-	// 			...res?.data,
-	// 			access_token: token,
-	// 			refreshToken: refreshToken,
-	// 		})
-	// 	);
-	// };
-	// const queryUser = useQuery({
-	// 	queryKey: ["users"],
-	// 	queryFn: handleGetDetailsUser,
-	// });
 
 	const handleUpdateUsers = async (selectedUserId) => {
 		try {
@@ -303,7 +252,6 @@ const ConfirmPaymentPage = () => {
 					city: user?.city,
 					address: user?.address,
 				});
-				console.log("updatedUser",updatedUser)
 				dispatch(updateUser(updatedUser));
 			} catch (error) {
 				// Xử lý lỗi tại đây nếu cần
@@ -311,25 +259,7 @@ const ConfirmPaymentPage = () => {
 			}
 		}
 	};
-	// const handleUpdateInforUser = new Promise(async (resolve,reject) => {
-	// 	try {
-	// 		const updatedUser = await mutationUpdate.mutate({
-	// 			id: user?.id,
-	// 			token: user?.access_token,
-	// 			name: user?.name,
-	// 			phone: user?.phone,
-	// 			city: user?.city,
-	// 			address: user?.address,
-	// 		});
 
-	// 		// Sau khi cập nhật, gọi dispatch để cập nhật trạng thái Redux
-	// 		dispatch(updateUser(updatedUser));
-
-	// 		resolve(updatedUser);
-	// 	} catch (error) {
-	// 		reject(error);
-	// 	}
-	// });
 
 
 
@@ -407,24 +337,12 @@ const ConfirmPaymentPage = () => {
 			<Loading isLoading={isLoadingAddOrder}>
 
 				<Grid container sx={{ width: "100vw !important",height: "100vh !important" }}>
-					{/* <Typography className={classes.txtOrder}>				Phương thức thanh toán & giao hàng</Typography> */}
 					<Grid
-					// style={{
-					// 	padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
-					// }}
-					// sx={
-					// 	{
-					// 		margin: '30px',
-					// 		borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
-					// 		display: "flex",justifyContent: "center"
-					// 	}
-					// }
+
 					>
 
 					</Grid>
 
-					{/* {style = {{display: "flex",justifyContent: "center" }}} */}
-					{/* <Grid container spacing={2} sx={{ display: { xs: "flex" },justifyContent: "space-around",flexDirection: { xs: "column",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}> */}
 					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{
 						display: 'flex',
 						justifyContent: 'flex-end',
@@ -435,7 +353,6 @@ const ConfirmPaymentPage = () => {
 						<Box className={classes.WrapperLeft}>
 
 							<Box>
-								{/* <Typography className={classes.nameProduct}>Chọn phương thức giao hàng</Typography> */}
 								<Typography
 									href="/"
 

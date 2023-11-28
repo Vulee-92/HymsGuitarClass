@@ -50,7 +50,6 @@ const ChangePassword = () => {
 	const classes = styles();
 	const navigate = useNavigate();
 	let { id,tokenReset } = useParams();
-	console.log("id,tokenReset",id,tokenReset)
 	const { t } = useTranslation();
 
 	const [confirmPassword,setConfirmPassword] = useState('');

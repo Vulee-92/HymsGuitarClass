@@ -59,7 +59,7 @@ const UserForm = ({
 			const response = await axios.get(`${BASE_API_URL}/p`);
 			setProvinces(response?.data);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 
@@ -80,9 +80,8 @@ const UserForm = ({
 				`${BASE_API_URL}/d/${districtId}/?depth=2`
 			);
 			setWards(response?.data?.wards);
-			console.log("responseresponseresponse",response?.data?.data?.ward)
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 

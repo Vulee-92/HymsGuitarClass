@@ -37,11 +37,8 @@ function createData(orderId,date,customer,totalAmount,status,items) {
 
 function OrderRow(props) {
 	const { order } = props;
-	console.log("order",order)
 	const { queryOrder } = props;
-	console.log("queryOrder",queryOrder)
 	const { user } = props;
-	console.log("useruseruseruseruseruseruseruseruseruseruser",user)
 	const [open,setOpen] = useState(false);
 	const formattedTime = moment(order?.createdAt).locale('vi');
 	const classes = styles();
@@ -185,10 +182,8 @@ const orders = [
 export default function OrderTable() {
 	const location = useLocation()
 	const { state } = location
-	console.log(state)
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
-	console.log("user",user)
 	const fetchMyOrder = async () => {
 		const res = await OrderService.getOrderByUserId(user?.id,user?.access_token)
 		return res.data
@@ -198,7 +193,6 @@ export default function OrderTable() {
 		enabled: user?.id && user?.access_token
 	})
 	const { isLoading,data } = queryOrder
-	console.log("data",data)
 	const handleDetailsOrder = (id) => {
 		navigate(`/order-success/${id}`,{
 			user: {

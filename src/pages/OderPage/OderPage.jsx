@@ -83,7 +83,6 @@ const OrderPage = () => {
 	// Sử dụng useSelector để lấy state từ Redux store
 	const order = useSelector((state) => state.order);
 	const user = useSelector((state) => state.user);
-	console.log("order",order.orderItemsSlected?.length)
 	// Sử dụng styles để tạo các class CSS cho component
 	const classes = styles();
 	const [email,setEmail] = useState("");
@@ -261,8 +260,6 @@ const OrderPage = () => {
 		}
 	};
 
-	console.log("order?.orderItemsSelected?.length",order?.orderItemsSlected?.length)
-	console.log("order?.orderItems?.length",order?.orderItems?.length)
 	const mutationUpdate = useMutationHooks((data) => {
 		const { id,token,...rests } = data;
 		const res = UserService.updateUser(id,{ ...rests },token);

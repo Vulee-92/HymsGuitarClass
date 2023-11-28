@@ -13,7 +13,6 @@ import { Box } from '@mui/system';
 const MyOderPage = () => {
 	const location = useLocation()
 	const { state } = location
-	console.log(state)
 	const navigate = useNavigate()
 	const user = useSelector((state) => state.user)
 	const fetchMyOrder = async () => {

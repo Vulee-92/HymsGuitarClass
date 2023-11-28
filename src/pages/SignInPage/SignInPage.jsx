@@ -71,7 +71,6 @@ const SignInPage = () => {
 			isShow: false,
 		},
 	});
-	console.log("formformform",form)
 	useEffect(() => {
 		if (isSuccess) {
 			if (data.status === "OK" && location?.state) {

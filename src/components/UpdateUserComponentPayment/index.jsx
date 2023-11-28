@@ -31,7 +31,6 @@ const UpdateUserComponentPayment = ({
 	const { t } = useTranslation();
 	const user = useSelector((state) => state.user);
 	const order = useSelector((state) => state.order);
-	console.log("order",order)
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
@@ -72,7 +71,7 @@ const UpdateUserComponentPayment = ({
 			const response = await axios.get(`${BASE_API_URL}/p`);
 			setProvinces(response?.data);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 
@@ -91,10 +90,9 @@ const UpdateUserComponentPayment = ({
 			const response = await axios.get(
 				`${BASE_API_URL}/d/${districtId}/?depth=2`
 			);
-			console.log("response",response.data?.wards)
 			setWards(response?.data?.wards);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 

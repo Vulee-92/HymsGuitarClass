@@ -56,6 +56,12 @@ const HomePage = () => {
 	//     return res;
 	//   }
 	// }
+	const user = useSelector((state) => state.user);
+	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
+	// ...
+
+
+
 	const fetchAllTypeProduct = async () => {
 		const res = await ProductService.getAllTypeProduct();
 		if (res?.status === "OK") {

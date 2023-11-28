@@ -43,13 +43,10 @@ const ProfileScreen = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const { state } = location
-	console.log("state",state)
 	const classes = styles();
 	const { t } = useTranslation();
-	console.log(state)
 
 	const user = useSelector((state) => state.user);
-	console.log("user",user)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");

@@ -46,7 +46,6 @@ const UpdateUserComponent = ({ open,
 	// const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user.data);
 	const user = useSelector((state) => state.user);
-	console.log("user",user)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");
@@ -59,9 +58,7 @@ const UpdateUserComponent = ({ open,
 	const [provinces,setProvinces] = useState([]);
 	const [citys,setCitys] = useState([]);
 	const [wards,setWards] = useState([]);
-	console.log("updateUser",updateUser)
 
-	console.log("wards",wards)
 	const BASE_API_URL = 'https://provinces.open-api.vn/api';
 	// const mutation = useMutationHooks((data) => {
 	// 	const { id,access_token,...rests } = data;
@@ -104,7 +101,7 @@ const UpdateUserComponent = ({ open,
 			const response = await axios.get(`${BASE_API_URL}/p`);
 			setProvinces(response?.data);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 
@@ -124,10 +121,9 @@ const UpdateUserComponent = ({ open,
 			const response = await axios.get(
 				`${BASE_API_URL}/d/${districtId}/?depth=2`
 			);
-			console.log("response",response.data?.wards)
 			setWards(response?.data?.wards);
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	};
 	const handleUpdate = () => {
@@ -225,7 +221,6 @@ const UpdateUserComponent = ({ open,
 			isShow: false,
 		},
 	});
-	console.log("form",form);
 
 
 	const onChangeInput = (event,field) => {

@@ -63,7 +63,6 @@ const ChangePassword = () => {
 	// const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user.data);
 	const user = useSelector((state) => state.user);
-	console.log("user",user)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");

@@ -52,7 +52,6 @@ const OrderSucess = () => {
 	);
 	const { isLoading,data } = queryOrder;
 
-	console.log("dataaaaa",data)
 	const priceMemo = useMemo(() => {
 		const result = data?.orderItems?.reduce((total,cur) => {
 			return total + ((cur.price * cur.amount))

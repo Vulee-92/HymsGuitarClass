@@ -29,7 +29,6 @@ const PaymentPage = () => {
 	const order = useSelector((state) => state.order)
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
 
-	console.log('shippingAddress:',shippingAddress);
 	const user = useSelector((state) => state.user)
 	const [localUserInfo,setLocalUserInfo] = useState(user);
 	useEffect(() => {
@@ -141,7 +140,6 @@ const PaymentPage = () => {
 			name: shippingAddress?.name
 		});
 	},[shippingAddress]);
-	console.log("formData",formData)
 	const handleAddOrder = () => {
 		setIsProcessing(true);
 
@@ -180,7 +178,6 @@ const PaymentPage = () => {
 
 
 	const updateUserInfo = (data) => {
-		console.log("dataaaaa",data)
 		setFormData({
 			...formData,
 			name: user?.name || data.name.value,
@@ -272,7 +269,6 @@ const PaymentPage = () => {
 					city: user?.city,
 					address: user?.address,
 				});
-				console.log("updatedUser",updatedUser)
 				dispatch(updateUser(updatedUser));
 			} catch (error) {
 				// Xử lý lỗi tại đây nếu cần

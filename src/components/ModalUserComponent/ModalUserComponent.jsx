@@ -47,7 +47,6 @@ const ModalUserComponent = ({
 		phone: '',
 		password: '',
 	});
-	console.log("formData",formData)
 	const [errors,setErrors] = useState({
 		_id: false,
 		name: false,
@@ -99,7 +98,6 @@ const ModalUserComponent = ({
 			const response = await axios.get(`${BASE_API_URL}/p`);
 			setProvinces(response?.data);
 		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -123,9 +121,7 @@ const ModalUserComponent = ({
 				`${BASE_API_URL}/d/${districtId}/?depth=2`
 			);
 			setWards(response?.data?.wards);
-			console.log("responseresponseresponse",response?.data?.data?.ward)
 		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -150,7 +146,6 @@ const ModalUserComponent = ({
 	};
 
 	const handleSubmitForm = (e) => {
-		console.log("first",1)
 		e.preventDefault();
 
 		// if (Object.values(errors).some((error) => error) || !isFormValid) {
@@ -167,7 +162,6 @@ const ModalUserComponent = ({
 		};
 
 		handleUpdateUser(formData);
-		console.log("formDataformDataformDataformDataformData",formData)
 		// window.location.reload();
 
 		handleClose();

@@ -15,7 +15,6 @@ const setDataStorage = (key,data) => {
 	try {
 		localStorage.setItem(key,data === '' ? data : JSON.stringify(data))
 	} catch (e) {
-		console.log('Error: ',e);
 		return null;
 	}
 };
@@ -34,7 +33,6 @@ const getDataStorage = key => {
 			return null;
 		}
 	} catch (e) {
-		console.log('Error: ',e);
 		return null;
 	}
 }
