@@ -226,16 +226,36 @@ const HomePage = () => {
 							<ImageList variant='masonry' cols={1} gap={8}>
 								<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
 									<Slider {...settings} style={{ overflow: "hidden" }}>
-										{products?.data?.map((product,post,index) => {
+										{products?.data?.map((product,index,post) => {
+											// Lấy hình ảnh ở vị trí đầu tiên trong mảng images
+											const firstImage = product.image[0];
+
 											return (
-												<div>
-													<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-														<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} type={product.type} description={product.description} image={product.image} name={product.name.slice(0,200)} price={product.price} rating={product.rating} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+												<div key={product._id}>
+													<ImageListItem style={{ cursor: "pointer" }}>
+														<CardComponent
+															post={post}
+															index={index}
+															key={product._id}
+															countInStock={product.countInStock}
+															type={product.type}
+															description={product.description}
+															image={firstImage} // Sử dụng hình ảnh đầu tiên
+															name={product.name.slice(0,200)}
+															price={product.price}
+															rating={product.rating}
+															discount={product.discount}
+															selled={product.selled}
+															id={product._id}
+															createdAt={product.createdAt}
+															style={{ cursor: "pointer" }}
+														/>
 													</ImageListItem>
 												</div>
 											);
 										})}
 									</Slider>
+
 								</Suspense>
 
 							</ImageList>
