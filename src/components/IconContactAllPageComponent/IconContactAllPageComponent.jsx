@@ -54,6 +54,25 @@ const IconContactAllPageComponent = () => {
 		const fbCustomerChat = document.querySelector('.fb-customerchat');
 		if (fbCustomerChat) {
 			fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
+
+			// Listen for changes in the DOM to detect the "Đóng" button click
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					const closeButton = mutation.target.querySelector('.x1o1ewxj');
+					if (closeButton) {
+						closeButton.addEventListener('click',() => {
+							setMessengerChatOpen(false);
+						});
+					}
+				});
+			});
+
+			observer.observe(fbCustomerChat,{ childList: true,subtree: true });
+
+			return () => {
+				// Cleanup the observer when the component is unmounted
+				observer.disconnect();
+			};
 		}
 	},[isMessengerChatOpen]);
 
