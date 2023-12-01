@@ -33,7 +33,8 @@ export default makeStyles(() => {
 		txtBlogTitle: {
 			...CStyles.txt_header_title,
 			textAlign: "left",
-			fontWeight: 600,
+			fontWeight: 500,
+			color: "#000",
 			display: "vertical",
 			fontSize: "1.8rem",
 			// fontWeight: 400,

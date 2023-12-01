@@ -19,6 +19,7 @@ import { Assets } from "../../configs";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
+import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -89,6 +90,7 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+	console.log("blogs",blogs)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -106,6 +108,51 @@ const HomePage = () => {
 			</Box>
 		);
 	}
+	const settingsBlog = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		cssEase: "linear",
+		pauseOnHover: true,
+		appendDots: dots => (
+			<div
+				style={{
+					borderRadius: "10px",
+				}}
+			>
+				<ul style={{
+					margin: "0px",
+				}}>
+					{dots}
+				</ul>
+			</div>
+		),
+		customPaging: i => (
+			<button
+				style={{
+					width: "10px",
+					height: "10px",
+
+					".slick-dots li.slick-active button:before": {
+						zIndex: 1000,
+						height: "8px !important",
+						marginRight: "10px",
+						backgroundColor: "#dce0e3",
+						borderRadius: "10px",
+						content: "",
+						opacity: 1,
+						transition: "width .3s linear,background-color .3s linear",
+						width: "32px",
+					}
+				}}
+			/>
+		),
+		className: "left",
+		centerMode: true,
+		centerPadding: "5px",
+	};
 
 
 
@@ -122,13 +169,14 @@ const HomePage = () => {
 	const settings = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 5,
+		slidesToShow: 3,
+		className: "center",
+		centerMode: true,
+		centerPadding: "60px",
 		slidesToScroll: 1,
-		// autoplay: true,
-		// autoplaySpeed: 3000,
+		speed: 500,
 		cssEase: "linear",
 		pauseOnHover: true,
-		centerPadding: "60px",
 		nextArrow: <SampleNextArrow />,
 		prevArrow: <SamplePrevArrow />,
 		responsive: [
@@ -138,6 +186,7 @@ const HomePage = () => {
 					slidesToShow: 3,
 					slidesToScroll: 3,
 					infinite: true,
+					centerMode: false,
 					dots: true,
 				},
 			},
@@ -145,6 +194,7 @@ const HomePage = () => {
 				breakpoint: 768,
 				settings: {
 					slidesToShow: 2,
+					centerMode: false,
 					slidesToScroll: 2,
 				},
 			},
@@ -152,6 +202,7 @@ const HomePage = () => {
 				breakpoint: 480,
 				settings: {
 					slidesToShow: 1,
+					centerMode: false,
 					slidesToScroll: 1,
 				},
 			},
@@ -160,6 +211,7 @@ const HomePage = () => {
 	const [reverseOrder,setReverseOrder] = useState(false);
 	// Lấy bài viết mới nhất đưa lên đầu
 	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+	console.log("sortedBlogs",sortedBlogs)
 	const toggleOrder = () => {
 		setReverseOrder(!reverseOrder);
 	};
@@ -310,7 +362,7 @@ const HomePage = () => {
 			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
-					<Grid container spacing={2}>
+					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
 						{[0,1,2].map((row) => (
 							<Grid key={row} container item spacing={2}>
 								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
@@ -319,8 +371,16 @@ const HomePage = () => {
 							</Grid>
 						))}
 					</Grid>
+					<Grid container spacing={2} sx={{ display: { xl: "none",xs: "block" } }}>
+						<Slider {...settingsBlog} >
+							{blogs?.data?.map((post,index) => (
+								<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
+							))}
+						</Slider>
+					</Grid>
+
 				</Box>
-				<Button
+				{/* <Button
 					sx={{ p: 3 }}
 					style={{
 						width: "100%",
@@ -347,7 +407,7 @@ const HomePage = () => {
 						}}
 						onClick={() => setLimit((prev) => prev + 2)}
 					/>
-				</Button>
+				</Button> */}
 			</Container >
 		</>
 		// </Loading >

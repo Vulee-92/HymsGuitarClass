@@ -15,10 +15,11 @@ import mask from "../../../assets/shape-avatar.svg";
 import { useState } from 'react';
 const StyledCardMedia = styled('div')({
 	position: 'relative',
-	paddingTop: 'calc(100% * 3 / 4)',
+	paddingTop: 'calc(80% * 3 / 4)',
 });
 
 const StyledTitle = styled(Link)({
+	marginTop: "10px",
 	height: 44,
 	overflow: 'hidden',
 	WebkitLineClamp: 2,
@@ -55,52 +56,29 @@ const StyledCover = styled('img')({
 
 // ----------------------------------------------------------------------
 
-BlogPostCard.propTypes = {
+BlogPostCardMobile.propTypes = {
 	blog: PropTypes.object,
 	index: PropTypes.number,
 };
 
-export default function BlogPostCard({ blog,index,id }) {
+export default function BlogPostCardMobile({ blog,index,id }) {
+	console.log("index",index)
 	const { image,title } = blog;
-	console.log("blog",blog)
-	const latestPostLarge = index === 0;
-	const latestPost = index === 1 || index === 2;
+	// const latestPostLarge = index === 0;
+	const latestPost = index === 1 || index === 2 || index === 3 || index === 0;
 	const navigate = useNavigate();
 	const classes = styles();
 	const handleDetailBlog = (id) => {
 		navigate(`/blog-details/${id}`);
 	};
-	const [isFirstLayout,setIsFirstLayout] = useState(true);
-
-	const toggleLayout = () => {
-		setIsFirstLayout(prevState => !prevState);
-	};
 
 
 	return (
 
-		<Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+		<Grid item xs={12} style={{ marginLeft: 25,marginRight: 10 }}>
 			<Card sx={{ position: 'relative',borderRadius: "14px" }} className={classes.boxCard}>
 				<StyledCardMedia
-					sx={{
-						...((latestPostLarge || latestPost) && {
-							pt: 'calc(100% * 4 / 3)',
-							'&:after': {
-								top: 0,
-								content: "''",
-								width: '100%',
-								height: '100%',
-								position: 'absolute',
-								// bgcolor: (theme) => alpha(theme.palette.grey[800],0.72),
-							},
-						}),
-						...(latestPostLarge && {
-							pt: {
-								xs: 'calc(100% * 4 / 3)',
-								sm: 'calc(100% * 3 / 4.66)',
-							},
-						}),
-					}}
+
 				>
 					<SvgColor
 						color="paper"
@@ -112,14 +90,13 @@ export default function BlogPostCard({ blog,index,id }) {
 							bottom: -15,
 							position: 'absolute',
 							color: 'background.paper',
-							...((latestPostLarge || latestPost) && { display: 'none' }),
 						}}
 					/>
 					<StyledAvatar
 						// alt={author.name}
 						src={image}
 						sx={{
-							...((latestPostLarge || latestPost) && {
+							...((!latestPost) && {
 								zIndex: 9,
 								top: 24,
 								left: 24,
@@ -134,27 +111,16 @@ export default function BlogPostCard({ blog,index,id }) {
 				</StyledCardMedia>
 
 				<CardContent
-					sx={{
-						pt: 4,
-						...((latestPostLarge || latestPost) && {
-							bottom: 0,
-							width: '100%',
-							position: 'absolute',
-						}),
-					}}
+
 				>
-					{/* <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled',display: 'block' }}>
-						{fDate(createdAt)}
-					</Typography> */}
+
 
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
 						variant="subtitle2"
 						underline="hover"
 						className={classes.txtBlogTitle}
-						style={{
-							color: (latestPostLarge || latestPost) ? "#fff" : "#000"
-						}}
+
 
 					>
 						{title}
@@ -166,10 +132,8 @@ export default function BlogPostCard({ blog,index,id }) {
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
-								ml: index === 0 ? 0 : 1.5,
-								...((latestPostLarge || latestPost) && {
-									color: 'grey.500',
-								}),
+
+								color: 'grey.500',
 							}}
 						>
 						</Box>
