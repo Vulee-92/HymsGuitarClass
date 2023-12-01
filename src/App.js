@@ -17,6 +17,7 @@ import { resetUser,updateUser } from "./redux/slides/userSlide";
 import Loading from "./components/LoadingComponent/Loading";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from './components/ScrollToTopComponent/ScrollToTopComponent';
+import IconContactAllPageComponent from "components/IconContactAllPageComponent/IconContactAllPageComponent";
 
 function App() {
 	const dispatch = useDispatch();
@@ -135,41 +136,46 @@ function App() {
 		setIsLoading(false);
 	},[]);
 	return (
-		<Loading isLoading={isLoading}>
-			<HelmetProvider>
-				<StyledEngineProvider injectFirst>
-					<CssBaseline />
-					<Router>
-						<ScrollToTop />
-						<Routes>
-							{routes.map((route) => {
-								const LazyPage = route.page;
-								const Layout = route.isShowHeader ? DefaultComponent : Fragment;
-								const isAuthorized = isAuthorizedd(user,route);
+		<>
 
-								return (
-									<Route
-										key={route.path}
-										path={route.path}
-										element={
-											<Suspense fallback={<div></div>}>
-												{isAuthorized ? (
-													<Layout>
-														<LazyPage />
-													</Layout>
-												) : (
-													<Navigate to="/" replace />
-												)}
-											</Suspense>
-										}
-									/>
-								);
-							})}
-						</Routes>
-					</Router>
-				</StyledEngineProvider>
-			</HelmetProvider>
-		</Loading>
+			<Loading isLoading={isLoading}>
+				<HelmetProvider>
+					<StyledEngineProvider injectFirst>
+						<CssBaseline />
+						<Router>
+							<ScrollToTop />
+							<Routes>
+								{routes.map((route) => {
+									const LazyPage = route.page;
+									const Layout = route.isShowHeader ? DefaultComponent : Fragment;
+									const isAuthorized = isAuthorizedd(user,route);
+
+									return (
+										<Route
+											key={route.path}
+											path={route.path}
+											element={
+												<Suspense fallback={<div></div>}>
+													{isAuthorized ? (
+														<Layout>
+															<LazyPage />
+														</Layout>
+													) : (
+														<Navigate to="/" replace />
+													)}
+												</Suspense>
+											}
+										/>
+									);
+								})}
+							</Routes>
+						</Router>
+						<IconContactAllPageComponent />
+					</StyledEngineProvider>
+				</HelmetProvider>
+			</Loading>
+		</>
+
 	);
 }
 
