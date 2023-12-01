@@ -159,6 +159,7 @@ function App() {
 													{isAuthorized ? (
 														<Layout>
 															<LazyPage />
+															<IconContactAllPageComponent />
 														</Layout>
 													) : (
 														<Navigate to="/" replace />
@@ -168,9 +169,9 @@ function App() {
 										/>
 									);
 								})}
+
 							</Routes>
 						</Router>
-						<IconContactAllPageComponent />
 					</StyledEngineProvider>
 				</HelmetProvider>
 			</Loading>
