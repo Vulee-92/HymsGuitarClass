@@ -65,7 +65,7 @@ const IconContactAllPageComponent = () => {
 			});
 		});
 
-		const fbCustomerChat = document.getElementById('fb-customer-chat');
+		const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
 		if (fbCustomerChat) {
 			fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
 			observer.observe(fbCustomerChat,{ childList: true,subtree: true });
