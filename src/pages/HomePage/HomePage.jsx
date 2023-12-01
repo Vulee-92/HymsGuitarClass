@@ -120,6 +120,7 @@ const HomePage = () => {
 			<div
 				style={{
 					borderRadius: "10px",
+					marginTop: "15px"
 				}}
 			>
 				<ul style={{

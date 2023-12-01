@@ -76,7 +76,9 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 	return (
 
 		<Grid item xs={12} style={{ marginLeft: 25,marginRight: 10 }}>
-			<Card sx={{ position: 'relative',borderRadius: "14px" }} className={classes.boxCard}>
+			<Card sx={{
+				position: 'relative',borderRadius: "14px",boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+			}} className={classes.boxCard}>
 				<StyledCardMedia
 
 				>
@@ -119,6 +121,7 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 						onClick={() => handleDetailBlog(id)}
 						variant="subtitle2"
 						underline="hover"
+						sx={{ height: "120px !important" }}
 						className={classes.txtBlogTitle}
 
 
