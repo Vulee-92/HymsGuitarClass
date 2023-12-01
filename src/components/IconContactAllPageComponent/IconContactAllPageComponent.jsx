@@ -52,7 +52,12 @@ const IconContactAllPageComponent = () => {
 		setMessengerChatOpen(false);
 		setPopoverOpenSVG(false);
 	};
+	const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
+	if (fbCustomerChat) {
+		fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
 
+
+	}
 	useEffect(() => {
 		// Theo dõi sự thay đổi trong DOM để phát hiện sự kiện nhấp vào nút "Đóng"
 		const observer = new MutationObserver((mutations) => {
