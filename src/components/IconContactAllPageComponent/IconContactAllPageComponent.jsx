@@ -51,9 +51,11 @@ const IconContactAllPageComponent = () => {
 		const mutationObserver = new MutationObserver((mutations) => {
 			mutations.forEach((mutation) => {
 				// Kiểm tra xem class "fb_dialog_advanced" có được thêm vào không
-				if (mutation.target.classList.contains('fb_dialog_advanced')) {
+				if (mutation.target.classList.contains('fb_dialog_advanced') || mutation.target.classList.contains('welcomePageModalSheetContent')) {
 					// Ẩn phần tử
-					mutation.target.style.display = 'none';
+					mutation.target.style.display = isMessengerChatOpen ? 'block' : 'none';
+
+
 				}
 			});
 		});
@@ -71,7 +73,8 @@ const IconContactAllPageComponent = () => {
 		return () => {
 			mutationObserver.disconnect();
 		};
-	},[]);
+	},[isMessengerChatOpen]);
+
 
 	// const handleMessengerClose = () => {
 	// 	// Xử lý sự kiện khi Facebook Messenger được đóng
@@ -169,6 +172,9 @@ const IconContactAllPageComponent = () => {
 
 					<OptionBox style={{ backgroundColor: orange[500] }} onClick={() => handleOptionClick('messenger')}>
 						<Typography variant="subtitle1">Messenger</Typography>
+					</OptionBox>
+					<OptionBox style={{ backgroundColor: pink[500] }}>
+						<Typography variant="subtitle1">Zalo</Typography>
 					</OptionBox>
 					<OptionBox style={{ backgroundColor: pink[500] }} onClick={() => navigate('/contact')}>
 						<Typography variant="subtitle1">Email</Typography>
