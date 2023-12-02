@@ -46,41 +46,49 @@ const IconContactAllPageComponent = () => {
 	const handleClosePopover = () => {
 		setPopoverOpen(false);
 	};
-
-	const handleMessengerClose = () => {
-		// Xử lý sự kiện khi Facebook Messenger được đóng
-		setMessengerChatOpen(false);
-		setPopoverOpenSVG(false);
-	};
-	const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
-	if (fbCustomerChat) {
-		fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
-
-
-	}
 	useEffect(() => {
-		// Theo dõi sự thay đổi trong DOM để phát hiện sự kiện nhấp vào nút "Đóng"
-		const observer = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				const closeButton = mutation.target.querySelector('.fb_customer_chat_bounce_out_v2');
-				if (closeButton) {
-					closeButton.addEventListener('click',handleMessengerClose);
-					setPopoverOpenSVG(false);
-				}
-			});
-		});
-
-		const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
-		if (fbCustomerChat) {
-			fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
-			observer.observe(fbCustomerChat,{ childList: true,subtree: true });
-
-			return () => {
-				// Dọn dẹp observer khi component bị unmount
-				observer.disconnect();
-			};
+		// Tìm phần tử theo class name và ẩn nó
+		const pluginElement = document.querySelector('.fb_dialog_advanced');
+		if (pluginElement) {
+			pluginElement.style.display = 'none';
 		}
-	},[isMessengerChatOpen]);
+
+		// Lưu ý: Để tối ưu hóa, bạn có thể kiểm tra xem pluginElement có tồn tại trước khi thực hiện ẩn.
+	},[]); // useEffect sẽ chạy chỉ một lần sau khi component được render
+	// const handleMessengerClose = () => {
+	// 	// Xử lý sự kiện khi Facebook Messenger được đóng
+	// 	setMessengerChatOpen(false);
+	// 	setPopoverOpenSVG(false);
+	// };
+	// const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
+	// if (fbCustomerChat) {
+	// 	fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
+
+
+	// }
+	// useEffect(() => {
+	// 	// Theo dõi sự thay đổi trong DOM để phát hiện sự kiện nhấp vào nút "Đóng"
+	// 	const observer = new MutationObserver((mutations) => {
+	// 		mutations.forEach((mutation) => {
+	// 			const closeButton = mutation.target.querySelector('.fb_customer_chat_bounce_out_v2');
+	// 			if (closeButton) {
+	// 				closeButton.addEventListener('click',handleMessengerClose);
+	// 				setPopoverOpenSVG(false);
+	// 			}
+	// 		});
+	// 	});
+
+	// 	const fbCustomerChat = document.querySelector('.fb_dialog_advanced');
+	// 	if (fbCustomerChat) {
+	// 		fbCustomerChat.style.display = isMessengerChatOpen ? 'block' : 'none';
+	// 		observer.observe(fbCustomerChat,{ childList: true,subtree: true });
+
+	// 		return () => {
+	// 			// Dọn dẹp observer khi component bị unmount
+	// 			observer.disconnect();
+	// 		};
+	// 	}
+	// },[isMessengerChatOpen]);
 
 	return (
 		<div style={{ position: 'fixed',bottom: '20px',right: '20px',zIndex: '1000' }}>
