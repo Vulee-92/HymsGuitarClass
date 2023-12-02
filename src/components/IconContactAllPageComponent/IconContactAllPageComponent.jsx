@@ -47,15 +47,30 @@ const IconContactAllPageComponent = () => {
 		setPopoverOpen(false);
 	};
 	useEffect(() => {
-		const hidePlugin = () => {
-			const pluginElement = document.querySelector('.fb_dialog_advanced');
-			if (pluginElement) {
-				pluginElement.style.display = 'none !important';
-			}
-		};
+		// Tạo một instance của MutationObserver với một callback
+		const mutationObserver = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				// Kiểm tra xem class "fb_dialog_advanced" có được thêm vào không
+				if (mutation.target.classList.contains('fb_dialog_advanced')) {
+					// Ẩn phần tử
+					mutation.target.style.display = 'none';
+				}
+			});
+		});
 
-		// Đợi 1 giây trước khi thực hiện ẩn
-		setTimeout(hidePlugin,3000);
+		// Chọn phần tử mà bạn muốn theo dõi (có thể là body hoặc một phần tử khác)
+		const targetNode = document.body;
+
+		// Cấu hình cho MutationObserver
+		const config = { attributes: true,childList: true,subtree: true };
+
+		// Bắt đầu theo dõi sự thay đổi
+		mutationObserver.observe(targetNode,config);
+
+		// Hủy theo dõi khi component unmount
+		return () => {
+			mutationObserver.disconnect();
+		};
 	},[]);
 
 	// const handleMessengerClose = () => {
@@ -145,9 +160,13 @@ const IconContactAllPageComponent = () => {
 							Gọi +84 90 904 36 19 từ 11am đến 7pm để được giải đáp mọi thắc mắc.
 						</Typography>
 					</OptionBox>
-					<OptionBox style={{ backgroundColor: green[500] }}>
-						<Typography variant="subtitle1">Chat</Typography>
+					<OptionBox
+						style={{ backgroundColor: green[500] }}
+						onClick={() => window.location.href = 'tel:0986320932'}
+					>
+						<Typography variant="subtitle1">Call</Typography>
 					</OptionBox>
+
 					<OptionBox style={{ backgroundColor: orange[500] }} onClick={() => handleOptionClick('messenger')}>
 						<Typography variant="subtitle1">Messenger</Typography>
 					</OptionBox>
