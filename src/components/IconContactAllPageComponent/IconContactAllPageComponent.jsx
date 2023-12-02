@@ -47,14 +47,17 @@ const IconContactAllPageComponent = () => {
 		setPopoverOpen(false);
 	};
 	useEffect(() => {
-		// Tìm phần tử theo class name và ẩn nó
-		const pluginElement = document.querySelector('.fb_dialog_advanced');
-		if (pluginElement) {
-			pluginElement.style.display = 'none';
-		}
+		const hidePlugin = () => {
+			const pluginElement = document.querySelector('.fb_dialog_advanced');
+			if (pluginElement) {
+				pluginElement.style.display = 'none !important';
+			}
+		};
 
-		// Lưu ý: Để tối ưu hóa, bạn có thể kiểm tra xem pluginElement có tồn tại trước khi thực hiện ẩn.
-	},[]); // useEffect sẽ chạy chỉ một lần sau khi component được render
+		// Đợi 1 giây trước khi thực hiện ẩn
+		setTimeout(hidePlugin,3000);
+	},[]);
+
 	// const handleMessengerClose = () => {
 	// 	// Xử lý sự kiện khi Facebook Messenger được đóng
 	// 	setMessengerChatOpen(false);
