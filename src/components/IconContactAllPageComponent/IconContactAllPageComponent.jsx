@@ -38,10 +38,20 @@ const IconContactAllPageComponent = () => {
 		setPopoverOpen(false);
 
 		if (option === 'messenger') {
-			setMessengerChatOpen(true);
-			setPopoverOpenSVG(true);
+			const messengerElement = document.querySelector('.fb_dialog_advanced');
+			console.log("messengerElement",messengerElement)
+			if (messengerElement) {
+				messengerElement.style.display = 'block';
+				setMessengerChatOpen(true);
+				setPopoverOpenSVG(true);
+			} else {
+				console.error('Messenger element not found.');
+				// Thực hiện xử lý khác nếu cần thiết khi element không được tìm thấy.
+			}
 		}
 	};
+
+
 
 	const handleClosePopover = () => {
 		setPopoverOpen(false);
