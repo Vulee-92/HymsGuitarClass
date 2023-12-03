@@ -43,7 +43,7 @@ const IconContactAllPageComponent = () => {
 			if (messengerElement) {
 				messengerElement.style.display = 'block';
 				setMessengerChatOpen(true);
-				setPopoverOpenSVG(true);
+				setPopoverOpenSVG(false);
 			} else {
 				console.error('Messenger element not found.');
 				// Thực hiện xử lý khác nếu cần thiết khi element không được tìm thấy.
@@ -64,9 +64,8 @@ const IconContactAllPageComponent = () => {
 				if (mutation.target.classList.contains('fb_dialog_advanced') || mutation.target.classList.contains('welcomePageModalSheetContent')) {
 					// Ẩn phần tử
 					mutation.target.style.display = isMessengerChatOpen ? 'block' : 'none';
-
-
 				}
+
 			});
 		});
 
@@ -87,7 +86,29 @@ const IconContactAllPageComponent = () => {
 
 
 
+	useEffect(() => {
+		const handleIconClick = (event) => {
+			// Kiểm tra xem phần tử được click có class "x1i10hfl" không
+			if (event.target.classList.contains('x1i10hfl')) {
+				// Tìm phần tử có class "fb_dialog_advanced"
+				const dialogElement = document.querySelector('.fb_dialog_advanced');
 
+				// Nếu phần tử tồn tại, thay đổi style thành display: none
+				if (dialogElement) {
+					dialogElement.style.display = 'none';
+					setPopoverOpenSVG(true);
+				}
+			}
+		};
+
+		// Đăng ký sự kiện click khi component được mount
+		document.addEventListener('click',handleIconClick);
+
+		// Hủy đăng ký sự kiện khi component bị unmount để tránh memory leak
+		return () => {
+			document.removeEventListener('click',handleIconClick);
+		};
+	},[]);
 	return (
 		<div style={{ position: 'fixed',bottom: '20px',right: '20px',zIndex: '1000' }}>
 			{!isPopoverOpenSVG && (
