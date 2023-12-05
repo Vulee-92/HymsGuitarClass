@@ -5,7 +5,6 @@ import { addOrderProduct,resetOrder } from "../../redux/slides/orderSlide";
 import * as message from "../Message/Message";
 import { WrapperPriceProduct,WrapperPriceTextProduct,WrapperInputNumber } from "./style";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../LoadingComponent/Loading";
 import { useDispatch,useSelector } from "react-redux";
 import { useLocation,useNavigate } from "react-router-dom";
 import styles from "./stylemui";
@@ -13,27 +12,22 @@ import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,
 import "react-medium-image-zoom/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import Slider from "react-slick";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import { useDebounce } from "hooks/useDebounce";
-import { convertPrice } from "utils";
-import { ShoppingCart } from "@mui/icons-material";
-import ImageZoom from "react-image-zooom";
 import { Helmet } from "react-helmet-async";
 import { bottom } from "@popperjs/core";
-import Gallery from 'react-image-gallery';
-import ReactImageMagnify from "react-image-magnify";
+
+import * as BlogService from "../../services/BlogService";
 import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
+import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 
 const ProductDetailsComponent = ({ idProduct }) => {
-	// const classess = useStyles({ isMobile });
 	const navigate = useNavigate();
-	const location = useLocation();
 	const dispatch = useDispatch();
 	const [numProduct,setNumProduct] = useState(1);
-	const user = useSelector((state) => state.user);
 	const order = useSelector((state) => state.order);
 	const classes = styles();
 	const [limit,setLimit] = useState(12);
@@ -43,23 +37,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [open,setOpen] = React.useState(false);
 	const [errorLimitOrder,setErrorLimitOrder] = useState(false);
 	const [openDialog,setOpenDialog] = useState(false);
-	const [isZoomed,setIsZoomed] = useState(false);
-	const [zoomPosition,setZoomPosition] = useState({ x: 0,y: 0 });
 	const [isProcessing,setIsProcessing] = useState(false);
 	const [images,setImages] = useState([]);
-
 	const [isCartOpen,setIsCartOpen] = useState(false);
-
-
-
 	const handleCartClick = () => {
 		setIsCartOpen(true);
 	};
-
 	const handleCartClose = () => {
 		setIsCartOpen(false);
 	};
-	const [open1,setOpen1] = useState(false);
 	const onChange = (value) => {
 		setNumProduct(Number(value));
 	};
@@ -76,12 +62,26 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		return accessoriesRes;
 	};
 	const fetchGetDetailsProduct = async (context) => {
-		const id = context?.queryKey && context?.queryKey[1];
-		if (id) {
-			const res = await ProductService.getDetailsProduct(id);
+		const slug = context?.queryKey && context?.queryKey[1];
+		if (slug) {
+			const res = await ProductService.getDetailsProduct(slug);
 			return res.data;
 		}
 	};
+	const fetchBlogAll = async (context) => {
+		const limit = context?.queryKey && context?.queryKey[1];
+		const search = context?.queryKey && context?.queryKey[2];
+		const res = await BlogService.getAllBlog(search,limit);
+
+		return res;
+	};
+	const {
+		data: blogs,
+	} = useQuery(["blogs",limit,searchDebounce],fetchBlogAll,{
+		retry: 3,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
 	useEffect(() => {
 		if (order.isSucessOrder) {
 			message.success("Đã thêm vào giỏ hàng");
@@ -187,6 +187,58 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			</Box>
 		);
 	}
+
+
+	const settingsBlog = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 3,
+		slidesToScroll: 3,
+		cssEase: "linear",
+		centerPadding: "60px",
+		nextArrow: <SampleNextArrow />,
+		prevArrow: <SamplePrevArrow />,
+		pauseOnHover: true,
+		appendDots: dots => (
+			<div
+				style={{
+					borderRadius: "10px",
+					marginTop: "15px"
+				}}
+			>
+				<ul style={{
+					margin: "0px",
+				}}>
+					{dots}
+				</ul>
+			</div>
+		),
+		customPaging: i => (
+			<button
+				style={{
+					width: "10px",
+					height: "10px",
+
+					".slick-dots li.slick-active button:before": {
+						zIndex: 1000,
+						height: "8px !important",
+						marginRight: "10px",
+						backgroundColor: "#dce0e3",
+						borderRadius: "10px",
+						content: "",
+						opacity: 1,
+						transition: "width .3s linear,background-color .3s linear",
+						width: "32px",
+					}
+				}}
+			/>
+		),
+		className: "left",
+		centerMode: true,
+		centerPadding: "5px",
+	};
+
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -197,8 +249,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		cssEase: "linear",
 		pauseOnHover: true,
 		centerPadding: "60px",
-		nextArrow: <SampleNextArrow />,
-		prevArrow: <SamplePrevArrow />,
+
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -225,47 +276,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			},
 		],
 	};
-	const settingsAccess = {
-		dots: true,
-		infinite: true,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		cssEase: "linear",
-		pauseOnHover: true,
-		centerPadding: "60px",
-		nextArrow: <SampleNextArrow />,
-		prevArrow: <SamplePrevArrow />,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-					infinite: true,
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 1,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-				},
-			},
-		],
-	};
-	const handleToggleDrawer = () => {
-		setOpen1(!open1);
-	};
+
 	const cartButtonRef = useRef(null);
 
 	useEffect(() => {
@@ -397,7 +408,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									>
 										<Box style={{ alignItems: "flex-end !important" }}>
 											<Typography className={classes.priceTitle}>{productDetails?.price?.toLocaleString()}₫</Typography>
-											<Typography className={classes.txtTilte}>Bao gồm thuế. Miễn phí vận chuyển cho mọi đơn hàng!</Typography>
+											<Typography className={classes.txtTilte}> Hỗ trợ vận chuyển cho mọi đơn hàng!</Typography>
 										</Box>
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 											className={classes.nameProductInfo}
@@ -687,7 +698,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						<DialogContent style={{ marginTop: "20px" }}>
 							<Grid container spacing={2}>
 								<Grid item xs={12} sm={4} xl={4}>
-									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image} alt={productDetails?.image} />
+									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image[0]} alt={productDetails?.image[0]} />
 								</Grid>
 								<Grid item xs={12} sm={8} xl={8}>
 									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",fontWeight: 600,marginBottom: "10px" }}>{productDetails?.name}</Typography>
@@ -743,99 +754,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</Button>
 						</DialogActions>
 					</Dialog>
-					{/* <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-						<Box sx={{ display: "flex",flexDirection: "row",justifyContent: "space-between" }} style={{ background: "rgb(36, 92, 79,0.1)" }}>
-							<DialogTitle style={{ width: "90%" }} className={classes.nameProduct}>Sản phẩm đã được thêm vào giỏ hàng!</DialogTitle>
-
-							<DialogActions style={{ width: '100%',position: 'absolute',top: 0,right: 0 }}>
-								<Button onClick={handleCloseDialog} style={{ color: '#212B36',padding: '8px',marginRight: '8px' }}>
-									<FontAwesomeIcon icon={faXmark} fade />
-								</Button>
-							</DialogActions>
-
-						</Box>
-						<DialogContent >
-							<Card style={{ padding: "none",boxShadow: "none" }} sx={{ display: "flex" }}>
-								<CardMedia component='img' sx={{ width: "30%",height: "30%" }} image={productDetails?.image} alt={productDetails?.image} />
-								<Box sx={{ display: "flex",flexDirection: "column" }}>
-									<CardContent sx={{ flex: "1 0 auto" }}>
-										<Box style={{ marginBottom: "10px" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "1.5rem",fontWeight: 600,marginBottom: "10px" }} component='div' variant='h5'>
-												{productDetails?.name}
-											</Typography>
-											<Typography className={classes.priceTitle} style={{ fontSize: "1.5rem",textAlign: "left",fontWeight: 500 }} >
-												{(productDetails?.price)?.toLocaleString()}₫
-											</Typography>
-										</Box>
-										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
-											<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "1rem",fontWeight: 500,lineHeight: 1.5 }} >
-												{" "}{numProduct}
-											</Typography>
-										</Box>
-										<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
-											<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400 }}>Tạm tính:</Typography>
-											<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500 }} >
-												{(productDetails?.price * numProduct)?.toLocaleString()}₫
-											</Typography>
-										</Box>
-
-									</CardContent>
-									<Box sx={{ display: "flex",alignItems: "center",pl: 1,pb: 1 }}>
-										<div>
-											<Button
-												className={classes.nameProductInfo}
-												variant='contained'
-												style={{
-													background: "#212B36",
-													height: "48px",
-													width: "100%",
-													border: "none",
-													borderRadius: "4px",
-													color: "#fff",
-													fontSize: "15px",
-													textTransform: "capitalize",
-													fontWeight: "700",
-												}}
-												onClick={() => navigate('/order')}
-											>
-												Xem giỏ hàng
-											</Button>
-											{errorLimitOrder && (
-												<Typography className={classes.nameProduct} style={{ color: "red",textAlign: "center",fontWeight: 300,marginTop: "10px" }}>
-													Sản phẩm hiện đang hết hàng
-												</Typography>
-											)}
-										</div>
-									</Box>
-								</Box>
-
-							</Card>
-							<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center",background: "rgb(36, 92, 79,0.1)" }}>
-
-								<hr style={{ margin: "60px 0" }} />
-								<Box style={{ margin: "60px 0" }}>
-									<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
-									<div className={classes.sliderWrapper}>
-										<ImageList variant='masonry' cols={1} gap={8}>
-											<Slider {...settingsAccess} style={{ overflow: "hidden" }}>
-												{productsAccessory?.data?.map((product,post,index) => {
-													return (
-														<div>
-															<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-																<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-															</ImageListItem>
-														</div>
-													);
-												})}
-											</Slider>
-										</ImageList>
-									</div>
-								</Box>
-							</div>
-
-						</DialogContent>
-					</Dialog> */}
 					<hr style={{ margin: "60px 0" }} />
 					<Box style={{ margin: "60px 0" }}>
 						<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
@@ -846,7 +764,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										return (
 											<div>
 												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
+													<CardComponent post={post} index={index} key={product._id} slug={product?.slug} countInStock={product.countInStock} description={product.description} image={product.image[0]} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
 												</ImageListItem>
 											</div>
 										);
@@ -855,9 +773,20 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</ImageList>
 						</div>
 					</Box>
+					<Box style={{ margin: "60px 0" }}>
+						<AnimationComponent type='text' text='Trích từ Blog' className={classes.txtTitleBox} />
+						<div className={classes.sliderWrapper}>
+							<ImageList variant='masonry' cols={1} gap={8} style={{ overflow: "hidden" }}>
+								<Slider {...settingsBlog} style={{ overflow: "hidden" }}>
+									{blogs?.data?.map((post,index) => (
+										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
+									))}
+								</Slider>
+							</ImageList>
+						</div>
+					</Box>
 				</Container >
 			)}
-			{/* </Loading > */}
 
 
 		</>

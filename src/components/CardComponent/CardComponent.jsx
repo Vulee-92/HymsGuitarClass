@@ -12,11 +12,12 @@ const CardComponent = (props,post,index) => {
 		name,
 		price,
 		id,
-
+		slug
 	} = props;
 	const navigate = useNavigate();
-	const handleDetailsProduct = (id) => {
-		navigate(`/product-details/${id}`);
+	const handleDetailsProduct = (slug) => {
+		console.log("slug",slug)
+		navigate(`/product-details/${slug}`);
 
 	};
 
@@ -24,7 +25,7 @@ const CardComponent = (props,post,index) => {
 
 	return (
 		<section className="content" id="Explore">
-			<img onClick={() => handleDetailsProduct(id)} style={{
+			<img onClick={() => handleDetailsProduct(slug)} style={{
 				maxHeight: '18em',
 				display: 'block',
 				position: 'relative',
@@ -33,7 +34,7 @@ const CardComponent = (props,post,index) => {
 				cursor: 'pointer',
 				transform: 'translate3d(-50%, 0, 0)'
 			}} src={image} alt="img 01" />
-			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(id)}> 			{name}</Typography>
+			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{name}</Typography>
 			<Typography className={classes.txtPrice} style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
 		</section>
 	);

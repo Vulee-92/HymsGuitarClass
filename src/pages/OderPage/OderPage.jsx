@@ -448,30 +448,7 @@ const OrderPage = () => {
 							<Grid container spacing={2} style={{ display: "flex",justifyContent: "center" }}>
 								<Grid item xs={12} xl={9}>
 
-									{/* <Typography className={classes.nameProduct}>Phí giao hàng</Typography> */}
-									{/* <Stack sx={{ width: '100%' }} spacing={4}>
-								<Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
-									{steps.map((label) => (
-										<Step key={label}>
-											<StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-										</Step>
-									))}
-								</Stepper>
-							</Stack> */}
-									{/* <WrapperStyleHeaderDilivery>
-										<StepComponent
-											items={itemsDelivery}
-											current={
-												diliveryPriceMemo === 10000
-													? 2
-													: diliveryPriceMemo === 20000
-														? 1
-														: order.orderItemsSlected.length === 0
-															? 0
-															: 3
-											}
-										/>
-									</WrapperStyleHeaderDilivery> */}
+
 									<WrapperStyleHeader>
 
 										<Grid
@@ -508,7 +485,7 @@ const OrderPage = () => {
 															}}
 														>
 															<img
-																src={order?.image}
+																src={order?.image[0]}
 																style={{
 																	width: "3rem",
 																	height: "3rem",
@@ -516,17 +493,8 @@ const OrderPage = () => {
 																}}
 															/>
 
-															{/* Hellodsaofksfsokdfk */}
-															{/* <Grid
-												sx={{ display: "flex",flexDirection: { xs: "column",md: "row",xl: "row" },width: { xs: "60%",md: "390px",xl: "390px" },alignItems: { xs: " flex-start",md: "center",xl: "center" },flex: { xs: "none", md: 1,xl: 1 } }}
-												style={{
-													justifyContent: "space-between",
-												
 
-												}}
-											> */}
 															<Grid
-																// sx={{ flexDirection: { xs: "column",md: "row",xl: "row" } }}
 																sx={{ display: "flex",flexDirection: { xs: "column",md: "row",xl: "row" },width: { xs: " calc(100% - 92px)",md: "390px",xl: "390px" },alignItems: { xs: " flex-start",md: "center",xl: "center" },flex: { xs: "none",md: 1,xl: 1 } }}
 															>
 																<Typography className={classes.nameProductCard}
@@ -583,21 +551,8 @@ const OrderPage = () => {
 																>
 																	{convertPrice(order?.price * order?.amount)}
 																</Typography>
-																{/* <span
-                          style={{
-                            color: "rgb(255, 66, 78)",
-                            fontSize: "13px",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {convertPrice(order?.price * order?.amount)}
-                        </span> */}
-																{/* <DeleteOutlined
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleDeleteOrder(order?.product)}
-                        /> */}
+
 															</Grid>
-															{/* </Grid> */}
 															<Grid
 																style={{
 																	display: "flex",
@@ -615,75 +570,10 @@ const OrderPage = () => {
 											);
 										})}
 									</WrapperListOrder>
-									{/* <TableComponent
-              columns={columns}
-              data={dataTable}
-              onRow={(record, rowIndex) => {
-                return {
-                  onClick: (event) => {
-                    setRowSelected(record._id);
-                  },
-                };
-              }}
-            /> */}
+
 								</Grid>
 								<Grid item xs={12} xl={3}>
-									{/* <div style={{ width: "100%" }}>
-										<Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }} sx={{ display: { xs: "none",lx: "flex",md: "flex" } }} className={classes.InfoUserForDesktop}>
-											<Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }} sx={{ display: { xs: "none",lx: "flex" } }}>
-												<Grid item xs={8}>
-													<Typography
-														style={{
-															color: "rgb(128, 128, 137)",
-															fontSize: "14px",
-														}}
-													>
-													</Typography>
-												</Grid>
-												<Grid item xs={8} style={{ textAlign: "right" }}>
-													<Typography>
-														{" "}
-														<span
-															onClick={handleChangeAddress}
-															style={{
-																color: "#212B36",
-																cursor: "pointer",
-																fontSize: "14px",
-															}}
-														>
-															Thay đổi
-														</span>
-													</Typography>
-												</Grid>
-											</Grid>
-											<Typography variant="h6" component="h2">
-                  {`${user?.name} ${user?.phone}`}{" "}
-                </Typography>
 
-											<Box>
-												<Typography
-													style={{
-														color: "rgb(128, 128, 137)",
-														fontSize: "13px",
-													}}
-												>
-													{" "}
-													<span
-														style={{
-															fontWeight: "bold",
-															color: "#212B36",
-															fontStyle: "italic",
-															fontSize: "12px",
-														}}
-													>
-														Nhà
-													</span>{" "}
-													{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "}
-												</Typography>
-											</Box>
-										</Grid>
-
-									</div> */}
 									<Button className={classes.btnAddCard} sx={{ display: { xs: "none",lx: "flex",md: "flex" } }}
 										variant='contained'
 
@@ -749,24 +639,7 @@ const OrderPage = () => {
 										{convertPrice(priceDiscountMemo)}
 									</Typography>
 								</Box>
-								{/* <Box
-									style={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "space-between",
-									}}
-								>
-									<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
-									<Typography className={classes.txtValueTotal}
-										style={{
-											color: "#000",
-											fontSize: "14px",
-											fontWeight: "bold",
-										}}
-									>
-										{convertPrice(diliveryPriceMemo)}
-									</Typography>
-								</Box> */}
+
 							</WrapperInfo>
 						</Grid>
 						<Grid style={{
@@ -1017,7 +890,7 @@ const OrderPage = () => {
 															checked={listChecked.includes(order.product)}
 														></CustomCheckbox>
 														<img
-															src={order.image}
+															src={order.image[0]}
 															style={{
 																width: "77px",
 																height: "79px",

@@ -444,6 +444,7 @@ const UpdateUserComponentPayment = ({
 
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} xl={12} className={classes.conCard}>
+
 					<Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "flex",xl: "flex",lg: "flex",md: "none",sm: "none" },paddingTop: "10px !important",paddingBottom: "10px" }}>
 						<Grid item xs={12}>
 							<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "11px" }}>
@@ -532,8 +533,8 @@ const UpdateUserComponentPayment = ({
 					<Box className={classes.conLogin}>
 						<Typography className={classes.txtHeaderTitle}>Địa chỉ giao hàng</Typography>
 						<Box className={classes.conForm}>
-							<Grid container spacing={2}>
-								<Grid item xs={12} sm={6} lg={6} xl={6}>
+							<Grid container>
+								<Grid item xs={6} sm={6} lg={6} xl={6}>
 									<Box className={classes.conItemInput}>
 										{/* <Typography className={classes.txtTitleInput}>
 											{t("name")}
@@ -573,6 +574,39 @@ const UpdateUserComponentPayment = ({
 										/>
 									</Box>
 
+									<Box className={classes.conItemInput}>
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("phone")}
+											value={form.phone.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														// icon={faphoneCard}
+														fontSize={20}
+														// color={
+														// 	form.phone.isFocus || form.phone.value !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"phone")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"phone")}
+											onBlur={() => onBlurFocusInput(false,"phone")}
+										/>
+									</Box>
+
+
+								</Grid>
+							</Grid>
+							<Grid container spacing={2}>
+
+								<Grid item xs={12} sm={12} lg={12} xl={12}>
 
 									<Box className={classes.conItemInput}>
 										{/* <Typography className={classes.txtTitleInput}>
@@ -623,80 +657,6 @@ const UpdateUserComponentPayment = ({
 										</Select>
 									</Box>
 									<Box className={classes.conItemInput}>
-										<Select
-											// style={{
-											// 	border: !form.ward.isFocus && `2px solid ${form.ward.error ? Colors.secondary : form.ward.value !== "" ? Colors.success : "transparent"}`,
-											// }}
-											value={shippingAddress?.ward || form.province.value}
-											fullWidth
-											onChange={(event) => onChangeInput(event,"ward")}
-											disabled={loading}
-											displayEmpty
-											className={classes.conInput}
-											onFocus={() => onBlurFocusInput(true,"ward")}
-											onBlur={() => onBlurFocusInput(false,"ward")}
-											MenuProps={{ PaperProps: { style: { maxHeight: 200,width: 250 } } }} // Điều chỉnh kích thước của Menu
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														fontSize={20}
-														// color={
-														// 	form.ward.isFocus || (form.ward.value && form.ward.value !== "")
-														// 		? Colors.bgLogin
-														// 		: Colors.placeHolder
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-										>
-											<MenuItem value={shippingAddress?.ward || ""}>
-												{shippingAddress?.ward || "Phường/Xã"}
-											</MenuItem>
-											{wards?.map((ward) => (
-												<MenuItem
-													className={classes.conInput}
-													value={ward.code}
-													data-key={ward.name}// Đây là giá trị cần chuyển đi khi MenuItem được chọn
-													key={ward.code}
-													name={ward.name}
-												// onClick={(e) => getNameWard(e,ward?.code)}
-
-												>
-													{ward.name}
-												</MenuItem>
-											))}
-										</Select>
-									</Box>
-								</Grid>
-								<Grid item xs={12} sm={6} lg={6} xl={6}>
-									<Box className={classes.conItemInput}>
-										<Input
-											className={classes.conInput}
-											fullWidth
-											placeholder={t("phone")}
-											value={form.phone.value}
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														// icon={faphoneCard}
-														fontSize={20}
-														// color={
-														// 	form.phone.isFocus || form.phone.value !== ""
-														// 		? Colors.bgLogin
-														// 		: Colors.bgLogin
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-											onChange={(event) => onChangeInput(event,"phone")}
-											disabled={loading}
-											onFocus={() => onBlurFocusInput(true,"phone")}
-											onBlur={() => onBlurFocusInput(false,"phone")}
-										/>
-									</Box>
-									<Box className={classes.conItemInput}>
 										{/* <Typography className={classes.txtTitleInput}>
 											{t("city")}
 										</Typography> */}
@@ -745,6 +705,52 @@ const UpdateUserComponentPayment = ({
 										</Select>
 									</Box>
 									<Box className={classes.conItemInput}>
+										<Select
+											// style={{
+											// 	border: !form.ward.isFocus && `2px solid ${form.ward.error ? Colors.secondary : form.ward.value !== "" ? Colors.success : "transparent"}`,
+											// }}
+											value={shippingAddress?.ward || form.province.value}
+											fullWidth
+											onChange={(event) => onChangeInput(event,"ward")}
+											disabled={loading}
+											displayEmpty
+											className={classes.conInput}
+											onFocus={() => onBlurFocusInput(true,"ward")}
+											onBlur={() => onBlurFocusInput(false,"ward")}
+											MenuProps={{ PaperProps: { style: { maxHeight: 200,width: 250 } } }} // Điều chỉnh kích thước của Menu
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.ward.isFocus || (form.ward.value && form.ward.value !== "")
+														// 		? Colors.bgLogin
+														// 		: Colors.placeHolder
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+										>
+											<MenuItem value={shippingAddress?.ward || ""}>
+												{shippingAddress?.ward || "Phường/Xã"}
+											</MenuItem>
+											{wards?.map((ward) => (
+												<MenuItem
+													className={classes.conInput}
+													value={ward.code}
+													data-key={ward.name}// Đây là giá trị cần chuyển đi khi MenuItem được chọn
+													key={ward.code}
+													name={ward.name}
+												// onClick={(e) => getNameWard(e,ward?.code)}
+
+												>
+													{ward.name}
+												</MenuItem>
+											))}
+										</Select>
+									</Box>
+									<Box className={classes.conItemInput}>
 										<Input
 											className={classes.conInput}
 											fullWidth
@@ -770,6 +776,7 @@ const UpdateUserComponentPayment = ({
 										/>
 									</Box>
 								</Grid>
+
 								<Grid item xs={12} sm={12} lg={12} xl={12}>
 									<Box className={classes.conMsg}>
 										<Typography className={classes.txtError}>

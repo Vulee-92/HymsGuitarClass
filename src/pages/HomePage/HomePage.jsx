@@ -82,6 +82,7 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+
 	const {
 		data: blogs,
 		isPreviousData
@@ -300,6 +301,7 @@ const HomePage = () => {
 															discount={product.discount}
 															selled={product.selled}
 															id={product._id}
+															slug={product.slug}
 															createdAt={product.createdAt}
 															style={{ cursor: "pointer" }}
 														/>

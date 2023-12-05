@@ -21,6 +21,11 @@
     --><!-- Using Local Font -->
     <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/fonts/index.css" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		 <meta property="og:title" content="Hymns Center" />
+  	<meta property="og:description" content="Mua sắm nhạc cụ và phụ kiện nhanh chóng, dễ dàng" />
+ 	 <meta property="og:image" content="./images/logo.png" />
+  <meta property="og:url" content="hymnscenter.com" />
+  <meta property="og:type" content="website" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -35,10 +40,9 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!-- Messenger Plugin chat Code -->
+		
     <div id="fb-root"></div>
 
-    <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
 
@@ -48,7 +52,6 @@
       chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
-    <!-- Your SDK code -->
     <script>
       window.fbAsyncInit = function() {
         FB.init({

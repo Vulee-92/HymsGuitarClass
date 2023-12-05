@@ -28,12 +28,13 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-	const { id,name,image,price,colors,status,priceSale,countInStock } =
+	const { id,name,image,price,colors,status,priceSale,countInStock,slug } =
 		product;
+	const firstImage = image[0];
 	const navigate = useNavigate();
 	const classes = styles();
-	const handleDetailsProduct = (id) => {
-		navigate(`/product-details/${id}`);
+	const handleDetailsProduct = (slug) => {
+		navigate(`/product-details/${slug}`);
 	};
 	return (
 		<>
@@ -63,9 +64,9 @@ export default function ShopProductCard({ product }) {
 						)}
 						<LazyLoad>
 							<StyledProductImg
-								onClick={() => handleDetailsProduct(id)}
+								onClick={() => handleDetailsProduct(slug)}
 								alt={name}
-								src={image}
+								src={firstImage}
 							/>
 						</LazyLoad>
 
@@ -76,7 +77,7 @@ export default function ShopProductCard({ product }) {
 							<Link color="inherit" underline="hover">
 								<Typography
 									className={classes.txtHeaderTitle}
-									onClick={() => handleDetailsProduct(id)}
+									onClick={() => handleDetailsProduct(slug)}
 								>
 									{name ? `${name.slice(0,300)}` : name}
 								</Typography>
@@ -100,13 +101,14 @@ export default function ShopProductCard({ product }) {
 							{/* <ColorPreview colors={colors} /> */}
 
 							<Box></Box>
-							<Typography className={classes.txtPrice}>
+							<Typography className={classes.txtPrice} onClick={() => handleDetailsProduct(slug)}>
 								<Typography
 									className={classes.txtPrice}
 									sx={{
 										color: "text.disabled",
 										textDecoration: "line-through",
 									}}
+									onClick={() => handleDetailsProduct(slug)}
 								>
 									{priceSale && convertPrice(priceSale)}
 								</Typography>

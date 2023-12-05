@@ -441,7 +441,7 @@ const UpdateUserComponent = ({ open,
 							</Typography>
 							<Box className={classes.conForm}>
 								<Grid container spacing={2}>
-									<Grid item xs={12} sm={6} lg={6} xl={6}>
+									<Grid item xs={12} sm={6} lg={6} xl={12}>
 										<Box className={classes.conItemInput}>
 											<Typography className={classes.txtTitleInput}>
 												{t("name")}
@@ -634,7 +634,7 @@ const UpdateUserComponent = ({ open,
 
 										</Box>
 									</Grid>
-									<Grid item xs={6} sm={6} lg={6} xl={6}>
+									<Grid item xs={6} sm={6} lg={6} xl={12}>
 										{/* <Box className={classes.conItemInput}>
 											<Typography className={classes.txtTitleInput}>
 												{t("email")}

@@ -112,7 +112,7 @@ export default makeStyles(() => {
 			textAlign: "left",
 			zIndex: 10,
 			marginTop: "100px",
-			textTransform: "capitalize",
+			textTransform: "uppercase",
 			margin: 0,
 			pointerEvents: "none",
 

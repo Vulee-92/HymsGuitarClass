@@ -175,6 +175,8 @@ export default makeStyles(() => {
 			fontSize: "0.7rem",
 		},
 		customLoadingButton: {
+			...CStyles.txt_title_item,
+			fontWeight: 400,
 			backgroundColor: '#212B36',
 			color: 'white',
 			padding: '10px 20px',

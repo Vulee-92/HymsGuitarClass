@@ -504,7 +504,7 @@ const ConfirmPaymentPage = () => {
 													horizontal: 'right',
 												}} // Vị trí của badge
 											>
-												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image} alt={order?.image} />
+												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image[0]} alt={order?.image[0]} />
 											</Badge>
 											<Box sx={{ display: "flex",flexDirection: "column" }}>
 												<CardContent style={{ flex: "1 0 auto",padding: "10px 0px 0px 0px" }}>

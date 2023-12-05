@@ -158,7 +158,7 @@ const IconContactAllPageComponent = () => {
 					<OptionBox>
 						<Typography variant="subtitle1">Gọi cho chúng tôi</Typography>
 						<Typography variant="body2">
-							Gọi +84 90 904 36 19 từ 11am đến 7pm để được giải đáp mọi thắc mắc.
+							Gọi 0986 32 09 32 từ 6am đến 10pm để được giải đáp mọi thắc mắc.
 						</Typography>
 					</OptionBox>
 					<OptionBox

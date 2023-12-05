@@ -1,4 +1,4 @@
-import React,{ useMemo,useState } from 'react'
+import React,{ useEffect,useMemo,useState } from 'react'
 import { Lable,WrapperInfo,WrapperTotal,WrapperValue,WrapperCountOrder,WrapperItemOrder,WrapperItemOrderInfo,WrapperRadio } from './style';
 import Loading from '../../components/LoadingComponent/Loading';
 import { useSelector } from 'react-redux';
@@ -17,25 +17,29 @@ const OrderSucess = () => {
 	const params = useParams()
 	const { id } = params
 	const location = useLocation()
+	const [data,setOrderData] = useState(null);
+	// State variable to track loading status
+	const [isLoading,setIsLoading] = useState(true);
 	const { state } = location
 	const [isProcessing,setIsProcessing] = useState(false);
 	const user = useSelector((state) => state.user)
+	console.log("user",user)
 	const classes = styles();
 	const delay = (ms) => new Promise((resolve) => setTimeout(resolve,ms));
-	const fetchDataWithDelay = async () => {
-		await delay(200); // Chờ 200 milliseconds trước khi gọi
-		const res = await OrderService.getDetailsOrder(id,state?.token);
-		confetti({
-			particleCount: 300,
-			spread: 100,
-			decay: 0.9,
-			gravity: 3,
-			ticks: 1000,
-			scalar: 1,
-			origin: { x: 0.5,y: 0.5 },
-		});
-		return res.data;
-	};
+	// const fetchDataWithDelay = async () => {
+	// 	await delay(200); // Chờ 200 milliseconds trước khi gọi
+	// 	const res = await OrderService.getDetailsOrder(id,state?.token);
+	// 	confetti({
+	// 		particleCount: 300,
+	// 		spread: 100,
+	// 		decay: 0.9,
+	// 		gravity: 3,
+	// 		ticks: 1000,
+	// 		scalar: 1,
+	// 		origin: { x: 0.5,y: 0.5 },
+	// 	});
+	// 	return res.data;
+	// };
 	const navigate = useNavigate();
 	const handleToProduct = () => {
 		setIsProcessing(true);
@@ -46,11 +50,11 @@ const OrderSucess = () => {
 	};
 
 	// Sau đó, bạn sử dụng fetchDataWithDelay khi khởi tạo useQuery
-	const queryOrder = useQuery(
-		{ queryKey: ['orders-details'],queryFn: fetchDataWithDelay },
-		{ enabled: id }
-	);
-	const { isLoading,data } = queryOrder;
+	// const queryOrder = useQuery(
+	// 	{ queryKey: ['orders-details'],queryFn: fetchDataWithDelay },
+	// 	{ enabled: id }
+	// );
+	// const { isLoading,data } = queryOrder;
 
 	const priceMemo = useMemo(() => {
 		const result = data?.orderItems?.reduce((total,cur) => {
@@ -149,6 +153,36 @@ const OrderSucess = () => {
 
 	const orderStatusTxt = checkOrderStatusTxt(data);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				setIsLoading(true);
+
+				const res = await OrderService.getDetailsOrder(id,state?.token);
+
+				// Your other logic...
+
+				confetti({
+					particleCount: 300,
+					spread: 100,
+					decay: 0.9,
+					gravity: 3,
+					ticks: 1000,
+					scalar: 1,
+					origin: { x: 0.5,y: 0.5 },
+				});
+
+				// Set order data or perform other logic based on the response
+				setOrderData(res.data);
+			} catch (error) {
+				// Handle error...
+			} finally {
+				setIsLoading(false); // Set loading to false whether there's an error or not
+			}
+		};
+
+		fetchData();
+	},[id,state?.token]);
 
 	return (
 
@@ -168,9 +202,7 @@ const OrderSucess = () => {
 						backgroundColor: "#fff",
 						marginTop: "30px"
 					}}>
-
 						<Box className={classes.WrapperLeft}>
-
 							<Box>
 								<Typography
 									href="/"
@@ -185,14 +217,9 @@ const OrderSucess = () => {
 										letterSpacing: '1rem',
 										color: "inherit",
 										textDecoration: "none"
-										// cursor: 'pointer',
 									}} className={classes.hymnsName} >HYMNS CENTER</Typography>
 								<Typography style={{ paddingRight: "10px",lineHeight: 1.5 }} className={classes.txtShipping}>
-									{/* {data?.orderStatus === false
-										? `Huỷ đơn hàng ${data?.codeOrder}`
-										: data?.isPaid && data?.isDelivered
-											? `Đơn hàng của bạn đã được giao hoàn thành!`
-											: `Đặt hàng thành công! Mã đơn hàng ${data?.codeOrder}`} */}
+
 									{orderStatusTxt}
 								</Typography>
 
@@ -208,6 +235,20 @@ const OrderSucess = () => {
 										fill="#A18C4F"><path d="m18.756,8.048c.193.197.191.514-.006.708l-5.325,5.244c-.686.671-1.568,1.007-2.45,1.007-.873,0-1.747-.329-2.43-.988l-2.296-2.264c-.196-.194-.198-.51-.005-.707.196-.197.512-.199.708-.005l2.292,2.26c.974.941,2.505.937,3.48-.018l5.324-5.243c.195-.193.513-.191.707.005Zm5.244,3.952c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-1,0c0-6.065-4.935-11-11-11S1,5.935,1,12s4.935,11,11,11,11-4.935,11-11Z" />
 									</svg>
 								</Grid>
+								{data?.orderStatus === false && (
+
+									<Box className={classes.BoxInfoOrder}>
+										<Box style={{ paddingTop: "10px" }}>
+											<Typography className={classes.txtShipping} style={{ color: "#333333" }}>
+												Đơn hàng đã bị huỷ
+											</Typography>
+											<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+												Mọi thắc mắc xin vui lòng liên hệ: hymnscenter@gmail.com hoặc 0986 32 09 32 (Vũ - Zalo)
+											</Typography>
+										</Box>
+
+									</Box>
+								)}
 
 								<Box className={classes.BoxInfoOrder}>
 									<Typography className={classes.txtShipping}>Thông tin khách hàng của Hymns</Typography>
@@ -294,16 +335,20 @@ const OrderSucess = () => {
 										}
 									</Typography>
 
-									<Grid container sx={{ padding: "3px",borderTop: '1px solid #e6e6e6' }}>
+									<Grid container sx={{ padding: "3px" }}>
 										<Grid item xs={12} xl={12}>
 											{(data?.isPaid && data?.isDelivered && data?.paymentMethod === 'bank' && data?.orderStatus) ? (
-												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
-													</Typography>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
-													</Typography>
+												<Box style={{ paddingTop: "10px" }}>
+													{data?.orderStatus === true && (
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															<Link className={classes.txtInfoOrder} href="mailto:hymnscenter@gmail.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+														</Typography>
+													)}
+													{!user?.access_token && (
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+														</Typography>
+													)}
 												</Box>
 											) : (data?.paymentMethod === 'bank' && !data?.isPaid && !data?.isDelivered && data?.orderStatus) ? (
 												<div>
@@ -325,45 +370,48 @@ const OrderSucess = () => {
 													<Typography className={classes.txtInfoOrder} style={{ color: "#333333",paddingBottom: "10px" }}>
 														Ghi chú: Đơn hàng của bạn sẽ được chuyển đi sau khi quá trình thanh toán hoàn tất!
 													</Typography>
-													<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
-														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-															<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
-														</Typography>
-														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
-														</Typography>
+													<Box style={{ paddingTop: "10px" }}>
+														{data?.orderStatus === true && (
+															<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+																<Link className={classes.txtInfoOrder} href="mailto:hymnscenter@gmail.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+															</Typography>
+														)}
+														{!user?.access_token && (
+															<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+																Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+															</Typography>
+														)}
 													</Box>
 												</div>
 											) : (data?.paymentMethod === 'bank' && data?.isPaid && !data?.isDelivered && data?.orderStatus) ? (
-												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
-													<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
+												<Box style={{ paddingTop: "10px" }}>
+													{data?.orderStatus === true && (
 														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-															<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+															<Link className={classes.txtInfoOrder} href="mailto:hymnscenter@gmail.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
 														</Typography>
+													)}
+													{!user?.access_token && (
 														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
 															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
 														</Typography>
-													</Box>
+													)}
 												</Box>
-											) : (data?.orderStatus === false) ? (
-												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														Đơn hàng đã bị huỷ.
-													</Typography>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														Mọi thắc mắc xin vui lòng liên hệ: hymnscenter@gmail.com hoặc 0986 32 09 32 (Vũ - Zalo)
-													</Typography>
+											) : (
+												<Box style={{ paddingTop: "10px" }}>
+													{data?.orderStatus === true && (
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															<Link className={classes.txtInfoOrder} href="mailto:hymnscenter@gmail.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
+														</Typography>
+													)}
+
+													{!user?.access_token && (
+														<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
+															Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
+														</Typography>
+													)}
+
 												</Box>
 
-											) : (
-												<Box style={{ paddingTop: "10px",borderTop: '1px solid #e6e6e6' }}>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														<Link className={classes.txtInfoOrder} href="mailto:tenungdung@domain.com">Liên hệ với Hymns</Link> hoặc 0986 32 09 32 (Vũ - Zalo)
-													</Typography>
-													<Typography className={classes.txtInfoOrder} style={{ color: "#333333" }}>
-														Gợi ý: Để quản lý đơn hàng dễ dàng, {data?.shippingAddress?.fullName} vui lòng tạo tài khoản bằng gmail đã đặt hàng! Mọi đơn hàng được lưu trong tài khoản của bạn.
-													</Typography>
-												</Box>
 											)}
 										</Grid>
 
@@ -400,7 +448,7 @@ const OrderSucess = () => {
 													horizontal: 'right',
 												}} // Vị trí của badge
 											>
-												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image} alt={order?.image} />
+												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image[0]} alt={order?.image[0]} />
 											</Badge>
 											<Box sx={{ display: "flex",flexDirection: "column",marginLeft: "10px" }}>
 												<CardContent style={{ flex: "1 0 auto",padding: "10px 0px 0px 0px" }}>
@@ -451,6 +499,11 @@ const OrderSucess = () => {
 									)
 								}
 							</Box>
+							<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+								onClick={() => handleToProduct()}
+								className={classes.customLoadingButton}
+								sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" },width: "85vw !important" }}
+							>Tiếp tục mua hàng</LoadingButton>
 						</Box>
 					</Grid>
 				</Grid >
