@@ -89,7 +89,7 @@ const IconContactAllPageComponent = () => {
 	useEffect(() => {
 		const handleIconClick = (event) => {
 			// Kiểm tra xem phần tử được click có class "x1i10hfl" không
-			if (event.target.classList.contains('x1i10hfl')) {
+			if (event.target.classList.contains('.x3nfvp2')) {
 				// Tìm phần tử có class "fb_dialog_advanced"
 				const dialogElement = document.querySelector('.fb_dialog_advanced');
 
