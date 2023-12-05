@@ -171,9 +171,9 @@ const UpdateUserComponentPayment = ({
 		}
 
 		for (const product of products) {
-			if (product.type === 'Guitar Electric') {
+			if (product.type === 'Acoustic Guitars') {
 				totalGuitarQuantity += product.amount;
-			} else if (product.type === 'Phụ kiện') {
+			} else if (product.type === 'Phụ kiện' || 'Tuner - máy lên dây' || 'Acoustic Guitar Strings') {
 				totalAccessoryQuantity += product.amount;
 			}
 		}
