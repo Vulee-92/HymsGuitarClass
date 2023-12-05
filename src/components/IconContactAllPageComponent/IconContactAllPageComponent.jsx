@@ -93,8 +93,8 @@ const IconContactAllPageComponent = () => {
 			const mutationObserver = new MutationObserver((mutations) => {
 				mutations.forEach((mutation) => {
 					if (mutation.target.classList.contains(' fb_customer_chat_bounce_out_v2')) {
-						const dialogElement = document.querySelector('.fb_iframe_widget span');
-						dialogElement.style.display = 'none';
+						const dialogElement = document.querySelector('.fb_reset>div');
+						dialogElement.style.display = 'none !important';
 					}
 				});
 			});
