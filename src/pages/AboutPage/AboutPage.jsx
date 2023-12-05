@@ -12,9 +12,11 @@ const AboutPage = () => {
 
 	const images = [
 		{ mobile: Assets.bgHomeM2,default: Assets.bgHome2 },
+		{ mobile: Assets.bgHomeM4,default: Assets.bgHymnsCenter },
 		{ mobile: Assets.bgHomeM4,default: Assets.bgHome4 },
 		{ mobile: Assets.bgHomeM5,default: Assets.bgHome5 },
 		{ mobile: Assets.bgHomeM6,default: Assets.bgHome6 },
+
 		// Thêm các đối tượng hình ảnh khác nếu cần
 	];
 	return (

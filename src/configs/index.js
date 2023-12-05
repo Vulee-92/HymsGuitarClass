@@ -46,6 +46,7 @@ export const Assets = {
 	bgSignUp: require("../assets/images/background/bgSignIn.jpg"),
 	bgProduct: require("../assets/images/background/bgproduct.jpg"),
 	bgHome: require("../assets/images/background/index.jpg"),
+	bgHymnsCenter: require("../assets/images/background/facebook_hymnscenter.png"),
 	bgHome1: require("../assets/images/background/1.png"),
 	bgHome2: require("../assets/images/background/2.png"),
 	bgHome3: require("../assets/images/background/3.png"),
