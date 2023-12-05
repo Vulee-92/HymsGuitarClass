@@ -50,7 +50,11 @@ const IconContactAllPageComponent = () => {
 			}
 		}
 	};
-
+	if (document.querySelector('.fb_customer_chat_bounce_out_v2')) {
+		const dialogElement = document.querySelector('.fb_dialog_advanced');
+		console.log("dialogElement",dialogElement)
+		dialogElement.style.display = 'none';
+	}
 
 
 	const handleClosePopover = () => {
@@ -84,36 +88,35 @@ const IconContactAllPageComponent = () => {
 		};
 	},[isMessengerChatOpen]);
 
-
 	useEffect(() => {
-		// Tạo một instance của MutationObserver với một callback
-		const mutationObserver = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				// Kiểm tra xem class "fb_dialog_advanced" có được thêm vào không
-				if (mutation.target.classList.contains('fb_customer_chat_bounce_out_v2')) {
-					const dialogElement = document.querySelector('.fb_dialog_advanced');
-					if (dialogElement) {
-						dialogElement.style.display = 'none';
+		const setupMutationObserver = () => {
+			const mutationObserver = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (mutation.target.classList.contains('fb_customer_chat_bounce_out_v2')) {
+						const dialogElement = document.querySelector('.fb_dialog_advanced');
+						if (dialogElement) {
+							dialogElement.style.display = 'none';
+						}
 					}
-				}
-
+				});
 			});
-		});
 
-		// Chọn phần tử mà bạn muốn theo dõi (có thể là body hoặc một phần tử khác)
-		const targetNode = document.body;
+			const targetNode = document.body;
+			const config = { attributes: true,childList: true,subtree: true };
 
-		// Cấu hình cho MutationObserver
-		const config = { attributes: true,childList: true,subtree: true };
-
-		// Bắt đầu theo dõi sự thay đổi
-		mutationObserver.observe(targetNode,config);
-
-		// Hủy theo dõi khi component unmount
-		return () => {
-			mutationObserver.disconnect();
+			mutationObserver.observe(targetNode,config);
 		};
-	},[isMessengerChatOpen]);
+
+		// Thiết lập MutationObserver sau 1 giây
+		const timeoutId = setTimeout(() => {
+			setupMutationObserver();
+		},1000);
+
+		return () => {
+			clearTimeout(timeoutId);
+		};
+	},[]);
+
 
 	// // useEffect cho việc theo dõi sự thay đổi trong class của iframe
 	// useEffect(() => {
