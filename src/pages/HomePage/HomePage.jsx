@@ -91,7 +91,6 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("blogs",blogs)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -213,7 +212,6 @@ const HomePage = () => {
 	const [reverseOrder,setReverseOrder] = useState(false);
 	// Lấy bài viết mới nhất đưa lên đầu
 	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
-	console.log("sortedBlogs",sortedBlogs)
 	const toggleOrder = () => {
 		setReverseOrder(!reverseOrder);
 	};

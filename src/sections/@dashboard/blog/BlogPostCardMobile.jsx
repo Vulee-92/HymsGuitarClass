@@ -62,7 +62,6 @@ BlogPostCardMobile.propTypes = {
 };
 
 export default function BlogPostCardMobile({ blog,index,id }) {
-	console.log("index",index)
 	const { image,title } = blog;
 	// const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2 || index === 3 || index === 0;
