@@ -85,30 +85,82 @@ const IconContactAllPageComponent = () => {
 	},[isMessengerChatOpen]);
 
 
-
 	useEffect(() => {
-		const handleIconClick = (event) => {
-			// Kiểm tra xem phần tử được click có class "x1i10hfl" không
-			if (event.target.classList.contains('.x3nfvp2')) {
-				// Tìm phần tử có class "fb_dialog_advanced"
-				const dialogElement = document.querySelector('.fb_dialog_advanced');
-
-				// Nếu phần tử tồn tại, thay đổi style thành display: none
-				if (dialogElement) {
-					dialogElement.style.display = 'none';
-					setPopoverOpenSVG(true);
+		// Tạo một instance của MutationObserver với một callback
+		const mutationObserver = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				// Kiểm tra xem class "fb_dialog_advanced" có được thêm vào không
+				if (mutation.target.classList.contains('fb_customer_chat_bounce_out_v2')) {
+					const dialogElement = document.querySelector('.fb_dialog_advanced');
+					if (dialogElement) {
+						dialogElement.style.display = 'none';
+					}
 				}
-			}
-		};
 
-		// Đăng ký sự kiện click khi component được mount
-		document.addEventListener('click',handleIconClick);
+			});
+		});
 
-		// Hủy đăng ký sự kiện khi component bị unmount để tránh memory leak
+		// Chọn phần tử mà bạn muốn theo dõi (có thể là body hoặc một phần tử khác)
+		const targetNode = document.body;
+
+		// Cấu hình cho MutationObserver
+		const config = { attributes: true,childList: true,subtree: true };
+
+		// Bắt đầu theo dõi sự thay đổi
+		mutationObserver.observe(targetNode,config);
+
+		// Hủy theo dõi khi component unmount
 		return () => {
-			document.removeEventListener('click',handleIconClick);
+			mutationObserver.disconnect();
 		};
-	},[]);
+	},[isMessengerChatOpen]);
+
+	// // useEffect cho việc theo dõi sự thay đổi trong class của iframe
+	// useEffect(() => {
+	// 	const iframe = document.querySelector('iframe[name="blank_fad379d1ef2ffc"]');
+	// 	const observer = new MutationObserver((mutations) => {
+	// 		mutations.forEach((mutation) => {
+	// 			if (mutation.target.classList.contains('fb_customer_chat_bounce_out_v2')) {
+	// 				const dialogElement = document.querySelector('.fb_dialog_advanced');
+	// 				if (dialogElement) {
+	// 					dialogElement.style.display = 'none';
+	// 				}
+	// 			}
+	// 		});
+	// 	});
+
+	// 	const observerConfig = { attributes: true,attributeFilter: ['class'] };
+
+	// 	observer.observe(iframe,observerConfig);
+
+	// 	return () => {
+	// 		observer.disconnect();
+	// 	};
+	// },[]);
+
+	// useEffect(() => {
+	// 	const handleIconClick = (event) => {
+	// 		// Kiểm tra xem phần tử được click có class "x1i10hfl" không
+	// 		if (event.target.classList.contains('.x3nfvp2')) {
+	// 			// Tìm phần tử có class "fb_dialog_advanced"
+	// 			const dialogElement = document.querySelector('.fb_dialog_advanced');
+
+	// 			// Nếu phần tử tồn tại, thay đổi style thành display: none
+	// 			if (dialogElement) {
+	// 				dialogElement.style.display = 'none';
+	// 				setPopoverOpenSVG(true);
+	// 			}
+	// 		}
+	// 	};
+
+	// 	// Đăng ký sự kiện click khi component được mount
+	// 	document.addEventListener('click',handleIconClick);
+
+	// 	// Hủy đăng ký sự kiện khi component bị unmount để tránh memory leak
+	// 	return () => {
+	// 		document.removeEventListener('click',handleIconClick);
+	// 	};
+	// },[]);
 	return (
 		<div style={{ position: 'fixed',bottom: '20px',right: '20px',zIndex: '1000' }}>
 			{!isPopoverOpenSVG && (
