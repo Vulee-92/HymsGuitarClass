@@ -171,7 +171,7 @@ const HomePage = () => {
 	const settings = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 3,
+		slidesToShow: 4,
 		className: "center",
 		centerMode: true,
 		centerPadding: "60px",
