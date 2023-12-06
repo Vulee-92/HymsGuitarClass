@@ -78,6 +78,11 @@ export default makeStyles(() => {
 			display: "flex",
 			marginTop: "10px",
 		},
+		nameOrder: {
+			...CStyles.txt_title_item,
+			alignItems: "center",
+			display: "flex",
+		},
 		updateInfo: {
 			...CStyles.txt_title_item,
 			lineHeight: 1.3,

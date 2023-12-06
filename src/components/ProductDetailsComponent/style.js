@@ -1,4 +1,4 @@
-import { Col, Image, InputNumber } from "antd";
+import { Col,Image,InputNumber } from "antd";
 import styled from "styled-components";
 
 export const WrapperStyleImageSmall = styled(Image)`
@@ -67,7 +67,7 @@ export const WrapperQualityProduct = styled.div`
 
 export const WrapperInputNumber = styled(InputNumber)`
   &.ant-input-number.ant-input-number-sm {
-    width: 50px;
+    width: 100px;
 		font-size: 15px;
     border-top: none;
     border-bottom: none;

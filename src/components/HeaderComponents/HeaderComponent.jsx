@@ -59,6 +59,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const [loading,setLoading] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
 	const [isDrawerOpen,setIsDrawerOpen] = useState(false);
+	const [isPageLoaded,setIsPageLoaded] = useState(false);
 	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
 	const [anchorEl,setAnchorEl] = useState(null);
 
@@ -66,6 +67,31 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		setAnchorEl(event.currentTarget);
 		setMenuOpen(true);
 	};
+
+	useEffect(() => {
+		// Simulate page loading time
+		const timeout = setTimeout(() => {
+			setIsPageLoaded(true);
+		},2000);
+
+		// Clear the timeout when the component unmounts or when the page is loaded
+		return () => clearTimeout(timeout);
+	},[]);
+
+	const handleToggleDrawer = () => {
+		if (isPageLoaded) {
+			setIsDrawerOpen((prev) => !prev);
+			setCurrentIcon((prevIcon) =>
+				prevIcon === faBarsStaggered ? faTimes : faBarsStaggered
+			);
+		}
+	};
+
+	const handleCloseDrawer = () => {
+		setIsDrawerOpen(false);
+		setCurrentIcon(faBarsStaggered);
+	};
+
 
 	const handleClose = () => {
 		if (menuOpen) {
@@ -123,7 +149,18 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
+	const menuItems = [
+		{ path: '/',label: t('home') },
+		{ path: '/product',label: t('product') },
+		{ path: '/about',label: t('about') },
+		{ path: '/blog',label: t('blog') },
+		{ path: '/contact',label: t('contact') },
+	];
 
+	const handleMenuItemClick = (path) => {
+		setIsDrawerOpen(!isDrawerOpen);
+		navigate(path);
+	};
 
 
 	const content = (
@@ -268,19 +305,20 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
-								onClick={(event) => {
-									// event.stopPropagation();
-									setIsDrawerOpen(!isDrawerOpen);
-									setCurrentIcon(isDrawerOpen ? faBarsStaggered : faTimes);
-								}}
+								// onClick={(event) => {
+								// 	// event.stopPropagation();
+								// 	setIsDrawerOpen(!isDrawerOpen);
+								// 	setCurrentIcon(isDrawerOpen ? faBarsStaggered : faTimes);
+								// }}
+								onClick={handleToggleDrawer}
 								color="inherit"
 							>
 								<FontAwesomeIcon icon={currentIcon} style={{ fontSize: "18px" }} />
 							</IconButton>
 							{/* <Button >{"top"}</Button> */}
 							<Drawer anchor="left"
-								open={isDrawerOpen}
-								onClose={() => setIsDrawerOpen(false)}
+								open={isDrawerOpen} onClose={handleCloseDrawer}
+								// onClose={() => setIsDrawerOpen(false)}
 								variant="temporary"
 								disableScrollLock="false"
 								className={classes.menuContent}
@@ -368,26 +406,11 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								<MenuItem>
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Trang</Typography>
 								</MenuItem>
-								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
-								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/')} textAlign="center">{t('home')}</Button>
-								</MenuItem>
-								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
-								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/product')} textAlign="center">{t('product')}</Button>
-								</MenuItem>
-								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
-								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/about')} textAlign="center">{t('about')}</Button>
-								</MenuItem>
-								<MenuItem onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}
-								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/blog')} textAlign="center">{t('blog')}</Button>
-								</MenuItem>
-								<MenuItem onClick={(event) => { setIsDrawerOpen(!isDrawerOpen) }}
-								>
-									<Button className={classes.txtTilte} onClick={() => navigate('/contact')} textAlign="center">{t('contact')}</Button>
-								</MenuItem>
+								{menuItems.map((item,index) => (
+									<MenuItem key={index} onClick={(event) => { event.stopPropagation(); handleMenuItemClick(item.path); }}>
+										<Typography className={classes.txtTilte} textAlign="center">{item.label}</Typography>
+									</MenuItem>
+								))}
 								<MenuItem>
 									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">{t('language')}</Typography>
 								</MenuItem>

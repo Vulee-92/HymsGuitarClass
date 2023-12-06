@@ -389,7 +389,7 @@ const OrderPage = () => {
 								<Grid item xs={12}>
 									<div role='presentation'>
 										<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "11px" }}>
-											<Typography style={{ fontSize: ".8rem",marginTop: "0px !important" }} underline='hover' color='inherit' href='/order' className={classes.nameProduct}	>
+											<Typography style={{ fontSize: ".8rem",marginTop: "0px !important" }} underline='hover' color='inherit' href='/order' className={classes.nameOrder}	>
 												Giỏ hàng
 											</Typography>
 											<Typography className={classes.txtValueTotal} style={{ fontSize: ".8rem",marginBottom: "0px",color: 'rgb(128, 128, 137)' }} underline='hover' href='/payment'>
@@ -401,30 +401,7 @@ const OrderPage = () => {
 								</Grid>
 							</Grid>
 						</Grid>
-						{/* <Grid style={{
-							padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
-						}} sx={{ display: { xs: "flex",lx: "none",md: "none" } }} >
-							<WrapperInfo>
-								<Grid container spacing={2} columns={16} style={{ alignItems: 'baseline' }}>
-									<Grid item xs={8}>
-										<Typography className={classes.nameInfoUser}>
-											<FontAwesomeIcon icon={faLocationDot} style={{ color: "#212B36" }} />	{user?.name}	     - {user?.phone}
-										</Typography>
-									</Grid>
-									<Grid item xs={8} style={{ textAlign: "right",color: "#212B36",cursor: "pointer",fontSize: "14px" }}>
-										<Typography className={classes.txtValueTotal} onClick={handleChangeAddress} style={{ color: "#212B36",cursor: "pointer",fontSize: "14px",}}>{" "}Thay đổi</Typography>
-									</Grid>
-								</Grid>
-						
 
-								<Box>
-									<Typography className={classes.txtValueTotal} style={{ color: 'rgb(128, 128, 137)',fontSize: '13px' }}>
-										{" "}<span style={{ fontWeight: "bold",color: "#212B36",fontStyle: "italic",fontSize: "13px",}}> Nhà  </span>
-										{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "}
-									</Typography>
-								</Box>
-							</WrapperInfo>
-						</Grid> */}
 						<Grid style={{
 							padding: "11px 16px",borderBottom: "1px solid rgb(224, 224, 224)"
 						}} sx={{ display: { xs: "flex",lx: "none",md: "none" } }} >
