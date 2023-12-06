@@ -104,11 +104,11 @@ export default makeStyles(() => {
 			width: "120px",
 			border: "none",
 			borderRadius: "4px",
+			textTransform: "none",
 
 			color: "#fff",
 			fontSize: "10px",
 			fontWeight: "600",
-			textTransform: "capitalize",
 			"&:hover": {
 				background: "#212B36",
 			}

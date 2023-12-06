@@ -59,19 +59,6 @@ const ConfirmPaymentPage = () => {
 
 
 
-	// useEffect(() => {
-	// 	if (isOpenModalUpdateInfo) {
-	// 		setStateUserDetails({
-	// 			id: user.id,
-	// 			city: user?.city,
-	// 			name: user?.name,
-	// 			province: user?.province,
-	// 			ward: user?.ward,
-	// 			address: user?.address,
-	// 			phone: user?.phone
-	// 		})
-	// 	}
-	// },[isOpenModalUpdateInfo])
 
 
 	const backToOrder = () => {
@@ -487,69 +474,66 @@ const ConfirmPaymentPage = () => {
 
 					</Grid>
 					{/* </Grid> */}
+					<Grid item xs={12} sm={12} md={12} lg={4} xl={6} style={{ backgroundColor: "rgb(247, 248, 250)" }}>
+						<Box className={classes.WrapperRight}>
 
-					<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={{ backgroundColor: "rgb(247, 248, 250)",borderLeft: "1px solid #e6e6e6" }}>
-						<WrapperRight>
-							<Box style={{ width: "500px" }}>
-
-								<Box>
-									{order?.orderItemsSlected?.map((order) => (
-										< Card style={{ padding: "none !important",boxShadow: "none",backgroundColor: "rgb(247, 248, 250)" }} sx={{ display: "flex" }}>
-											<Badge
-												badgeContent={order?.amount} // Đặt nội dung badge là số lượng từ 'order'
-												color="success" // Màu của badge
-												overlap="circular" // Chồng lên tấm hình
-												anchorOrigin={{
-													vertical: 'top',
-													horizontal: 'right',
-												}} // Vị trí của badge
-											>
-												<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image[0]} alt={order?.image[0]} />
-											</Badge>
-											<Box sx={{ display: "flex",flexDirection: "column" }}>
-												<CardContent style={{ flex: "1 0 auto",padding: "10px 0px 0px 0px" }}>
-													<Box style={{ marginBottom: "10px" }}>
-														<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 600,marginBottom: "10px" }} component='Box' >
-															{order?.name}
-														</Typography>
-														<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
-															{(order?.price * order?.amount)?.toLocaleString()}₫
-														</Typography>
-													</Box>
+							<Box>
+								{order?.orderItemsSlected?.map((order) => (
+									< Card style={{ padding: "none !important",boxShadow: "none",backgroundColor: "rgb(247, 248, 250)" }} sx={{ display: "flex" }}>
+										<Badge
+											badgeContent={order?.amount} // Đặt nội dung badge là số lượng từ 'order'
+											color="success" // Màu của badge
+											overlap="circular" // Chồng lên tấm hình
+											anchorOrigin={{
+												vertical: 'top',
+												horizontal: 'right',
+											}} // Vị trí của badge
+										>
+											<CardMedia component='img' sx={{ width: "50px",height: "50px" }} image={order?.image[0]} alt={order?.image[0]} />
+										</Badge>
+										<Box sx={{ display: "flex",flexDirection: "column" }}>
+											<CardContent style={{ flex: "1 0 auto",padding: "10px 0px 0px 0px" }}>
+												<Box style={{ marginBottom: "10px" }}>
+													<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 600,marginBottom: "10px" }} component='Box' >
+														{order?.name}
+													</Typography>
+													<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
+														{(order?.price * order?.amount)?.toLocaleString()}₫
+													</Typography>
+												</Box>
 
 
-												</CardContent>
-											</Box>
-										</Card>
-									))}
-								</Box>
-								<WrapperInfo>
-
-									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-										<Typography className={classes.txtValueTotal}>Tạm tính</Typography>
-										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceMemo)}</Typography>
-									</Box>
-									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-										<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
-										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
-									</Box>
-									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
-										<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
-										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(diliveryPriceMemo)}</Typography>
-									</Box>
-								</WrapperInfo>
-								<WrapperTotal>
-									<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
-									<Typography style={{ display: 'flex',flexDirection: 'column' }}>
-										<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(totalPriceMemo)}</Typography>
-										<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
-										<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '13px',textAlign: "right",cursor: 'pointer' }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Quay lại</Typography>
-									</Typography>
-								</WrapperTotal>
-								<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
-									<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
-								</Grid>
+											</CardContent>
+										</Box>
+									</Card>
+								))}
 							</Box>
+							<WrapperInfo>
+
+								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+									<Typography className={classes.txtValueTotal}>Tạm tính</Typography>
+									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceMemo)}</Typography>
+								</Box>
+								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
+									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
+								</Box>
+								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
+									<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
+									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(diliveryPriceMemo)}</Typography>
+								</Box>
+							</WrapperInfo>
+							<WrapperTotal>
+								<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
+								<Typography style={{ display: 'flex',flexDirection: 'column' }}>
+									<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(totalPriceMemo)}</Typography>
+									<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
+									<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '13px',textAlign: "right",cursor: 'pointer' }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Quay lại</Typography>
+								</Typography>
+							</WrapperTotal>
+							<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
+								<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
+							</Grid>
 							{payment === 'paypal' && sdkReady ? (
 								<Box style={{ width: '320px' }}>
 									<PayPalButton
@@ -565,7 +549,7 @@ const ConfirmPaymentPage = () => {
 								<>
 
 									<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
-										<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
+										<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} loading={isProcessing} />
 									</Grid>
 									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 										onClick={() => handleAddOrder()}
@@ -577,7 +561,7 @@ const ConfirmPaymentPage = () => {
 
 							)}
 
-						</WrapperRight>
+						</Box>
 					</Grid>
 
 					{/* </Grid> */}

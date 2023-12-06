@@ -129,6 +129,17 @@ export default makeStyles(() => {
 			"&:hover": {
 				backgroundColor: "#AFC4BF"
 			},
+		},
+		btnBottomShow: {
+			background: "#212B36",
+			height: "48px",
+			border: "none",
+			borderRadius: "4px",
+			zIndex: 1000000,
+			color: "#fff",
+			fontSize: "10px",
+			fontWeight: "600",
+			textTransform: "none",
 		}
 	};
 });

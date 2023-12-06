@@ -78,7 +78,7 @@ export default makeStyles(() => {
 			color: "#fff",
 			fontSize: "10px",
 			fontWeight: "600",
-			textTransform: "capitalize",
+			textTransform: "none",
 			"&:hover": {
 				background: "#212B36",
 			}

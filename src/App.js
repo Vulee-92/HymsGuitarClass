@@ -159,7 +159,7 @@ function App() {
 													{isAuthorized ? (
 														<Layout>
 															<LazyPage />
-															<IconContactAllPageComponent />
+															{/* <IconContactAllPageComponent /> */}
 														</Layout>
 													) : (
 														<Navigate to="/" replace />

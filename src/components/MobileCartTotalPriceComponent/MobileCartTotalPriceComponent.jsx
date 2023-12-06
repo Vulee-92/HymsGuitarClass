@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOrderProduct,isProcessing }) => {
+const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOrderProduct,loading }) => {
 	const [open,setOpen] = useState(false);
 	const location = useLocation();
 
@@ -62,7 +62,7 @@ const MobileCartTotalPriceComponent = ({ name,totalPriceMemo,classes,handleAddOr
 						alignItems: 'center',
 						justifyContent: 'center'
 					}}>
-						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={loading}
 							onClick={handleAddOrderProduct}
 							className={classes.btnAddCard}
 						>				{name}

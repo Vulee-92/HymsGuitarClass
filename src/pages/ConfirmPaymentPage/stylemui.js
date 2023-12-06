@@ -63,7 +63,7 @@ export default makeStyles(() => {
 			color: "#fff",
 			fontSize: "10px",
 			fontWeight: "600",
-			textTransform: "capitalize",
+			textTransform: "none",
 			"&:hover": {
 				background: "#212B36",
 			}
@@ -165,6 +165,21 @@ export default makeStyles(() => {
 					backgroundColor: '#245c4f'
 				}
 			},
-		}
+		},
+		WrapperRight: {
+			width: '100%', // Đặt chiều rộng là 100% mặc định
+
+			// Media Query để thay đổi chiều rộng tùy thuộc vào kích thước màn hình
+			'@media (min-width: 600px)': {
+				width: '600px', // Đối với màn hình rộng hơn hoặc bằng 600px
+			},
+
+			color: "rgb(33,43,54)",
+			transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+			overflow: "hidden",
+			borderRadius: "16px",
+			padding: "30px 24px 0px",
+			backgroundColor: "rgb(247, 248, 250)"
+		},
 	};
 });

@@ -358,18 +358,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 									<div>
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
-											className={classes.nameProductInfo}
-											style={{
-												background: "#212B36",
-												height: "48px",
-												width: "160px",
-												border: "none",
-												borderRadius: "4px",
-
-												color: "#fff",
-												fontSize: "10px",
-												fontWeight: "600",
-												textTransform: "capitalize",
+											className={classes.btnBottomShow}
+											sx={{
+												width: { xl: "200px",xs: "180px" },
 											}}
 											onClick={handleAddOrderProduct}
 										>
@@ -439,7 +430,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 												background: "#212B36",
 												height: "48px",
 												width: "200px",
-												textTransform: "capitalize",
+												textTransform: "none",
 												border: "none",
 												borderRadius: "4px",
 												color: "#fff",
@@ -639,7 +630,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											background: errorLimitOrder ? "#CCCCCC" : "#212B36",
 											height: "48px",
 											width: "100%",
-											textTransform: "capitalize",
+											textTransform: "none",
 											border: "none",
 											borderRadius: "4px",
 											color: errorLimitOrder ? "#B22222" : "#fff !important",
@@ -692,6 +683,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											width: "100%",
 											border: "none",
 											borderRadius: "4px",
+											textTransform: "none",
 											color: "#fff",
 											fontSize: "15px",
 											fontWeight: "700",

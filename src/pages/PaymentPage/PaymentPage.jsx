@@ -42,7 +42,6 @@ const PaymentPage = () => {
 	const classes = styles();
 	const [isOpenModalUpdateInfo,setIsOpenModalUpdateInfo] = useState(false)
 	const [isProcessing,setIsProcessing] = useState(false);
-
 	const [stateUserDetails,setStateUserDetails] = useState({
 		id: '',
 		name: '',
@@ -479,7 +478,7 @@ const PaymentPage = () => {
 								</Typography>
 							</WrapperTotal>
 							<Grid style={{ with: "100%",marginTop: "90px" }} sx={{ display: { xl: "none !important",lg: "none !important",md: "none !important",xs: "flex !important" } }}>
-								<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} />
+								<MobileCartTotalPriceComponent name={"Đặt hàng"} totalPriceMemo={totalPriceMemo} handleAddOrderProduct={handleAddOrder} classes={classes} loading={isProcessing} />
 							</Grid>
 							<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 								onClick={() => handleAddOrder()}

@@ -357,7 +357,9 @@ export default makeStyles(() => {
 		},
 		txtTitleInput: {
 			...CStyles.txt_title_item,
-			fontWeight: 400
+			fontWeight: 400,
+			fontSize: "1rem",
+			color: "rgb(128, 128, 137)"
 		},
 		txtError: {
 			...CStyles.txt_error,

@@ -4,9 +4,11 @@ import {
 	Avatar,
 	Box,
 	Breadcrumbs,
+	FormControl,
 	Grid,
 	Input,
 	InputAdornment,
+	InputLabel,
 	MenuItem,
 	Select,
 	Typography,
@@ -24,6 +26,7 @@ import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import { resetUser } from "../../redux/slides/userSlide";
 import { setShippingAddress } from "redux/slides/orderSlide";
+import { Colors } from "utils/colors";
 const UpdateUserComponentPayment = ({
 	updateUserInfo,
 }) => {
@@ -502,6 +505,7 @@ const UpdateUserComponentPayment = ({
 					) : (
 						<>
 							<Box className={classes.conItemInput}>
+								{/* <InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Email</InputLabel> */}
 								<Input
 									className={classes.conInput}
 									fullWidth
@@ -534,8 +538,9 @@ const UpdateUserComponentPayment = ({
 						<Typography className={classes.txtHeaderTitle}>Địa chỉ giao hàng</Typography>
 						<Box className={classes.conForm}>
 							<Grid container>
-								<Grid item xs={6} sm={6} lg={6} xl={6}>
+								<Grid item xs={12} sm={6} lg={6} xl={6} sx={{ paddingRight: "10px" }}>
 									<Box className={classes.conItemInput}>
+										{/* <InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Họ tên</InputLabel> */}
 										{/* <Typography className={classes.txtTitleInput}>
 											{t("name")}
 										</Typography> */}
@@ -573,8 +578,10 @@ const UpdateUserComponentPayment = ({
 											onBlur={() => onBlurFocusInput(false,"name")}
 										/>
 									</Box>
-
+								</Grid>
+								<Grid item xs={12} sm={6} lg={6} xl={6} >
 									<Box className={classes.conItemInput}>
+										{/* <InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Số điện thoại</InputLabel> */}
 										<Input
 											className={classes.conInput}
 											fullWidth
@@ -585,11 +592,11 @@ const UpdateUserComponentPayment = ({
 													<FontAwesomeIcon
 														// icon={faphoneCard}
 														fontSize={20}
-														// color={
-														// 	form.phone.isFocus || form.phone.value !== ""
-														// 		? Colors.bgLogin
-														// 		: Colors.bgLogin
-														// }
+														color={
+															form.phone.isFocus || form.phone.value !== ""
+																? Colors.bgLogin
+																: Colors.bgLogin
+														}
 														className={classes.conIconInput}
 													/>
 												</InputAdornment>
@@ -601,7 +608,6 @@ const UpdateUserComponentPayment = ({
 										/>
 									</Box>
 
-
 								</Grid>
 							</Grid>
 							<Grid container spacing={2}>
@@ -612,168 +618,178 @@ const UpdateUserComponentPayment = ({
 										{/* <Typography className={classes.txtTitleInput}>
 											{t("province")}
 										</Typography> */}
-										<Select
-											// style={{
-											// 	border: !form.province.isFocus && `2px solid ${form.province.error ? Colors.secondary : form.province.value !== "" ? Colors.success : "transparent"}`,
-											// }}
-											value={shippingAddress?.province || form.province.value}
-											// Đây là giá trị được chọn
-											fullWidth
-											displayEmpty
-											onChange={(event) => onChangeInput(event,"province")}
-											disabled={loading}
-											className={classes.conInput}
-											onFocus={() => onBlurFocusInput(true,"province")}
-											onBlur={() => onBlurFocusInput(false,"province")}
-											MenuProps={{ PaperProps: { style: { maxHeight: 400,width: 250 } } }} // Điều chỉnh kích thước của Menu
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														fontSize={20}
-														// color={
-														// 	form.province.isFocus || (form.province.value && form.province.value !== "")
-														// 		? Colors.bgLogin
-														// 		: Colors.placeHolder
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-										>
-											<MenuItem value={shippingAddress?.province || ""}>
-												{shippingAddress?.province || "Tỉnh"}
-											</MenuItem>
-											{provinces.map((province) => (
-												<MenuItem
-													className={classes.conInput}
-													value={province.code}
-													data-key={province.name}
-													key={province.code}
-													name={province.name}
-												>
-													{province.name}
-												</MenuItem>
-											))}
-										</Select>
-									</Box>
-									<Box className={classes.conItemInput}>
-										{/* <Typography className={classes.txtTitleInput}>
-											{t("city")}
-										</Typography> */}
-										<Select
-											// style={{
-											// 	border: !form.city.isFocus && `2px solid ${form.city.error ? Colors.secondary : form.city.value !== "" ? Colors.success : "transparent"}`,
-											// }}
-											value={form.city.value || ""} // Đây là giá trị được chọn
-											fullWidth
-											onChange={(event) => onChangeInput(event,"city")}
-											disabled={loading}
-											displayEmpty
-											className={classes.conInput}
-											onFocus={() => onBlurFocusInput(true,"city")}
-											onBlur={() => onBlurFocusInput(false,"city")}
-											inputProps={{ style: { border: 'none' } }}
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														fontSize={20}
-														// color={
-														// 	form.city.isFocus || (form.city.value && form.city.value !== "")
-														// 		? Colors.bgLogin
-														// 		: Colors.placeHolder
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-										>
-											<MenuItem value={shippingAddress?.city || ""}>
-												{shippingAddress?.city || "Thành phố"}
-											</MenuItem>
-											{citys?.map((city) => (
-												<MenuItem
-													className={classes.conInput}
-													value={city.code} // Đây là giá trị cần chuyển đi khi MenuItem được chọn
-													key={city.code}
-													data-key={city.code}
-													name={city.name}
-												// onClick={(e) => getNameCity(e,city?.code)}
-												>
-													{city.name}
-												</MenuItem>
-											))}
-										</Select>
-									</Box>
-									<Box className={classes.conItemInput}>
-										<Select
-											// style={{
-											// 	border: !form.ward.isFocus && `2px solid ${form.ward.error ? Colors.secondary : form.ward.value !== "" ? Colors.success : "transparent"}`,
-											// }}
-											value={shippingAddress?.ward || form.province.value}
-											fullWidth
-											onChange={(event) => onChangeInput(event,"ward")}
-											disabled={loading}
-											displayEmpty
-											className={classes.conInput}
-											onFocus={() => onBlurFocusInput(true,"ward")}
-											onBlur={() => onBlurFocusInput(false,"ward")}
-											MenuProps={{ PaperProps: { style: { maxHeight: 200,width: 250 } } }} // Điều chỉnh kích thước của Menu
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														fontSize={20}
-														// color={
-														// 	form.ward.isFocus || (form.ward.value && form.ward.value !== "")
-														// 		? Colors.bgLogin
-														// 		: Colors.placeHolder
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-										>
-											<MenuItem value={shippingAddress?.ward || ""}>
-												{shippingAddress?.ward || "Phường/Xã"}
-											</MenuItem>
-											{wards?.map((ward) => (
-												<MenuItem
-													className={classes.conInput}
-													value={ward.code}
-													data-key={ward.name}// Đây là giá trị cần chuyển đi khi MenuItem được chọn
-													key={ward.code}
-													name={ward.name}
-												// onClick={(e) => getNameWard(e,ward?.code)}
+										<FormControl fullWidth>
+											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Tỉnh/Thành phố</InputLabel>
+											<Select
 
-												>
-													{ward.name}
+												// style={{
+												// 	border: !form.province.isFocus && `2px solid ${form.province.error ? Colors.secondary : form.province.value !== "" ? Colors.success : "transparent"}`,
+												// }}
+												value={shippingAddress?.province || form.province.value}
+												// Đây là giá trị được chọn
+												fullWidth
+												displayEmpty
+												onChange={(event) => onChangeInput(event,"province")}
+												disabled={loading}
+												className={classes.conInput}
+												onFocus={() => onBlurFocusInput(true,"province")}
+												onBlur={() => onBlurFocusInput(false,"province")}
+												MenuProps={{ PaperProps: { style: { maxHeight: 400,width: 250 } } }} // Điều chỉnh kích thước của Menu
+												startAdornment={
+													<InputAdornment position="start">
+														<FontAwesomeIcon
+															fontSize={20}
+															color={
+																form.province.isFocus || (form.province.value && form.province.value !== "")
+																	? Colors.bgLogin
+																	: Colors.placeHolder
+															}
+															className={classes.conIconInput}
+														/>
+													</InputAdornment>
+												}
+											>
+												<MenuItem value={shippingAddress?.province || ""}>
+													{shippingAddress?.province || "Tỉnh"}
 												</MenuItem>
-											))}
-										</Select>
+												{provinces.map((province) => (
+													<MenuItem
+														className={classes.conInput}
+														value={province.code}
+														data-key={province.name}
+														key={province.code}
+														name={province.name}
+													>
+														{province.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
 									</Box>
 									<Box className={classes.conItemInput}>
-										<Input
-											className={classes.conInput}
-											fullWidth
-											placeholder={t("address")}
-											value={form.address.value}
-											startAdornment={
-												<InputAdornment position="start">
-													<FontAwesomeIcon
-														fontSize={20}
-														// color={
-														// 	form.address.isFocus || form.address.value.trim() !== ""
-														// 		? Colors.bgLogin
-														// 		: Colors.bgLogin
-														// }
-														className={classes.conIconInput}
-													/>
-												</InputAdornment>
-											}
-											onChange={(event) => onChangeInput(event,"address")}
-											disabled={loading}
-											onFocus={() => onBlurFocusInput(true,"address")}
-											onBlur={() => onBlurFocusInput(false,"address")}
-										/>
+										<FormControl fullWidth>
+											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Thành phố/Quận/Huyện</InputLabel>
+											<Select
+												// style={{
+												// 	border: !form.city.isFocus && `2px solid ${form.city.error ? Colors.secondary : form.city.value !== "" ? Colors.success : "transparent"}`,
+												// }}
+												value={form.city.value || ""} // Đây là giá trị được chọn
+												fullWidth
+												onChange={(event) => onChangeInput(event,"city")}
+												disabled={loading}
+												displayEmpty
+												className={classes.conInput}
+												onFocus={() => onBlurFocusInput(true,"city")}
+												onBlur={() => onBlurFocusInput(false,"city")}
+												inputProps={{ style: { border: 'none' } }}
+												startAdornment={
+													<InputAdornment position="start">
+														<FontAwesomeIcon
+															fontSize={20}
+															// color={
+															// 	form.city.isFocus || (form.city.value && form.city.value !== "")
+															// 		? Colors.bgLogin
+															// 		: Colors.placeHolder
+															// }
+															className={classes.conIconInput}
+														/>
+													</InputAdornment>
+												}
+											>
+												<MenuItem value={shippingAddress?.city || ""}>
+													{shippingAddress?.city || "Thành phố"}
+												</MenuItem>
+												{citys?.map((city) => (
+													<MenuItem
+														className={classes.conInput}
+														value={city.code} // Đây là giá trị cần chuyển đi khi MenuItem được chọn
+														key={city.code}
+														data-key={city.code}
+														name={city.name}
+													// onClick={(e) => getNameCity(e,city?.code)}
+													>
+														{city.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Box>
+									<Box className={classes.conItemInput}>
+										<FormControl fullWidth>
+											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
+											<Select
+												// style={{
+												// 	border: !form.ward.isFocus && `2px solid ${form.ward.error ? Colors.secondary : form.ward.value !== "" ? Colors.success : "transparent"}`,
+												// }}
+												value={shippingAddress?.ward || form.province.value}
+												fullWidth
+												onChange={(event) => onChangeInput(event,"ward")}
+												disabled={loading}
+												displayEmpty
+												className={classes.conInput}
+												onFocus={() => onBlurFocusInput(true,"ward")}
+												onBlur={() => onBlurFocusInput(false,"ward")}
+												MenuProps={{ PaperProps: { style: { maxHeight: 200,width: 250 } } }} // Điều chỉnh kích thước của Menu
+												startAdornment={
+													<InputAdornment position="start">
+														<FontAwesomeIcon
+															fontSize={20}
+															// color={
+															// 	form.ward.isFocus || (form.ward.value && form.ward.value !== "")
+															// 		? Colors.bgLogin
+															// 		: Colors.placeHolder
+															// }
+															className={classes.conIconInput}
+														/>
+													</InputAdornment>
+												}
+											>
+												<MenuItem value={shippingAddress?.ward || ""}>
+													{shippingAddress?.ward || "Phường/Xã"}
+												</MenuItem>
+												{wards?.map((ward) => (
+													<MenuItem
+														className={classes.conInput}
+														value={ward.code}
+														data-key={ward.name}// Đây là giá trị cần chuyển đi khi MenuItem được chọn
+														key={ward.code}
+														name={ward.name}
+													// onClick={(e) => getNameWard(e,ward?.code)}
+
+													>
+														{ward.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Box>
+									<Box className={classes.conItemInput}>
+										<FormControl fullWidth>
+											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Số nhà - đường</InputLabel>
+											<Input
+												className={classes.conInput}
+												fullWidth
+												placeholder={t("address")}
+												value={form.address.value}
+												startAdornment={
+													<InputAdornment position="start">
+														<FontAwesomeIcon
+															fontSize={20}
+															// color={
+															// 	form.address.isFocus || form.address.value.trim() !== ""
+															// 		? Colors.bgLogin
+															// 		: Colors.bgLogin
+															// }
+															className={classes.conIconInput}
+														/>
+													</InputAdornment>
+												}
+												onChange={(event) => onChangeInput(event,"address")}
+												disabled={loading}
+												onFocus={() => onBlurFocusInput(true,"address")}
+												onBlur={() => onBlurFocusInput(false,"address")}
+											/>
+										</FormControl>
 									</Box>
 								</Grid>
 
