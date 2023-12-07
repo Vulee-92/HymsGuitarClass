@@ -25,9 +25,7 @@ import AnswerComponent from "components/AnswerComponent/AnswerComponent";
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingButton } from "@mui/lab";
-const ButtonComponent = React.lazy(() => import('../../components/ButtonComponent/ButtonComponent'));
-const Loading = React.lazy(() => import('../../components/LoadingComponent/Loading'));
-const InputComponent = React.lazy(() => import('../../components/InputComponent/InputComponent'));
+
 const MobileCartTotalPriceComponent = React.lazy(() => import('../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent'));
 
 
@@ -116,14 +114,14 @@ const OrderPage = () => {
 	const dispatch = useDispatch();
 
 	// Hàm xử lý sự kiện khi checkbox được chọn hoặc bỏ chọn
-	const onChange = (e) => {
-		if (listChecked.includes(e.target.value)) {
-			const newListChecked = listChecked.filter((item) => item !== e.target.value);
-			setListChecked(newListChecked);
-		} else {
-			setListChecked([...listChecked,e.target.value]);
-		}
-	};
+	// const onChange = (e) => {
+	// 	if (listChecked.includes(e.target.value)) {
+	// 		const newListChecked = listChecked.filter((item) => item !== e.target.value);
+	// 		setListChecked(newListChecked);
+	// 	} else {
+	// 		setListChecked([...listChecked,e.target.value]);
+	// 	}
+	// };
 
 	// Hàm xử lý sự kiện khi số lượng sản phẩm được thay đổi
 	const handleChangeCount = (type,idProduct,limited) => {
@@ -144,18 +142,26 @@ const OrderPage = () => {
 	};
 
 	// Hàm xử lý sự kiện khi checkbox "Chọn tất cả" được chọn hoặc bỏ chọn
-	const handleOnchangeCheckAll = (e) => {
-		if (e.target.checked) {
-			const newListChecked = [];
-			order?.orderItems?.forEach((item) => {
-				newListChecked.push(item?.product);
-			});
+	// const handleOnchangeCheckAll = (e) => {
+	// 	if (e.target.checked) {
+	// 		const newListChecked = [];
+	// 		order?.orderItems?.forEach((item) => {
+	// 			newListChecked.push(item?.product);
+	// 		});
+	// 		setListChecked(newListChecked);
+	// 	} else {
+	// 		setListChecked([]);
+	// 	}
+	// };
+	// Thêm sử dụng useEffect
+	useEffect(() => {
+		// Kiểm tra nếu có sản phẩm trong đơn hàng và listChecked đang trống
+		if (order?.orderItems?.length > 0 && listChecked.length === 0) {
+			// Tự động chọn tất cả sản phẩm
+			const newListChecked = order?.orderItems?.map((item) => item.product) || [];
 			setListChecked(newListChecked);
-		} else {
-			setListChecked([]);
 		}
-	};
-
+	},[order,listChecked]); // Theo dõi sự thay đổi của order và listChecked
 	// Sử dụng useEffect để thực hiện các tác vụ khi state thay đổi
 	useEffect(() => {
 		dispatch(selectedOrder({ listChecked }));
@@ -167,15 +173,6 @@ const OrderPage = () => {
 
 
 
-	// useEffect(() => {
-	// 	setEmail(user?.email);
-	// 	setName(user?.name);
-	// 	setCity(user?.city);
-	// 	setPhone(user?.phone);
-	// 	setPassword(user?.password);
-	// 	setAddress(user?.address);
-	// 	setAvatar(user?.avatar);
-	// },[user]);
 
 
 	useEffect(() => {
@@ -212,15 +209,7 @@ const OrderPage = () => {
 		}
 		return 0;
 	},[order]);
-	// const diliveryPriceMemo = useMemo(() => {
-	// 	if (priceMemo >= 20000 && priceMemo < 500000) {
-	// 		return 10000;
-	// 	} else if (priceMemo >= 500000 || order?.orderItemsSlected?.length === 0) {
-	// 		return 0;
-	// 	} else {
-	// 		return 20000;
-	// 	}
-	// },[priceMemo]);
+
 
 	const totalPriceMemo = useMemo(() => {
 		return Number(priceMemo) - Number(priceDiscountMemo);
@@ -409,7 +398,7 @@ const OrderPage = () => {
 								sx={{ width: { xs: "100%",md: "390px",xl: "390px",},display: { xs: "flex",xl: "none" } }}
 
 							>
-								<CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length}></CustomCheckbox>
+								{/* <CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length}></CustomCheckbox> */}
 								<Box sx={{ display: { xs: "flex",xl: "none" },justifyContent: "space-between",width: "100%" }}>
 									<Typography className={classes.nameAllProduct} > Tất cả ({order.orderItems.length} sản phẩm)</Typography>
 									<DeleteOutlined style={{ cursor: "pointer" }} onClick={handleRemoveAllOrder} />
@@ -448,7 +437,7 @@ const OrderPage = () => {
 										{order?.orderItems?.map((order) => {
 											return (
 												<WrapperItemOrder key={order?.product}>
-													<CustomCheckbox onChange={onChange} value={order?.product} checked={listChecked.includes(order?.product)}></CustomCheckbox>
+													{/* <CustomCheckbox onChange={onChange} value={order?.product} checked={listChecked.includes(order?.product)}></CustomCheckbox> */}
 													<Box style={{
 														width: "calc(100%)",
 													}}>
@@ -556,23 +545,7 @@ const OrderPage = () => {
 
 										onClick={() => handleAddCard()}
 									>Đặt hàng</Button>
-									{/* <ButtonComponent
-								onClick={() => handleAddCard()}
-								size={40}
-								styleButton={{
-									background: "#212B36",
-									height: "48px",
-									width: "320px",
-									border: "none",
-									borderRadius: "4px",
-								}}
-								textbutton={"Mua hàng"}
-								styleTextButton={{
-									color: "#fff",
-									fontSize: "15px",
-									fontWeight: "700",
-								}}
-							></ButtonComponent> */}
+
 								</Grid>
 							</Grid>
 						</Container>
@@ -654,77 +627,7 @@ const OrderPage = () => {
 							</WrapperTotal>
 						</Grid>
 						<UpdateUserComponent open={isOpenModalUpdateInfo} handleClose={handleClose} />
-						{/* <ModalComponent style={{ width: "100% !important" }} className={classes.updateInfo} title='Cập nhật thông tin' open={isOpenModalUpdateInfo} onCancel={handleCancleUpdate} onOk={handleUpdate}>
 
-							<Loading isLoading={isLoading}>
-
-								<Form
-									className={classes.updateInfo}
-									name='basic'
-									labelCol={{ span: 4 }}
-									wrapperCol={{ span: 20 }}
-									wrapperRow={{ span: 20 }}
-									// onFinish={onUpdateUser}
-									autoComplete='on'
-									form={form}
-									style={{ fontFamily: 'Public Sans, sans-serif' }}
-								>
-									<Form.Item
-										style={{ fontFamily: 'Public Sans, sans-serif' }}
-										label='Name'
-										name='name'
-										rules={[
-											{
-												required: true,
-												message: "Please input your name!",
-											},
-										]}
-									>
-										<InputComponent className={classes.updateInfo} value={stateUserDetails["name"]} onChange={handleOnchangeDetails} name='name' />
-									</Form.Item>
-									<Form.Item
-										style={{ fontFamily: 'Public Sans, sans-serif' }}
-										label='City'
-										name='city'
-										rules={[
-											{
-												required: true,
-												message: "Please input your city!",
-											},
-										]}
-									>
-										<InputComponent className={classes.updateInfo} value={stateUserDetails["city"]} onChange={handleOnchangeDetails} name='city' />
-									</Form.Item>
-									<Form.Item
-										style={{ fontFamily: 'Public Sans, sans-serif' }}
-										label='Phone'
-										name='phone'
-										rules={[
-											{
-												required: true,
-												message: "Please input your  phone!",
-											},
-										]}
-									>
-										<InputComponent className={classes.updateInfo} value={stateUserDetails.phone} onChange={handleOnchangeDetails} name='phone' />
-									</Form.Item>
-
-									<Form.Item
-										style={{ fontFamily: 'Public Sans, sans-serif' }}
-										label='Adress'
-										name='address'
-										rules={[
-											{
-												required: true,
-												message: "Please input your  address!",
-											},
-										]}
-									>
-										<InputComponent className={classes.updateInfo} value={stateUserDetails.address} onChange={handleOnchangeDetails} name='address' />
-									</Form.Item>
-								</Form>
-							</Loading>
-						</ModalComponent> */}
 					</div>
 				</>
 			) : (
@@ -733,67 +636,18 @@ const OrderPage = () => {
 						<title>Giỏ hàng của bạn - Hymns</title>
 					</Helmet>
 					<Container maxWidth="xl" style={{ with: "100%",height: "100vh",marginTop: '100px' }}>
-						{/* <div style={{ with: "100%",height: "100vh",marginTop: '100px' }}>
-
-							<div style={{ height: "100%",width: "1270px",margin: "0 auto" }}> */}
 						<Grid style={{ marginTop: '100px' }}>
 							<Typography style={{ marginBottom: "30px" }} className={classes.txtOrder}>Giỏ hàng của bạn</Typography>
-							{/* <Grid
-									container
-									spacing={2}
-									sx={
-										{
-											textAlign: '-webkit-center',marginTop: '0px',
-											borderBottom: { xl: "1px solid #d6d6d4",xs: "none" },
-											display: "flex",justifyContent: "center"
-										}
-									}
-								>
-									<Grid item sm={12} md={12} lg={12} xl={12} sx={{ display: { xs: "none",xl: "flex",lg: "flex",md: "none",sm: "none" },paddingTop: "10px !important",paddingBottom: "10px" }}>
-										<Grid item xs={12}>
-											<div role='presentation'>
-												<Breadcrumbs aria-label='breadcrumb' separator='›' sx={{ fontSize: "13px" }}>
-													<Link underline='hover' color='inherit' href='/' style={{}}>
-														Giỏ hàng
-													</Link>
-													<Link style={{}} underline='hover' color='inherit' href='/product'>
-														Thông tin tài khoản
-													</Link>
-													<Link sx={{ fontSize: "13px !important" }} className={classes.nameProductTotal}>
-														Phương thức thanh toán
-													</Link>
-												</Breadcrumbs>
-											</div>
-										</Grid>
-									</Grid>
-								</Grid> */}
+
 						</Grid>
 						<div style={{ display: "flex",justifyContent: "center" }}>
-							{/* <Container maxWidth="md" className={classes.ConWrapperLeft}> */}
 							<WrapperLeft>
-
-								{/* 
-									<Typography className={classes.nameAllProduct}>Phí giao hàng</Typography>
-									<WrapperStyleHeaderDilivery>
-										<StepComponent
-											items={itemsDelivery}
-											current={
-												diliveryPriceMemo === 10000
-													? 1
-													: diliveryPriceMemo === 20000
-														? 1
-														: order.orderItemsSlected.length === 0
-															? 0
-															: 3
-											}
-										/>
-									</WrapperStyleHeaderDilivery> */}
 								<WrapperStyleHeader style={{ padding: "20px",backgroundColor: "#f4f4f2",borderBottom: "1px solid #d6d6d4" }}>
 									<span style={{ display: "flex",width: "280px" }}>
-										<CustomCheckbox
+										{/* <CustomCheckbox
 											onChange={handleOnchangeCheckAll}
 											checked={listChecked?.length === order?.orderItems?.length}
-										></CustomCheckbox>
+										></CustomCheckbox> */}
 										<Typography className={classes.txtValueTotal} > Tất cả ({order.orderItems.length} sản phẩm)</Typography>
 									</span>
 									<div
@@ -861,11 +715,11 @@ const OrderPage = () => {
 															gap: 4,
 														}}
 													>
-														<CustomCheckbox
+														{/* <CustomCheckbox
 															onChange={onChange}
 															value={order.product}
 															checked={listChecked.includes(order.product)}
-														></CustomCheckbox>
+														></CustomCheckbox> */}
 														<img
 															src={order.image[0]}
 															style={{
@@ -965,26 +819,7 @@ const OrderPage = () => {
 
 							<WrapperRight>
 								<div style={{ width: "100%" }}>
-									{/* <WrapperInfo >
-											<Grid container spacing={2} columns={16} style={{ paddingBottom: "16px" }}>
-												<Grid item xs={8}>
-													<Typography style={{ color: 'rgb(128, 128, 137)',fontSize: '18px' }}>Giao tới</Typography>
-												</Grid>
-												<Grid item xs={8} style={{ textAlign: "right" }}>
-													<Typography
-														onClick={handleChangeAddress}
-														style={{ color: "#212B36",cursor: "pointer",fontSize: '18px' }}>
-														Thay đổi
-													</Typography>
-												</Grid>
-											</Grid>
-											<Box >
-												<Typography className={classes.nameProductCard} style={{ color: 'rgb(128, 128, 137)',fontSize: '16px' }}>
-													<span style={{ fontWeight: "bold",color: "#212B36",fontStyle: "italic",fontSize: "16px" }}>
-														Nhà{" "}
-													</span>{" "}{`${user?.address}, ${user?.ward}, ${user?.city}, ${user?.province}`}{" "} </Typography>
-											</Box>
-										</WrapperInfo> */}
+
 									<WrapperInfo>
 										<div
 											style={{
@@ -1025,24 +860,7 @@ const OrderPage = () => {
 												{convertPrice(priceDiscountMemo)}
 											</Typography>
 										</div>
-										{/* <div
-												style={{
-													display: "flex",
-													alignItems: "center",
-													justifyContent: "space-between",
-												}}
-											>
-												<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
-												<Typography
-													style={{
-														color: "#000",
-														fontSize: "14px",
-														fontWeight: "bold",
-													}}
-												>
-													{convertPrice(diliveryPriceMemo)}
-												</Typography>
-											</div> */}
+
 
 									</WrapperInfo>
 									<WrapperTotal>
@@ -1074,8 +892,6 @@ const OrderPage = () => {
 
 							</WrapperRight>
 						</div>
-						{/* </div >
-						</div > */}
 
 					</Container>
 					<Container maxWidth="xl">
