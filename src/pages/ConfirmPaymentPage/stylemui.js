@@ -146,7 +146,7 @@ export default makeStyles(() => {
 			backgroundColor: '#212B36',
 			color: 'white',
 			padding: '10px 20px',
-			width: '90%',
+			width: '100%',
 			border: 'none',
 			borderRadius: '5px',
 			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {

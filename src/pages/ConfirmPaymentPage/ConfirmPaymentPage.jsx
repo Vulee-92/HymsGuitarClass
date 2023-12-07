@@ -390,10 +390,10 @@ const ConfirmPaymentPage = () => {
 								</Grid>
 								<WrapperRadio onChange={handleDilivery} value={delivery}>
 									<Grid container spacing={2} sx={{ padding: "3px" }}>
-										<Grid item xs={2}>
+										<Grid item xs={4} xl={2}>
 											<Typography className={classes.txtInfoUser}>Liên hệ</Typography>
 										</Grid>
-										<Grid item xs={8}>
+										<Grid item xs={8} xl={8}>
 											<Typography className={classes.txtInfoUser} style={{ color: "#333333" }}>
 												{user.name || shippingAddress?.name}
 												{" "}
@@ -401,18 +401,19 @@ const ConfirmPaymentPage = () => {
 
 											</Typography>
 										</Grid>
-										<Grid item xs={2}>
+										<Grid item xs={0} sx={{ display: { xl: "block",xs: "none" } }} xl={2} >
+
 											<Typography onClick={handleNavigatePayment} style={{ cursor: "pointer" }} className={classes.txtTitleInfoUser}>Thay đổi</Typography>
 										</Grid>
 									</Grid>
 									<Grid container spacing={2} sx={{ padding: "3px",borderTop: '1px solid #e6e6e6' }}>
-										<Grid item xs={2}>
+										<Grid item xs={4} xl={2}>
 											<Typography className={classes.txtInfoUser}>Giao đến</Typography>
 										</Grid>
-										<Grid item xs={8}>
+										<Grid item xs={8} xl={8}>
 											<Typography className={classes.txtInfoUser} style={{ lineHeight: 1.5,width: "100%",overflow: "hidden",color: "#333333" }}>	{shippingAddress?.address}{", "}{shippingAddress?.ward}{", "}{shippingAddress?.city}{", "}{shippingAddress?.province}</Typography>
 										</Grid>
-										<Grid item xs={2}>
+										<Grid item xs={0} sx={{ display: { xl: "block",xs: "none" } }} xl={2} >
 											<Typography onClick={handleNavigatePayment} style={{ cursor: "pointer" }} className={classes.txtTitleInfoUser}>Thay đổi</Typography>
 										</Grid>
 									</Grid>

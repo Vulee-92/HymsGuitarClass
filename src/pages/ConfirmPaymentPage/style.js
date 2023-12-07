@@ -96,7 +96,7 @@ export const WrapperRadio = styled(Radio.Group)`
   border-radius: 10px;
   height: 100%;
 	width: 100%;
-  padding: 30px;
+  padding: 15px;
   font-weight: normal;
   display: flex;
   flex-direction: column;
