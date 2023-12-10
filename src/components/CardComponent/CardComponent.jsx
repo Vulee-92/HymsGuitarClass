@@ -1,12 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Typography } from '@mui/material'
+import { Box,Typography } from '@mui/material'
 import styles from "./styledmui";
 import { convertPrice } from '../../utils';
 const CardComponent = (props,post,index) => {
 	const classes = styles();
 	const {
-		// countInStock,
+		countInStock,
 		// description,
 		image,
 		name,
@@ -25,17 +25,21 @@ const CardComponent = (props,post,index) => {
 
 	return (
 		<section className="content" id="Explore">
-			<img onClick={() => handleDetailsProduct(slug)} style={{
-				maxHeight: '18em',
-				display: 'block',
-				position: 'relative',
-				top: 0,
-				left: '50%',
-				cursor: 'pointer',
-				transform: 'translate3d(-50%, 0, 0)'
-			}} src={image} alt="img 01" />
+			<Box style={{ height: "200px" }}>
+				<img onClick={() => handleDetailsProduct(slug)} style={{
+					display: 'block',
+					maxHeight: '10em',
+					position: 'relative',
+					top: 0,
+					cursor: 'pointer',
+				}} src={image} alt="img 01" />
+			</Box>
+
+
 			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{name}</Typography>
-			<Typography className={classes.txtPrice} style={{ textAlign: 'center',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
+			<Typography className={classes.txtPrice} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{countInStock === 0 ? <Typography color="red">hết hàng</Typography> : <Typography color="#45cc8f">còn hàng</Typography>}</Typography>
+
+			<Typography className={classes.txtPrice} style={{ textAlign: 'left',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
 		</section>
 	);
 }

@@ -10,6 +10,7 @@ import {
 	InputAdornment,
 	InputLabel,
 	MenuItem,
+	NativeSelect,
 	Select,
 	Typography,
 } from "@mui/material";
@@ -33,8 +34,10 @@ const UpdateUserComponentPayment = ({
 	const classes = styles();
 	const { t } = useTranslation();
 	const user = useSelector((state) => state.user);
+	console.log("user",user)
 	const order = useSelector((state) => state.order);
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
+	console.log("shippingAddress",shippingAddress)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");
@@ -53,23 +56,24 @@ const UpdateUserComponentPayment = ({
 	const [errorMsg,setErrorMsg] = useState("");
 	const [activePage,setActivePage] = useState('payment'); // Ban đầu, trang là "Giỏ hàng"
 	const [searchKeyword,setSearchKeyword] = useState("");
-	const [selectedProvinceCode,setSelectedProvinceCode] = useState("");
+	const [selectedProvinceCode,setSelectedProvinceCode] = useState(shippingAddress?.province || user?.province || "");
+	console.log("selectedProvinceCode",selectedProvinceCode)
 	const handleNavigate = (page) => {
 		setActivePage(page);
 	};
 
-	useEffect(() => {
-		setEmail(shippingAddress?.email);
-		setName(shippingAddress?.name);
-		setPhone(shippingAddress?.phone);
-		// setPassword(user?.password);
-		setAddress(shippingAddress?.address);
-		setAvatar(user?.avatar);
-		setProvince(shippingAddress?.province);
-		setSelectedProvinceCode(shippingAddress?.province);
-		setCity(shippingAddress?.city);
-		setWard(shippingAddress?.ward);
-	},[shippingAddress]);
+	// useEffect(() => {
+	// 	setEmail(shippingAddress?.email);
+	// 	setName(shippingAddress?.name);
+	// 	setPhone(shippingAddress?.phone);
+	// 	// setPassword(user?.password);
+	// 	setAddress(shippingAddress?.address);
+	// 	setAvatar(user?.avatar);
+	// 	setProvince(shippingAddress?.province);
+	// 	setSelectedProvinceCode(shippingAddress?.province);
+	// 	setCity(shippingAddress?.city);
+	// 	setWard(shippingAddress?.ward);
+	// },[shippingAddress]);
 
 	const fetchProvinces = async () => {
 		try {
@@ -103,61 +107,61 @@ const UpdateUserComponentPayment = ({
 
 	const [form,setForm] = useState({
 		name: {
-			value: shippingAddress?.name,
+			value: user?.name || shippingAddress?.name || "",
 			isFocus: false,
 			msg: "",
 			error: false,
 			name: ""
 		},
 		email: {
-			value: shippingAddress?.email || user?.email,
+			value: user?.email || shippingAddress?.email || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.email,
+			name: user?.email || shippingAddress?.email || "",
 		},
-
 		phone: {
-			value: shippingAddress?.phone,
+			value: user?.phone || shippingAddress?.phone || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.phone,
+			name: user?.phone || shippingAddress?.phone || "",
 			isShow: false,
 		},
 		province: {
-			value: shippingAddress?.province,
+			value: user?.province || shippingAddress?.province || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.province,
+			name: user?.province || shippingAddress?.province || "",
 			isShow: false,
 		},
 		city: {
-			value: shippingAddress?.city,
+			value: user?.city || shippingAddress?.city || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.city,
+			name: user?.city || shippingAddress?.city || "",
 			isShow: false,
 		},
 		ward: {
-			value: shippingAddress?.ward,
+			value: user?.ward || shippingAddress?.ward || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.ward,
+			name: user?.ward || shippingAddress?.ward || "",
 			isShow: false,
 		},
 		address: {
-			value: shippingAddress?.address,
+			value: user?.address || shippingAddress?.address || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: shippingAddress?.address,
+			name: user?.address || shippingAddress?.address || "",
 			isShow: false,
 		},
 	});
+	console.log("form",form)
 	// Hàm tính phí vận chuyển
 	const calculateShippingFee = (address,products) => {
 		const freeShippingCities = ['Thành phố Tam Kỳ'];
@@ -636,35 +640,43 @@ const UpdateUserComponentPayment = ({
 											{t("province")}
 										</Typography> */}
 										<FormControl fullWidth>
-											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Tỉnh/Thành phố</InputLabel>
+											<InputLabel className={classes.txtTitleInput} variant="standard" htmlFor="uncontrolled-native">Tỉnh/Thành phố</InputLabel>
 											<Select
 
 												// style={{
 												// 	border: !form.province.isFocus && `2px solid ${form.province.error ? Colors.secondary : form.province.value !== "" ? Colors.success : "transparent"}`,
 												// }}
-												value={form.province.value}
+												// value={user?.province}
+												defaultValue={user?.province}
 												// Đây là giá trị được chọn
-												fullWidth
-												displayEmpty
-												onChange={(event) => onChangeInput(event,"province")}
-												disabled={loading}
-												className={classes.conInput}
-												onFocus={() => onBlurFocusInput(true,"province")}
-												onBlur={() => onBlurFocusInput(false,"province")}
-												MenuProps={{ PaperProps: { style: { maxHeight: 400,width: 250 } } }} // Điều chỉnh kích thước của Menu
-												startAdornment={
-													<InputAdornment position="start">
-														<FontAwesomeIcon
-															fontSize={20}
-															color={
-																form.province.isFocus || (form.province.value && form.province.value !== "")
-																	? Colors.bgLogin
-																	: Colors.placeHolder
-															}
-															className={classes.conIconInput}
-														/>
-													</InputAdornment>
-												}
+												inputProps={{
+													name: 'province',
+													id: 'uncontrolled-native',
+												}}
+											// fullWidth
+											// displayEmpty
+											// onChange={(event) => {
+											// 	onChangeInput(event,"province");
+											// 	handleSearchChange(event); // Thay đổi giá trị của Input khi chọn giá trị mới
+											// }}
+											// disabled={loading}
+											// className={classes.conInput}
+											// onFocus={() => onBlurFocusInput(true,"province")}
+											// onBlur={() => onBlurFocusInput(false,"province")}
+											// MenuProps={{ PaperProps: { style: { maxHeight: 400,width: 250 } } }} // Điều chỉnh kích thước của Menu
+											// startAdornment={
+											// 	<InputAdornment position="start">
+											// 		<FontAwesomeIcon
+											// 			fontSize={20}
+											// 			color={
+											// 				form.province.isFocus || (form.province.value && form.province.value !== "")
+											// 					? Colors.bgLogin
+											// 					: Colors.placeHolder
+											// 			}
+											// 			className={classes.conIconInput}
+											// 		/>
+											// 	</InputAdornment>
+											// }
 											>
 												<Input
 													placeholder="Tìm kiếm tỉnh/thành phố"

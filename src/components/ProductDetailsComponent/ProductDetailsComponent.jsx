@@ -18,7 +18,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { Helmet } from "react-helmet-async";
 import { bottom } from "@popperjs/core";
-
+import * as RecentlyViewed from "../../services/RecentlyViewed";
 import * as BlogService from "../../services/BlogService";
 import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
@@ -29,6 +29,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const dispatch = useDispatch();
 	const [numProduct,setNumProduct] = useState(1);
 	const order = useSelector((state) => state.order);
+	const user = useSelector((state) => state.user);
+	console.log("user",user)
 	const classes = styles();
 	const [limit,setLimit] = useState(12);
 	const [showFab,setShowFab] = useState(false);
@@ -40,6 +42,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [isProcessing,setIsProcessing] = useState(false);
 	const [images,setImages] = useState([]);
 	const [isCartOpen,setIsCartOpen] = useState(false);
+	const [slug,setSlug] = useState("");
 	const handleCartClick = () => {
 		setIsCartOpen(true);
 	};
@@ -61,13 +64,80 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		const accessoriesRes = await ProductService.getProductType('Acoustic Guitars',0,10);
 		return accessoriesRes;
 	};
+
 	const fetchGetDetailsProduct = async (context) => {
 		const slug = context?.queryKey && context?.queryKey[1];
+		setSlug(slug);
+
 		if (slug) {
 			const res = await ProductService.getDetailsProduct(slug);
-			return res.data;
+			const productData = res.data;
+
+			// Gọi fetchRecentlyViewed sau khi có dữ liệu từ ProductService.getDetailsProduct
+			fetchRecentlyViewed(slug);
+
+			return productData;
 		}
 	};
+	const fetchRecentlyViewed = async (slug) => {
+		let userId = null;
+
+		// Lấy userId từ user hoặc localStorage
+		if (user?.id) {
+			userId = cleanUserId(user.id);
+		} else if (localStorage.getItem("userId")) {
+			userId = cleanUserId(localStorage.getItem("userId"));
+		}
+
+		// Nếu có userId, thực hiện yêu cầu
+		if (userId) {
+			const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
+			localStorage.setItem('userId',JSON.stringify(res?.data?.userId));
+			return res.data;
+		}
+
+		// Nếu không có userId, thực hiện yêu cầu không cần userId
+		const res = await RecentlyViewed.postRecentlyViewed(slug);
+		localStorage.setItem('userId',JSON.stringify(res?.data?.userId));
+		return res.data;
+	};
+
+	// Hàm hỗ trợ loại bỏ dấu \ và "
+	const cleanUserId = (userId) => {
+		return userId.replace(/\\/g,'').replace(/"/g,'');
+	};
+
+	// const fetchRecentlyViewed = async (slug) => {
+	// 	let storageUserID = localStorage.getItem("userId");
+	// 	if (user?.id) {
+	// 		let userIdWithQuotes = user?.id;
+
+	// 		// Sử dụng replace để loại bỏ dấu \ và "
+	// 		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+	// 		const res = await RecentlyViewed.postRecentlyViewed(slug,userIdWithoutQuotes);
+	// 		localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
+	// 		return res.data;
+
+	// 	} else
+	// 		// Kiểm tra xem storageUserID có giá trị hay không
+	// 		if (storageUserID) {
+	// 			let userIdWithQuotes = storageUserID;
+
+	// 			// Sử dụng replace để loại bỏ dấu \ và "
+	// 			let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+	// 			const res = await RecentlyViewed.postRecentlyViewed(slug,userIdWithoutQuotes);
+	// 			localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
+	// 			return res.data;
+	// 		}
+	// 	// Bạn cần cung cấp slug từ nơi đó (hoặc từ state hoặc một nguồn khác)
+	// 	const res = await RecentlyViewed.postRecentlyViewed(slug);
+
+	// 	localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
+	// 	return res.data;
+
+	// };
+
+
 	const fetchBlogAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
@@ -138,6 +208,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		setOpenDialog(false);
 	};
 	const { isLoading,data: productDetails } = useQuery(["product-details",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
+	console.log("productDetails,",productDetails)
 	useEffect(() => {
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
@@ -713,7 +784,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						<DialogContent style={{ marginTop: "20px" }}>
 							<Grid container spacing={2}>
 								<Grid item xs={12} sm={4} xl={4}>
-									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image[0]} alt={productDetails?.image[0]} />
+									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image} alt={productDetails?.image} />
 								</Grid>
 								<Grid item xs={12} sm={8} xl={8}>
 									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",fontWeight: 600,marginBottom: "10px" }}>{productDetails?.name}</Typography>

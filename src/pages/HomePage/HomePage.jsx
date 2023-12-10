@@ -4,6 +4,9 @@ import { Box,Button,Card,CardContent,Container,Grid,ImageList,ImageListItem,Imag
 import styles from "./stylemui";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
+import * as RecentlyViewed from "../../services/RecentlyViewed";
+
+
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -12,14 +15,12 @@ import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
-
 import * as BlogService from "../../services/BlogService";
 import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
 import { Assets } from "../../configs";
-import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
-import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import Typical from "react-typical";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
+import Carousel from "components/CardComponent/CarouselComponent/CarouselComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -32,11 +33,33 @@ const HomePage = () => {
 	const [loading,setLoading] = useState(false);
 	const { t } = useTranslation();
 	const [typeProducts,setTypeProducts] = useState([]);
+	function getCookieValue(cookieName) {
+		var cookieArray = document.cookie.split('; ');
+		for (var i = 0; i < cookieArray.length; i++) {
+			var cookie = cookieArray[i];
+			if (cookie.startsWith(cookieName + '=')) {
+				return cookie.split('=')[1];
+			}
+		}
+		return null;
+	}
 
+	// Lấy giá trị của cookie 'deviceid'
+	var deviceIdValue = getCookieValue('deviceId');
+
+	// Hiển thị giá trị của cookie 'deviceid'
+	console.log("Value of 'deviceid' cookie:",deviceIdValue);
+
+	// Sử dụng giá trị userId tại đây
 	const fetchProductAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
 		const res = await ProductService.getAllProduct(search,limit);
+
+		return res;
+	};
+	const fetchProductAllNosearch = async (context) => {
+		const res = await ProductService.getAllProduct();
 
 		return res;
 	};
@@ -62,7 +85,26 @@ const HomePage = () => {
 	// ...
 
 
+	const fetchRecentlyViewed = async () => {
+		let storageUserID = localStorage.getItem("userId");
+		let userIdWithQuotes = storageUserID;
 
+		// Sử dụng replace để loại bỏ dấu \ và "
+		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+		// Bạn cần cung cấp slug từ nơi đó (hoặc từ state hoặc một nguồn khác)
+		const res = await RecentlyViewed.getRecentlyViewed(userIdWithoutQuotes);
+		const productData = res.data;
+
+		return productData;
+	};
+	const {
+		data: recentlyViewed,
+	} = useQuery(["recentlyViewed"],fetchRecentlyViewed,{
+		retry: 3,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
+	console.log("recentlyViewedrecentlyViewed",recentlyViewed)
 	const fetchAllTypeProduct = async () => {
 		const res = await ProductService.getAllTypeProduct();
 		if (res?.status === "OK") {
@@ -82,6 +124,24 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+	const {
+		isLoadingx,
+		data: productsNosearch,
+	} = useQuery(["productsNosearch"],fetchProductAllNosearch,{
+		retry: 3,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
+	console.log("productsNosearch",productsNosearch)
+	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
+
+	// Lấy ra 5 sản phẩm mới nhất
+	const latestProducts = sortedProducts?.slice(0,5);
+
+	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
+
+	console.log(filteredProducts);
+
 
 	const {
 		data: blogs,
@@ -167,19 +227,108 @@ const HomePage = () => {
 		// Thêm các đối tượng hình ảnh khác nếu cần
 	];
 
+	const settingsXemlai = {
+		focusOnSelect: true,
+		infinite: true,
+		slidesToShow: 2,
+		slidesToScroll: 1,
+		speed: 500
+		// responsive: [
+		// 	{
+		// 		breakpoint: 1024,
+		// 		settings: {
+		// 			slidesToShow: 3,
+		// 			slidesToScroll: 3,
+		// 			infinite: true,
+		// 			centerMode: false,
+		// 			dots: true,
+		// 		},
+		// 	},
+		// 	{
+		// 		breakpoint: 768,
+		// 		settings: {
+		// 			slidesToShow: 2,
+		// 			centerMode: false,
+		// 			slidesToScroll: 2,
+		// 		},
+		// 	},
+		// 	{
+		// 		breakpoint: 480,
+		// 		settings: {
+		// 			slidesToShow: 1,
+		// 			centerMode: false,
+		// 			slidesToScroll: 1,
+		// 		},
+		// 	},
+		// ],
+	};
 	const settings = {
 		dots: true,
 		infinite: true,
-		slidesToShow: 4,
+		slidesToShow: 5,
+		draggable: false,
 		className: "center",
+		variableWidth: false,
+
 		centerMode: true,
 		centerPadding: "60px",
-		slidesToScroll: 1,
 		speed: 500,
-		cssEase: "linear",
+		// cssEase: "linear",
 		pauseOnHover: true,
-		nextArrow: <SampleNextArrow />,
-		prevArrow: <SamplePrevArrow />,
+		// nextArrow: <SampleNextArrow />,
+		// prevArrow: <SamplePrevArrow />,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+					infinite: true,
+					centerMode: false,
+
+					dots: true,
+				},
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					centerMode: true,
+					variableWidth: false,
+
+					draggable: true, // Tắt chức năng trượt
+					infinite: true,
+
+					slidesToScroll: 2,
+				},
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					infinite: true,
+					variableWidth: false,
+
+					draggable: true, // Tắt chức năng trượt
+					centerMode: true,
+					slidesToScroll: 1,
+				},
+			},
+		],
+	};
+	const settingsBanchay = {
+		dots: true,
+		infinite: true,
+		slidesToShow: 4,
+		draggable: false,
+
+		centerMode: true,
+		// centerPadding: "60px",
+		speed: 500,
+		// cssEase: "linear",
+		pauseOnHover: true,
+		// nextArrow: <SampleNextArrow />,
+		// prevArrow: <SamplePrevArrow />,
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -195,6 +344,7 @@ const HomePage = () => {
 				breakpoint: 768,
 				settings: {
 					slidesToShow: 2,
+					draggable: true,
 					centerMode: false,
 					slidesToScroll: 2,
 				},
@@ -203,6 +353,7 @@ const HomePage = () => {
 				breakpoint: 480,
 				settings: {
 					slidesToShow: 1,
+					draggable: true,
 					centerMode: false,
 					slidesToScroll: 1,
 				},
@@ -257,7 +408,7 @@ const HomePage = () => {
 			{/* <Box >
 				<ImageCarousel images={images} />
 			</Box> */}
-			<Container maxWidth='lx' style={{ marginTop: "100px" }}>
+			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
@@ -278,12 +429,12 @@ const HomePage = () => {
 							<ImageList variant='masonry' cols={1} gap={8}>
 								<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
 									<Slider {...settings} style={{ overflow: "hidden" }}>
-										{products?.data?.map((product,index,post) => {
+										{latestProducts?.map((product,index,post) => {
 											// Lấy hình ảnh ở vị trí đầu tiên trong mảng images
 											const firstImage = product.image[0];
 
 											return (
-												<div key={product._id}>
+												<div key={product._id} style={{ width: '100px' }}>
 													<ImageListItem style={{ cursor: "pointer" }}>
 														<CardComponent
 															post={post}
@@ -347,7 +498,47 @@ const HomePage = () => {
 				</Button>
 			</Container>
 
+			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+				<Typography className={classes.txtTitleRecentlyViewed}>Sản phẩm bán chạy</Typography>
 
+				<ImageList variant='masonry' cols={1} gap={8}>
+					<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
+						<Slider {...settingsBanchay} style={{ overflow: "hidden" }}>
+							{filteredProducts?.map((product,index,post) => {
+								// Lấy hình ảnh ở vị trí đầu tiên trong mảng images
+								const firstImage = product.image[0];
+
+								return (
+									<div key={product._id}>
+										<ImageListItem style={{ cursor: "pointer" }}>
+											<CardComponent
+												post={post}
+												index={index}
+												key={product._id}
+												countInStock={product.countInStock}
+												type={product.type}
+												description={product.description}
+												image={firstImage} // Sử dụng hình ảnh đầu tiên
+												name={product.name.slice(0,200)}
+												price={product.price}
+												rating={product.rating}
+												discount={product.discount}
+												selled={product.selled}
+												id={product._id}
+												slug={product.slug}
+												createdAt={product.createdAt}
+												style={{ cursor: "pointer" }}
+											/>
+										</ImageListItem>
+									</div>
+								);
+							})}
+						</Slider>
+
+					</Suspense>
+
+				</ImageList>
+			</Container>
 			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
 				<>
 					<Container maxWidth='lg' style={{ padding: 0 }}>
@@ -424,6 +615,16 @@ const HomePage = () => {
 					/>
 				</Button> */}
 			</Container >
+			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+				<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>
+				<ImageList variant='masonry' cols={1} gap={8}>
+					<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
+						<Carousel products={recentlyViewed?.products} />
+					</Suspense>
+
+				</ImageList>
+
+			</Container>
 		</>
 		// </Loading >
 	);

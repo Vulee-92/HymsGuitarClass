@@ -11,7 +11,7 @@ export default makeStyles(() => {
 			backgroundImage: `url(${Assets.bgHome})`,
 
 			marginTop: "40px",
-			height: "50vh",
+			height: "40vh",
 			width: "100%",
 			backgroundSize: "cover",
 			backgroundRepeat: "no-repeat",
@@ -91,19 +91,19 @@ export default makeStyles(() => {
 			boxShadow: "rgba(0, 0, 0, 0.1) 0px 1px 4px",
 		},
 		txtTitleBox: {
-			fontSize: "3em",
+			fontSize: "1.375rem",
 			fontWeight: 700,
 			lineHeight: "34px",
 			position: "relative",
-			textAlign: "center",
+			textAlign: "left",
 			zIndex: 10,
 			marginTop: "100px",
 			marginBottom: "70px",
 			margin: 0,
-			textTransform: "capitalize",
+			textTransform: "uppercase",
 			pointerEvents: "none",
 			"@media (max-width: 550px)": {
-				fontSize: "1.5rem",
+				fontSize: "1.125rem",
 				marginTop: "30px",
 				textAlign: "center",
 			},
@@ -112,15 +112,55 @@ export default makeStyles(() => {
 				display: 'block',
 				position: 'absolute',
 				bottom: "-20px",
-				left: '50%',
+				// left: '10%',
 				marginTop: "10px",
-				transform: 'translateX(-50%)',
 				width: '90px',
-				height: '6px',
+				height: '3px',
 				backgroundColor: "#212B36", // Màu đỏ của MUI
+				"@media (max-width: 550px)": {
+					textAlign: "center",
+					display: 'none',
+
+				},
 			},
 		},
+		txtTitleRecentlyViewed: {
+			fontSize: "1.375em",
+			fontWeight: 700,
+			lineHeight: "34px",
+			position: "relative",
+			textAlign: "left",
+			zIndex: 10,
+			marginTop: "100px",
+			marginBottom: "70px",
+			margin: 0,
+			textTransform: "uppercase",
+			pointerEvents: "none",
+			"@media (max-width: 550px)": {
+				fontSize: "1.125rem",
+				marginTop: "30px",
+				textAlign: "center",
+			},
+			"&::after": {
+				content: '""',
+				display: 'block',
+				position: 'absolute',
+				bottom: "-20px",
+				// left: '10%',
+				marginTop: "10px",
+				width: '90px',
+				height: '3px',
+				backgroundColor: "#212B36", // Màu đỏ của MUI
+				"@media (max-width: 550px)": {
+					textAlign: "center",
+					display: 'none',
 
+				},
+			},
+		},
+		ProductItem: {
+			width: "200px"
+		},
 		conTextCreate: {
 			maxWidth: 720,
 			margin: "auto",
