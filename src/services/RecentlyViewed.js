@@ -33,7 +33,7 @@ export const postRecentlyViewed = async (id,userId) => {
 			: `${process.env.REACT_APP_API_URL}/viewed/viewed-product/${id}`;
 
 		// Sử dụng axios.post với URL đã xây dựng
-		const res = await axios.post(url,null,{
+		const res = await axios.get(url,null,{
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
