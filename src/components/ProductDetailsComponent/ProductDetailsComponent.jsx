@@ -226,7 +226,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		setOpenDialog(false);
 	};
 	const { isLoading,data: productDetails } = useQuery(["product-details",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
-	const firstImage = productDetails.image[0];
+
 
 	console.log("productDetails,",productDetails)
 	useEffect(() => {
@@ -698,7 +698,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							<Grid container spacing={2}>
 								<Grid item xs={12} sm={4} xl={4}>
 
-									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={firstImage} alt={productDetails?.name} />
+									<CardMedia component='img' sx={{ width: "100%",height: "100%" }} image={productDetails?.image[0]} alt={productDetails?.name} />
 								</Grid>
 								<Grid item xs={12} sm={8} xl={8}>
 									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",fontWeight: 600,marginBottom: "10px" }}>{productDetails?.name}</Typography>
