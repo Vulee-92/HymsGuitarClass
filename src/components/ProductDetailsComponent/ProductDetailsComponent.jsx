@@ -23,6 +23,7 @@ import * as BlogService from "../../services/BlogService";
 import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
+import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
 const { v4: uuidv4 } = require('uuid');
 
 const ProductDetailsComponent = ({ idProduct }) => {
@@ -854,19 +855,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 					<Box style={{ margin: "60px 0" }}>
 						<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
 						<div className={classes.sliderWrapper}>
-							<ImageList variant='masonry' cols={1} gap={8}>
-								<Slider {...settings} style={{ overflow: "hidden" }}>
-									{products?.data?.map((product,post,index) => {
-										return (
-											<div>
-												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-													<CardComponent post={post} index={index} key={product._id} slug={product?.slug} countInStock={product.countInStock} description={product.description} image={product.image[0]} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-												</ImageListItem>
-											</div>
-										);
-									})}
-								</Slider>
-							</ImageList>
+							<YourSwiperComponent latestProducts={products?.data} classes={classes} />
+
+
 						</div>
 					</Box>
 					<Box style={{ margin: "60px 0" }}>
