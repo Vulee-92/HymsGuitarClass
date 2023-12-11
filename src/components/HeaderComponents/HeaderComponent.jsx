@@ -45,6 +45,7 @@ import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFa
 import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
+import Nav from "./dashboard/nav";
 
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const dispatch = useDispatch();
@@ -79,12 +80,13 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	},[]);
 
 	const handleToggleDrawer = () => {
-		if (isPageLoaded) {
-			setIsDrawerOpen((prev) => !prev);
-			setCurrentIcon((prevIcon) =>
-				prevIcon === faBarsStaggered ? faTimes : faBarsStaggered
-			);
-		}
+		// if (isPageLoaded) {
+		// 	setIsDrawerOpen((prev) => !prev);
+		// 	setCurrentIcon((prevIcon) =>
+		// 		prevIcon === faBarsStaggered ? faTimes : faBarsStaggered
+		// 	);
+		// }
+		setOpen(true)
 	};
 
 	const handleCloseDrawer = () => {
@@ -137,7 +139,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		setLoading(false);
 	},[user?.name]);
 
-	const open = Boolean(anchorEl);
+	// const open = Boolean(anchorEl);
+	const [open,setOpen] = useState(false);
 
 
 
@@ -316,9 +319,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								<FontAwesomeIcon icon={currentIcon} style={{ fontSize: "18px" }} />
 							</IconButton>
 							{/* <Button >{"top"}</Button> */}
-							<Drawer anchor="left"
+							{/* <Drawer anchor="left"
 								open={isDrawerOpen} onClose={handleCloseDrawer}
-								// onClose={() => setIsDrawerOpen(false)}
 								variant="temporary"
 								disableScrollLock="false"
 								className={classes.menuContent}
@@ -377,7 +379,6 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								</MenuItem>
 								{user?.access_token ? (
 									<>
-										{/* <MenuItem onClick={() => handleClickNavigate('profile')}>  <Typography className={classes.txtTilte}>Tài khoản của bạn </Typography></MenuItem> */}
 										{user?.isAdmin && (
 											<MenuItem onClick={() => handleClickNavigate('admin')}
 											>
@@ -425,7 +426,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 										}
 									/>
 								</MenuItem>
-							</Drawer>
+							</Drawer> */}
+							<Nav openNav={open} onCloseNav={() => setOpen(false)} />
 
 						</Box>
 						<Typography
@@ -440,22 +442,17 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								letterSpacing: '.3rem',
 								color: "inherit",
 								textDecoration: "none"
-								// cursor: 'pointer',
 							}} className={classes.hymnsName} style={{ justifyContent: "center",color: colorChange ? "#000" : "#fff",}} >HYMNS CENTER</Typography>
 						<Box sx={{
 							display: { xs: "block",md: "none" }
 						}}>
-							{/* {!isHiddenCart && user.access_token && ( */}
 							<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
 								<Badge count={order?.orderItems?.length} size="small">
 									<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
 
 								</Badge>
-								{/* <WrapperTextHeaderSmall style={{ fontSize: '16px', color: colorChange ? "#000" : "#fff" }}>Giỏ hàng</WrapperTextHeaderSmall> */}
 							</div>
-							{/* 
-							)
-							} */}
+
 						</Box>
 
 

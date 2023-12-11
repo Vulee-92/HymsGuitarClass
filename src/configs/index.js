@@ -66,6 +66,14 @@ export const Assets = {
 	class: require("../assets/class.jpg"),
 	bgBlog: require("../assets/shape-avatar.svg"),
 	logoEmail: require("../assets/images/logo/gmail.png"),
+
+	ic_analytics: require("../assets/navbar/ic_analytics.svg"),
+	ic_blog: require("../assets/navbar/ic_blog.svg"),
+	ic_cart: require("../assets/navbar/ic_cart.svg"),
+	ic_disabled: require("../assets/navbar/ic_disabled.svg"),
+	ic_lock: require("../assets/navbar/ic_lock.svg"),
+	ic_user: require("../assets/navbar/ic_user.svg"),
+
 	// /** ICON */
 };
 
