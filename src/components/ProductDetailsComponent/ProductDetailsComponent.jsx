@@ -6,6 +6,15 @@ import * as message from "../Message/Message";
 import { WrapperPriceProduct,WrapperPriceTextProduct,WrapperInputNumber } from "./style";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch,useSelector } from "react-redux";
+import { Swiper,SwiperSlide } from 'swiper/react';
+
+// Thêm các styles tùy chọn nếu cần
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { EffectCards } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 import { useLocation,useNavigate } from "react-router-dom";
 import styles from "./stylemui";
 import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialog,DialogActions,DialogContent,DialogTitle,Divider,Drawer,Fab,Grid,IconButton,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Rating,Snackbar,Stack,Typography,useMediaQuery } from "@mui/material";
@@ -25,6 +34,7 @@ import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
 const { v4: uuidv4 } = require('uuid');
+
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	const navigate = useNavigate();
@@ -114,7 +124,34 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	};
 
 
+	const fetchRecentlyViewedGet = async () => {
+		let storageUserID = localStorage.getItem("userId");
+		if (storageUserID === "undefined") {
+			// const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
+			localStorage.removeItem('userId');
+			// return res.data;
+		}
+		let userIdWithQuotes = storageUserID;
 
+		// Sử dụng replace để loại bỏ dấu \ và "
+		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+		if (!userIdWithoutQuotes) {
+			// Nếu userId chưa được set, bạn có thể thực hiện các hành động như đăng nhập hoặc tạo mới userId
+			return
+		}
+		// Bạn cần cung cấp slug từ nơi đó (hoặc từ state hoặc một nguồn khác)
+		const res = await RecentlyViewed.getRecentlyViewed(userIdWithoutQuotes);
+		const productData = res.data;
+
+		return productData;
+	};
+	const {
+		data: recentlyViewed,
+	} = useQuery(["recentlyViewed"],fetchRecentlyViewedGet,{
+		retry: 3,
+		retryDelay: 100,
+		keepPreviousData: true,
+	});
 
 
 
@@ -853,7 +890,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 					</Dialog>
 					<hr style={{ margin: "60px 0" }} />
 					<Box style={{ margin: "60px 0" }}>
-						<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
+						<Typography className={classes.txtTitleBox}>Có thể bạn quan tâm</Typography>
+
+						{/* <AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} /> */}
 						<div className={classes.sliderWrapper}>
 							<YourSwiperComponent latestProducts={products?.data} classes={classes} />
 
@@ -861,17 +900,54 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						</div>
 					</Box>
 					<Box style={{ margin: "60px 0" }}>
-						<AnimationComponent type='text' text='Trích từ Blog' className={classes.txtTitleBox} />
+						{/* <AnimationComponent type='text' text='Trích từ Blog' className={classes.txtTitleBox} /> */}
+						<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
+
 						<div className={classes.sliderWrapper}>
-							<ImageList variant='masonry' cols={1} gap={8} style={{ overflow: "hidden" }}>
-								<Slider {...settingsBlog} style={{ overflow: "hidden" }}>
-									{blogs?.data?.map((post,index) => (
-										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
-									))}
-								</Slider>
-							</ImageList>
+
+							<Grid container spacing={2} sx={{ display: { xl: "block",xs: "block" } }}>
+								{/* <Slider {...settingsBlog} >
+							{blogs?.data?.map((post,index) => (
+								<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
+							))}
+						</Slider> */}
+								<Swiper
+									spaceBetween={10}
+
+									grabCursor={true}
+									// navigation={true}
+									style={{ paddingLeft: '0px',paddingRight: '0px' }}
+									modules={[Pagination]}
+									className="mySwiper"
+									breakpoints={{
+										320: { slidesPerView: 2 },
+										396: { slidesPerView: 2 },
+										480: { slidesPerView: 2 },
+										768: { slidesPerView: 2 },
+										1024: { slidesPerView: 4 },
+										1200: { slidesPerView: 5 },
+									}}
+								>
+									{blogs?.data?.map((post,index) => {
+
+
+										return (
+											<SwiperSlide className={classes.SwiperSlideBlog} key={post._id} style={{ marginLeft: '40px',marginRight: '10px' }}>
+												<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
+											</SwiperSlide>
+										);
+									})}
+								</Swiper>
+							</Grid>
 						</div>
+
 					</Box>
+					{(recentlyViewed?.products && (
+						<Container maxWidth='lg'>
+							<Typography className={classes.txtTitleBox}>Xem gần đây</Typography>
+							<YourSwiperComponent latestProducts={recentlyViewed?.products} classes={classes} />
+						</Container>
+					))}
 				</Container >
 			)}
 

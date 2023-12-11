@@ -104,22 +104,37 @@ export default makeStyles(() => {
 			},
 		},
 		txtTitleBox: {
-			...CStyles.txt_title_item,
-			fontSize: "2rem",
+			fontSize: "1.375rem",
 			fontWeight: 700,
-			lineHeight: 1.3,
+			lineHeight: "34px",
 			position: "relative",
 			textAlign: "left",
 			zIndex: 10,
 			marginTop: "100px",
-			textTransform: "uppercase",
+			marginBottom: "70px",
 			margin: 0,
+			textTransform: "uppercase",
 			pointerEvents: "none",
-
 			"@media (max-width: 550px)": {
-				fontSize: "1.5rem",
-				marginTop: "70px",
-				textAlign: "left",
+				fontSize: "1.125rem",
+				marginTop: "30px",
+				textAlign: "center",
+			},
+			"&::after": {
+				content: '""',
+				display: 'block',
+				position: 'absolute',
+				bottom: "-20px",
+				// left: '10%',
+				marginTop: "10px",
+				width: '90px',
+				height: '3px',
+				backgroundColor: "#212B36", // Màu đỏ của MUI
+				"@media (max-width: 550px)": {
+					textAlign: "center",
+					display: 'none',
+
+				},
 			},
 		},
 		boxAnswer: {
