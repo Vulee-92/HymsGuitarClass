@@ -38,6 +38,8 @@ export const postRecentlyViewed = async (id,userId) => {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
+			credentials: 'include',
+			mode: 'cors'
 		});
 
 		return res.data;
