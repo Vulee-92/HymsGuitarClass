@@ -484,6 +484,27 @@ export default makeStyles(() => {
 				width: "180px !important",
 
 			},
+			SwiperSlideBlog: {
+				width: "200px !important",
+				marginRight: "30px !important",
+
+				"swiper-slide": {
+					width: "200px !important",
+					marginRight: "30px !important"
+				},
+				"swiper-slide-active": {
+					width: "200px !important",
+					marginRight: "30px !important"
+				},
+				"@media (max-width: 767px)": {
+					marginRight: "30px !important"
+				},
+				"@media (min-width: 768px)": {
+					marginRight: "70px !important",
+					width: "200px !important",
+
+				},
+			}
 		}
 	};
 });

@@ -250,175 +250,16 @@ const HomePage = () => {
 		// Thêm các đối tượng hình ảnh khác nếu cần
 	];
 
-	const settingsXemlai = {
-		focusOnSelect: true,
-		infinite: true,
-		slidesToShow: 2,
-		slidesToScroll: 1,
-		speed: 500
-		// responsive: [
-		// 	{
-		// 		breakpoint: 1024,
-		// 		settings: {
-		// 			slidesToShow: 3,
-		// 			slidesToScroll: 3,
-		// 			infinite: true,
-		// 			centerMode: false,
-		// 			dots: true,
-		// 		},
-		// 	},
-		// 	{
-		// 		breakpoint: 768,
-		// 		settings: {
-		// 			slidesToShow: 2,
-		// 			centerMode: false,
-		// 			slidesToScroll: 2,
-		// 		},
-		// 	},
-		// 	{
-		// 		breakpoint: 480,
-		// 		settings: {
-		// 			slidesToShow: 1,
-		// 			centerMode: false,
-		// 			slidesToScroll: 1,
-		// 		},
-		// 	},
-		// ],
-	};
-	const settings = {
-		dots: true,
-		infinite: true,
-		slidesToShow: 5,
-		draggable: false,
-		className: "center",
-		variableWidth: false,
 
-		centerMode: true,
-		centerPadding: "60px",
-		speed: 500,
-		// cssEase: "linear",
-		pauseOnHover: true,
-		// nextArrow: <SampleNextArrow />,
-		// prevArrow: <SamplePrevArrow />,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
-					infinite: true,
-					centerMode: false,
 
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					centerMode: true,
-					variableWidth: false,
 
-					draggable: true, // Tắt chức năng trượt
-					infinite: true,
-
-					slidesToScroll: 2,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					infinite: true,
-					variableWidth: false,
-
-					draggable: true, // Tắt chức năng trượt
-					centerMode: true,
-					slidesToScroll: 1,
-				},
-			},
-		],
-	};
-	const settingsBanchay = {
-		dots: true,
-		infinite: true,
-		slidesToShow: 4,
-		draggable: false,
-
-		centerMode: true,
-		// centerPadding: "60px",
-		speed: 500,
-		// cssEase: "linear",
-		pauseOnHover: true,
-		// nextArrow: <SampleNextArrow />,
-		// prevArrow: <SamplePrevArrow />,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
-					infinite: true,
-					centerMode: false,
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					draggable: true,
-					centerMode: false,
-					slidesToScroll: 2,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					draggable: true,
-					centerMode: false,
-					slidesToScroll: 1,
-				},
-			},
-		],
-	};
 	const [reverseOrder,setReverseOrder] = useState(false);
 	// Lấy bài viết mới nhất đưa lên đầu
 	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
-	const toggleOrder = () => {
-		setReverseOrder(!reverseOrder);
-	};
-	// const lastProduct = products?.data?.[products?.data?.length - 1]
-	// useEffect(() => {
-	//   if (refSearch.current) {
-	//     setLoading(true);
-	//     fetchProductAll(searchDebounce);
-	//   }
-	//   refSearch.current = true;
-	//   setLoading(false);
-	// }, [searchDebounce]);
 
-	// useEffect(() => {
-	//   if (products?.data?.length > 0) {
-	//     setStateProducts(products?.data);
-	//   }
-	// }, [products]);
 
-	const ParallaxBannerw = styled(ParallaxBanner)(({ theme }) => ({
-		padding: theme.spacing(1),
-		height: "300px",
-		width: "400px",
-		textAlign: "center",
-	}));
-	const Item = styled(Paper)(({ theme }) => ({
-		backgroundColor: "#1A2027",
-		...theme.typography.body2,
-		padding: theme.spacing(1),
 
-		textAlign: "center",
-		color: theme.palette.text.secondary,
-	}));
+
 	return (
 		// <Loading isLoading={isLoading || loading}>
 		<>
@@ -434,16 +275,12 @@ const HomePage = () => {
 			</Box> */}
 			<Container maxWidth='lg'>
 				<Box>
-
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
 						{isLoading ? (
 							<Typical
 								steps={[
-									'Xin chào!, bạn vui lòng đợi trong giây lát...',1000,
-									'Server free có thể "ngủ gật" một chút.',1000,
-									'Nhưng đừng lo, nó sẽ tỉnh giấc ngay thôi!',500,
-									'Chúc bạn có một ngày thật tuyệt vời! ☕️🌟',500
+									'Loading...',500
 								]}
 								loop={Infinity}
 								wrapper="span"
@@ -536,11 +373,38 @@ const HomePage = () => {
 						))}
 					</Grid>
 					<Grid container spacing={2} sx={{ display: { xl: "none",xs: "block" } }}>
-						<Slider {...settingsBlog} >
+						{/* <Slider {...settingsBlog} >
 							{blogs?.data?.map((post,index) => (
 								<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
 							))}
-						</Slider>
+						</Slider> */}
+						<Swiper
+							spaceBetween={10}
+
+							grabCursor={true}
+							// navigation={true}
+							style={{ paddingLeft: '0px',paddingRight: '0px' }}
+							modules={[Pagination]}
+							className="mySwiper"
+							breakpoints={{
+								320: { slidesPerView: 2 },
+								396: { slidesPerView: 2 },
+								480: { slidesPerView: 2 },
+								768: { slidesPerView: 2 },
+								1024: { slidesPerView: 4 },
+								1200: { slidesPerView: 5 },
+							}}
+						>
+							{blogs?.data?.map((post,index) => {
+
+
+								return (
+									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id} style={{ marginLeft: '40px',marginRight: '10px' }}>
+										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
+									</SwiperSlide>
+								);
+							})}
+						</Swiper>
 					</Grid>
 
 				</Box>

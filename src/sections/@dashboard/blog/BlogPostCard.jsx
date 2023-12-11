@@ -78,7 +78,7 @@ export default function BlogPostCard({ blog,index,id }) {
 
 	return (
 
-		<Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
+		<Grid item xs={6} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
 			<Card sx={{ position: 'relative',borderRadius: "14px" }} className={classes.boxCard}>
 				<StyledCardMedia
 					sx={{
@@ -148,7 +148,6 @@ export default function BlogPostCard({ blog,index,id }) {
 
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
-						variant="subtitle2"
 						underline="hover"
 						className={classes.txtBlogTitle}
 						style={{

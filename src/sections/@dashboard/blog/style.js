@@ -36,12 +36,14 @@ export default makeStyles(() => {
 			fontWeight: 500,
 			color: "#000",
 			display: "vertical",
-			fontSize: "1.8rem",
+			fontSize: "1.125rem",
 			// fontWeight: 400,
-			height: "80px",
-			minHeight: "62.4px",
+			height: "40px",
 			overflow: "hidden",
 			overflowWrap: "break-word",
+			"&:hover": {
+				color: "#000",
+			},
 		},
 		txtPrice: {
 			...CStyles.txt_body_item,

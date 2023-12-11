@@ -19,6 +19,7 @@ import { BlogPostCard } from "sections/@dashboard/blog";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
 import { WrapperButtonMore } from "pages/HomePage/style";
+import BlogPostCardMobile from "sections/@dashboard/blog/BlogPostCardMobile";
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 	...theme.typography.body2,
@@ -58,9 +59,9 @@ const BlogUserPage = () => {
 	// };
 
 	const fetchBlogAll = async (context) => {
-		const limit = context?.queryKey && context?.queryKey[1];
-		const search = context?.queryKey && context?.queryKey[2];
-		const res = await BlogService.getAllBlog(search,limit);
+		// const limit = context?.queryKey && context?.queryKey[1];
+		// const search = context?.queryKey && context?.queryKey[2];search,limit
+		const res = await BlogService.getAllBlog();
 
 		return res;
 	};
@@ -132,7 +133,7 @@ const BlogUserPage = () => {
 								{/* <BlogPostCard blog={blogList} /> */}
 								{/* ))} */}
 							</Grid>
-							<Grid container spacing={2}>
+							<Grid container sx={{ display: { xl: "block",xs: "none" } }}>
 								< Grid container item spacing={2} >
 									{blogs?.data?.map((post,index) => (
 										<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
@@ -141,6 +142,17 @@ const BlogUserPage = () => {
 
 								</Grid>
 							</Grid>
+							<Grid container sx={{ display: { xl: "none",xs: "block" } }}>
+								< Grid container item spacing={2} >
+									{blogs?.data?.map((post,index) => (
+										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={6} />
+
+									))
+									}
+
+								</Grid>
+							</Grid>
+
 							<Button
 								sx={{ p: 3 }}
 								style={{

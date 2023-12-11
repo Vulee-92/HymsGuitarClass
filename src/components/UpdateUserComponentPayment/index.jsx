@@ -262,64 +262,61 @@ const UpdateUserComponentPayment = ({
 	const onChangeInput = (event,field) => {
 		let value = event.target.value;
 		let name = '';
-		if (field === 'province') {
+		// if (field === 'province') {
 
-			const selectedProvince = provinces.find(province => province.code === value);
-			if (selectedProvince) {
-				name = selectedProvince.name;
-			}
-			setSelectedProvinceCode(name);
-			setProvince(name);
-			setForm({
-				...form,
-				[field]: {
-					...form[field],
-					value: value,
-					name: name,
-				},
-			});
-			setSearchKeyword('');
-			if (value) {
-				// Gọi API để lấy danh sách thành phố dựa trên mã code của tỉnh
-				fetchDistricts(value)
-			}
-		} else if (field === 'city') {
-			const selectedCity = citys.find(city => city.code === value);
-			if (selectedCity) {
-				name = selectedCity.name;
-			}
-			setCity(name);
-			setForm({
-				...form,
-				[field]: {
-					...form[field],
-					value: value,
-					name: name,
-				},
-			});
-			setSearchKeyword('');
-			if (value) {
-				// Gọi API để lấy danh sách phường xã dựa trên mã code của thành phố
-				fetchWards(value)
-			}
-		} else if (field === "ward") {
-			const selectedWard = wards.find(ward => ward.code === value);
-			if (selectedWard) {
-				name = selectedWard.name;
-			}
-			setWard(name);
-			// Lưu giá trị của phường/xã đã chọn vào state
-			setForm({
-				...form,
-				[field]: {
-					...form[field],
-					value: value,
-					name: name,
-				},
-			});
-			setSearchKeyword('');
-		}
-		else if (field === "phone") {
+		// 	const selectedProvince = provinces.find(province => province.code === value);
+		// 	if (selectedProvince) {
+		// 		name = selectedProvince.name;
+		// 	}
+		// 	setSelectedProvinceCode(name);
+		// 	setProvince(name);
+		// 	setForm({
+		// 		...form,
+		// 		[field]: {
+		// 			...form[field],
+		// 			value: value,
+		// 			name: name,
+		// 		},
+		// 	});
+		// 	setSearchKeyword('');
+		// 	if (value) {
+		// 		fetchDistricts(value)
+		// 	}
+		// } else if (field === 'city') {
+		// 	const selectedCity = citys.find(city => city.code === value);
+		// 	if (selectedCity) {
+		// 		name = selectedCity.name;
+		// 	}
+		// 	setCity(name);
+		// 	setForm({
+		// 		...form,
+		// 		[field]: {
+		// 			...form[field],
+		// 			value: value,
+		// 			name: name,
+		// 		},
+		// 	});
+		// 	setSearchKeyword('');
+		// 	if (value) {
+		// 		fetchWards(value)
+		// 	}
+		// } else if (field === "ward") {
+		// 	const selectedWard = wards.find(ward => ward.code === value);
+		// 	if (selectedWard) {
+		// 		name = selectedWard.name;
+		// 	}
+		// 	setWard(name);
+		// 	setForm({
+		// 		...form,
+		// 		[field]: {
+		// 			...form[field],
+		// 			value: value,
+		// 			name: name,
+		// 		},
+		// 	});
+		// 	setSearchKeyword('');
+		// }
+		if (field === "phone") {
 			// Định dạng số điện thoại
 			setForm({
 				...form,
@@ -634,49 +631,73 @@ const UpdateUserComponentPayment = ({
 							<Grid container spacing={2}>
 
 								<Grid item xs={12} sm={12} lg={12} xl={12}>
-
 									<Box className={classes.conItemInput}>
-										{/* <Typography className={classes.txtTitleInput}>
-											{t("province")}
-										</Typography> */}
+										<InputLabel className={classes.txtTitleInput} variant="standard" htmlFor="uncontrolled-native">Tỉnh/Thành phố</InputLabel>
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Tỉnh/Thành phố")}
+											value={form?.province?.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"province")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"province")}
+											onBlur={() => onBlurFocusInput(false,"province")}
+										/>
+									</Box>
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Thành phố/Quận/Huyện</InputLabel>
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Thành phố/Quận/Huyện")}
+											value={form?.city?.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"city")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"city")}
+											onBlur={() => onBlurFocusInput(false,"city")}
+										/>
+									</Box>
+									{/* <Box className={classes.conItemInput}>
+								
 										<FormControl fullWidth>
 											<InputLabel className={classes.txtTitleInput} variant="standard" htmlFor="uncontrolled-native">Tỉnh/Thành phố</InputLabel>
 											<Select
 
-												// style={{
-												// 	border: !form.province.isFocus && `2px solid ${form.province.error ? Colors.secondary : form.province.value !== "" ? Colors.success : "transparent"}`,
-												// }}
-												// value={user?.province}
+											
 												defaultValue={user?.province}
-												// Đây là giá trị được chọn
 												inputProps={{
 													name: 'province',
 													id: 'uncontrolled-native',
 												}}
-											// fullWidth
-											// displayEmpty
-											// onChange={(event) => {
-											// 	onChangeInput(event,"province");
-											// 	handleSearchChange(event); // Thay đổi giá trị của Input khi chọn giá trị mới
-											// }}
-											// disabled={loading}
-											// className={classes.conInput}
-											// onFocus={() => onBlurFocusInput(true,"province")}
-											// onBlur={() => onBlurFocusInput(false,"province")}
-											// MenuProps={{ PaperProps: { style: { maxHeight: 400,width: 250 } } }} // Điều chỉnh kích thước của Menu
-											// startAdornment={
-											// 	<InputAdornment position="start">
-											// 		<FontAwesomeIcon
-											// 			fontSize={20}
-											// 			color={
-											// 				form.province.isFocus || (form.province.value && form.province.value !== "")
-											// 					? Colors.bgLogin
-											// 					: Colors.placeHolder
-											// 			}
-											// 			className={classes.conIconInput}
-											// 		/>
-											// 	</InputAdornment>
-											// }
+											
 											>
 												<Input
 													placeholder="Tìm kiếm tỉnh/thành phố"
@@ -701,14 +722,12 @@ const UpdateUserComponentPayment = ({
 											</Select>
 										</FormControl>
 
-									</Box>
-									<Box className={classes.conItemInput}>
+									</Box> */}
+									{/* <Box className={classes.conItemInput}>
 										<FormControl fullWidth>
 											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Thành phố/Quận/Huyện</InputLabel>
 											<Select
-												// style={{
-												// 	border: !form.city.isFocus && `2px solid ${form.city.error ? Colors.secondary : form.city.value !== "" ? Colors.success : "transparent"}`,
-												// }}
+										
 												value={form.city.value || ""} // Đây là giá trị được chọn
 												fullWidth
 												onChange={(event) => onChangeInput(event,"city")}
@@ -722,19 +741,13 @@ const UpdateUserComponentPayment = ({
 													<InputAdornment position="start">
 														<FontAwesomeIcon
 															fontSize={20}
-															// color={
-															// 	form.city.isFocus || (form.city.value && form.city.value !== "")
-															// 		? Colors.bgLogin
-															// 		: Colors.placeHolder
-															// }
+														
 															className={classes.conIconInput}
 														/>
 													</InputAdornment>
 												}
 											>
-												{/* <MenuItem value={shippingAddress?.city || ""}>
-													{shippingAddress?.city || "Thành phố"}
-												</MenuItem> */}
+											
 												<Input
 													placeholder="Tìm kiếm thành phố/huyện"
 													value={searchKeyword}
@@ -757,14 +770,40 @@ const UpdateUserComponentPayment = ({
 													))}
 											</Select>
 										</FormControl>
-									</Box>
+									</Box> */}
 									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
+
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Thành phố/Quận/Huyện")}
+											value={form?.ward?.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"ward")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"ward")}
+											onBlur={() => onBlurFocusInput(false,"ward")}
+										/>
+									</Box>
+									{/* <Box className={classes.conItemInput}>
 										<FormControl fullWidth>
 											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
 											<Select
-												// style={{
-												// 	border: !form.ward.isFocus && `2px solid ${form.ward.error ? Colors.secondary : form.ward.value !== "" ? Colors.success : "transparent"}`,
-												// }}
+
 												value={shippingAddress?.ward || form.province.value}
 												fullWidth
 												onChange={(event) => onChangeInput(event,"ward")}
@@ -777,19 +816,13 @@ const UpdateUserComponentPayment = ({
 													<InputAdornment position="start">
 														<FontAwesomeIcon
 															fontSize={20}
-															// color={
-															// 	form.ward.isFocus || (form.ward.value && form.ward.value !== "")
-															// 		? Colors.bgLogin
-															// 		: Colors.placeHolder
-															// }
+
 															className={classes.conIconInput}
 														/>
 													</InputAdornment>
 												}
 											>
-												{/* <MenuItem value={shippingAddress?.ward || ""}>
-													{shippingAddress?.ward || "Phường/Xã"}
-												</MenuItem> */}
+
 												<Input
 													placeholder="Tìm kiếm thành phố/huyện"
 													value={searchKeyword}
@@ -812,7 +845,7 @@ const UpdateUserComponentPayment = ({
 													))}
 											</Select>
 										</FormControl>
-									</Box>
+									</Box> */}
 									<Box className={classes.conItemInput}>
 										<FormControl fullWidth>
 											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Số nhà - đường</InputLabel>

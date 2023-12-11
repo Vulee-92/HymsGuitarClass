@@ -46,8 +46,8 @@ const StyledInfo = styled('div')(({ theme }) => ({
 
 const StyledCover = styled('img')({
 	top: 0,
-	width: '100%',
-	height: '100%',
+	width: '100% !important',
+	height: '120%',
 	objectFit: 'cover',
 	position: 'absolute',
 	cursor: "pointer",
@@ -61,7 +61,7 @@ BlogPostCardMobile.propTypes = {
 	index: PropTypes.number,
 };
 
-export default function BlogPostCardMobile({ blog,index,id }) {
+export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 	const { image,title } = blog;
 	// const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2 || index === 3 || index === 0;
@@ -73,15 +73,14 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 
 
 	return (
-
-		<Grid item xs={12} style={{ marginLeft: 25,marginRight: 10 }}>
+		<Grid item xs={responsive} >
 			<Card sx={{
-				position: 'relative',borderRadius: "14px",boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				// position: 'relative',borderRadius: "14px",boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
 			}} className={classes.boxCard}>
 				<StyledCardMedia
 
 				>
-					<SvgColor
+					{/* <SvgColor
 						color="paper"
 						src={mask}
 						sx={{
@@ -94,7 +93,6 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 						}}
 					/>
 					<StyledAvatar
-						// alt={author.name}
 						src={image}
 						sx={{
 							...((!latestPost) && {
@@ -105,7 +103,7 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 								height: 40,
 							}),
 						}}
-					/>
+					/> */}
 					<LazyLoad>
 						<StyledCover onClick={() => handleDetailBlog(id)} alt={title} src={image} />
 					</LazyLoad>
@@ -119,8 +117,7 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
 						variant="subtitle2"
-						underline="hover"
-						sx={{ height: "120px !important" }}
+						sx={{ height: "80px !important" }}
 						className={classes.txtBlogTitle}
 
 
@@ -128,20 +125,9 @@ export default function BlogPostCardMobile({ blog,index,id }) {
 						{title}
 					</StyledTitle>
 
-					<StyledInfo>
-						<Box
-							key={index}
-							sx={{
-								display: 'flex',
-								alignItems: 'center',
-
-								color: 'grey.500',
-							}}
-						>
-						</Box>
-					</StyledInfo>
 				</CardContent>
 			</Card>
 		</Grid>
+
 	);
 }
