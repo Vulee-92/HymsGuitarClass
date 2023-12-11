@@ -29,7 +29,7 @@ import { Helmet } from "react-helmet-async";
 import { bottom } from "@popperjs/core";
 import * as RecentlyViewed from "../../services/RecentlyViewed";
 import * as BlogService from "../../services/BlogService";
-import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
+import ImageCarouselZoom from "../../components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
@@ -154,36 +154,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	});
 
 
-
-	// const fetchRecentlyViewed = async (slug) => {
-	// 	let storageUserID = localStorage.getItem("userId");
-	// 	if (user?.id) {
-	// 		let userIdWithQuotes = user?.id;
-
-	// 		// Sử dụng replace để loại bỏ dấu \ và "
-	// 		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
-	// 		const res = await RecentlyViewed.postRecentlyViewed(slug,userIdWithoutQuotes);
-	// 		localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
-	// 		return res.data;
-
-	// 	} else
-	// 		// Kiểm tra xem storageUserID có giá trị hay không
-	// 		if (storageUserID) {
-	// 			let userIdWithQuotes = storageUserID;
-
-	// 			// Sử dụng replace để loại bỏ dấu \ và "
-	// 			let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
-	// 			const res = await RecentlyViewed.postRecentlyViewed(slug,userIdWithoutQuotes);
-	// 			localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
-	// 			return res.data;
-	// 		}
-	// 	// Bạn cần cung cấp slug từ nơi đó (hoặc từ state hoặc một nguồn khác)
-	// 	const res = await RecentlyViewed.postRecentlyViewed(slug);
-
-	// 	localStorage.setItem('userId',JSON.stringify(res?.data?.userId))
-	// 	return res.data;
-
-	// };
 
 
 	const fetchBlogAll = async (context) => {
@@ -310,116 +280,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	}
 
 
-	const settingsBlog = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 3,
-		slidesToScroll: 3,
-		cssEase: "linear",
-		centerPadding: "60px",
-		pauseOnHover: true,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
-					infinite: true,
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-				},
-			},
-		],
-		appendDots: dots => (
-			<div
-				style={{
-					borderRadius: "10px",
-					marginTop: "15px"
-				}}
-			>
-				<ul style={{
-					margin: "0px",
-				}}>
-					{dots}
-				</ul>
-			</div>
-		),
-		customPaging: i => (
-			<button
-				style={{
-					width: "10px",
-					height: "10px",
 
-					".slick-dots li.slick-active button:before": {
-						zIndex: 1000,
-						height: "8px !important",
-						marginRight: "10px",
-						backgroundColor: "#dce0e3",
-						borderRadius: "10px",
-						content: "",
-						opacity: 1,
-						transition: "width .3s linear,background-color .3s linear",
-						width: "32px",
-					}
-				}}
-			/>
-		),
-		className: "left",
-		centerMode: true,
-		centerPadding: "5px",
-	};
 
-	const settings = {
-		dots: true,
-		infinite: true,
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		cssEase: "linear",
-		pauseOnHover: true,
-		centerPadding: "60px",
 
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
-					infinite: true,
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-				},
-			},
-		],
-	};
 
 	const cartButtonRef = useRef(null);
 
