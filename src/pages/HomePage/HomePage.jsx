@@ -87,10 +87,19 @@ const HomePage = () => {
 
 	const fetchRecentlyViewed = async () => {
 		let storageUserID = localStorage.getItem("userId");
+		if (storageUserID === "undefined") {
+			// const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
+			localStorage.removeItem('userId');
+			// return res.data;
+		}
 		let userIdWithQuotes = storageUserID;
 
 		// Sử dụng replace để loại bỏ dấu \ và "
 		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+		if (!userIdWithoutQuotes) {
+			// Nếu userId chưa được set, bạn có thể thực hiện các hành động như đăng nhập hoặc tạo mới userId
+			return
+		}
 		// Bạn cần cung cấp slug từ nơi đó (hoặc từ state hoặc một nguồn khác)
 		const res = await RecentlyViewed.getRecentlyViewed(userIdWithoutQuotes);
 		const productData = res.data;

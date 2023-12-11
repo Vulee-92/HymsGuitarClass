@@ -23,6 +23,7 @@ import * as BlogService from "../../services/BlogService";
 import ImageCarouselZoom from "components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
+const { v4: uuidv4 } = require('uuid');
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	const navigate = useNavigate();
@@ -64,6 +65,40 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		const accessoriesRes = await ProductService.getProductType('Acoustic Guitars',0,10);
 		return accessoriesRes;
 	};
+	const generateUserId = () => {
+		return uuidv4();
+	};
+	// Hàm hỗ trợ loại bỏ dấu \ và "
+	const cleanUserId = (userId) => {
+		if (userId) {
+			return userId.replace(/"/g,'');
+		}
+	};
+	const fetchRecentlyViewed = async (slug) => {
+		let userId = user?.id || localStorage.getItem("userId");
+		// Kiểm tra xem localStorage đã có userId hay chưa
+		if (userId === null || userId === "undefined") {
+			// Nếu không có, tạo mới và lưu vào localStorage
+			userId = generateUserId();
+			console.log("generateUserId",userId)
+			localStorage.setItem("userId",userId);
+		}
+		if (userId !== null && userId !== "undefined") {
+			// Thực hiện yêu cầu API
+			console.log("userID",userId)
+			const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
+
+			// Kiểm tra và xử lý giá trị userId từ response
+			const cleanedUserId = cleanUserId(res?.data?.userId);
+
+			if (cleanedUserId) {
+				localStorage.setItem("userId",JSON.stringify(cleanedUserId));
+			}
+			return res.data;
+		}
+
+
+	};
 
 	const fetchGetDetailsProduct = async (context) => {
 		const slug = context?.queryKey && context?.queryKey[1];
@@ -72,40 +107,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		if (slug) {
 			const res = await ProductService.getDetailsProduct(slug);
 			const productData = res.data;
-
-			// Gọi fetchRecentlyViewed sau khi có dữ liệu từ ProductService.getDetailsProduct
-			fetchRecentlyViewed(slug);
-
+			await fetchRecentlyViewed(slug);
 			return productData;
 		}
 	};
-	const fetchRecentlyViewed = async (slug) => {
-		let userId = null;
 
-		// Lấy userId từ user hoặc localStorage
-		if (user?.id) {
-			userId = cleanUserId(user.id);
-		} else if (localStorage.getItem("userId")) {
-			userId = cleanUserId(localStorage.getItem("userId"));
-		}
 
-		// Nếu có userId, thực hiện yêu cầu
-		if (userId) {
-			const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
-			localStorage.setItem('userId',JSON.stringify(res?.data?.userId));
-			return res.data;
-		}
 
-		// Nếu không có userId, thực hiện yêu cầu không cần userId
-		const res = await RecentlyViewed.postRecentlyViewed(slug);
-		localStorage.setItem('userId',JSON.stringify(res?.data?.userId));
-		return res.data;
-	};
 
-	// Hàm hỗ trợ loại bỏ dấu \ và "
-	const cleanUserId = (userId) => {
-		return userId.replace(/\\/g,'').replace(/"/g,'');
-	};
+
 
 	// const fetchRecentlyViewed = async (slug) => {
 	// 	let storageUserID = localStorage.getItem("userId");
