@@ -464,5 +464,26 @@ export default makeStyles(() => {
 				content: "'\\f105'",
 			},
 		},
+		SwiperSlide: {
+			width: "120px !important",
+			marginRight: "30px !important",
+
+			"swiper-slide": {
+				width: "120px !important",
+				marginRight: "30px !important"
+			},
+			"swiper-slide-active": {
+				width: "120px !important",
+				marginRight: "30px !important"
+			},
+			"@media (max-width: 767px)": {
+				marginRight: "30px !important"
+			},
+			"@media (min-width: 768px)": {
+				marginRight: "70px !important",
+				width: "180px !important",
+
+			},
+		}
 	};
 });

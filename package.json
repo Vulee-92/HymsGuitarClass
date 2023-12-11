@@ -35,7 +35,7 @@
     "framer-motion": "^10.16.1",
     "i18next": "^23.2.11",
     "js-base64": "^3.7.5",
-    "jwt-decode": "^3.1.2",
+		"jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
@@ -75,6 +75,8 @@
     "simplebar-react": "^3.2.4",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.4",
+    "swiper": "^11.0.5",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -104,5 +106,5 @@
   "devDependencies": {
     "npm-force-resolutions": "^0.0.10"
   },
-  "proxy": "http://localhost:3001/api"
+  "proxy": "https://hymnscenter.online"
 }

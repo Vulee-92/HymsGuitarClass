@@ -5,6 +5,16 @@ import styles from "./stylemui";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
 import * as RecentlyViewed from "../../services/RecentlyViewed";
+import { Swiper,SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Import CSS Swiper
+
+// Thêm các styles tùy chọn nếu cần
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { EffectCards } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 
 
 import { useTranslation } from "react-i18next";
@@ -21,6 +31,7 @@ import { Assets } from "../../configs";
 import Typical from "react-typical";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import Carousel from "components/CardComponent/CarouselComponent/CarouselComponent";
+import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
@@ -43,7 +54,10 @@ const HomePage = () => {
 		}
 		return null;
 	}
-
+	const slides = [];
+	for (let i = 0; i < 5; i++) {
+		slides.push(<SwiperSlide key={`slide-${i}`}>Slide {i + 1}</SwiperSlide>);
+	}
 	// Lấy giá trị của cookie 'deviceid'
 	var deviceIdValue = getCookieValue('deviceId');
 
@@ -418,8 +432,9 @@ const HomePage = () => {
 			{/* <Box >
 				<ImageCarousel images={images} />
 			</Box> */}
-			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+			<Container maxWidth='lg'>
 				<Box>
+
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
 						{isLoading ? (
@@ -436,43 +451,8 @@ const HomePage = () => {
 								style={{ textAlign: "center",willChange: "transform" }}
 							/>
 						) : (
-							<ImageList variant='masonry' cols={1} gap={8}>
-								<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
-									<Slider {...settings} style={{ overflow: "hidden" }}>
-										{latestProducts?.map((product,index,post) => {
-											// Lấy hình ảnh ở vị trí đầu tiên trong mảng images
-											const firstImage = product.image[0];
+							<YourSwiperComponent latestProducts={latestProducts} classes={classes} />
 
-											return (
-												<div key={product._id} style={{ width: '100px' }}>
-													<ImageListItem style={{ cursor: "pointer" }}>
-														<CardComponent
-															post={post}
-															index={index}
-															key={product._id}
-															countInStock={product.countInStock}
-															type={product.type}
-															description={product.description}
-															image={firstImage} // Sử dụng hình ảnh đầu tiên
-															name={product.name.slice(0,200)}
-															price={product.price}
-															rating={product.rating}
-															discount={product.discount}
-															selled={product.selled}
-															id={product._id}
-															slug={product.slug}
-															createdAt={product.createdAt}
-															style={{ cursor: "pointer" }}
-														/>
-													</ImageListItem>
-												</div>
-											);
-										})}
-									</Slider>
-
-								</Suspense>
-
-							</ImageList>
 						)}
 
 					</div>
@@ -506,48 +486,16 @@ const HomePage = () => {
 								onClick={() => setLimit((prev) => prev + 6)}
 							/> */}
 				</Button>
+
 			</Container>
 
-			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+			<Container maxWidth='lg'>
 				<Typography className={classes.txtTitleRecentlyViewed}>Sản phẩm bán chạy</Typography>
 
-				<ImageList variant='masonry' cols={1} gap={8}>
-					<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
-						<Slider {...settingsBanchay} style={{ overflow: "hidden" }}>
-							{filteredProducts?.map((product,index,post) => {
-								// Lấy hình ảnh ở vị trí đầu tiên trong mảng images
-								const firstImage = product.image[0];
+				<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
 
-								return (
-									<div key={product._id}>
-										<ImageListItem style={{ cursor: "pointer" }}>
-											<CardComponent
-												post={post}
-												index={index}
-												key={product._id}
-												countInStock={product.countInStock}
-												type={product.type}
-												description={product.description}
-												image={firstImage} // Sử dụng hình ảnh đầu tiên
-												name={product.name.slice(0,200)}
-												price={product.price}
-												rating={product.rating}
-												discount={product.discount}
-												selled={product.selled}
-												id={product._id}
-												slug={product.slug}
-												createdAt={product.createdAt}
-												style={{ cursor: "pointer" }}
-											/>
-										</ImageListItem>
-									</div>
-								);
-							})}
-						</Slider>
 
-					</Suspense>
-
-				</ImageList>
+				{/* </ImageList> */}
 			</Container>
 			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
 				<>
@@ -575,7 +523,7 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container>
-			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
+			<Container maxWidth='lg'>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
@@ -625,16 +573,13 @@ const HomePage = () => {
 					/>
 				</Button> */}
 			</Container >
-			<Container maxWidth='lg' style={{ marginTop: "100px" }}>
-				<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>
-				<ImageList variant='masonry' cols={1} gap={8}>
-					<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
-						<Carousel products={recentlyViewed?.products} />
-					</Suspense>
+			{(recentlyViewed?.products && (
+				<Container maxWidth='lg'>
+					<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>
+					<YourSwiperComponent latestProducts={recentlyViewed?.products} classes={classes} />
+				</Container>
+			))}
 
-				</ImageList>
-
-			</Container>
 		</>
 		// </Loading >
 	);
