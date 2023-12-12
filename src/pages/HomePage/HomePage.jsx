@@ -62,7 +62,6 @@ const HomePage = () => {
 	var deviceIdValue = getCookieValue('deviceId');
 
 	// Hiển thị giá trị của cookie 'deviceid'
-	console.log("Value of 'deviceid' cookie:",deviceIdValue);
 
 	// Sử dụng giá trị userId tại đây
 	const fetchProductAll = async (context) => {
@@ -127,7 +126,6 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("recentlyViewedrecentlyViewed",recentlyViewed)
 	const fetchAllTypeProduct = async () => {
 		const res = await ProductService.getAllTypeProduct();
 		if (res?.status === "OK") {
@@ -155,7 +153,6 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("productsNosearch",productsNosearch)
 	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
 
 	// Lấy ra 5 sản phẩm mới nhất
@@ -163,7 +160,6 @@ const HomePage = () => {
 
 	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
-	console.log(filteredProducts);
 
 
 	const {

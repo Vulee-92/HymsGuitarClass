@@ -34,10 +34,8 @@ const UpdateUserComponentPayment = ({
 	const classes = styles();
 	const { t } = useTranslation();
 	const user = useSelector((state) => state.user);
-	console.log("user",user)
 	const order = useSelector((state) => state.order);
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
-	console.log("shippingAddress",shippingAddress)
 	const [email,setEmail] = useState("");
 	const [name,setName] = useState("");
 	const [phone,setPhone] = useState("");
@@ -57,7 +55,6 @@ const UpdateUserComponentPayment = ({
 	const [activePage,setActivePage] = useState('payment'); // Ban đầu, trang là "Giỏ hàng"
 	const [searchKeyword,setSearchKeyword] = useState("");
 	const [selectedProvinceCode,setSelectedProvinceCode] = useState(shippingAddress?.province || user?.province || "");
-	console.log("selectedProvinceCode",selectedProvinceCode)
 	const handleNavigate = (page) => {
 		setActivePage(page);
 	};
@@ -107,61 +104,60 @@ const UpdateUserComponentPayment = ({
 
 	const [form,setForm] = useState({
 		name: {
-			value: user?.name || shippingAddress?.name || "",
+			value: shippingAddress?.name || user?.name || "",
 			isFocus: false,
 			msg: "",
 			error: false,
 			name: ""
 		},
 		email: {
-			value: user?.email || shippingAddress?.email || "",
+			value: shippingAddress?.email || user?.email || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.email || shippingAddress?.email || "",
+			name: shippingAddress?.email || user?.email || "",
 		},
 		phone: {
-			value: user?.phone || shippingAddress?.phone || "",
+			value: shippingAddress?.phone || user?.phone || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.phone || shippingAddress?.phone || "",
+			name: shippingAddress?.phone || user?.phone || "",
 			isShow: false,
 		},
 		province: {
-			value: user?.province || shippingAddress?.province || "",
+			value: shippingAddress?.province || user?.province || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.province || shippingAddress?.province || "",
+			name: shippingAddress?.province || user?.province || "",
 			isShow: false,
 		},
 		city: {
-			value: user?.city || shippingAddress?.city || "",
+			value: shippingAddress?.city || user?.city || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.city || shippingAddress?.city || "",
+			name: shippingAddress?.city || user?.city || "",
 			isShow: false,
 		},
 		ward: {
-			value: user?.ward || shippingAddress?.ward || "",
+			value: shippingAddress?.ward || user?.ward || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.ward || shippingAddress?.ward || "",
+			name: shippingAddress?.ward || user?.ward || "",
 			isShow: false,
 		},
 		address: {
-			value: user?.address || shippingAddress?.address || "",
+			value: shippingAddress?.address || user?.address || "",
 			isFocus: false,
 			msg: "",
 			error: false,
-			name: user?.address || shippingAddress?.address || "",
+			name: shippingAddress?.address || user?.address || "",
 			isShow: false,
 		},
 	});
-	console.log("form",form)
 	// Hàm tính phí vận chuyển
 	const calculateShippingFee = (address,products) => {
 		const freeShippingCities = ['Thành phố Tam Kỳ'];
@@ -189,7 +185,7 @@ const UpdateUserComponentPayment = ({
 
 		if (totalGuitarQuantity > 0 && totalAccessoryQuantity > 0) {
 			// Tính phí vận chuyển cho đàn guitar theo quy định, phụ kiện miễn phí
-			if (address !== 'Thành phố Tam Kỳ') {
+			if (address !== 'Tam Kỳ') {
 				if (totalGuitarQuantity === 1) {
 					totalShippingFee += shippingFeePerGuitar;
 				} else if (totalGuitarQuantity === 2) {
@@ -200,7 +196,7 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalAccessoryQuantity > 0) {
-			if (address === 'Thành phố Tam Kỳ') {
+			if (address === 'Tam Kỳ') {
 				// Miễn phí vận chuyển cho phụ kiện nếu mua tại Thành phố Thành phố Tam Kỳ
 				return totalShippingFee;
 			} else {
@@ -213,7 +209,7 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalGuitarQuantity > 0) {
-			if (address === 'Thành phố Tam Kỳ') {
+			if (address === 'Tam Kỳ') {
 				// Miễn phí vận chuyển cho đàn guitar nếu mua tại Thành phố Thành phố Tam Kỳ
 				return totalShippingFee;
 			} else {
@@ -234,9 +230,9 @@ const UpdateUserComponentPayment = ({
 		const shippingInfo = {
 			name: form.name.value,
 			email: form.email.value || user?.email,
-			city: form.city.name,
-			ward: form.ward.name,
-			province: form.province.name,
+			city: form.city.value,
+			ward: form.ward.value,
+			province: form.province.value,
 			address: form.address.value,
 			phone: form.phone.value,
 			shippingFee: shippingFee // Thêm phí vận chuyển vào thông tin vận chuyển
@@ -409,17 +405,17 @@ const UpdateUserComponentPayment = ({
 			form.email.error = true;
 			form.email.msg = t("txt_error_name_empty");
 		}
-		if (form.city.value === "") {
+		if (form.city.value.trim() === "") {
 			isError = true;
 			form.city.error = true;
 			form.city.msg = "txt_error_access_code_empty";
 		}
-		if (form.ward.value === "") {
+		if (form.ward.value.trim() === "") {
 			isError = true;
 			form.ward.error = true;
 			form.ward.msg = "txt_error_access_code_empty";
 		}
-		if (form.province.value === "") {
+		if (form.province.value.trim() === "") {
 			isError = true;
 			form.province.error = true;
 			form.province.msg = "txt_error_access_code_empty";
@@ -449,9 +445,9 @@ const UpdateUserComponentPayment = ({
 
 
 
-	useEffect(() => {
-		fetchProvinces();
-	},[]);
+	// useEffect(() => {
+	// 	fetchProvinces();
+	// },[]);
 
 	/** RENDER */
 	return (
@@ -779,7 +775,7 @@ const UpdateUserComponentPayment = ({
 											className={classes.conInput}
 											fullWidth
 											placeholder={t("Thành phố/Quận/Huyện")}
-											value={form?.ward?.value}
+											value={form?.ward.value}
 											startAdornment={
 												<InputAdornment position="start">
 													<FontAwesomeIcon

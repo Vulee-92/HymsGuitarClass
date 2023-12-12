@@ -40,7 +40,7 @@ export const postRecentlyViewed = async (id,userId) => {
 
 		return res.data;
 	} catch (error) {
-		console.error('Error in postRecentlyViewed:',error);
+		// console.error('Error in postRecentlyViewed:',error);
 		throw error; // Ném lại lỗi để xử lý ở mã gọi hàm
 	}
 };
@@ -60,7 +60,7 @@ export const getRecentlyViewed = async (id) => {
 		);
 		return res.data;
 	} catch (error) {
-		console.error('Error in getRecentlyViewed:',error);
+		// console.error('Error in getRecentlyViewed:',error);
 		throw error;
 	}
 };

@@ -182,9 +182,9 @@ const PaymentPage = () => {
 			name: user?.name || data.name.value,
 			email: user?.email,
 			address: data.address.value,
-			city: data?.city?.name,
-			province: data?.province?.name,
-			ward: data?.ward?.name,
+			city: data?.city?.value,
+			province: data?.province?.value,
+			ward: data?.ward?.value,
 			phone: data.phone.value,
 		});
 	};
@@ -271,7 +271,6 @@ const PaymentPage = () => {
 				dispatch(updateUser(updatedUser));
 			} catch (error) {
 				// Xử lý lỗi tại đây nếu cần
-				console.error(error);
 			}
 		}
 	};

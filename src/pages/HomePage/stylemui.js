@@ -13,7 +13,6 @@ export default makeStyles(() => {
 			marginTop: "40px",
 			height: "100vh",
 			display: "block",
-
 			width: "100%",
 			margin: "0 auto",
 			backgroundRepeat: "no-repeat",

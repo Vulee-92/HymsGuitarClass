@@ -23,7 +23,6 @@ const OrderSucess = () => {
 	const { state } = location
 	const [isProcessing,setIsProcessing] = useState(false);
 	const user = useSelector((state) => state.user)
-	console.log("user",user)
 	const classes = styles();
 	const delay = (ms) => new Promise((resolve) => setTimeout(resolve,ms));
 	// const fetchDataWithDelay = async () => {

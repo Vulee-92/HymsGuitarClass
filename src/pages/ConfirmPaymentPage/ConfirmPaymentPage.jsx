@@ -218,7 +218,7 @@ const ConfirmPaymentPage = () => {
 			// toast.success(`Cập nhật thành công`);
 
 		} catch (error) {
-			console.error(error);
+			// console.error(error);
 			// Xử lý lỗi nếu cần
 		}
 	};
@@ -242,7 +242,7 @@ const ConfirmPaymentPage = () => {
 				dispatch(updateUser(updatedUser));
 			} catch (error) {
 				// Xử lý lỗi tại đây nếu cần
-				console.error(error);
+				// console.error(error);
 			}
 		}
 	};
