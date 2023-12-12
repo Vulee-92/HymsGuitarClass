@@ -131,7 +131,7 @@ const ProductsPage = () => {
 			</Typography> */}
 			<Box className={classes.container}>
 			</Box>
-			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
+			<Container maxWidth="xl" style={{ marginTop: "100px" }} >
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
 						<NavbarComponent />
@@ -141,7 +141,7 @@ const ProductsPage = () => {
 					</Grid>
 				</Grid>
 			</Container>
-			<Container maxWidth="lg">
+			<Container maxWidth="xl">
 				<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 					<Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: { xl: " 10px 30px",xs: "0px 10px" } }}>
 						<div>

@@ -7,7 +7,7 @@ import CStyles from "../../utils/common";
 export default makeStyles(() => {
 	return {
 		container: {
-			maxWidth: " 1140px",
+			// maxWidth: " 1140px",
 		},
 		priceTitle: {
 			...CStyles.txt_title_item,
@@ -124,8 +124,8 @@ export default makeStyles(() => {
 			justifyContent: "center"
 		},
 		innerInsider: {
-			maxWidth: "1160px",
-			padding: "60px 30px",
+			// maxWidth: "1160px",
+			padding: "60px 0px",
 			margin: "0 auto",
 			boxSizing: "border-box"
 		},

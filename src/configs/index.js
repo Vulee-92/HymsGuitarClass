@@ -48,9 +48,10 @@ export const Assets = {
 	bgHome: require("../assets/images/background/bg_carousel_desktop.png"),
 	bgHome_1: require("../assets/images/background/index.jpg"),
 
-	bgHomeMobile: require("../assets/images/background/bg_carousel.png"),
+	bgHomeMobile: require("../assets/images/background/bg_carousel_mobile.png"),
 
 	bgHymnsCenter: require("../assets/images/background/hymnscenter_bg.png"),
+	bgHymnsCenterChristmas: require("../assets/images/background/bg_carousel_desktop_christmas_2.png"),
 	bgHome1: require("../assets/images/background/1.png"),
 	bgHome2: require("../assets/images/background/2.png"),
 	bgHome3: require("../assets/images/background/3.png"),

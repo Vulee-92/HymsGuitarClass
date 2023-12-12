@@ -8,7 +8,7 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			backgroundImage: `url(${Assets.bgHome})`,
+			backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
 
 			marginTop: "40px",
 			height: "100vh",
@@ -31,7 +31,7 @@ export default makeStyles(() => {
 				display: "block"
 			},
 			'@media (min-width: 768px) and (max-width: 1509px)': {
-				backgroundImage: `url(${Assets.bgHome})`,
+				backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
@@ -43,7 +43,7 @@ export default makeStyles(() => {
 				display: "block"
 			},
 			'@media (min-width: 1510px)': {
-				backgroundImage: `url(${Assets.bgHome})`,
+				backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
@@ -509,20 +509,10 @@ export default makeStyles(() => {
 				width: "200px !important",
 				marginRight: "30px !important",
 
-				"swiper": {
-					width: "300px",
-					height: "380px"
-				},
 				"swiper-slide": {
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					borderRadius: "18px",
-					fontSize: "22px",
-					fontWeight: "bold",
-					color: " #fff",
+					width: "200px !important",
+					marginRight: "30px !important"
 				},
-
 				"swiper-slide-active": {
 					width: "200px !important",
 					marginRight: "30px !important"

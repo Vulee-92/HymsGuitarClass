@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css/effect-cards';
 
-import CardComponent from 'components/CardComponent/CardComponent';
+import CardComponent from '../../components/CardComponent/CardComponent';
 import { Typography } from '@mui/material';
 
 const YourSwiperComponent = ({ latestProducts,classes }) => {

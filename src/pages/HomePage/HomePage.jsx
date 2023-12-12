@@ -11,23 +11,14 @@ import 'swiper/css'; // Import CSS Swiper
 // Thêm các styles tùy chọn nếu cần
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
-import { EffectCards } from 'swiper/modules';
+import { Autoplay,Pagination,Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
-// Import Swiper styles
-
-
-// import required modules
 
 
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useDebounce } from "../../hooks/useDebounce";
-import { ParallaxBanner } from "react-scroll-parallax";
-import Slider from "react-slick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet-async";
 import * as BlogService from "../../services/BlogService";
 import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
@@ -35,10 +26,9 @@ import { Assets } from "../../configs";
 import Typical from "react-typical";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import Carousel from "components/CardComponent/CarouselComponent/CarouselComponent";
-import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
+import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiperComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
-const CardComponent = React.lazy(() => import('../../components/CardComponent/CardComponent'));
 
 const HomePage = () => {
 	const searchProduct = useSelector((state) => state?.product?.search);
@@ -62,12 +52,8 @@ const HomePage = () => {
 	for (let i = 0; i < 5; i++) {
 		slides.push(<SwiperSlide key={`slide-${i}`}>Slide {i + 1}</SwiperSlide>);
 	}
-	// Lấy giá trị của cookie 'deviceid'
-	var deviceIdValue = getCookieValue('deviceId');
 
-	// Hiển thị giá trị của cookie 'deviceid'
 
-	// Sử dụng giá trị userId tại đây
 	const fetchProductAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
@@ -87,21 +73,8 @@ const HomePage = () => {
 
 		return res;
 	};
-	// const fetchProductAll = async (search) => {
-	//   let res = [];
-	//     res = await ProductService.getAllProduct(search);
-	//   if (search?.length > 0 || refSearch?.current) {
-	//     setStateProducts(res?.data);
-	//     return []
-	//   } else {
-	//     return res;
-	//   }
-	// }
+
 	const user = useSelector((state) => state.user);
-	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
-	// ...
-
-
 	const fetchRecentlyViewed = async () => {
 		let storageUserID = localStorage.getItem("userId");
 		if (storageUserID === "undefined") {
@@ -160,7 +133,7 @@ const HomePage = () => {
 	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
 
 	// Lấy ra 5 sản phẩm mới nhất
-	const latestProducts = sortedProducts?.slice(0,5);
+	const latestProducts = sortedProducts?.slice(0,6);
 
 	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
@@ -174,81 +147,11 @@ const HomePage = () => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	function SampleNextArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.buttontoi} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} rotation={180} />
-			</Box>
-		);
-	}
-
-	function SamplePrevArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.samplePrevArrow} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} />
-			</Box>
-		);
-	}
-	const settingsBlog = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		cssEase: "linear",
-		pauseOnHover: true,
-		appendDots: dots => (
-			<div
-				style={{
-					borderRadius: "10px",
-					marginTop: "15px"
-				}}
-			>
-				<ul style={{
-					margin: "0px",
-				}}>
-					{dots}
-				</ul>
-			</div>
-		),
-		customPaging: i => (
-			<button
-				style={{
-					width: "10px",
-					height: "10px",
-
-					".slick-dots li.slick-active button:before": {
-						zIndex: 1000,
-						height: "8px !important",
-						marginRight: "10px",
-						backgroundColor: "#dce0e3",
-						borderRadius: "10px",
-						content: "",
-						opacity: 1,
-						transition: "width .3s linear,background-color .3s linear",
-						width: "32px",
-					}
-				}}
-			/>
-		),
-		className: "left",
-		centerMode: true,
-		centerPadding: "5px",
-	};
 
 
 
-	const images = [
-		{ mobile: Assets.bgHomeM1,default: Assets.bgHome },
-		// { mobile: Assets.bgHomeM2,default: Assets.bgHome2 },
-		// { mobile: Assets.bgHomeM3,default: Assets.bgHome3 },
-		// { mobile: Assets.bgHomeM4,default: Assets.bgHome4 },
-		// { mobile: Assets.bgHomeM5,default: Assets.bgHome5 },
-		// { mobile: Assets.bgHomeM6,default: Assets.bgHome6 },
-		// Thêm các đối tượng hình ảnh khác nếu cần
-	];
+
+
 
 
 
@@ -267,13 +170,33 @@ const HomePage = () => {
 			<Helmet>
 				<title> Hymns </title>
 			</Helmet>
+			{/* <Container maxWidth='xl' style={{ marginTop: "80px" }} sx={{ display: { xl: "block",lg: "block",xs: "none" } }}>
+				<Swiper
+					spaceBetween={30}
+					centeredSlides={true}
+					autoplay={{
+						delay: 2500,
+						disableOnInteraction: false,
+					}}
+					pagination={{
+						clickable: true,
+					}}
+					navigation={true}
+					modules={[Autoplay,Pagination,Navigation]}
+					className="mySwiper"
+				>
 
+
+					<SwiperSlide ><img src={Assets.bgHymnsCenterChristmas} style={{ width: "100%",height: "50vh",margin: "auto",display: "block" }} /></SwiperSlide>
+					<SwiperSlide ><img src={Assets.bgHome} style={{ width: "100%",height: "25vh",margin: "auto",display: "block" }} /></SwiperSlide>
+
+				</Swiper>
+
+			</Container > */}
 			<Box className={classes.container}>
 			</Box>
-			{/* <Box >
-				<ImageCarousel images={images} />
-			</Box> */}
-			<Container maxWidth='lg'>
+
+			<Container maxWidth='xl'>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
@@ -326,7 +249,7 @@ const HomePage = () => {
 
 			</Container>
 
-			<Container maxWidth='lg'>
+			<Container maxWidth='xl'>
 				<Typography className={classes.txtTitleRecentlyViewed}>Sản phẩm bán chạy</Typography>
 
 				<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
@@ -334,9 +257,9 @@ const HomePage = () => {
 
 				{/* </ImageList> */}
 			</Container>
-			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
+			<Container maxWidth='xl' style={{ marginTop: "50px",padding: 0 }}>
 				<>
-					<Container maxWidth='lg' style={{ padding: 0 }}>
+					<Container maxWidth='xl' style={{ padding: 0 }}>
 						<Box sx={{
 							paddingLeft: "30px",paddingRight: "30px",display: { xl: "block",xs: "none" }
 						}}>
@@ -348,9 +271,9 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container >
-			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
+			<Container maxWidth='xl' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
 				<>
-					<Container maxWidth='lg' style={{ padding: 0 }}>
+					<Container maxWidth='xl' style={{ padding: 0 }}>
 						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
 							<Typography className={classes.txtTitleBox}>Về Hymns Center</Typography>
 							<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
@@ -360,7 +283,7 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container>
-			<Container maxWidth='lg'>
+			<Container maxWidth='xl'>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
@@ -379,16 +302,12 @@ const HomePage = () => {
 							))}
 						</Slider> */}
 						<Swiper
-							// spaceBetween={10}
+							spaceBetween={10}
 
-							// grabCursor={true}
-							// // navigation={true}
-							// style={{ paddingLeft: '0px',paddingRight: '0px' }}
-							// modules={[Pagination]}
-							effect={'cards'}
 							grabCursor={true}
-							centeredSlides={true}
-							modules={[EffectCards]}
+							// navigation={true}
+							style={{ paddingLeft: '0px',paddingRight: '0px' }}
+							modules={[Pagination]}
 							className="mySwiper"
 							breakpoints={{
 								320: { slidesPerView: 2 },
@@ -442,7 +361,7 @@ const HomePage = () => {
 				</Button> */}
 			</Container >
 			{(recentlyViewed?.products && (
-				<Container maxWidth='lg'>
+				<Container maxWidth='xl'>
 					<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>
 					<YourSwiperComponent latestProducts={recentlyViewed?.products} classes={classes} />
 				</Container>

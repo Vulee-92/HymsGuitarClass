@@ -118,32 +118,34 @@ const FooterComponent = () => {
 						</Box>
 					</Box> */}
 				<Box className={classes.blockHymnsInsider}>
-					<Box className={classes.innerInsider}>
-						<Grid container>
-							<Grid item xs={12} sm={12} xl={7} md={12} >
-								<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
-									Trở thành thành viên đặc biệt của Hymns
-								</Typography>
-								<Box onClick={goToSignIn}>
-									<Button
-										className={classes.btnLoginHeader}
-									>
-										Đăng ký
-									</Button>
-									<Typography className={classes.txtTilteInsider}>
-										"Đăng ký ngay để nhận các email với cơ hội nhận giải thưởng đàn guitar, ưu đãi hấp dẫn, tin tức về guitar và nhiều hơn nữa từ Hymns Center!"
+					<Container maxWidth='xl'>
+						<Box className={classes.innerInsider}>
+							<Grid container>
+								<Grid item xs={12} sm={12} xl={7} md={12} >
+									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
+										Trở thành thành viên đặc biệt của Hymns
 									</Typography>
-								</Box>
-							</Grid>
+									<Box onClick={goToSignIn}>
+										<Button
+											className={classes.btnLoginHeader}
+										>
+											Đăng ký
+										</Button>
+										<Typography className={classes.txtTilteInsider}>
+											"Đăng ký ngay để nhận các email với cơ hội nhận giải thưởng đàn guitar, ưu đãi hấp dẫn, tin tức về guitar và nhiều hơn nữa từ Hymns Center!"
+										</Typography>
+									</Box>
+								</Grid>
 
-							<Grid item xs={12} sm={2} xl={6}>
+								<Grid item xs={12} sm={2} xl={6}>
 
+								</Grid>
 							</Grid>
-						</Grid>
-					</Box>
+						</Box>
+					</Container>
 				</Box>
 				<Box className={classes.blockFooterConnect}>
-					<Container className={classes.container}>
+					<Container maxWidth='xl'>
 						<Grid container>
 
 							<Box className={classes.innerConnect} sx={{
@@ -205,7 +207,8 @@ const FooterComponent = () => {
 					</Container>
 				</Box >
 				<Box className={classes.blockFooterConnect} sx={{ paddingTop: "75px" }}>
-					<Container className={classes.container}>
+					<Container maxWidth='xl'>
+
 
 
 						<Grid container sx={{ padding: "0px 13px" }}>
