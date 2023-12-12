@@ -335,7 +335,9 @@ export default makeStyles(() => {
 		},
 		hymnsName: {
 			...CStyles.txt_title_item,
-			fontSize: "0.7rem",
+			fontSize: "1rem",
+			fontWeight: 600,
+
 		},
 		txtTilteLight: {
 			...CStyles.txt_body_item,

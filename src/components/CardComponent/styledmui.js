@@ -15,7 +15,7 @@ export default makeStyles(() => {
 			textAlign: "left",
 			fontWeight: 500,
 			color: "#231e18",
-			fontSize: "1.125rem",
+			fontSize: "1rem",
 			width: "100%",
 			height: "70px",
 			overflow: "hidden",
@@ -27,11 +27,18 @@ export default makeStyles(() => {
 		},
 		txtPrice: {
 			...CStyles.txt_body_item,
-			fontSize: 16,
+			fontSize: "1rem",
 			textAlign: "left",
 			fontWeight: 500,
 			marginBottom: 5,
 			color: "#0b2238",
+		},
+		txtStatusSell: {
+			...CStyles.txt_body_item,
+			fontSize: "1rem",
+			textAlign: "left",
+			fontWeight: 400,
+			marginBottom: 5,
 		},
 		Image: {
 			zIndex: 10,

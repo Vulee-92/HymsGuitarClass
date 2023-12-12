@@ -33,7 +33,7 @@ import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiper
 const HomePage = () => {
 	const searchProduct = useSelector((state) => state?.product?.search);
 	const searchDebounce = useDebounce(searchProduct,100);
-	const [limit,setLimit] = useState(6);
+	const [limit,setLimit] = useState(12);
 	const classes = styles();
 	const [loading,setLoading] = useState(false);
 	const { t } = useTranslation();
@@ -133,8 +133,15 @@ const HomePage = () => {
 	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
 
 	// Lấy ra 5 sản phẩm mới nhất
-	const latestProducts = sortedProducts?.slice(0,6);
+	const latestProducts = sortedProducts?.slice(0,12);
+	const acousticProducts = latestProducts?.filter(product => product.type === "Acoustic Guitars");
 
+	// Then, filter out all products without type "Acoustic Guitars"
+	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic Guitars");
+
+	// Finally, concatenate the two arrays to get the desired order
+	const sortedProductsGuitar = acousticProducts?.concat(otherProducts);
+	console.log("sortedProductss",sortedProductsGuitar)
 	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
 
@@ -221,7 +228,7 @@ const HomePage = () => {
 								style={{ textAlign: "center",willChange: "transform" }}
 							/>
 						) : (
-							<YourSwiperComponent latestProducts={latestProducts} classes={classes} />
+							<YourSwiperComponent latestProducts={sortedProductsGuitar} classes={classes} />
 
 						)}
 
@@ -293,7 +300,7 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container>
-			<Container maxWidth='xl'>
+			<Container maxWidth='xl' style={{ width: "95%" }}>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
@@ -320,10 +327,10 @@ const HomePage = () => {
 							modules={[Pagination]}
 							className="mySwiper"
 							breakpoints={{
-								320: { slidesPerView: 2 },
-								396: { slidesPerView: 2 },
-								480: { slidesPerView: 2 },
-								768: { slidesPerView: 2 },
+								320: { slidesPerView: 1 },
+								396: { slidesPerView: 1 },
+								480: { slidesPerView: 1 },
+								768: { slidesPerView: 1 },
 								1024: { slidesPerView: 4 },
 								1200: { slidesPerView: 5 },
 							}}
@@ -332,7 +339,7 @@ const HomePage = () => {
 
 
 								return (
-									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id} style={{ marginLeft: '40px',marginRight: '10px' }}>
+									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id}>
 										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
 									</SwiperSlide>
 								);

@@ -61,7 +61,7 @@ BlogPostCard.propTypes = {
 };
 
 export default function BlogPostCard({ blog,index,id }) {
-	const { image,title } = blog;
+	const { image,title,description } = blog;
 	const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2;
 	const navigate = useNavigate();
@@ -170,6 +170,12 @@ export default function BlogPostCard({ blog,index,id }) {
 								}),
 							}}
 						>
+							<Typography
+								className={classes.txtTilte}
+								dangerouslySetInnerHTML={{
+									__html: description,
+								}}
+							></Typography>
 						</Box>
 					</StyledInfo>
 				</CardContent>

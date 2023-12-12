@@ -40,7 +40,7 @@ const StyledInfo = styled('div')(({ theme }) => ({
 	display: 'flex',
 	flexWrap: 'wrap',
 	justifyContent: 'flex-end',
-	marginTop: theme.spacing(3),
+	// marginTop: theme.spacing(3),
 	color: theme.palette.text.disabled,
 }));
 
@@ -62,7 +62,7 @@ BlogPostCardMobile.propTypes = {
 };
 
 export default function BlogPostCardMobile({ blog,index,id,responsive }) {
-	const { image,title } = blog;
+	const { image,title,description } = blog;
 	// const latestPostLarge = index === 0;
 	const latestPost = index === 1 || index === 2 || index === 3 || index === 0;
 	const navigate = useNavigate();
@@ -117,14 +117,32 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
 						variant="subtitle2"
-						sx={{ height: "80px !important" }}
+						sx={{ height: "40px !important" }}
 						className={classes.txtBlogTitle}
 
 
 					>
 						{title}
 					</StyledTitle>
+					<StyledInfo>
+						<Box
+							key={index}
+							sx={{
+								display: 'flex',
+								alignItems: 'left',
+								// ml: index === 0 ? 0 : 1.5,
 
+							}}
+						>
+							<Typography
+								onClick={() => handleDetailBlog(id)}
+								className={classes.txtTilte}
+								dangerouslySetInnerHTML={{
+									__html: description?.slice(0,50) + "..."
+								}}
+							/>
+						</Box>
+					</StyledInfo>
 				</CardContent>
 			</Card>
 		</Grid>

@@ -39,9 +39,9 @@ const CardComponent = (props,post,index) => {
 
 
 			<Typography className={classes.nameProduct} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{name}</Typography>
-			<Typography className={classes.txtPrice} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{countInStock === 0 ? <Typography color="red">hết hàng</Typography> : <Typography color="#45cc8f">còn hàng</Typography>}</Typography>
+			<Typography className={classes.txtPrice} sx={{ cursor: 'pointers' }} onClick={() => handleDetailsProduct(slug)}> 			{countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "red" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#45cc8f" }} >còn hàng</Typography>}</Typography>
 
-			<Typography className={classes.txtPrice} style={{ textAlign: 'left',cursor: 'pointers',fontSize: "18px" }}>{convertPrice(price)}</Typography>
+			<Typography className={classes.txtPrice} style={{ textAlign: 'left',cursor: 'pointers' }}>{convertPrice(price)}</Typography>
 		</section>
 	);
 }

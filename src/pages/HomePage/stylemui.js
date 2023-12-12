@@ -49,7 +49,7 @@ export default makeStyles(() => {
 				alignItems: "center",
 				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
-				height: "800px",
+				height: "500px",
 
 				width: "100%",
 				display: "block"
@@ -118,8 +118,8 @@ export default makeStyles(() => {
 			position: "relative",
 			textAlign: "left",
 			zIndex: 10,
-			marginTop: "100px",
-			marginBottom: "70px",
+			marginTop: "80px",
+			marginBottom: "30px",
 			margin: 0,
 			textTransform: "uppercase",
 			pointerEvents: "none",
@@ -209,7 +209,7 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			color: "#393939",
 			marginTop: "30px",
-			fontSize: "18px",
+			fontSize: "1rem",
 			fontWeight: 500,
 			marginBottom: "30px",
 			lineHeight: 2
@@ -506,19 +506,20 @@ export default makeStyles(() => {
 
 			},
 			SwiperSlideBlog: {
-				width: "200px !important",
-				marginRight: "30px !important",
+				width: "320px !important",
+				margin: "0 15px",
 
 				"swiper-slide": {
 					width: "200px !important",
 					marginRight: "30px !important"
 				},
 				"swiper-slide-active": {
-					width: "200px !important",
-					marginRight: "30px !important"
+					width: "320px !important",
+					margin: "0 15px",
 				},
 				"@media (max-width: 767px)": {
-					marginRight: "30px !important"
+					width: "320px !important",
+					margin: "0 15px",
 				},
 				"@media (min-width: 768px)": {
 					marginRight: "70px !important",
