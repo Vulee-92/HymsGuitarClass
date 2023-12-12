@@ -36,7 +36,7 @@ export default makeStyles(() => {
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-				backgroundSize: "contain",
+				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
 				height: "20vh",
 
@@ -48,7 +48,7 @@ export default makeStyles(() => {
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-				backgroundSize: "contain",
+				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
 				height: "800px",
 
