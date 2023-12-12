@@ -15,6 +15,10 @@ import { Pagination } from 'swiper/modules';
 import { EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
+// Import Swiper styles
+
+
+// import required modules
 
 
 import { useTranslation } from "react-i18next";
@@ -375,12 +379,16 @@ const HomePage = () => {
 							))}
 						</Slider> */}
 						<Swiper
-							spaceBetween={10}
+							// spaceBetween={10}
 
+							// grabCursor={true}
+							// // navigation={true}
+							// style={{ paddingLeft: '0px',paddingRight: '0px' }}
+							// modules={[Pagination]}
+							effect={'cards'}
 							grabCursor={true}
-							// navigation={true}
-							style={{ paddingLeft: '0px',paddingRight: '0px' }}
-							modules={[Pagination]}
+							centeredSlides={true}
+							modules={[EffectCards]}
 							className="mySwiper"
 							breakpoints={{
 								320: { slidesPerView: 2 },

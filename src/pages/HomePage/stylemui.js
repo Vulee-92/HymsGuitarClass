@@ -509,10 +509,20 @@ export default makeStyles(() => {
 				width: "200px !important",
 				marginRight: "30px !important",
 
-				"swiper-slide": {
-					width: "200px !important",
-					marginRight: "30px !important"
+				"swiper": {
+					width: "300px",
+					height: "380px"
 				},
+				"swiper-slide": {
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+					borderRadius: "18px",
+					fontSize: "22px",
+					fontWeight: "bold",
+					color: " #fff",
+				},
+
 				"swiper-slide-active": {
 					width: "200px !important",
 					marginRight: "30px !important"
