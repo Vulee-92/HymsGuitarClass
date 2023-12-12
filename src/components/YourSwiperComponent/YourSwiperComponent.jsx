@@ -14,7 +14,7 @@ const YourSwiperComponent = ({ latestProducts,classes }) => {
 	return (
 		<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
 			<Swiper
-				spaceBetween={100}
+				spaceBetween={200}
 				grabCursor={true}
 				modules={[Pagination]}
 				className="mySwiper"

@@ -28,11 +28,11 @@ const CardComponent = (props,post,index) => {
 			<Box >
 				<img onClick={() => handleDetailsProduct(slug)} style={{
 					display: 'block',
-					height: '10vh',
-					width: 'auto',
+					height: '150px',
+					width: '150px',
+					left: "-15px",
 					position: 'relative',
 					top: 0,
-					left: "20%",
 					cursor: 'pointer',
 				}} src={image} alt="img 01" />
 			</Box>

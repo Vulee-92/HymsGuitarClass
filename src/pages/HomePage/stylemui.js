@@ -486,19 +486,19 @@ export default makeStyles(() => {
 			},
 		},
 		SwiperSlide: {
-			width: "120px !important",
-			marginRight: "30px !important",
+			width: "130px !important",
+			marginRight: "25px !important",
 
 			"swiper-slide": {
-				width: "120px !important",
-				marginRight: "30px !important"
+				width: "130px !important",
+				marginRight: "25px !important"
 			},
 			"swiper-slide-active": {
 				width: "120px !important",
-				marginRight: "30px !important"
+				marginRight: "25px !important"
 			},
 			"@media (max-width: 767px)": {
-				marginRight: "30px !important"
+				marginRight: "25px !important"
 			},
 			"@media (min-width: 768px)": {
 				marginRight: "70px !important",
