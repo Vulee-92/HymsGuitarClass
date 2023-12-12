@@ -11,28 +11,49 @@ export default makeStyles(() => {
 			backgroundImage: `url(${Assets.bgHome})`,
 
 			marginTop: "40px",
-			height: "50vh",
+			height: "100vh",
+			display: "block",
 			width: "100%",
-			backgroundSize: "cover",
+			margin: "0 auto",
 			backgroundRepeat: "no-repeat",
-			padding: Configs.pH,
+			// padding: Configs.pH,
 
 
-			maxHeight: "100%",
 			'@media (max-width: 767px)': {
-				backgroundImage: `url(${Assets.bgHome})`,
-				width: "100vw",
-				backgroundPosition: "0px 20px",
+				backgroundImage: `url(${Assets.bgHomeMobile})`,
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				width: "100%",
+				height: "60vh", /* Đảm bảo tỷ lệ chiều rộng/chiều cao không bị biến đổi */
+				display: "block"
 			},
 			'@media (min-width: 768px) and (max-width: 1509px)': {
 				backgroundImage: `url(${Assets.bgHome})`,
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				height: "20vh",
+
 				width: "100vw",
-				backgroundPosition: "0px 20px",
+				display: "block"
 			},
 			'@media (min-width: 1510px)': {
 				backgroundImage: `url(${Assets.bgHome})`,
-				width: "100vw",
-				backgroundPosition: "0px -620px",
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				height: "800px",
+
+				width: "100%",
+				display: "block"
+
 
 			},
 		},

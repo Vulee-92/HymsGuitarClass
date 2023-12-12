@@ -8,15 +8,54 @@ export default makeStyles(() => {
 	return {
 		container: {
 			...CStyles.center,
-			height: "40vh",
 			backgroundImage: `url(${Assets.bgHome})`,
-			backgroundSize: "cover",
-			backgroundRepeat: "no-repeat",
-			padding: Configs.pH,
-			display: "fixed",
-			padding: Configs.pH,
+
+			marginTop: "40px",
+			height: "100vh",
+			display: "block",
 			width: "100%",
-			backgroundPosition: "0px -300px",// Đảm bảo chiều rộng là 100%
+			margin: "0 auto",
+			backgroundRepeat: "no-repeat",
+			// padding: Configs.pH,
+
+
+			'@media (max-width: 767px)': {
+				backgroundImage: `url(${Assets.bgHomeMobile})`,
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				width: "100%",
+				height: "60vh", /* Đảm bảo tỷ lệ chiều rộng/chiều cao không bị biến đổi */
+				display: "block"
+			},
+			'@media (min-width: 768px) and (max-width: 1509px)': {
+				backgroundImage: `url(${Assets.bgHome})`,
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				height: "20vh",
+
+				width: "100vw",
+				display: "block"
+			},
+			'@media (min-width: 1510px)': {
+				backgroundImage: `url(${Assets.bgHome})`,
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				height: "800px",
+
+				width: "100%",
+				display: "block"
+
+
+			},
 		},
 		conModal: {
 			...CStyles.shadow,

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
 const PRODUCT_COLOR = [
 	"#00AB55",
@@ -128,6 +129,8 @@ const ProductsPage = () => {
 					className={classes.conTextCreate}
 				/>
 			</Typography> */}
+			<Box className={classes.container}>
+			</Box>
 			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >

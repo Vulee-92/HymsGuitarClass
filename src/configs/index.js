@@ -46,6 +46,8 @@ export const Assets = {
 	bgSignUp: require("../assets/images/background/bgSignIn.jpg"),
 	bgProduct: require("../assets/images/background/bgproduct.jpg"),
 	bgHome: require("../assets/images/background/bg_carousel_desktop.png"),
+	bgHome_1: require("../assets/images/background/index.jpg"),
+
 	bgHomeMobile: require("../assets/images/background/bg_carousel.png"),
 
 	bgHymnsCenter: require("../assets/images/background/hymnscenter_bg.png"),
