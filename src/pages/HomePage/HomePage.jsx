@@ -85,7 +85,7 @@ const HomePage = () => {
 		let userIdWithQuotes = storageUserID;
 
 		// Sử dụng replace để loại bỏ dấu \ và "
-		let userIdWithoutQuotes = userIdWithQuotes.replace(/\\/g,'').replace(/"/g,'');
+		let userIdWithoutQuotes = userIdWithQuotes?.replace(/\\/g,'')?.replace(/"/g,'');
 		if (!userIdWithoutQuotes) {
 			// Nếu userId chưa được set, bạn có thể thực hiện các hành động như đăng nhập hoặc tạo mới userId
 			return
@@ -160,6 +160,16 @@ const HomePage = () => {
 	// Lấy bài viết mới nhất đưa lên đầu
 	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
 
+
+	useEffect(() => {
+		// Thử chọn phần tử meta
+		const ogImageMeta = document.querySelector('meta[property="og:image"]');
+
+		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
+		if (ogImageMeta) {
+			ogImageMeta.setAttribute('content',"https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
+	},[]);
 
 
 

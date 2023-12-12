@@ -117,9 +117,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 		if (slug) {
 			const res = await ProductService.getDetailsProduct(slug);
-			const productData = res.data;
 			await fetchRecentlyViewed(slug);
-			return productData;
+			return res?.data;
 		}
 	};
 
@@ -225,13 +224,20 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const handleCloseDialog = () => {
 		setOpenDialog(false);
 	};
-	const { isLoading,data: productDetails } = useQuery(["product-details",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
+	const { isLoading,data: productDetails } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
+	console.log("productDetails,",productDetails)
 
 	useEffect(() => {
-		// Khi component được render, cập nhật giá trị của thẻ meta
-		document.querySelector('meta[property="og:image"]').setAttribute('content',productDetails?.image);
+		// Thử chọn phần tử meta
+		const ogImageMeta = document.querySelector('meta[property="og:image"]');
+
+		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
+		if (ogImageMeta) {
+			ogImageMeta.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
 	},[productDetails]);
-	console.log("productDetails,",productDetails)
+
+
 	useEffect(() => {
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
