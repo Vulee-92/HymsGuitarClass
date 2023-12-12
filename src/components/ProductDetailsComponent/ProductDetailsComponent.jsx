@@ -227,7 +227,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	};
 	const { isLoading,data: productDetails } = useQuery(["product-details",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
 
-
+	useEffect(() => {
+		// Khi component được render, cập nhật giá trị của thẻ meta
+		document.querySelector('meta[property="og:image"]').setAttribute('content',productDetails?.image);
+	},[productDetails]);
 	console.log("productDetails,",productDetails)
 	useEffect(() => {
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
