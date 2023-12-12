@@ -22,7 +22,7 @@ const AboutPage = () => {
 	return (
 		<>
 
-			<ImageCarousel images={images} />
+			{/* <ImageCarousel images={images} /> */}
 			{/* <Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="About" className={classes.conTextCreate} />
 					<Typography className={classes.txtAboutInfo}>  <AnimationComponent type="text" text="Know more about my career" className={classes.txtAboutInfo} /></Typography>
 				</Typography> */}
