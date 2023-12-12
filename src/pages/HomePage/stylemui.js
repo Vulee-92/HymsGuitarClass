@@ -118,7 +118,7 @@ export default makeStyles(() => {
 			position: "relative",
 			textAlign: "left",
 			zIndex: 10,
-			marginTop: "80px",
+			marginTop: "30px",
 			marginBottom: "30px",
 			margin: 0,
 			textTransform: "uppercase",
@@ -128,22 +128,22 @@ export default makeStyles(() => {
 				marginTop: "30px",
 				textAlign: "center",
 			},
-			"&::after": {
-				content: '""',
-				display: 'block',
-				position: 'absolute',
-				bottom: "-20px",
-				// left: '10%',
-				marginTop: "10px",
-				width: '90px',
-				height: '3px',
-				backgroundColor: "#212B36", // Màu đỏ của MUI
-				"@media (max-width: 550px)": {
-					textAlign: "center",
-					display: 'none',
+			// "&::after": {
+			// 	content: '""',
+			// 	display: 'block',
+			// 	position: 'absolute',
+			// 	bottom: "-20px",
+			// 	// left: '10%',
+			// 	marginTop: "5px",
+			// 	width: '90px',
+			// 	height: '3px',
+			// 	borderTop: "2px solid #454F5B",
+			// 	"@media (max-width: 550px)": {
+			// 		textAlign: "center",
+			// 		display: 'none',
 
-				},
-			},
+			// 	},
+			// },
 		},
 		txtTitleRecentlyViewed: {
 			fontSize: "1.375em",
@@ -152,8 +152,8 @@ export default makeStyles(() => {
 			position: "relative",
 			textAlign: "left",
 			zIndex: 10,
-			marginTop: "100px",
-			marginBottom: "70px",
+			marginTop: "30px",
+			marginBottom: "30px",
 			margin: 0,
 			textTransform: "uppercase",
 			pointerEvents: "none",
@@ -162,22 +162,7 @@ export default makeStyles(() => {
 				marginTop: "30px",
 				textAlign: "center",
 			},
-			"&::after": {
-				content: '""',
-				display: 'block',
-				position: 'absolute',
-				bottom: "-20px",
-				// left: '10%',
-				marginTop: "10px",
-				width: '90px',
-				height: '3px',
-				backgroundColor: "#212B36", // Màu đỏ của MUI
-				"@media (max-width: 550px)": {
-					textAlign: "center",
-					display: 'none',
 
-				},
-			},
 		},
 		ProductItem: {
 			width: "200px"
@@ -209,10 +194,10 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			color: "#393939",
 			marginTop: "30px",
-			fontSize: "1rem",
+			fontSize: "1.125rem",
 			fontWeight: 500,
 			marginBottom: "30px",
-			lineHeight: 2
+			lineHeight: 2.2
 		},
 		txtTilteLoading: {
 			...CStyles.txt_body_item,

@@ -304,20 +304,40 @@ const HomePage = () => {
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
-						{[0,1,2].map((row) => (
+						{/* {[0,1,2].map((row) => (
 							<Grid key={row} container item spacing={2}>
 								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
 									<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
 								))}
 							</Grid>
-						))}
+						))} */}
+						<Swiper
+							spaceBetween={10}
+
+							grabCursor={true}
+							// navigation={true}
+							style={{ paddingLeft: '0px',paddingRight: '0px' }}
+							modules={[Pagination]}
+							className="mySwiper"
+							breakpoints={{
+
+								1024: { slidesPerView: 3 },
+								1200: { slidesPerView: 3 },
+							}}
+						>
+							{blogs?.data?.map((post,index) => {
+
+
+								return (
+									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id}>
+										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
+									</SwiperSlide>
+								);
+							})}
+						</Swiper>
 					</Grid>
 					<Grid container spacing={2} sx={{ display: { xl: "none",xs: "block" } }}>
-						{/* <Slider {...settingsBlog} >
-							{blogs?.data?.map((post,index) => (
-								<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
-							))}
-						</Slider> */}
+
 						<Swiper
 							spaceBetween={10}
 

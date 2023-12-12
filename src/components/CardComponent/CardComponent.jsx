@@ -24,17 +24,18 @@ const CardComponent = (props,post,index) => {
 
 
 	return (
-		<section className="content" id="Explore">
-			<Box >
+		<section id="Explore" >
+			<Box className={classes.boxCard}>
 				<img onClick={() => handleDetailsProduct(slug)} style={{
 					display: 'block',
 					height: '150px',
 					width: '150px',
-					left: "-15px",
 					position: 'relative',
-					top: 0,
+					top: 10,
 					cursor: 'pointer',
-				}} src={image} alt="img 01" />
+				}}
+					sx={{ left: { xl: "15px",lg: "15px",xs: "-20px" } }}
+					src={image} alt={image} />
 			</Box>
 
 

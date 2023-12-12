@@ -50,6 +50,8 @@ const StyledCover = styled('img')({
 	objectFit: 'cover',
 	position: 'absolute',
 	cursor: "pointer",
+	overlay: 1,
+	background: "rgba(0, 0, 0, 0.5)"
 	// transform: "scale(0.7)",
 });
 
@@ -163,19 +165,12 @@ export default function BlogPostCard({ blog,index,id }) {
 							key={index}
 							sx={{
 								display: 'flex',
-								alignItems: 'center',
-								ml: index === 0 ? 0 : 1.5,
-								...((latestPostLarge || latestPost) && {
-									color: 'grey.500',
-								}),
+								alignItems: 'left',
+								// ml: index === 0 ? 0 : 1.5,
+
 							}}
 						>
-							<Typography
-								className={classes.txtTilte}
-								dangerouslySetInnerHTML={{
-									__html: description,
-								}}
-							></Typography>
+
 						</Box>
 					</StyledInfo>
 				</CardContent>

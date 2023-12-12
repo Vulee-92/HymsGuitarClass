@@ -148,7 +148,7 @@ export default function Nav({ openNav,onCloseNav }) {
 					</>
 				) : (
 					<>
-						<Link underline="none">
+						<Link underline="none" style={{ marginBottom: "10px" }}>
 							<StyledAccount>
 								<Avatar src={Assets.ic_user.default} alt={userAvatar} sx={{ width: .1,height: .1 }} />
 
@@ -174,11 +174,11 @@ export default function Nav({ openNav,onCloseNav }) {
 					</>
 				)}
 			</Box>
-			<Box sx={{ px: 2.5,display: 'inline-flex' }}>
+			{/* <Box sx={{ px: 2.5,display: 'inline-flex' }}>
 				<Typography className={classes.pageName}>
 					TRANG
 				</Typography>
-			</Box>
+			</Box> */}
 			<NavSection data={navConfig} />
 
 			<Box sx={{ flexGrow: 1 }} />

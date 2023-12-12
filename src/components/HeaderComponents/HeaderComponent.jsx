@@ -308,125 +308,13 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
-								// onClick={(event) => {
-								// 	// event.stopPropagation();
-								// 	setIsDrawerOpen(!isDrawerOpen);
-								// 	setCurrentIcon(isDrawerOpen ? faBarsStaggered : faTimes);
-								// }}
+
 								onClick={handleToggleDrawer}
 								color="inherit"
 							>
 								<FontAwesomeIcon icon={currentIcon} style={{ fontSize: "18px" }} />
 							</IconButton>
-							{/* <Button >{"top"}</Button> */}
-							{/* <Drawer anchor="left"
-								open={isDrawerOpen} onClose={handleCloseDrawer}
-								variant="temporary"
-								disableScrollLock="false"
-								className={classes.menuContent}
-								sx={{
-									flexGrow: 0,display: { xs: "flex",md: "none" },position: "fixed",
-									width: 210,
-									flexShrink: 0,
-									'& .MuiDrawer-paper': {
-										width: 240,
-										boxSizing: 'border-box',
-										zIndex: 1,top: '80px !important'
-									},
-								}}
-							>
 
-								<MenuItem>
-									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Thông tin của bạn</Typography>
-
-								</MenuItem>
-								<MenuItem>
-									{user?.access_token ? (
-										<>
-											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" style={{ marginRight: "16px" }} />
-											<Typography onClick={(event) => {
-												event.stopPropagation();
-												setIsDrawerOpen(!isDrawerOpen);
-												handleNavigateProfile()
-											}}
-												className={classes.txtTilte} >
-												{userName?.length ? userName : user?.email}
-											</Typography>
-										</>
-									) : (
-										<>
-											<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" sx={{ marginRight: "10px" }} />
-											<Button onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen); handleNavigateLogin() }}
-												className={classes.txtTilte}
-											>
-												{t('sign_in')}
-											</Button>
-										</>
-
-									)}
-
-								</MenuItem>
-								<MenuItem sx={{ display: !user?.access_token ? "flex" : "none" }} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(!isDrawerOpen) }}>
-									<>
-										<FontAwesomeIcon icon={faUser} fontSize="18px" color="#212B36" style={{
-											marginRight: "0px",
-										}} />
-										<Button onClose={() => setIsDrawerOpen(false)}
-											onClick={handleNavigateSignIn} className={classes.txtTilte}>
-											{t('sign_up')}
-										</Button>
-									</>
-								</MenuItem>
-								{user?.access_token ? (
-									<>
-										{user?.isAdmin && (
-											<MenuItem onClick={() => handleClickNavigate('admin')}
-											>
-												<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
-													quản lý
-												</Typography>
-											</MenuItem>
-										)}
-										<MenuItem onClick={() => handleClickNavigate(`my-order`)}
-										>
-											<FontAwesomeIcon icon={faTruckFast} fontSize="18px" color="#212B36" style={{ marginRight: "10px" }} />
-											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
-												Đơn hàng của bạn
-											</Typography>
-										</MenuItem>
-										<MenuItem onClick={() => handleClickNavigate()}
-										>
-											<FontAwesomeIcon icon={faRightFromBracket} fontSize="18px" color="#212B36" style={{ marginRight: "14px",}} />
-											<Typography className={classes.txtTilte} onClick={(event) => { event.stopPropagation(); setIsDrawerOpen(isDrawerOpen) }}>
-												Đăng xuất
-											</Typography>
-										</MenuItem>
-									</>
-
-								) : (<></>)}
-								<MenuItem>
-									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">Trang</Typography>
-								</MenuItem>
-								{menuItems.map((item,index) => (
-									<MenuItem key={index} onClick={(event) => { event.stopPropagation(); handleMenuItemClick(item.path); }}>
-										<Typography className={classes.txtTilte} textAlign="center">{item.label}</Typography>
-									</MenuItem>
-								))}
-								<MenuItem>
-									<Typography className={classes.txtTitleNNavBar} href="/" textAlign="center">{t('language')}</Typography>
-								</MenuItem>
-								<MenuItem>
-									<FormControlLabel
-										control={
-											<LanguageSwitch
-												sx={{ m: 1 }}
-												checked={lang === 'en'}
-												onClick={handleLanguageChange}
-											/>
-										}
-									/>
-								</MenuItem>
-							</Drawer> */}
 							<Nav openNav={open} onCloseNav={() => setOpen(false)} />
 
 						</Box>

@@ -37,7 +37,7 @@ export default makeStyles(() => {
 			color: "#000",
 			display: "vertical",
 			textDecoration: "none",
-			fontSize: "1.125rem",
+			fontSize: "1.3rem",
 			overflow: "hidden",
 			overflowWrap: "break-word",
 			"&:hover": {

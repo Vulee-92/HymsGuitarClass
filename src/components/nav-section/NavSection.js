@@ -51,7 +51,7 @@ function NavItem({ item }) {
 	return (
 		<>
 			{/* onChange={handleAccordionChange} */}
-			<Accordion expanded={expanded} >
+			<Accordion expanded={expanded} style={{ boxShadow: "none" }}>
 				<AccordionSummary style={{ padding: "0px !important" }} >
 					<StyledNavItem component={RouterLink}
 						to={path}

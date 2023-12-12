@@ -129,7 +129,7 @@ const ContactPage = () => {
 				<Box className={classes.container}>
 					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Contact" className={classes.conTextCreate} /></Typography>
 				</Box>
-				<Container sx={{ overflow: 'hidden' }}>
+				<Container maxWidth="xl" sx={{ overflow: 'hidden' }}>
 					<Grid container className={classes.conContent} sx={{ overflow: 'hidden' }}>
 
 						<Grid item xs={12} sm={12} lg={4} className={classes.conInfo} >
