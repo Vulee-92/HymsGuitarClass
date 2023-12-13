@@ -34,7 +34,7 @@ export default makeStyles(() => {
 			...CStyles.txt_header_title,
 			textAlign: "left",
 			fontWeight: 500,
-			color: "#000",
+			color: "#0b2238",
 			display: "vertical",
 			textDecoration: "none",
 			fontSize: "1.3rem",
@@ -53,6 +53,8 @@ export default makeStyles(() => {
 		},
 		boxCard: {
 			borderBottom: "0px",
+			width: "90%",
+			margin: "0 auto",
 			borderTop: "2px solid #454F5B",
 			borderRadius: "9px",
 			boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
@@ -64,7 +66,8 @@ export default makeStyles(() => {
 		},
 		txtTilte: {
 			textAlign: "left",
-			fontSize: "1rem",
+			fontSize: ".875rem",
+			color: "##161616"
 
 		},
 		boxBorderCard: {

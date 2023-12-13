@@ -49,21 +49,28 @@ const ProductsPage = () => {
 	};
 	const searchProduct = useSelector((state) => state?.product?.search);
 	const searchDebounce = useDebounce(searchProduct,500);
-	const fetchProductAll = async (page,limit) => {
-		setLoading(true);
-		let res;
-		if (state) {
-			res = await ProductService.getProductType(state,page,limit);
-		} else {
-			res = await ProductService.getAllProduct();
-		}
-		if (res?.status === "OK") {
-			setLoading(false);
-			setProducts(res?.data);
-			setPanigate({ ...panigate,total: res?.totalPage });
-		} else {
-			setLoading(false);
-		}
+	// const fetchProductAll = async (page,limit) => {
+	// 	setLoading(true);
+	// 	let res;
+	// 	if (state) {
+	// 		res = await ProductService.getProductType(state,page,limit);
+	// 	} else {
+	// 		res = await ProductService.getAllProduct();
+	// 	}
+	// 	if (res?.status === "OK") {
+	// 		setLoading(false);
+	// 		setProducts(res?.data);
+	// 		setPanigate({ ...panigate,total: res?.totalPage });
+	// 	} else {
+	// 		setLoading(false);
+	// 	}
+	// };
+	const fetchProductAll = async (context) => {
+		// const limit = context?.queryKey && context?.queryKey[1];
+		// const search = context?.queryKey && context?.queryKey[2];
+		const res = await ProductService.getAllProduct();
+
+		return res;
 	};
 	const { state } = useLocation();
 
@@ -116,6 +123,7 @@ const ProductsPage = () => {
 		// status: sample(["new", "new", "", ""]),
 		...product,
 	})).filter(product => state ? product.type === state : true);
+	console.log("products",products)
 	return (
 		<>
 			<Helmet>
@@ -131,17 +139,20 @@ const ProductsPage = () => {
 			</Typography> */}
 			<Box className={classes.container}>
 			</Box>
-			<Container maxWidth="xl" style={{ marginTop: "100px" }} >
+			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
+				<Typography className={classes.txtTitleBox}>Sản phẩm</Typography>
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
+					{/* <Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
 						<NavbarComponent />
-					</Grid>
-					<Grid item xs={12} sm={12} md={9} xl={9}>
-						<ProductList products={state ? productList?.filter(product => product?.type === state) : productList} />
+					</Grid> */}
+					<Grid item xs={12} sm={12} md={12} xl={12}>
+						{/* <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} /> */}
+						<ProductList products={products} />
+
 					</Grid>
 				</Grid>
 			</Container>
-			<Container maxWidth="xl">
+			<Container maxWidth="lg">
 				<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
 					<Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: { xl: " 10px 30px",xs: "0px 10px" } }}>
 						<div>

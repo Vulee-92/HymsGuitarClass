@@ -29,7 +29,7 @@ import * as BlogService from "../../services/BlogService";
 import ImageCarouselZoom from "../../components/ImageCarouselZoom/ImageCarouselZoom";
 import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
-import YourSwiperComponent from "components/YourSwiperComponent/YourSwiperComponent";
+import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiperComponent";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -258,7 +258,20 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
+	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
 
+	// Lấy ra 5 sản phẩm mới nhất
+	const latestProducts = sortedProducts?.slice(0,5);
+	const acousticProducts = latestProducts?.filter(product => product.type === "Phụ kiện");
+
+	// Then, filter out all products without type "Acoustic Guitars"
+	const otherProducts = latestProducts?.filter(product => product.type !== "Phụ kiện");
+
+	// Finally, concatenate the two arrays to get the desired order
+	// ?.concat(otherProducts)
+	const sortedProductsGuitar = acousticProducts;
+	console.log("sortedProductss",sortedProductsGuitar)
+	// const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
 	const {
 		data: productsAccessory,
@@ -268,23 +281,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	function SampleNextArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.buttontoi} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} rotation={180} />
-			</Box>
-		);
-	}
-
-	function SamplePrevArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.samplePrevArrow} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} />
-			</Box>
-		);
-	}
 
 
 
@@ -292,11 +288,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 
 	const cartButtonRef = useRef(null);
-
+	const cartButtonRefOut = useRef(null);
 	useEffect(() => {
 		const handleScroll = () => {
 			const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
-			if (cartButtonTop < 0) {
+			const cartButtonOut = cartButtonRefOut.current.getBoundingClientRect().top;
+			console.log("cartButtonTop",cartButtonTop)
+			console.log("cartButtonOut",cartButtonOut)
+			if (cartButtonOut < 0 && cartButtonTop < 0) {
+				setIsCartOpen(false);
+			}
+			if (cartButtonTop < 0 && cartButtonOut > 0) {
 				setIsCartOpen(true);
 			} else {
 				setIsCartOpen(false);
@@ -761,29 +763,24 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</Button>
 						</DialogActions>
 					</Dialog>
-					<hr style={{ margin: "60px 0" }} />
-					<Box style={{ margin: "60px 0" }}>
+					<Container maxWidth='lg'
+						ref={cartButtonRefOut}
+					>
+
 						<Typography className={classes.txtTitleBox}>Có thể bạn quan tâm</Typography>
 
-						{/* <AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} /> */}
-						<div className={classes.sliderWrapper}>
-							<YourSwiperComponent latestProducts={products?.data} classes={classes} />
+						{/* <div className={classes.sliderWrapper}> */}
+						<YourSwiperComponent latestProducts={sortedProductsGuitar} classes={classes} />
 
 
-						</div>
-					</Box>
-					<Box style={{ margin: "60px 0" }}>
-						{/* <AnimationComponent type='text' text='Trích từ Blog' className={classes.txtTitleBox} /> */}
+						{/* </div> */}
+					</Container>
+					<Container maxWidth='lg' style={{ width: "95%" }}>
+
 						<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
-
 						<div className={classes.sliderWrapper}>
-
 							<Grid container spacing={2} sx={{ display: { xl: "block",xs: "block" } }}>
-								{/* <Slider {...settingsBlog} >
-							{blogs?.data?.map((post,index) => (
-								<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} />
-							))}
-						</Slider> */}
+
 								<Swiper
 									spaceBetween={10}
 
@@ -793,19 +790,19 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									modules={[Pagination]}
 									className="mySwiper"
 									breakpoints={{
-										320: { slidesPerView: 2 },
-										396: { slidesPerView: 2 },
-										480: { slidesPerView: 2 },
-										768: { slidesPerView: 2 },
-										1024: { slidesPerView: 4 },
-										1200: { slidesPerView: 5 },
+										320: { slidesPerView: 1 },
+										396: { slidesPerView: 1 },
+										480: { slidesPerView: 1 },
+										768: { slidesPerView: 1 },
+										1024: { slidesPerView: 3 },
+										1200: { slidesPerView: 3 },
 									}}
 								>
 									{blogs?.data?.map((post,index) => {
 
 
 										return (
-											<SwiperSlide className={classes.SwiperSlideBlog} key={post._id} style={{ marginLeft: '40px',marginRight: '10px' }}>
+											<SwiperSlide className={classes.SwiperSlideBlog} key={post._id} >
 												<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
 											</SwiperSlide>
 										);
@@ -813,8 +810,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								</Swiper>
 							</Grid>
 						</div>
+					</Container>
 
-					</Box>
 					{(recentlyViewed?.products && (
 						<Container maxWidth='lg'>
 							<Typography className={classes.txtTitleBox}>Xem gần đây</Typography>

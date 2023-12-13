@@ -7,8 +7,20 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch,useSelector } from 'react-redux';
 import * as ProductService from "../../services/ProductService";
 import { addOrderProduct,resetOrder } from "../../redux/slides/orderSlide";
+import LazyLoad from 'react-lazyload';
+import { styled } from '@mui/styles';
+
+
+const StyledProductImg = styled("img")({
+	display: 'block',
+	height: '230px',
+	width: '80%',
+	position: 'relative',
+	top: 10,
+	cursor: 'pointer',
+	left: "10%"
+});
 const CardComponent = (product) => {
-	console.log("product",product)
 	const classes = styles();
 	const [isProcessing,setIsProcessing] = useState(false);
 	const [numProduct,setNumProduct] = useState(1);
@@ -106,21 +118,24 @@ const CardComponent = (product) => {
 	};
 
 
-
 	return (
 		<section id="Explore" className={classes.boxCard}>
 			<Box >
-				<img onClick={() => handleDetailsProduct()} style={{
-					display: 'block',
-					height: '300px',
-					width: '80%',
-					position: 'relative',
-					top: 10,
-					cursor: 'pointer',
-					left: "10%"
-				}}
-					sx={{ left: { xl: "50px",lg: "15px",xs: "-20px" } }}
-					src={product?.product?.image[0]} alt={product?.product?.image} />
+				<LazyLoad>
+					<img
+						style={{
+							display: 'block',
+							height: '230px',
+							width: '80%',
+							position: 'relative',
+							top: 10,
+							cursor: 'pointer',
+							left: "10%"
+						}}
+						onClick={() => handleDetailsProduct()}
+						// sx={{ left: { xl: "50px",lg: "15px",xs: "-20px" } }}
+						src={product?.product?.image[0]} alt={product?.product?.image[0]} />
+				</LazyLoad>
 
 				<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.name}</Typography>
 				<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#45cc8f" }} >còn hàng</Typography>}</Typography>

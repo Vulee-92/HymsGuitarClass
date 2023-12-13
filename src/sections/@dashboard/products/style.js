@@ -48,6 +48,32 @@ export default makeStyles(() => {
 			},
 
 		},
+		SwiperSlide: {
+			// width: "130px !important",
+			// marginRight: "25px !important",
+			paddingBottom: "50px !important",
+
+			"swiper": {
+				paddingBottom: "50px !important"
+			},
+			"swiper-slide": {
+				// width: "130px !important",
+				// marginRight: "25px !important",
+			},
+			"swiper-slide-active": {
+				// width: "120px !important",
+				// marginRight: "25px !important"
+			},
+			"@media (max-width: 767px)": {
+				// marginRight: "25px !important"
+			},
+			"@media (min-width: 768px)": {
+				// marginRight: "70px !important",
+				// width: "180px !important",
+
+			},
+
+		},
 		boxBorderCard: {
 			boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.14)",
 		},

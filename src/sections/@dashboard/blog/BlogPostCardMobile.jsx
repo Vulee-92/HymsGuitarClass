@@ -47,7 +47,7 @@ const StyledInfo = styled('div')(({ theme }) => ({
 const StyledCover = styled('img')({
 	top: 0,
 	width: '100% !important',
-	height: '120%',
+	height: 'auto',
 	objectFit: 'cover',
 	position: 'absolute',
 	cursor: "pointer",
@@ -63,14 +63,11 @@ BlogPostCardMobile.propTypes = {
 
 export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 	const { image,title,description } = blog;
-	// const latestPostLarge = index === 0;
-	const latestPost = index === 1 || index === 2 || index === 3 || index === 0;
 	const navigate = useNavigate();
 	const classes = styles();
 	const handleDetailBlog = (id) => {
 		navigate(`/blog-details/${id}`);
 	};
-
 
 	return (
 		<Grid item xs={responsive} >
@@ -108,16 +105,11 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 						<StyledCover onClick={() => handleDetailBlog(id)} alt={title} src={image} />
 					</LazyLoad>
 				</StyledCardMedia>
-
 				<CardContent
-
 				>
-
-
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
-						variant="subtitle2"
-						sx={{ height: "40px !important" }}
+						sx={{ height: "40px !important",textTransform: "uppercase",fontWeight: 600 }}
 						className={classes.txtBlogTitle}
 
 

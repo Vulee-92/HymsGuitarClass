@@ -10,7 +10,6 @@ import CardComponent from '../../components/CardComponent/CardComponent';
 import { Typography } from '@mui/material';
 
 const YourSwiperComponent = ({ latestProducts,classes,isLoading }) => {
-	console.log("latestProducts",latestProducts)
 	return (
 		<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
 			<Swiper

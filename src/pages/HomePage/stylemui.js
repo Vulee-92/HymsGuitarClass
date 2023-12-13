@@ -496,27 +496,27 @@ export default makeStyles(() => {
 			},
 
 		},
-		SwiperSlideBlog: {
-			width: "320px !important",
-			margin: "0 15px",
+		// SwiperSlideBlog: {
+		// 	width: "320px !important",
+		// 	margin: "0 15px",
 
-			"swiper-slide": {
-				width: "200px !important",
-				marginRight: "30px !important"
-			},
-			"swiper-slide-active": {
-				width: "320px !important",
-				margin: "0 15px",
-			},
-			"@media (max-width: 767px)": {
-				width: "320px !important",
-				margin: "0 15px",
-			},
-			"@media (min-width: 768px)": {
-				marginRight: "70px !important",
-				width: "200px !important",
+		// 	"swiper-slide": {
+		// 		width: "200px !important",
+		// 		marginRight: "30px !important"
+		// 	},
+		// 	"swiper-slide-active": {
+		// 		width: "320px !important",
+		// 		margin: "0 15px",
+		// 	},
+		// 	"@media (max-width: 767px)": {
+		// 		width: "320px !important",
+		// 		margin: "0 15px",
+		// 	},
+		// 	"@media (min-width: 768px)": {
+		// 		marginRight: "70px !important",
+		// 		width: "200px !important",
 
-			},
-		}
+		// 	},
+		// }
 	};
 });

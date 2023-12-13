@@ -104,38 +104,38 @@ export default makeStyles(() => {
 			},
 		},
 		txtTitleBox: {
-			fontSize: "1.375rem",
+			fontSize: "1.5rem",
 			fontWeight: 700,
 			lineHeight: "34px",
 			position: "relative",
 			textAlign: "left",
 			zIndex: 10,
-			marginTop: "100px",
-			marginBottom: "70px",
+			marginTop: "30px",
+			marginBottom: "30px",
 			margin: 0,
 			textTransform: "uppercase",
 			pointerEvents: "none",
 			"@media (max-width: 550px)": {
-				fontSize: "1.125rem",
+				fontSize: "1.5rem",
 				marginTop: "30px",
 				textAlign: "center",
 			},
-			"&::after": {
-				content: '""',
-				display: 'block',
-				position: 'absolute',
-				bottom: "-20px",
-				// left: '10%',
-				marginTop: "10px",
-				width: '90px',
-				height: '3px',
-				backgroundColor: "#212B36", // Màu đỏ của MUI
-				"@media (max-width: 550px)": {
-					textAlign: "center",
-					display: 'none',
+			// "&::after": {
+			// 	content: '""',
+			// 	display: 'block',
+			// 	position: 'absolute',
+			// 	bottom: "-20px",
+			// 	// left: '10%',
+			// 	marginTop: "10px",
+			// 	width: '90px',
+			// 	height: '3px',
+			// 	backgroundColor: "#212B36", // Màu đỏ của MUI
+			// 	"@media (max-width: 550px)": {
+			// 		textAlign: "center",
+			// 		display: 'none',
 
-				},
-			},
+			// 	},
+			// },
 		},
 		boxAnswer: {
 			margin: "10px 0px",
@@ -157,25 +157,52 @@ export default makeStyles(() => {
 			textTransform: "none",
 		},
 		SwiperSlide: {
-			width: "120px !important",
-			marginRight: "30px !important",
+			// width: "130px !important",
+			// marginRight: "25px !important",
+			paddingBottom: "50px !important",
 
+			"swiper": {
+				paddingBottom: "50px !important"
+			},
 			"swiper-slide": {
-				width: "120px !important",
-				marginRight: "30px !important"
+				// width: "130px !important",
+				// marginRight: "25px !important",
 			},
 			"swiper-slide-active": {
-				width: "120px !important",
-				marginRight: "30px !important"
+				// width: "120px !important",
+				// marginRight: "25px !important"
 			},
 			"@media (max-width: 767px)": {
-				marginRight: "30px !important"
+				// marginRight: "25px !important"
 			},
 			"@media (min-width: 768px)": {
-				marginRight: "70px !important",
-				width: "180px !important",
+				// marginRight: "70px !important",
+				// width: "180px !important",
 
 			},
-		}
+
+		},
+		// SwiperSlideBlog: {
+		// 	width: "320px !important",
+		// 	margin: "0 15px",
+
+		// 	"swiper-slide": {
+		// 		width: "200px !important",
+		// 		marginRight: "30px !important"
+		// 	},
+		// 	"swiper-slide-active": {
+		// 		width: "320px !important",
+		// 		margin: "0 15px",
+		// 	},
+		// 	"@media (max-width: 767px)": {
+		// 		width: "320px !important",
+		// 		margin: "0 15px",
+		// 	},
+		// 	"@media (min-width: 768px)": {
+		// 		marginRight: "70px !important",
+		// 		width: "200px !important",
+
+		// 	},
+		// }
 	};
 });

@@ -118,7 +118,7 @@ const FooterComponent = () => {
 						</Box>
 					</Box> */}
 				<Box className={classes.blockHymnsInsider}>
-					<Container maxWidth='xl'>
+					<Container maxWidth='lg'>
 						<Box className={classes.innerInsider}>
 							<Grid container>
 								<Grid item xs={12} sm={12} xl={7} md={12} >
@@ -145,7 +145,7 @@ const FooterComponent = () => {
 					</Container>
 				</Box>
 				<Box className={classes.blockFooterConnect}>
-					<Container maxWidth='xl'>
+					<Container maxWidth='lg'>
 						<Grid container>
 
 							<Box className={classes.innerConnect} sx={{
@@ -207,7 +207,7 @@ const FooterComponent = () => {
 					</Container>
 				</Box >
 				<Box className={classes.blockFooterConnect} sx={{ paddingTop: "75px" }}>
-					<Container maxWidth='xl'>
+					<Container maxWidth='lg'>
 
 
 
