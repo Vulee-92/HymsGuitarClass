@@ -60,6 +60,8 @@ export default makeStyles(() => {
 		boxCard: {
 			borderBottom: "0px",
 			padding: 15,
+			width: "80%",
+			margin: "0 auto",
 			borderTop: "2px solid #454F5B",
 			borderRadius: "9px",
 			boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",

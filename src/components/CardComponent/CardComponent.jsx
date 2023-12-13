@@ -113,7 +113,7 @@ const CardComponent = (product) => {
 				<img onClick={() => handleDetailsProduct()} style={{
 					display: 'block',
 					height: '300px',
-					width: 'auto',
+					width: '80%',
 					position: 'relative',
 					top: 10,
 					cursor: 'pointer',
