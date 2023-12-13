@@ -143,7 +143,9 @@ const HomePage = () => {
 	// ?.concat(otherProducts)
 	const sortedProductsGuitar = acousticProducts;
 	console.log("sortedProductss",sortedProductsGuitar)
-	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
+	const filteredProducts = productsNosearch?.data
+		?.filter(product => product.selled > 1)
+		?.sort((a,b) => b.selled - a.selled);
 
 
 
