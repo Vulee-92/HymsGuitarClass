@@ -65,7 +65,7 @@ export default makeStyles(() => {
 			width: "30px",
 			color: "#fff",
 			fontSize: "20px",
-			backgroundColor: "#212B36",
+			backgroundColor: "#436E67",
 			borderRadius: "50%",
 			boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
 			zIndex: 1000,
@@ -83,7 +83,7 @@ export default makeStyles(() => {
 			transform: "translateY(-50%)",
 			height: "30px",
 			width: "30px",
-			backgroundColor: "#212B36",
+			backgroundColor: "#436E67",
 			borderRadius: "50%",
 			boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
 			zIndex: 1000,
@@ -129,7 +129,7 @@ export default makeStyles(() => {
 			// 	marginTop: "10px",
 			// 	width: '90px',
 			// 	height: '3px',
-			// 	backgroundColor: "#212B36", // Màu đỏ của MUI
+			// 	backgroundColor: "#436E67", // Màu đỏ của MUI
 			// 	"@media (max-width: 550px)": {
 			// 		textAlign: "center",
 			// 		display: 'none',
@@ -146,7 +146,7 @@ export default makeStyles(() => {
 			},
 		},
 		btnBottomShow: {
-			background: "#212B36",
+			background: "#436E67",
 			height: "48px",
 			border: "none",
 			borderRadius: "4px",

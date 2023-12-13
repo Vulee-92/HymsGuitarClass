@@ -122,12 +122,12 @@ export const WrapperTotal = styled.div`
 
 export const CustomCheckbox = styled(Checkbox)`
   .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #212B36;
-    border-color: #212B36;
+    background-color: #436E67;
+    border-color: #436E67;
   }
 .ant-checkbox-checked:hover .ant-checkbox-inner:hover {
-    border-color: #212B36;
-		 background-color: #212B36;
+    border-color: #436E67;
+		 background-color: #436E67;
   }
 `;
 export const WrapperInputNumber = styled(InputNumber)`

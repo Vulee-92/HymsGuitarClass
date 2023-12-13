@@ -362,7 +362,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert className={classes.nameProductInfo} style={{ border: "1px solid #212B36",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
+													<Alert className={classes.nameProductInfo} style={{ border: "1px solid #436E67",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
 														Đã thêm vào giỏ hàng!
 													</Alert>
 												</Snackbar>
@@ -420,7 +420,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 											className={classes.nameProductInfo}
 											style={{
-												background: "#212B36",
+												background: "#436E67",
 												height: "48px",
 												width: "200px",
 												textTransform: "none",
@@ -437,7 +437,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										{!errorLimitOrder ? (
 											<>
 												<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-													<Alert style={{ border: "1px solid #212B36",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
+													<Alert style={{ border: "1px solid #436E67",fontSize: "13px" }} severity='success' sx={{ width: "100%" }}>
 														Đã thêm vào giỏ hàng!
 													</Alert>
 												</Snackbar>
@@ -620,7 +620,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										color='primary'
 										aria-label='Mua hàng'
 										style={{
-											background: errorLimitOrder ? "#CCCCCC" : "#212B36",
+											background: errorLimitOrder ? "#CCCCCC" : "#436E67",
 											height: "48px",
 											width: "100%",
 											textTransform: "none",
@@ -639,17 +639,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								{(!errorLimitOrder
 									&&
 									<Box className={classes.boxInfoShipping}>
-										<FontAwesomeIcon icon={faBox} style={{ color: "#212B36",marginRight: "15px",fontSize: "16px" }} />
+										<FontAwesomeIcon icon={faBox} style={{ color: "#436E67",marginRight: "15px",fontSize: "16px" }} />
 										<Typography className={classes.nameProductInfo}>{!errorLimitOrder ? "Còn hàng" : <Typography style={{ color: "#B22222" }}> Hết hàng</Typography>}</Typography>
 									</Box>
 								)}
 
 								<Box className={classes.boxInfoShipping} >
-									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
+									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#436E67",marginRight: "10px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển nội thành TP. Tam Kỳ</Typography>
 								</Box>
 								<Box className={classes.boxInfoShipping}>
-									<FontAwesomeIcon icon={faTruck} style={{ color: "#212B36",marginRight: "10px",fontSize: "16px" }} />
+									<FontAwesomeIcon icon={faTruck} style={{ color: "#436E67",marginRight: "10px",fontSize: "16px" }} />
 									<Typography className={classes.nameProductInfo}>Hỗ trợ vận chuyển toàn quốc</Typography>
 								</Box>
 							</Paper>
@@ -671,7 +671,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 										className={classes.nameProductInfo}
 										style={{
-											background: "#212B36",
+											background: "#436E67",
 											height: "48px",
 											width: "100%",
 											border: "none",
@@ -731,7 +731,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							<Button onClick={handleCloseDialog} className={classes.nameProductInfo}
 								variant='contained'
 								style={{
-									background: "#212B36",
+									background: "#436E67",
 									height: "48px",
 									width: "100%",
 									border: "none",
@@ -747,7 +747,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								className={classes.nameProductInfo}
 								variant='contained'
 								style={{
-									background: "#212B36",
+									background: "#436E67",
 									height: "48px",
 									width: "100%",
 									border: "none",

@@ -49,31 +49,31 @@ const PasswordCheckerComponent = ({ password }) => {
 		<TrackerBox >
 			<ValidationItem validated={lowerValidated}>
 				<Typography className={classes.txtStrongPassword} >
-					{lowerValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#212B36' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
+					{lowerValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#436E67' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
 				</Typography>
 				Ít nhất một chữ thường
 			</ValidationItem>
 			<ValidationItem validated={upperValidated}>
 				<Typography className={classes.txtStrongPassword}>
-					{upperValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#212B36' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
+					{upperValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#436E67' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
 				</Typography>
 				Ít nhất một chữ in hoa
 			</ValidationItem>
 			<ValidationItem validated={numberValidated}>
 				<Typography className={classes.txtStrongPassword}>
-					{numberValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#212B36' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
+					{numberValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#436E67' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
 				</Typography>
 				Ít nhất một số
 			</ValidationItem>
 			<ValidationItem validated={specialValidated}>
 				<Typography className={classes.txtStrongPassword}>
-					{specialValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#212B36' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
+					{specialValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#436E67' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
 				</Typography>
 				Ít nhất một ký tự đặc biệt
 			</ValidationItem>
 			<ValidationItem validated={lengthValidated}>
 				<Typography className={classes.txtStrongPassword}>
-					{lengthValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#212B36' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
+					{lengthValidated ? <FontAwesomeIcon icon={faCircleCheck} color='#436E67' style={{ marginRight: 5 }} /> : <FontAwesomeIcon icon={faCircleXmark} color='red' style={{ marginRight: 5 }} />}
 				</Typography>
 				Ít nhất 8 ký tự
 			</ValidationItem>

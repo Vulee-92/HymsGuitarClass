@@ -368,7 +368,7 @@ export default makeStyles(() => {
 			cursor: "pointer",
 		},
 		customLoadingButton: {
-			backgroundColor: '#212B36',
+			backgroundColor: '#436E67',
 			...CStyles.txt_body_item,
 			color: 'white',
 			padding: '10px 20px',

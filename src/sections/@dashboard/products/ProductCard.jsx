@@ -52,9 +52,9 @@ export default function ShopProductCard({ product }) {
 									zIndex: 9,
 									top: 16,
 									background: "none",
-									border: "1px solid #212B36",
+									border: "1px solid #436E67",
 									right: 16,
-									color: "#212B36",
+									color: "#436E67",
 									position: "absolute",
 									textTransform: "",
 								}}

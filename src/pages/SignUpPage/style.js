@@ -215,7 +215,7 @@ export default makeStyles(() => {
 		},
 		customLoadingButton: {
 			...CStyles.txt_body_item,
-			backgroundColor: '#212B36',
+			backgroundColor: '#436E67',
 			color: 'white',
 			padding: '10px 20px',
 			width: '100%',

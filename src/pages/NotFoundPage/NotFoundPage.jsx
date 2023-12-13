@@ -25,7 +25,7 @@ export const NotFoundPage = ({ children }) => {
 
 				<Container>
 					<StyledContent sx={{ textAlign: 'center',alignItems: 'center' }}>
-						<Typography variant="h3" paragraph style={{ color: "#212B36" }} className={classes.txtHeaderTitle}>
+						<Typography variant="h3" paragraph style={{ color: "#436E67" }} className={classes.txtHeaderTitle}>
 							Sorry, page not found!
 						</Typography>
 
@@ -40,7 +40,7 @@ export const NotFoundPage = ({ children }) => {
 							sx={{ height: 260,mx: 'auto',my: { xs: 5,sm: 10 } }}
 						/>
 
-						<Button href="/" size="large" variant="contained" style={{ backgroundColor: "#212B36",color: "#fff" }} className={classes.txtTilte} component={RouterLink}>
+						<Button href="/" size="large" variant="contained" style={{ backgroundColor: "#436E67",color: "#fff" }} className={classes.txtTilte} component={RouterLink}>
 							Go to Home
 						</Button>
 					</StyledContent>

@@ -62,7 +62,7 @@ const VerifyEmailPage = () => {
 								initial={{ y: 0,opacity: 0 }}
 								animate={{ y: 10,opacity: 1 }}
 								transition={{ duration: 1,delay: 0.5 }}>
-								<Typography className={classes.txtHeaderTitle} style={{ color: '#212B36',fontSize: '1rem',textAlign: "right",cursor: 'pointer',marginTop: "50px" }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Trang chủ</Typography>
+								<Typography className={classes.txtHeaderTitle} style={{ color: '#436E67',fontSize: '1rem',textAlign: "right",cursor: 'pointer',marginTop: "50px" }} onClick={backToOrder}> <FontAwesomeIcon icon={faArrowLeftLong} /> Trang chủ</Typography>
 							</motion.div>
 						</Box>
 

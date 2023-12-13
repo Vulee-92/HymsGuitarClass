@@ -115,7 +115,7 @@ export default makeStyles(() => {
 			color: "#000",
 			paddingRight: Configs.pH,
 			"&:hover": {
-				backgroundColor: "#212B36",
+				backgroundColor: "#436E67",
 				color: "#fff",
 				opacity: .9
 			}

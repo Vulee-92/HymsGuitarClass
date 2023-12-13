@@ -138,7 +138,7 @@ const CardComponent = (product) => {
 				</LazyLoad>
 
 				<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.name}</Typography>
-				<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#45cc8f" }} >còn hàng</Typography>}</Typography>
+				<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#436E67" }} >còn hàng</Typography>}</Typography>
 
 				<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5 }}>{convertPrice(product?.product?.price)}</Typography>
 				<Grid container spacing={2} item sm={12} md={12} >
@@ -155,7 +155,7 @@ const CardComponent = (product) => {
 						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 							className={classes.nameProductInfo}
 							style={{
-								background: "rgba(46,46,46,1)",
+								background: "#436E67",
 								color: "#fff"
 							}} onClick={() => handleBuyNow()}
 						>

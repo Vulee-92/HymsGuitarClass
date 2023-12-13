@@ -484,7 +484,7 @@ const OrderSucess = () => {
 								<WrapperTotal>
 									<Typography className={classes.txtValueTotal}>Tổng tiền</Typography>
 									<Typography style={{ display: 'flex',flexDirection: 'column' }}>
-										<Typography className={classes.txtValueTotal} style={{ color: '#212B36',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(data?.totalPrice)}</Typography>
+										<Typography className={classes.txtValueTotal} style={{ color: '#436E67',fontSize: '24px',fontWeight: 'bold',textAlign: "end" }}>{convertPrice(data?.totalPrice)}</Typography>
 										<Typography className={classes.txtValueTotal} style={{ color: '#000',fontSize: '11px' }}>(Đã bao gồm VAT nếu có)</Typography>
 									</Typography>
 								</WrapperTotal>

@@ -69,7 +69,7 @@ export default makeStyles(() => {
 		},
 		btnAddCard: {
 			...CStyles.txt_title_item,
-			background: "#212B36",
+			background: "#436E67",
 			height: "44px",
 			width: "120px",
 			border: "none",
@@ -80,7 +80,7 @@ export default makeStyles(() => {
 			fontWeight: "600",
 			textTransform: "none",
 			"&:hover": {
-				background: "#212B36",
+				background: "#436E67",
 			}
 		},
 		txtTilteBank: {
@@ -99,11 +99,11 @@ export default makeStyles(() => {
 		},
 		txtOrder: {
 			...CStyles.txt_body_item,
-			color: "#212B36",
+			color: "#436E67",
 			fontSize: "18px",
 			fontWeight: 700,
 			paddingBottom: "10px",
-			borderBottom: "3px solid #212B36",
+			borderBottom: "3px solid #436E67",
 			marginLeft: "15px",
 			marginRight: "15px",
 			marginBottom: "15px",
@@ -158,7 +158,7 @@ export default makeStyles(() => {
 			fontSize: "0.7rem",
 		},
 		customLoadingButton: {
-			backgroundColor: '#212B36',
+			backgroundColor: '#436E67',
 			color: 'white',
 			padding: '10px 20px',
 			width: '100%',

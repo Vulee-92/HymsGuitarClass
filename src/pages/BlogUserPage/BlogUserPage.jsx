@@ -166,8 +166,8 @@ const BlogUserPage = () => {
 									textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 									type='outline'
 									styleButton={{
-										border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#212B36"}`,
-										color: `${blogs?.total === blogs?.data?.length ? "#000" : "#212B36"}`,
+										border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#436E67"}`,
+										color: `${blogs?.total === blogs?.data?.length ? "#000" : "#436E67"}`,
 										width: "180px",
 										height: "38px",
 										borderRadius: "4px",

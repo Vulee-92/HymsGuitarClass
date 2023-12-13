@@ -409,7 +409,7 @@ export default makeStyles(() => {
 				transform: 'translateX(-50%)',
 				width: '90px',
 				height: '6px',
-				backgroundColor: "#212B36" // Màu đỏ của MUI
+				backgroundColor: "#436E67" // Màu đỏ của MUI
 			},
 		},
 		boxAnswer: {

@@ -204,14 +204,14 @@ export default makeStyles(() => {
 		btnLoginHeader: {
 			...CStyles.btn_login,
 			marginTop: "0px",
-			backgroundColor: "#808080",
+			backgroundColor: "#436E67",
 			cursor: "pointer",
-			color: "#000",
+			color: "#fff",
 			textTransform: "capitalize",
 			transition: "background-color 0.3s, color 0.3s", /* Thêm transition */
 			"&:hover": {
-				backgroundColor: "#fff", /* Đổi màu nền khi hover */
-				color: "#000", /* Đổi màu chữ khi hover */
+				backgroundColor: "#355852", /* Đổi màu nền khi hover */
+				color: "#fff", /* Đổi màu chữ khi hover */
 			},
 		},
 
@@ -278,11 +278,11 @@ export default makeStyles(() => {
 		},
 		txtTitleNNavBar: {
 			...CStyles.txt_body_item,
-			color: "#212B36",
+			color: "#436E67",
 			fontSize: "16px",
 			fontWeight: 700,
 			paddingBottom: "10px",
-			borderBottom: "1px solid #212B36",
+			borderBottom: "1px solid #436E67",
 			textAlign: "center",
 			textTransform: "uppercase",
 		},

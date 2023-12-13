@@ -3,15 +3,15 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 
 export const WrapperButtonMore = styled(ButtonComponent)`
   &:hover {
-    color: #212B36;
+    color: #436E67;
     background: #ffff;
      &:span {
-   color: #212B36;
+   color: #436E67;
     }
   }
   width: 100%;
-  color: #212B36;
-	    background: #212B36;
+  color: #436E67;
+	    background: #436E67;
   text-align: center;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointers")};
 `;

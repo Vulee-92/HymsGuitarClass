@@ -611,7 +611,7 @@ const OrderPage = () => {
 								>
 									<Typography className={classes.txtValueTotal}
 										style={{
-											color: "#212B36",
+											color: "#436E67",
 											fontSize: "16px",
 											fontWeight: "bold",
 											textAlign: "right",
@@ -672,7 +672,7 @@ const OrderPage = () => {
 										<>
 											<Typography className={classes.txtValueTotal}
 												style={{
-													color: "#212B36",
+													color: "#436E67",
 													fontSize: "1.1rem",
 													marginTop: "5%",
 													textAlign: "center",
@@ -681,7 +681,7 @@ const OrderPage = () => {
 											<Typography className={classes.txtValueTotal}
 												onClick={() => handleToProduct()}
 												style={{
-													color: "#212B36",
+													color: "#436E67",
 													fontSize: "1rem",
 													marginTop: "1%",
 													textDecoration: "underline",
@@ -868,7 +868,7 @@ const OrderPage = () => {
 										<Typography style={{ display: "flex",flexDirection: "column" }}>
 											<Typography className={classes.txtValueTotal}
 												style={{
-													color: "#212B36",
+													color: "#436E67",
 													fontSize: "24px",
 													fontWeight: "bold",
 													textAlign: "right"

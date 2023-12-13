@@ -16,7 +16,7 @@ export default makeStyles(() => {
 		},
 		nameProduct: {
 			...CStyles.txt_title_item,
-			color: "#e9e6e0",
+			color: "#0b2238",
 			fontSize: "1.2rem",
 			fontWeight: 700,
 			marginBottom: 10,
@@ -35,7 +35,6 @@ export default makeStyles(() => {
 			color: "#6c7a87",
 			marginTop: "1rem",
 			fontSize: "1rem",
-			color: "#e9e6e0",
 			fontWeight: 500,
 			lineHeight: 1.5,
 			marginBottom: "1.45rem",
@@ -46,8 +45,7 @@ export default makeStyles(() => {
 			color: "#6c7a87",
 			marginTop: "1rem",
 			fontSize: "1rem",
-			color: "#e9e6e0",
-			fontWeight: 500,
+			fontWeight: 400,
 			lineHeight: 1.5,
 			marginBottom: 0,
 		},
@@ -55,7 +53,6 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			color: "#6c7a87",
 			marginTop: ".45rem",
-			color: "#e9e6e0",
 			fontSize: "1rem",
 			fontWeight: 600,
 			marginBottom: 0,
@@ -77,7 +74,7 @@ export default makeStyles(() => {
 		},
 		inputEmailBase: {
 			...CStyles.txt_body_item,
-			border: "1px solid #edeef1",
+			border: "1px solid #6c7a87",
 			height: "40px",
 			borderRadius: "10px",
 			fontSize: "11px",
@@ -86,36 +83,36 @@ export default makeStyles(() => {
 		},
 		txtCopyRight: {
 			...CStyles.txt_body_item,
-			color: "#e9e6e0",
-			fontSize: "13px",
+			color: "#6c7a87",
+			fontSize: "1rem",
 			paddingTop: "4rem",
 			paddingBottom: "30px"
 		},
 		txtCopyRightLink: {
 			textDecoration: "none",
-			color: "#e9e6e0",
+			color: "#6c7a87",
 		},
-		// 		#212B36
+		// 		#436E67
 		// #179a71
 		// #1d7063
 		// #3d8d74
 		// #4c7c69
 		// #155a5b
 		customSendEmail: {
-			backgroundColor: "#212B36",
+			backgroundColor: "#436E67",
 			height: "40px",
 			width: "40px",
 			marginLeft: "10px",
 			// marginRight: "10px",
 			fontSize: "20px",
 			color: "#fff",
-			border: "1px solid #edeef1",
+			border: "1px solid #6c7a87",
 			borderTopRightRadius: "1px",
 			borderBottomRightRadius: "1px",
 		},
 
 		blockFooterConnect: {
-			background: "#212B36"
+			background: "#fff"
 		},
 		innerConnect: {
 			padding: "55px 0px",
@@ -133,21 +130,23 @@ export default makeStyles(() => {
 			...CStyles.txt_header_title,
 			paddingBottom: "8px",
 			marginBottom: "30px",
-			color: "#e9e6e0",
-			fontSize: "35px",
-			borderBottom: "1px solid #e9e6e0"
+			color: "#0b2238",
+			fontSize: "1.875rem",
+			fontWeight: 600,
+			borderBottom: "1px solid #6c7a87"
 		},
 		txtFooterInsider: {
 			...CStyles.txt_header_title,
 			paddingBottom: "8px",
-			marginBottom: "1rem",
-			color: "#e9e6e0",
-			fontSize: "40px",
+			marginBottom: "1.25rem",
+			color: "#0b2238",
+			fontSize: "1.875rem",
+			fontWeight: 600
 		},
 		borderIconConnect: {
 			width: '55px',
 			height: '55px',
-			border: "1px solid #edeef1",
+			border: "1px solid #6c7a87",
 			borderRadius: '30%',
 			textAlign: 'center',
 			display: 'flex',
@@ -157,18 +156,23 @@ export default makeStyles(() => {
 		},
 
 		blockHymnsInsider: {
-			backgroundColor: "#000"
+			backgroundColor: "#f7f8fa"
 		},
 		btnLoginHeader: {
 			...CStyles.btn_login,
 			// fontWeight: CStyles.fBold,
 			marginTop: "0px",
+
 			backgroundColor: Colors.bgLogin,
 			cursor: "pointer",
-			fontSize: "20px",
-			fontWeight: 500,
-			padding: "10px 30px",
-			textTransform: "capitalize",
+			fontSize: "1rem",
+			fontWeight: 400,
+			padding: "10px 25px",
+			textTransform: "none",
+			"&:hover": {
+				backgroundColor: "#355852", /* Đổi màu nền khi hover */
+				color: "#fff", /* Đổi màu chữ khi hover */
+			},
 		},
 	};
 });
