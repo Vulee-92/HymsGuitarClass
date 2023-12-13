@@ -14,6 +14,16 @@ import AnimationComponent from "components/AnimationComponent/AnimationComponent
 import { useDebounce } from "hooks/useDebounce";
 
 import { Helmet } from "react-helmet-async";
+import { Swiper,SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Import CSS Swiper
+
+// Thêm các styles tùy chọn nếu cần
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Autoplay,Pagination,Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import BlogPostCardMobile from "sections/@dashboard/blog/BlogPostCardMobile";
 
 const BlogDetailPage = ({ idBlog }) => {
 	// const classess = useStyles({ isMobile });
@@ -111,7 +121,6 @@ const BlogDetailPage = ({ idBlog }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	console.log("first",blogs)
 	function SampleNextArrow(props) {
 		const { onClick } = props;
 		return (
@@ -209,26 +218,78 @@ const BlogDetailPage = ({ idBlog }) => {
 					</Grid>
 				</Grid>
 
-				<Box style={{ margin: "60px 0" }}>
-					{/* <Typography className={classes.txtTitleBox}>Latest Releases</Typography> */}
-					<AnimationComponent type='text' text='Có thể bạn quan tâm' className={classes.txtTitleBox} />
-					<div className={classes.sliderWrapper}>
-						<ImageList variant='masonry' cols={1} gap={8}>
-							{/* <Slider {...settings} style={{ overflow: 'hidden' }}> */}
-							{/* <Slider {...settings} style={{ overflow: "hidden" }}>
-									{products?.data?.map((product,post,index) => {
-										return (
-											<div>
-												<ImageListItem key={product.image} style={{ cursor: "pointers" }}>
-													<CardComponent post={post} index={index} key={product._id} countInStock={product.countInStock} description={product.description} image={product.image} name={product.name} price={product.price} rating={product.rating} type={product.type} discount={product.discount} selled={product.selled} id={product._id} createdAt={product.createdAt} style={{ cursor: "pointers" }} />
-												</ImageListItem>
-											</div>
-										);
-									})}
-								</Slider> */}
-						</ImageList>
-					</div>
+
+			</Container >
+			<Container maxWidth='lg' style={{ width: "95%" }}>
+				<Box>
+					<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
+					<Grid container spacing={2} >
+						{/* {[0,1,2].map((row) => (
+							<Grid key={row} container item spacing={2}>
+								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
+									<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
+								))}
+							</Grid>
+						))} */}
+						<Swiper
+							spaceBetween={10}
+
+							grabCursor={true}
+							// navigation={true}
+							style={{ paddingLeft: '0px',paddingRight: '0px' }}
+							modules={[Pagination]}
+							className="mySwiper"
+							breakpoints={{
+								320: { slidesPerView: 1 },
+								396: { slidesPerView: 1 },
+								480: { slidesPerView: 1 },
+								768: { slidesPerView: 1 },
+								1024: { slidesPerView: 3 },
+								1200: { slidesPerView: 3 },
+							}}
+						>
+							{blogs?.data?.map((post,index) => {
+
+
+								return (
+									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id}>
+										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
+									</SwiperSlide>
+								);
+							})}
+						</Swiper>
+					</Grid>
+
+
 				</Box>
+				{/* <Button
+					sx={{ p: 3 }}
+					style={{
+						width: "100%",
+						display: "flex",
+						justifyContent: "center",
+						marginTop: "10px",
+					}}
+				>
+					<WrapperButtonMore
+						textbutton={isPreviousData ? "Load more" : "Xem thêm"}
+						type='outline'
+						styleButton={{
+							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#436E67"}`,
+							color: `${blogs?.total === blogs?.data?.length ? "#000" : "#436E67"}`,
+							width: "180px",
+							height: "38px",
+							borderRadius: "4px",
+							display: `${blogs?.total === blogs?.data?.length || blogs?.totalPage === 1 ? "none" : "block"}`,
+						}}
+						disabled={blogs?.total === blogs?.data?.length || blogs?.totalPage === 1}
+						styleTextButton={{
+							fontWeight: 500,
+							color: blogs?.total === blogs?.data?.length && "#000",
+						}}
+						onClick={() => setLimit((prev) => prev + 2)}
+					/>
+				</Button> */}
 			</Container >
 		</>
 	);
