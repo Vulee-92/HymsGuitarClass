@@ -12,7 +12,6 @@ const TypeProductPage = lazy(() => import("../pages/TypeProductPage/TypeProductP
 const OrderSuccess = lazy(() => import("../pages/OderSuccess/OderSuccess"));
 const Profile = lazy(() => import("../pages/profile"));
 
-const Dashboard = lazy(() => import("../pages/Dashboard/DashboardAppPage"));
 const OrderPage = lazy(() => import("../pages/OderPage/OderPage"));
 const PaymentPage = lazy(() => import("../pages/PaymentPage/PaymentPage"));
 const MyOrderPage = lazy(() => import("../pages/MyOderPage/MyOderPage"));
@@ -152,12 +151,7 @@ export const routes = [
 		isShowFooter: true,
 	},
 
-	{
-		path: "/system/admin",
-		page: Dashboard,
-		isShowHeader: false,
-		isPrivate: true,
-	},
+
 
 	{
 		path: "/product-details/:id",

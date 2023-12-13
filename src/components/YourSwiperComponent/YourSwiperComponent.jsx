@@ -5,55 +5,48 @@ import 'swiper/css/pagination';
 
 // Thêm các styles tùy chọn nếu cần
 import { Pagination } from 'swiper/modules';
-import 'swiper/css/effect-cards';
 
 import CardComponent from '../../components/CardComponent/CardComponent';
 import { Typography } from '@mui/material';
 
-const YourSwiperComponent = ({ latestProducts,classes }) => {
+const YourSwiperComponent = ({ latestProducts,classes,isLoading }) => {
+	console.log("latestProducts",latestProducts)
 	return (
 		<Suspense fallback={<Typography className={classes.txtTilte} style={{ textAlign: "center" }}>Loading...</Typography>}>
 			<Swiper
-				spaceBetween={200}
 				grabCursor={true}
+				breakpoints={{
+					320: { slidesPerView: 1 },
+					480: { slidesPerView: 1 },
+					768: { slidesPerView: 1 },
+					1024: { slidesPerView: 3 },
+					1200: { slidesPerView: 3 },
+					1489: { slidesPerView: 3 }
+				}}
+				spaceBetween={30}
+				pagination={{
+					clickable: true,
+				}}
 				modules={[Pagination]}
 				className="mySwiper"
-				breakpoints={{
-					320: { slidesPerView: 2 },
-					480: { slidesPerView: 2 },
-					768: { slidesPerView: 3 },
-					1024: { slidesPerView: 4 },
-					1200: { slidesPerView: 5 },
-				}}
 			>
-				{latestProducts?.map((product,index,post) => {
+				{latestProducts?.map((product) => {
 					const firstImage = product.image[0];
+					console.log("productproductproductproduct",product)
 
 					return (
 						<SwiperSlide className={classes.SwiperSlide} key={product._id}>
 							<CardComponent
-								post={post}
-								index={index}
-								key={product._id}
-								countInStock={product.countInStock}
-								type={product.type}
-								description={product.description}
-								image={firstImage}
-								name={product.name.slice(0,200)}
-								price={product.price}
-								rating={product.rating}
-								discount={product.discount}
-								selled={product.selled}
-								id={product._id}
-								slug={product.slug}
-								createdAt={product.createdAt}
+								product={product}
+								// post={post}
+								// index={index}
 								style={{ cursor: 'pointer' }}
 							/>
 						</SwiperSlide>
 					);
 				})}
 			</Swiper>
-		</Suspense>
+		</Suspense >
 	);
 };
 

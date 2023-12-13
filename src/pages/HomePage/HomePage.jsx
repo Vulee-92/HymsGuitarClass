@@ -140,7 +140,8 @@ const HomePage = () => {
 	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic Guitars");
 
 	// Finally, concatenate the two arrays to get the desired order
-	const sortedProductsGuitar = acousticProducts?.concat(otherProducts);
+	// ?.concat(otherProducts)
+	const sortedProductsGuitar = acousticProducts;
 	console.log("sortedProductss",sortedProductsGuitar)
 	const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
@@ -213,7 +214,7 @@ const HomePage = () => {
 			<Box className={classes.container}>
 			</Box>
 
-			<Container maxWidth='xl'>
+			<Container maxWidth='lg'>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
 					<div className={classes.sliderWrapper}>
@@ -228,7 +229,7 @@ const HomePage = () => {
 								style={{ textAlign: "center",willChange: "transform" }}
 							/>
 						) : (
-							<YourSwiperComponent latestProducts={sortedProductsGuitar} classes={classes} />
+							<YourSwiperComponent latestProducts={sortedProductsGuitar} classes={classes} isLoading={isLoadingx} />
 
 						)}
 
@@ -266,7 +267,7 @@ const HomePage = () => {
 
 			</Container>
 
-			<Container maxWidth='xl'>
+			<Container maxWidth='lg'>
 				<Typography className={classes.txtTitleRecentlyViewed}>Sản phẩm bán chạy</Typography>
 
 				<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
@@ -274,9 +275,9 @@ const HomePage = () => {
 
 				{/* </ImageList> */}
 			</Container>
-			<Container maxWidth='xl' style={{ marginTop: "50px",padding: 0 }}>
+			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }}>
 				<>
-					<Container maxWidth='xl' style={{ padding: 0 }}>
+					<Container maxWidth='lg' style={{ padding: 0 }}>
 						<Box sx={{
 							paddingLeft: "30px",paddingRight: "30px",display: { xl: "block",xs: "none" }
 						}}>
@@ -288,9 +289,9 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container >
-			<Container maxWidth='xl' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
+			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
 				<>
-					<Container maxWidth='xl' style={{ padding: 0 }}>
+					<Container maxWidth='lg' style={{ padding: 0 }}>
 						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
 							<Typography className={classes.txtTitleBox}>Về Hymns Center</Typography>
 							<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
@@ -300,7 +301,7 @@ const HomePage = () => {
 					</Container>
 				</>
 			</Container>
-			<Container maxWidth='xl' style={{ width: "95%" }}>
+			<Container maxWidth='lg' style={{ width: "95%" }}>
 				<Box>
 					<Typography className={classes.txtTitleBox}>Bài viết</Typography>
 					<Grid container spacing={2} sx={{ display: { xl: "block",xs: "none" } }}>
@@ -398,7 +399,7 @@ const HomePage = () => {
 				</Button> */}
 			</Container >
 			{(recentlyViewed?.products && (
-				<Container maxWidth='xl'>
+				<Container maxWidth='lg'>
 					<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>
 					<YourSwiperComponent latestProducts={recentlyViewed?.products} classes={classes} />
 				</Container>

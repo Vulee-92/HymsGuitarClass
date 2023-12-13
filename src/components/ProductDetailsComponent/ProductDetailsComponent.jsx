@@ -12,7 +12,6 @@ import { Swiper,SwiperSlide } from 'swiper/react';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
-import { EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import { useLocation,useNavigate } from "react-router-dom";
@@ -21,9 +20,7 @@ import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,
 import "react-medium-image-zoom/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
-import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
-import Slider from "react-slick";
-import CardComponent from "../../components/CardComponent/CardComponent";
+
 import { useDebounce } from "hooks/useDebounce";
 import { Helmet } from "react-helmet-async";
 import { bottom } from "@popperjs/core";
@@ -221,6 +218,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		handleCartClick();
 		setOpenDialog(true);
 	};
+
 	const handleCloseDialog = () => {
 		setOpenDialog(false);
 	};

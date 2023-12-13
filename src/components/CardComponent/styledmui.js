@@ -12,11 +12,12 @@ export default makeStyles(() => {
 		},
 		nameProduct: {
 			...CStyles.txt_header_title,
-			textAlign: "left",
+			textAlign: "center",
 			fontWeight: 500,
 			color: "#231e18",
-			fontSize: "1rem",
-			width: "100%",
+			fontSize: "1.5rem",
+			width: "80%",
+			margin: "0 auto",
 			height: "70px",
 			overflow: "hidden",
 			overflowWrap: "break-word",
@@ -27,29 +28,51 @@ export default makeStyles(() => {
 		},
 		txtPrice: {
 			...CStyles.txt_body_item,
-			fontSize: "1rem",
+			fontSize: "1.5rem",
 			textAlign: "left",
 			fontWeight: 500,
 			marginBottom: 5,
 			color: "#0b2238",
 		},
+		nameProductInfo: {
+			...CStyles.txt_body_item,
 
+			background: "rgba(221,221,221,1)",
+			height: "40px",
+			padding: "8px 15px",
+			marginTop: 10,
+			width: "100%",
+			textTransform: "none",
+			border: "solid 1px rgb(255,255,255,0)",
+			borderRadius: "999px",
+			color: "rgba(18,18,18,1)",
+			fontSize: "1rem",
+			fontWeight: "500",
+			transition: "all 0.1s ease- out 0s",
+			"&:hover": {
+				// boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				// transition: "boxShadow 0.3s ease -in -out 0s"
+				background: "rgba(221,221,221,1)",
+
+			},
+
+		},
 		boxCard: {
 			borderBottom: "0px",
+			padding: 15,
 			borderTop: "2px solid #454F5B",
-			height: "163px",
 			borderRadius: "9px",
 			boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
-			// "&:hover": {
-			// 	boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
-			// 	transition: "boxShadow 0.3s ease -in -out 0s"
-			// },
+			"&:hover": {
+				boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				transition: "boxShadow 0.3s ease -in -out 0s"
+			},
 
 		},
 		txtStatusSell: {
 			...CStyles.txt_body_item,
-			fontSize: "1rem",
-			textAlign: "left",
+			fontSize: "1.5rem",
+			textAlign: "right",
 			fontWeight: 400,
 			marginBottom: 5,
 		},

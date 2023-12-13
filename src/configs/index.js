@@ -36,14 +36,9 @@ export const Configs = {
 export const Assets = {
 	/** IMAGE */
 	bankOrder: require("../assets/images/bank.png"),
-	hymns_1: require("../assets/hymnsAbout/hymns_1.jpg"),
-	hymns_2: require("../assets/hymnsAbout/hymns_2.jpg"),
-	hymns_3: require("../assets/hymnsAbout/hymns_3.jpg"),
-	hymns_4: require("../assets/hymnsAbout/hymns_4.jpg"),
-	hymns_5: require("../assets/hymnsAbout/hymns_5.jpg"),
+
 	bgSheet: require("../assets/images/background/sheet.jpg"),
 	bgLogin: require("../assets/images/background/bgLogin.jpg"),
-	bgSignUp: require("../assets/images/background/bgSignIn.jpg"),
 	bgProduct: require("../assets/images/background/bgproduct.jpg"),
 	bgHome: require("../assets/images/background/bg_carousel_desktop.png"),
 	bgHome_1: require("../assets/images/background/index.jpg"),
@@ -51,7 +46,7 @@ export const Assets = {
 	bgHomeMobile: require("../assets/images/background/bg_carousel_moblie.webp"),
 
 	bgHymnsCenter: require("../assets/images/background/hymnscenter_bg.png"),
-	bgHymnsCenterChristmas: require("../assets/images/background/bg_carousel_desktop_christmas_2.webp"),
+	bgHymnsCenterChristmas: require("../assets/images/background/bg_carousel_desktop_christmas_3.webp"),
 	bgHome1: require("../assets/images/background/1.png"),
 	bgHome2: require("../assets/images/background/2.png"),
 	bgHome3: require("../assets/images/background/3.png"),
