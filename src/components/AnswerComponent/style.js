@@ -415,9 +415,9 @@ export default makeStyles(() => {
 		boxAnswer: {
 			margin: "10px 0px",
 			boxShadow: "none",
-			border: "1px solid #d6d6d4",
+			border: "1px solid #f7f8fa",
 			"&:hover": {
-				backgroundColor: "#d6d6d4"
+				backgroundColor: "#f7f8fa"
 			},
 		},
 		txtTilte: {

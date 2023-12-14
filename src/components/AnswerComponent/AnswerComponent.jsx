@@ -23,13 +23,17 @@ const AnswerComponent = () => {
 							<Typography className={classes.txtTilte}>Đơn hàng của tôi có phụ kiện đi kèm không?</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
-							<Typography className={classes.txtAnswer}>Sản phẩm không có phụ kiện đi kèm, trừ trường hợp những phụ kiện đó được nêu rõ trong phần mô tả sản phẩm. Bạn có thể tìm trên cửa hàng trực tuyến hoặc hỏi Đội Ngũ Kinh Doanh & Chăm Sóc Khách Hàng nhiệt tình của chúng tôi để được hỗ trợ ngay hôm nay!</Typography>
+							<Typography className={classes.txtAnswer}>Sản phẩm không đi kèm phụ kiện, trừ khi phụ kiện đó được nêu rõ trong mô tả sản phẩm. Bạn có thể tìm trên cửa hàng trực tuyến hoặc hỏi Đội Kinh Doanh & Chăm Sóc Khách Hàng nhiệt tình của chúng tôi để được hỗ trợ ngay hôm nay! Chúng tôi sẽ rất vui lòng giúp bạn!</Typography>
 						</AccordionDetails>
 					</Accordion>
 					<Accordion className={classes.boxAnswer}>
 						<AccordionSummary expandIcon={<FontAwesomeIcon icon={faChevronDown} />} aria-controls='panel3a-content' id='panel3a-header'>
 							<Typography className={classes.txtTilte}>Đơn hàng của tôi có được bảo hành không?</Typography>
 						</AccordionSummary>
+						<AccordionDetails>
+							<Typography className={classes.txtAnswer}>Đơn hàng của bạn sẽ được bảo hành trong 1 năm đối với đàn guitar. Nếu có bất kỳ phụ kiện nào hư hỏng do quá trình vận chuyển, xin vui lòng liên hệ với chúng tôi. Để tiện cho việc xử lý, bạn nhớ quay video khi mở sản phẩm nhé. Mong rằng bạn sẽ hài lòng với dịch vụ của chúng tôi!
+							</Typography>
+						</AccordionDetails>
 					</Accordion>
 				</Grid>
 			</Grid>
