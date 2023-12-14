@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React,{ useState,useEffect } from 'react';
-import electric from '../../assets/guitar-playing.png';
+import electric from '../../assets/hymns.gif';
 import styles from "./stylemui";
 import Typical from 'react-typical';
 import { Assets } from 'configs';
@@ -20,9 +20,9 @@ const Loading = ({ children,isLoading,deday = 10 }) => {
 	const antIcon = <div style={{
 		fontSize: 24,
 		background: `url(${electric}) no-repeat 50% 50%`,
-		backgroundSize: '5em',
+		backgroundSize: '10em',
 		pointerEvents: 'none',
-		opacity: 0.4,
+		// opacity: 0.4,
 		position: 'fixed',
 		zIndex: 100000,
 		top: 0,

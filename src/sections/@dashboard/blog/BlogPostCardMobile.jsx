@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import { alpha,styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Box,Link,Card,Grid,Avatar,Typography,CardContent } from '@mui/material';
 // utils
 //
