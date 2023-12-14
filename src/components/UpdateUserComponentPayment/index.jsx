@@ -28,6 +28,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { resetUser } from "../../redux/slides/userSlide";
 import { setShippingAddress } from "redux/slides/orderSlide";
 import { Colors } from "utils/colors";
+import ShippingCalculator from "./ShippingCalculator";
 const UpdateUserComponentPayment = ({
 	updateUserInfo,
 }) => {
@@ -160,13 +161,18 @@ const UpdateUserComponentPayment = ({
 	});
 	// Hàm tính phí vận chuyển
 	const calculateShippingFee = (address,products) => {
-		const freeShippingCities = ['Thành phố Tam Kỳ'];
+		console.log("address,productsaddress,products",address,products)
+
+		const freeShippingCities = ['tam kỳ','tam kỳ','Tam kỳ'];
 		const shippingFeePerAccessory = 50000;
 		const shippingFeePerAccessoryBulk = 30000;
 		const shippingFeePerGuitar = 150000;
 		const shippingFeePerTwoGuitars = 200000;
+		const addressLower = address.toLowerCase();
 
-		const isFreeShipping = freeShippingCities.includes(address);
+
+		const isFreeShipping = freeShippingCities.includes(addressLower);
+		console.log("isFreeShipping",isFreeShipping)
 		let totalGuitarQuantity = 0;
 		let totalAccessoryQuantity = 0;
 		let totalShippingFee = 0;
@@ -185,7 +191,7 @@ const UpdateUserComponentPayment = ({
 
 		if (totalGuitarQuantity > 0 && totalAccessoryQuantity > 0) {
 			// Tính phí vận chuyển cho đàn guitar theo quy định, phụ kiện miễn phí
-			if (address !== 'Tam Kỳ') {
+			if (address !== 'tam kỳ') {
 				if (totalGuitarQuantity === 1) {
 					totalShippingFee += shippingFeePerGuitar;
 				} else if (totalGuitarQuantity === 2) {
@@ -196,8 +202,8 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalAccessoryQuantity > 0) {
-			if (address === 'Tam Kỳ') {
-				// Miễn phí vận chuyển cho phụ kiện nếu mua tại Thành phố Thành phố Tam Kỳ
+			if (address === 'tam kỳ') {
+				// Miễn phí vận chuyển cho phụ kiện nếu mua tại Thành phố Thành phố tam kỳ
 				return totalShippingFee;
 			} else {
 				if (totalAccessoryQuantity >= 15) {
@@ -209,8 +215,8 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalGuitarQuantity > 0) {
-			if (address === 'Tam Kỳ') {
-				// Miễn phí vận chuyển cho đàn guitar nếu mua tại Thành phố Thành phố Tam Kỳ
+			if (address === 'tam kỳ') {
+				// Miễn phí vận chuyển cho đàn guitar nếu mua tại Thành phố Thành phố tam kỳ
 				return totalShippingFee;
 			} else {
 				if (totalGuitarQuantity === 1) {
@@ -226,7 +232,9 @@ const UpdateUserComponentPayment = ({
 
 
 	useEffect(() => {
-		const shippingFee = calculateShippingFee(form.city.name,order?.orderItemsSlected); // Thay products bằng danh sách sản phẩm trong giỏ hàng
+		const shippingFee = calculateShippingFee(form.city.value,order?.orderItemsSlected);
+		console.log("form.city.value",form.city.value)
+		// Thay products bằng danh sách sản phẩm trong giỏ hàng
 		const shippingInfo = {
 			name: form.name.value,
 			email: form.email.value || user?.email,
