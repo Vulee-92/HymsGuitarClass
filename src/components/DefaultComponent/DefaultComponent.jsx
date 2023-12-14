@@ -11,7 +11,7 @@ const DefaultComponent = ({ children }) => {
 		setTimeout(() => {
 			setIsLoaded(true);
 			setIsLoading(false);
-		},1000); // Thay 1000 bằng thời gian loading của bạn
+		},2000); // Thay 1000 bằng thời gian loading của bạn
 	},[]);
 
 	return (
