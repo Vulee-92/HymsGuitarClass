@@ -1,25 +1,15 @@
-import React,{ useState } from 'react'
+import React,{ useEffect,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box,Grid,Typography } from '@mui/material'
 import styles from "./styledmui";
 import { convertPrice } from '../../utils';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch,useSelector } from 'react-redux';
-import * as ProductService from "../../services/ProductService";
-import { addOrderProduct,resetOrder } from "../../redux/slides/orderSlide";
+import { addOrderProduct,resetOrder,addToOrderAndSelect } from "../../redux/slides/orderSlide";
 import LazyLoad from 'react-lazyload';
 import { styled } from '@mui/styles';
 
 
-const StyledProductImg = styled("img")({
-	display: 'block',
-	height: '230px',
-	width: '80%',
-	position: 'relative',
-	top: 10,
-	cursor: 'pointer',
-	left: "10%"
-});
 const CardComponent = (product) => {
 	const classes = styles();
 	const [isProcessing,setIsProcessing] = useState(false);
@@ -64,23 +54,18 @@ const CardComponent = (product) => {
 		// handleCartClick();
 		// setOpenDialog(true);
 	};
+	const [addedToOrder,setAddedToOrder] = useState(false);
+
 	const handleBuyNow = async () => {
-		setIsProcessing(true);
-
-		// // Kiểm tra xem có sản phẩm nào được chọn không
-		// if (order?.orderItemsSlected?.length === 0) {
-		// 	// Nếu không có sản phẩm nào được chọn
-		// 	// toast.error('Vui lòng chọn sản phẩm');
-		// 	setIsProcessing(false);
-		// 	return;
-		// }
-
 		try {
-			// Thêm sản phẩm đã chọn vào đơn hàng
+			setIsProcessing(true);
+
 			const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
+
 			if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && product?.product?.countInStock > 0)) {
+				// Thực hiện action mới để thêm sản phẩm vào orderItems và chọn cho orderItemsSelected
 				dispatch(
-					addOrderProduct({
+					addToOrderAndSelect({
 						orderItem: {
 							name: product?.product?.name,
 							amount: numProduct,
@@ -92,30 +77,26 @@ const CardComponent = (product) => {
 							discount: product?.product?.discount,
 							countInstock: product?.product?.countInStock,
 						},
-
 					})
-
 				);
 
-			}
-
-			if (order?.orderItemsSlected?.length === 0) {
-				// toast.error('Vui lòng chọn sản phẩm');
-				setIsProcessing(false);
-			} else if (order?.orderItems?.length === 0) {
-				// toast.error('Hiện bạn chưa có sản phẩm nào trong giỏ hàng.');
-				setIsProcessing(false);
-			} else {
-				setTimeout(() => {
-					navigate("/payment");
-					setIsProcessing(false);
-				},1000);
+				// Đặt trạng thái đã thêm mới thành true
+				setAddedToOrder(true);
 			}
 		} catch (error) {
 			console.error("Error processing order:",error);
+		} finally {
 			setIsProcessing(false);
 		}
 	};
+
+	useEffect(() => {
+		if (addedToOrder && order?.orderItemsSlected?.length > 0) {
+			// Chuyển hướng đến trang thanh toán
+			navigate("/payment");
+		}
+	},[addedToOrder,order?.orderItemsSlected]);
+
 
 
 	return (

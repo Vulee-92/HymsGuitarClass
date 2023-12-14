@@ -103,6 +103,26 @@ export const orderSlide = createSlice({
 			});
 			state.orderItemsSlected = orderSelected;
 		},
+		addToOrderAndSelect: (state,action) => {
+			const { orderItem } = action.payload;
+			const itemOrder = state?.orderItems?.find((item) => item?.product === orderItem.product);
+
+			// Thêm vào orderItems và chọn cho orderItemsSelected
+			if (itemOrder) {
+				if (itemOrder.amount + orderItem.amount <= itemOrder.countInstock) {
+					// Nếu sản phẩm đã tồn tại, tăng số lượng nếu còn đủ hàng
+					itemOrder.amount += orderItem.amount;
+				}
+			} else {
+				// Nếu sản phẩm chưa tồn tại, thêm mới và chọn cho orderItemsSelected
+				state.orderItems.push(orderItem);
+				state.orderItemsSlected = [orderItem];
+			}
+
+			// Cập nhật trạng thái
+			state.isSucessOrder = true;
+			state.isErrorOrder = false;
+		},
 		// Thêm reducer để cập nhật thông tin người dùng
 		setShippingAddress: (state,action) => {
 			state.shippingAddress = action.payload;
@@ -119,6 +139,7 @@ export const {
 	removeAllOrderProduct,
 	selectedOrder,
 	setShippingAddress,
+	addToOrderAndSelect,
 	resetOrder,
 } = orderSlide.actions;
 
