@@ -6,14 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
 import * as RecentlyViewed from "../../services/RecentlyViewed";
 import { Swiper,SwiperSlide } from 'swiper/react';
-import 'swiper/css'; // Import CSS Swiper
-
-// Thêm các styles tùy chọn nếu cần
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { Autoplay,Pagination,Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
+
 
 
 import { useTranslation } from "react-i18next";
@@ -171,15 +165,15 @@ const HomePage = () => {
 	const sortedBlogs = blogs?.data?.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
 
 
-	useEffect(() => {
-		// Thử chọn phần tử meta
-		const ogImageMeta = document.querySelector('meta[property="og:image"]');
+	// useEffect(() => {
+	// 	// Thử chọn phần tử meta
+	// 	const ogImageMeta = document.querySelector('meta[property="og:image"]');
 
-		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
-		if (ogImageMeta) {
-			ogImageMeta.setAttribute('content',"https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
-		}
-	},[]);
+	// 	// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
+	// 	if (ogImageMeta) {
+	// 		ogImageMeta.setAttribute('content',"https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+	// 	}
+	// },[]);
 
 
 

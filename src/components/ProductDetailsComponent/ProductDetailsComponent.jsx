@@ -9,11 +9,9 @@ import { useDispatch,useSelector } from "react-redux";
 import { Swiper,SwiperSlide } from 'swiper/react';
 
 // Thêm các styles tùy chọn nếu cần
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+
 import { Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
+
 import { useLocation,useNavigate } from "react-router-dom";
 import styles from "./stylemui";
 import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialog,DialogActions,DialogContent,DialogTitle,Divider,Drawer,Fab,Grid,IconButton,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Rating,Snackbar,Stack,Typography,useMediaQuery } from "@mui/material";
@@ -225,13 +223,28 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const { isLoading,data: productDetails } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
 	console.log("productDetails,",productDetails)
 
+
 	useEffect(() => {
 		// Thử chọn phần tử meta
 		const ogImageMeta = document.querySelector('meta[property="og:image"]');
+		const ogImageMetaUrl = document.querySelector('meta[property="og:image:secure_url"]');
+		const ogImageUrl = document.querySelector('meta[property="og:url"]');
 
+		const ogImageMetaTitle = document.querySelector('meta[property="og:title"]');
+		if (ogImageUrl) {
+			ogImageMeta.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
 		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
 		if (ogImageMeta) {
 			ogImageMeta.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
+
+		if (ogImageMetaUrl) {
+			ogImageMetaUrl.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
+
+		if (ogImageMetaTitle) {
+			ogImageMetaTitle.setAttribute('content',productDetails?.image || "Hymns Center");
 		}
 	},[productDetails]);
 

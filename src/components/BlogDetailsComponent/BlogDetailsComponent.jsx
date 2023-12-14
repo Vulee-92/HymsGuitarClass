@@ -3,36 +3,23 @@ import * as BlogService from "../../services/BlogService";
 
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch,useSelector } from "react-redux";
-import { useLocation,useNavigate } from "react-router-dom";
+
 import styles from "./stylemui";
 import { Box,Container,Grid,ImageList,Paper,Typography } from "@mui/material";
 import "react-medium-image-zoom/dist/styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
-import AnimationComponent from "components/AnimationComponent/AnimationComponent";
+
 
 import { useDebounce } from "hooks/useDebounce";
 
 import { Helmet } from "react-helmet-async";
 import { Swiper,SwiperSlide } from 'swiper/react';
-import 'swiper/css'; // Import CSS Swiper
 
-// Thêm các styles tùy chọn nếu cần
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { Autoplay,Pagination,Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
+
 import BlogPostCardMobile from "sections/@dashboard/blog/BlogPostCardMobile";
 
 const BlogDetailPage = ({ idBlog }) => {
-	// const classess = useStyles({ isMobile });
-	const navigate = useNavigate();
-	const location = useLocation();
-	const dispatch = useDispatch();
-	const [numBlog,setNumBlog] = useState(1);
-	const user = useSelector((state) => state.user);
-	const order = useSelector((state) => state.order);
+
 	const classes = styles();
 	const [limit,setLimit] = useState(6);
 	const searchBlog = useSelector((state) => state?.blog?.search);
@@ -41,7 +28,6 @@ const BlogDetailPage = ({ idBlog }) => {
 
 
 
-	const [isCartOpen,setIsCartOpen] = useState(false);
 
 	const fetchGetDetailsBlog = async (context) => {
 		const id = context?.queryKey && context?.queryKey[1];
@@ -65,51 +51,36 @@ const BlogDetailPage = ({ idBlog }) => {
 	};
 
 	fetchData();
-	// useEffect(() => {
-	// 	if (order.isSucessOrder) {
-	// 		message.success("Đã thêm vào giỏ hàng");
-	// 	}
-	// 	return () => {
-	// 		dispatch(resetOrder());
-	// 	};
-	// },[order.isSucessOrder]);
-	const handleChangeCount = (type,limited) => {
-		if (type === "increase") {
-			if (!limited) {
-				setNumBlog(numBlog + 1);
-			}
-		} else {
-			if (!limited) {
-				setNumBlog(numBlog - 1);
-			}
-		}
-	};
 
 	const { isLoading,data: blogDetails } = useQuery(
 		["blogs",idBlog],
 		fetchGetDetailsBlog
 	);
 
-	// // Kiểm tra xem dữ liệu đang được tải hay không
-	// if (isLoading) {
-	// 	return <p>Loading...</p>;
-	// }
+	useEffect(() => {
+		// Thử chọn phần tử meta
+		const ogImageMeta = document.querySelector('meta[property="og:image"]');
+		const ogImageMetaUrl = document.querySelector('meta[property="og:image:secure_url"]');
+		const ogImageUrl = document.querySelector('meta[property="og:url"]');
 
-	// // Kiểm tra xem có dữ liệu chi tiết blog hay không
-	// if (!blogDetails) {
-	// 	return <p>No blog details available.</p>;
-	// }
+		const ogImageMetaTitle = document.querySelector('meta[property="og:title"]');
+		if (ogImageUrl) {
+			ogImageMeta.setAttribute('content',blogDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
+		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
+		if (ogImageMeta) {
+			ogImageMeta.setAttribute('content',blogDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
 
+		if (ogImageMetaUrl) {
+			ogImageMetaUrl.setAttribute('content',blogDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_2.3f27ce6c96dec6c43824.png");
+		}
 
-	// const { isLoading,data: blogDetails } = useQuery(["blog-details",idBlog],fetchGetDetailsBlog,{ enabled: !!idBlog });
-	// useEffect(() => {
-	// 	const orderRedux = order?.orderItems?.find((item) => item.product === blogDetails?._id);
-	// 	if (orderRedux?.amount + numBlog <= orderRedux?.countInstock || (!orderRedux && blogDetails?.countInStock > 0)) {
-	// 		setErrorLimitOrder(false);
-	// 	} else if (blogDetails?.countInStock === 0) {
-	// 		setErrorLimitOrder(true);
-	// 	}
-	// },[numBlog]);
+		if (ogImageMetaTitle) {
+			ogImageMetaTitle.setAttribute('content',blogDetails?.image || "Hymns Center");
+		}
+	},[blogDetails]);
+
 
 
 	const {
@@ -121,67 +92,6 @@ const BlogDetailPage = ({ idBlog }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	function SampleNextArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.buttontoi} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} rotation={180} />
-			</Box>
-		);
-	}
-
-	function SamplePrevArrow(props) {
-		const { onClick } = props;
-		return (
-			<Box className={classes.samplePrevArrow} onClick={onClick}>
-				<FontAwesomeIcon icon={faCircleArrowLeft} />
-			</Box>
-		);
-	}
-	const settings = {
-		dots: true,
-		infinite: true,
-		slidesToShow: 3,
-		slidesToScroll: 1,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		cssEase: "linear",
-		pauseOnHover: true,
-		centerPadding: "60px",
-		nextArrow: <SampleNextArrow />,
-		prevArrow: <SamplePrevArrow />,
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 3,
-					infinite: true,
-					dots: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2,
-				},
-			},
-			{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 1,
-					slidesToScroll: 1,
-				},
-			},
-		],
-	};
-
-
-
-
-
-
 	return (
 		<>
 
@@ -224,13 +134,7 @@ const BlogDetailPage = ({ idBlog }) => {
 				<Box>
 					<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
 					<Grid container spacing={2} >
-						{/* {[0,1,2].map((row) => (
-							<Grid key={row} container item spacing={2}>
-								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
-									<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
-								))}
-							</Grid>
-						))} */}
+
 						<Swiper
 							spaceBetween={10}
 
