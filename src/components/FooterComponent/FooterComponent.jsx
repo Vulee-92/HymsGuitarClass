@@ -76,7 +76,7 @@ const FooterComponent = () => {
 									<Typography className={classes.txtFooterInsider} sx={{ fontSize: {} }}>
 										Trở thành thành viên đặc biệt của Hymns
 									</Typography>
-									<Box onClick={goToSignIn}>
+									<Box >
 
 										<Typography className={classes.txtTilteInsider}>
 											Đăng ký ngay để nhận các email với cơ hội nhận giải thưởng đàn guitar, ưu đãi hấp dẫn, tin tức về guitar và nhiều hơn nữa từ Hymns Center!
@@ -87,6 +87,7 @@ const FooterComponent = () => {
 								<Grid item xs={12} sm={2} xl={5} sx={{ textAlign: { xl: "right",xs: "left" },marginTop: 3 }}>
 									<Button
 										className={classes.btnLoginHeader}
+										onClick={goToSignIn}
 									>
 										Đăng ký
 									</Button>

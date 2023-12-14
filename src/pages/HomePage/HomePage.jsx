@@ -271,46 +271,42 @@ const HomePage = () => {
 
 				{/* </ImageList> */}
 			</Container>
-			<Container maxWidth='md' style={{ marginTop: "50px",padding: 0 }}>
-				<>
-					<Container maxWidth='md' style={{ padding: 0 }}>
-						<Box sx={{
-							paddingLeft: "30px",paddingRight: "30px",display: { xl: "block",xs: "none" }
-						}}>
-							<Typography className={classes.txtTitleHymnsCenter}>Hymns Center</Typography>
-							<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
-							<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Center sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Center cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
-							<Typography className={classes.txtTilte}>Ngoài ra, Hymns Center còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Center là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
-						</Box>
-					</Container>
-				</>
-			</Container >
-			<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
-				<>
-					<Container maxWidth='lg' style={{ padding: 0 }}>
-						<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
-							<Typography className={classes.txtTitleBox} >Hymns Center</Typography>
-							<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
-							<Typography className={classes.txtTilte}>Khám phá đàn guitar và phụ kiện chất lượng tại Hymns Center. Chúng tôi không chỉ cung cấp những sản phẩm tốt, giá cả phải chăng mà còn mang đến trải nghiệm học guitar chuyên nghiệp. </Typography>
-							<Typography className={classes.txtTilte}>Với kinh nghiệm và sự chu cần, Hymns Center sẽ là điểm đến hoàn hảo cho hành trình âm nhạc của bạn. Rất mong được gặp các bạn!"</Typography>
-						</Box>
-					</Container>
-				</>
-			</Container>
-			<Container maxWidth='lg' style={{ width: "95%" }}>
+			<Box sx={{ backgroundColor: "#f7f8fa !important",paddingTop: "20px",paddingBottom: "20px" }}>
+
+				<Container maxWidth='md' style={{ marginTop: "50px",padding: 0 }}>
+					<>
+						<Container maxWidth='md' style={{ padding: 0 }}>
+							<Box sx={{
+								paddingLeft: "30px",paddingRight: "30px",display: { xl: "block",xs: "none" }
+							}}>
+								<Typography className={classes.txtTitleHymnsCenter}>Hymns Center</Typography>
+								<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
+								<Typography className={classes.txtTilte}>Nếu bạn đang tìm kiếm một trung tâm dạy đàn guitar chuyên nghiệp, Hymns Center sẽ là một lựa chọn tuyệt vời cho bạn. Tại đây, chúng tôi cung cấp các khóa học đàn guitar từ cơ bản đến nâng cao, giúp học viên phát triển kỹ năng và trở thành một người chơi guitar thành thạo. Với đội ngũ giáo viên giàu kinh nghiệm và tâm huyết, Hymns Center cam kết mang đến cho học viên những bài học chất lượng nhất, giúp họ tiến bộ nhanh chóng và hiệu quả. Chúng tôi luôn tập trung vào việc xây dựng một môi trường học tập thân thiện và đầy đủ các tiện ích để học viên có thể tiếp thu kiến thức một cách dễ dàng và thoải mái nhất.</Typography>
+								<Typography className={classes.txtTilte}>Ngoài ra, Hymns Center còn cung cấp các dịch vụ bán đàn guitar và phụ kiện liên quan, giúp học viên có thể sở hữu một cây đàn tốt nhất để phục vụ cho việc học tập và luyện tập. Chúng tôi cam kết chỉ bán các sản phẩm chất lượng cao, đảm bảo sự hài lòng của khách hàng. Nếu bạn muốn học đàn guitar một cách chuyên nghiệp và hiệu quả, Hymns Center là sự lựa chọn tốt nhất cho bạn. Hãy đến với chúng tôi để trải nghiệm những khóa học tuyệt vời và được hỗ trợ tận tình từ các giáo viên giàu kinh nghiệm của chúng tôi.</Typography>
+							</Box>
+						</Container>
+					</>
+				</Container >
+				<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
+					<>
+						<Container maxWidth='lg' style={{ padding: 0 }}>
+							<Box sx={{ paddingLeft: "30px",paddingRight: "30px" }}>
+								<Typography className={classes.txtTitleBox} >Hymns Center</Typography>
+								<Typography className={classes.txtTilte}>Hymns Center - Nơi Hợp Nhất Chất Lượng và Đam Mê Âm Nhạc!</Typography>
+								<Typography className={classes.txtTilte}>Khám phá đàn guitar và phụ kiện chất lượng tại Hymns Center. Chúng tôi không chỉ cung cấp những sản phẩm tốt, giá cả phải chăng mà còn mang đến trải nghiệm học guitar chuyên nghiệp. </Typography>
+								<Typography className={classes.txtTilte}>Với kinh nghiệm và sự chu cần, Hymns Center sẽ là điểm đến hoàn hảo cho hành trình âm nhạc của bạn. Rất mong được gặp các bạn!"</Typography>
+							</Box>
+						</Container>
+					</>
+				</Container>
+			</Box>
+
+			<Container maxWidth='lg' style={{ width: "95%",background: "#f7f8fa !important" }} >
 				<Box>
 					<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
 					<Grid container spacing={2} >
-						{/* {[0,1,2].map((row) => (
-							<Grid key={row} container item spacing={2}>
-								{sortedBlogs?.slice(row * 3,(row + 1) * 3).map((post,index) => (
-									<ShopBLogCard id={post?._id} key={post?._id} blog={post} index={index} />
-								))}
-							</Grid>
-						))} */}
 						<Swiper
 							spaceBetween={10}
-
 							grabCursor={true}
 							// navigation={true}
 							style={{ paddingLeft: '0px',paddingRight: '0px' }}
@@ -326,8 +322,6 @@ const HomePage = () => {
 							}}
 						>
 							{blogs?.data?.map((post,index) => {
-
-
 								return (
 									<SwiperSlide className={classes.SwiperSlideBlog} key={post._id}>
 										<BlogPostCardMobile id={post?._id} key={post?._id} blog={post} index={index} responsive={12} />
@@ -368,6 +362,7 @@ const HomePage = () => {
 					/>
 				</Button> */}
 			</Container >
+
 			{(recentlyViewed?.products && (
 				<Container maxWidth='lg'>
 					<Typography className={classes.txtTitleRecentlyViewed}>Xem gần đây</Typography>

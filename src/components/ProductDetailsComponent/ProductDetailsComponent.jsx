@@ -232,15 +232,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 		const ogImageMetaTitle = document.querySelector('meta[property="og:title"]');
 		if (ogImageUrl) {
-			ogImageMeta.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_3.e23d5af039c32592f3a5.webp");
+			ogImageMeta.setAttribute('content',productDetails?.image);
 		}
 		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
 		if (ogImageMeta) {
-			ogImageMeta.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_3.e23d5af039c32592f3a5.webp");
+			ogImageMeta.setAttribute('content',productDetails?.image);
 		}
 
 		if (ogImageMetaUrl) {
-			ogImageMetaUrl.setAttribute('content',productDetails?.image || "https://www.hymnscenter.com/static/media/bg_carousel_desktop_christmas_3.e23d5af039c32592f3a5.webp");
+			ogImageMetaUrl.setAttribute('content',productDetails?.image);
 		}
 
 		if (ogImageMetaTitle) {

@@ -40,8 +40,9 @@ export default makeStyles(() => {
 			fontSize: "1.3rem",
 			overflow: "hidden",
 			overflowWrap: "break-word",
+			height: "40px !important",textTransform: "none",
 			"&:hover": {
-				color: "#000",
+				color: "#436E67",
 			},
 		},
 		txtPrice: {
@@ -53,7 +54,7 @@ export default makeStyles(() => {
 		},
 		boxCard: {
 			borderBottom: "0px",
-			width: "90%",
+			width: "100%",
 			margin: "0 auto",
 			borderTop: "2px solid #454F5B",
 			borderRadius: "9px",
@@ -65,9 +66,11 @@ export default makeStyles(() => {
 
 		},
 		txtTilte: {
+			...CStyles.txt_body_item,
 			textAlign: "left",
-			fontSize: ".875rem",
-			color: "##161616"
+			fontSize: "1rem",
+			color: "#6c7a87",
+			fontWeight: 400,
 
 		},
 		boxBorderCard: {

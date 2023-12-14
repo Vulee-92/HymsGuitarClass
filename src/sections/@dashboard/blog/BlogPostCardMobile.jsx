@@ -109,7 +109,7 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 				>
 					<StyledTitle
 						onClick={() => handleDetailBlog(id)}
-						sx={{ height: "40px !important",textTransform: "uppercase",fontWeight: 600 }}
+						sx={{}}
 						className={classes.txtBlogTitle}
 
 
