@@ -24,6 +24,9 @@ const CardComponent = (product) => {
 
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
+		if ('vibrate' in navigator) {
+			navigator.vibrate([100,200,100]);
+		}
 		const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && product?.product?.countInStock > 0)) {
 			dispatch(
@@ -58,6 +61,9 @@ const CardComponent = (product) => {
 
 	const handleBuyNow = async () => {
 		try {
+			if ('vibrate' in navigator) {
+				navigator.vibrate([100,200,100]);
+			}
 			setIsProcessing(true);
 
 			const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
