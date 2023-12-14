@@ -28,7 +28,7 @@ import ImageCarouselZoom from "../../components/ImageCarouselZoom/ImageCarouselZ
 import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiperComponent";
-import AnswerComponent from "components/AnswerComponent/AnswerComponent";
+import AnswerComponent from "../../components/AnswerComponent/AnswerComponent";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -754,7 +754,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</Button>
 						</DialogActions>
 					</Dialog>
-					<Container maxWidth="lg">
+					<Container maxWidth="xl" sx={{ paddingLeft: "0px !important",paddingRight: "0px !important",}}>
 						<AnswerComponent />
 
 					</Container>

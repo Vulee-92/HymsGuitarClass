@@ -6,9 +6,9 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 const AnswerComponent = () => {
 	const classes = styles();
 	return (
-		<Container maxWidth="lg">
+		<Container maxWidth="xl" sx={{ paddingLeft: "0px !important",paddingRight: "0px !important",}}>
 			<Grid container spacing={2} sx={{ display: { xs: "flex" },marginLeft: "0px",width: "100%",justifyContent: "space-around",flexDirection: { xs: "column-reverse",sm: "column-reverse",md: "column-reverse",xl: "row",lg: "row" } }}>
-				<Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: { xl: " 10px 30px",xs: "0px 10px" } }}>
+				<Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: { xl: " 10px 30px",xs: "0px 0px !important" } }} sx={{ paddingLeft: "0px !important",paddingRight: "0px !important",}}>
 					<Typography className={classes.txtTitleBox}>Các câu hỏi thường gặp</Typography>
 					<Accordion className={classes.boxAnswer} >
 						<AccordionSummary expandIcon={<FontAwesomeIcon icon={faChevronDown} />} aria-controls='panel1a-content' id='panel1a-header'>
