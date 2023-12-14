@@ -33,6 +33,7 @@ import CButton from "../../components/CButton";
 /** STYLES */
 import styles from "./style";
 import { LoadingButton } from "@mui/lab";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 
 
 const SignInPage = () => {
@@ -222,8 +223,8 @@ const SignInPage = () => {
 	};
 	return (
 		<>
-			<Box className={classes.container}>
-			</Box>
+			<CarouselComponent />
+
 
 			<Grid container className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} xl={3} className={classes.conCard}>

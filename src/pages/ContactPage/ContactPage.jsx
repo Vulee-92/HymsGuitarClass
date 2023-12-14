@@ -17,6 +17,7 @@ import Loading from "../../components/LoadingComponent/Loading";
 import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import InputForm from "../../components/InputForm/InputForm";
 import { PatternFormat } from "react-number-format";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 
 const ContactPage = () => {
 	const [name,setName] = useState("");
@@ -126,9 +127,7 @@ const ContactPage = () => {
 		<>
 			<Loading isLoading={isLoading || loading}>
 
-				<Box className={classes.container}>
-					<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Contact" className={classes.conTextCreate} /></Typography>
-				</Box>
+				<CarouselComponent />
 				<Container maxWidth="xl" sx={{ overflow: 'hidden' }}>
 					<Grid container className={classes.conContent} sx={{ overflow: 'hidden' }}>
 

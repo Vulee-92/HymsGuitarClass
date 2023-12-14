@@ -37,6 +37,7 @@ import OrderTable from "components/FooterComponent/TableOrderComponent/TableOrde
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { LoadingButton } from "@mui/lab";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 
 const ResetPasswordDonePage = () => {
 	const navigate = useNavigate()
@@ -54,9 +55,8 @@ const ResetPasswordDonePage = () => {
 			<Helmet>
 				<title> Verify Email </title>
 			</Helmet>
-			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thông tin tài khoản" className={classes.conTextCreate} /></Typography>
-			</Box>
+			<CarouselComponent />
+
 
 			<Grid container style={{ marginTop: "60px" }}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>

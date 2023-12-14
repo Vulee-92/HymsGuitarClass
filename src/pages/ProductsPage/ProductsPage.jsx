@@ -17,6 +17,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import AnswerComponent from "components/AnswerComponent/AnswerComponent";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
 const PRODUCT_COLOR = [
 	"#00AB55",
@@ -130,16 +131,8 @@ const ProductsPage = () => {
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
-			{/* <Typography className={classes.conTextCreate}>
-				<Typical
-					steps={['Guitar',2000,'Ukulele',2000,'Tuner',2000,'Pick',2000,'Capo',2000]}
-					loop={Infinity}
-					wrapper="p"
-					className={classes.conTextCreate}
-				/>
-			</Typography> */}
-			<Box className={classes.container}>
-			</Box>
+			<CarouselComponent />
+
 			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
 				<Typography className={classes.txtTitleBox}>Sản phẩm</Typography>
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>

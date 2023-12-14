@@ -31,6 +31,7 @@ import { LoadingButton } from "@mui/lab";
 import { useNavigate,useParams } from "react-router-dom";
 import { styled } from "@mui/styles";
 import PasswordCheckerComponent from "components/PasswordCheckerComponent/PasswordCheckerComponent";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 const LightTooltip = styled(({ className,...props }) => (
 	<Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -207,9 +208,8 @@ const ChangePassword = () => {
 		//   disableAutoFocus={true}
 		// >
 		<>
-			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thay đổi mật khẩu" className={classes.conTextCreate} /></Typography>
-			</Box>
+			<CarouselComponent />
+
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>

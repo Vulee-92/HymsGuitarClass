@@ -6,57 +6,7 @@ import CStyles from "../../utils/common";
 
 export default makeStyles(() => {
 	return {
-		container: {
-			...CStyles.center,
-			backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
 
-			marginTop: "40px",
-			height: "100vh",
-			display: "block",
-			width: "100%",
-			margin: "0 auto",
-			backgroundRepeat: "no-repeat",
-			// padding: Configs.pH,
-
-
-			'@media (max-width: 767px)': {
-				backgroundImage: `url(${Assets.bgHomeMobile})`,
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				backgroundSize: "cover",
-				backgroundRepeat: "no-repeat",
-				width: "100%",
-				height: "60vh", /* Đảm bảo tỷ lệ chiều rộng/chiều cao không bị biến đổi */
-				display: "block"
-			},
-			'@media (min-width: 768px) and (max-width: 1509px)': {
-				backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				backgroundSize: "cover",
-				backgroundRepeat: "no-repeat",
-				height: "20vh",
-
-				width: "100vw",
-				display: "block"
-			},
-			'@media (min-width: 1510px)': {
-				backgroundImage: `url(${Assets.bgHymnsCenterChristmas})`,
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				backgroundSize: "cover",
-				backgroundRepeat: "no-repeat",
-				height: "500px",
-
-				width: "100%",
-				display: "block"
-
-
-			},
-		},
 		conContent: {
 			...CStyles.rowJusCen,
 		},

@@ -38,6 +38,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { useLocation,useNavigate } from "react-router-dom";
 import OrderTable from "../../components/FooterComponent/TableOrderComponent/TableOrderComponent";
 import { useQuery } from "@tanstack/react-query";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 
 const ProfileScreen = () => {
 	const navigate = useNavigate()
@@ -222,9 +223,8 @@ const ProfileScreen = () => {
 		// >
 
 		<Loading isLoading={isLoading || loading}>
-			<Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Thông tin tài khoản" className={classes.conTextCreate} /></Typography>
-			</Box>
+			<CarouselComponent />
+
 			<Grid className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} className={classes.conCard}>
 					<Box className={classes.conLogin}>

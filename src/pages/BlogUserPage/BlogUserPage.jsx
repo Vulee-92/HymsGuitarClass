@@ -18,8 +18,8 @@ import BLogList from "sections/@dashboard/blog/BlogList";
 import { BlogPostCard } from "sections/@dashboard/blog";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import ShopBLogCard from "../../sections/@dashboard/blog/BlogPostCard";
-import { WrapperButtonMore } from "pages/HomePage/style";
 import BlogPostCardMobile from "sections/@dashboard/blog/BlogPostCardMobile";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 	...theme.typography.body2,
@@ -120,10 +120,7 @@ const BlogUserPage = () => {
 			<Helmet>
 				<title> Blog </title>
 			</Helmet>
-			< Box className={classes.container}>
-				<Typography className={classes.conTextCreate}>  <AnimationComponent type="text" text="Blog" className={classes.conTextCreate} /></Typography>
-
-			</Box>
+			<CarouselComponent />
 			<Container maxWidth="lg">
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					<Grid item xs={12} sm={12} md={12} xl={12}>
@@ -162,7 +159,7 @@ const BlogUserPage = () => {
 									marginTop: "10px",
 								}}
 							>
-								<WrapperButtonMore
+								{/* <WrapperButtonMore
 									textbutton={isPreviousData ? "Load more" : "Xem thêm"}
 									type='outline'
 									styleButton={{
@@ -179,7 +176,7 @@ const BlogUserPage = () => {
 										color: blogs?.total === blogs?.data?.length && "#000",
 									}}
 									onClick={() => setLimit((prev) => prev + 2)}
-								/>
+								/> */}
 							</Button>
 							{/* <BLogList blogs={blogList} /> */}
 						</Item>

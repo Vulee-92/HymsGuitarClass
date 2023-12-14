@@ -18,6 +18,7 @@ import Loading from "../../components/LoadingComponent/Loading";
 import CButton from "../../components/CButton";
 /** STYLES */
 import styles from "./style";
+import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 
 
 const SendEmailForgotPasswordSuccess = () => {
@@ -32,8 +33,8 @@ const SendEmailForgotPasswordSuccess = () => {
 	return (
 		<>
 
-			<Box className={classes.container}>
-			</Box>
+			<CarouselComponent />
+
 			<Grid container className={classes.conContent}>
 				<Grid item xs={12} sm={6} lg={4} xl={3} className={classes.conCard}>
 					<Box className={classes.conLogin}>
