@@ -304,7 +304,7 @@ const HomePage = () => {
 			<Container maxWidth='lg' style={{ width: "95%",background: "#f7f8fa !important" }} >
 				<Box>
 					<Typography className={classes.txtTitleBox}>Trích từ Blog</Typography>
-					<Grid container spacing={2} >
+					<Grid container  >
 						<Swiper
 							spaceBetween={10}
 							grabCursor={true}

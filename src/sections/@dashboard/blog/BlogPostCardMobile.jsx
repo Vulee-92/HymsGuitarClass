@@ -70,7 +70,7 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 	};
 
 	return (
-		<Grid item xs={responsive} >
+		<Grid item  >
 			<Card sx={{
 				// position: 'relative',borderRadius: "14px",boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
 			}} className={classes.boxCard}>

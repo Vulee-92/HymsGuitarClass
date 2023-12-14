@@ -123,7 +123,7 @@ const FooterComponent = () => {
 
 
 
-						<Grid container sx={{ padding: "0px 13px" }}>
+						<Grid container >
 							<Grid item xs={12} sm={3} sx={{ marginBottom: { xl: "0",xs: "20px" } }}>
 								<Typography className={classes.nameProduct} onClick={goToHome}>
 									Hymns
