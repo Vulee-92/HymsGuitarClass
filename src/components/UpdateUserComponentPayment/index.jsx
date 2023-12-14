@@ -9,9 +9,7 @@ import {
 	Input,
 	InputAdornment,
 	InputLabel,
-	MenuItem,
-	NativeSelect,
-	Select,
+
 	Typography,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -23,12 +21,10 @@ import * as UserService from "../../services/UserService";
 import styles from "./style";
 import { useDispatch,useSelector } from "react-redux";
 import Loading from "../../components/LoadingComponent/Loading";
-import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import { resetUser } from "../../redux/slides/userSlide";
 import { setShippingAddress } from "redux/slides/orderSlide";
 import { Colors } from "utils/colors";
-import ShippingCalculator from "./ShippingCalculator";
 const UpdateUserComponentPayment = ({
 	updateUserInfo,
 }) => {
@@ -37,28 +33,14 @@ const UpdateUserComponentPayment = ({
 	const user = useSelector((state) => state.user);
 	const order = useSelector((state) => state.order);
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
-	const [email,setEmail] = useState("");
-	const [name,setName] = useState("");
-	const [phone,setPhone] = useState("");
-	const [password,setPassword] = useState("");
-	const [address,setAddress] = useState("");
-	const [avatar,setAvatar] = useState("");
-	const [province,setProvince] = useState("");
-	const [cityhehe,setCity] = useState("");
-	const [ward,setWard] = useState("");
-	const [provinces,setProvinces] = useState([]);
-	const [citys,setCitys] = useState([]);
-	const [wards,setWards] = useState([]);
+
+
 	const dispatch = useDispatch();
-	const BASE_API_URL = 'https://provinces.open-api.vn/api';
 	const [loading,setLoading] = useState(false);
 	const [errorMsg,setErrorMsg] = useState("");
 	const [activePage,setActivePage] = useState('payment'); // Ban đầu, trang là "Giỏ hàng"
-	const [searchKeyword,setSearchKeyword] = useState("");
-	const [selectedProvinceCode,setSelectedProvinceCode] = useState(shippingAddress?.province || user?.province || "");
-	const handleNavigate = (page) => {
-		setActivePage(page);
-	};
+
+
 
 	// useEffect(() => {
 	// 	setEmail(shippingAddress?.email);
@@ -73,35 +55,8 @@ const UpdateUserComponentPayment = ({
 	// 	setWard(shippingAddress?.ward);
 	// },[shippingAddress]);
 
-	const fetchProvinces = async () => {
-		try {
-			const response = await axios.get(`${BASE_API_URL}/p`);
-			setProvinces(response?.data);
-		} catch (error) {
-			// console.log(error);
-		}
-	};
 
-	const fetchDistricts = async (provinceId) => {
-		try {
-			const response = await axios.get(
-				`${BASE_API_URL}/p/${provinceId}/?depth=2`);
-			setCitys(response?.data?.districts);
-		} catch (error) {
-			setCitys([]); // Set districts to an empty array or handle the error in an appropriate way
-		}
-	};
 
-	const fetchWards = async (districtId) => {
-		try {
-			const response = await axios.get(
-				`${BASE_API_URL}/d/${districtId}/?depth=2`
-			);
-			setWards(response?.data?.wards);
-		} catch (error) {
-			// console.log(error);
-		}
-	};
 
 	const [form,setForm] = useState({
 		name: {
@@ -161,7 +116,6 @@ const UpdateUserComponentPayment = ({
 	});
 	// Hàm tính phí vận chuyển
 	const calculateShippingFee = (address,products) => {
-		console.log("address,productsaddress,products",address,products)
 
 		const freeShippingCities = ['tam kỳ','tam kỳ','Tam kỳ'];
 		const shippingFeePerAccessory = 50000;
@@ -172,7 +126,6 @@ const UpdateUserComponentPayment = ({
 
 
 		const isFreeShipping = freeShippingCities.includes(addressLower);
-		console.log("isFreeShipping",isFreeShipping)
 		let totalGuitarQuantity = 0;
 		let totalAccessoryQuantity = 0;
 		let totalShippingFee = 0;
@@ -233,7 +186,6 @@ const UpdateUserComponentPayment = ({
 
 	useEffect(() => {
 		const shippingFee = calculateShippingFee(form.city.value,order?.orderItemsSlected);
-		console.log("form.city.value",form.city.value)
 		// Thay products bằng danh sách sản phẩm trong giỏ hàng
 		const shippingInfo = {
 			name: form.name.value,
@@ -266,60 +218,6 @@ const UpdateUserComponentPayment = ({
 	const onChangeInput = (event,field) => {
 		let value = event.target.value;
 		let name = '';
-		// if (field === 'province') {
-
-		// 	const selectedProvince = provinces.find(province => province.code === value);
-		// 	if (selectedProvince) {
-		// 		name = selectedProvince.name;
-		// 	}
-		// 	setSelectedProvinceCode(name);
-		// 	setProvince(name);
-		// 	setForm({
-		// 		...form,
-		// 		[field]: {
-		// 			...form[field],
-		// 			value: value,
-		// 			name: name,
-		// 		},
-		// 	});
-		// 	setSearchKeyword('');
-		// 	if (value) {
-		// 		fetchDistricts(value)
-		// 	}
-		// } else if (field === 'city') {
-		// 	const selectedCity = citys.find(city => city.code === value);
-		// 	if (selectedCity) {
-		// 		name = selectedCity.name;
-		// 	}
-		// 	setCity(name);
-		// 	setForm({
-		// 		...form,
-		// 		[field]: {
-		// 			...form[field],
-		// 			value: value,
-		// 			name: name,
-		// 		},
-		// 	});
-		// 	setSearchKeyword('');
-		// 	if (value) {
-		// 		fetchWards(value)
-		// 	}
-		// } else if (field === "ward") {
-		// 	const selectedWard = wards.find(ward => ward.code === value);
-		// 	if (selectedWard) {
-		// 		name = selectedWard.name;
-		// 	}
-		// 	setWard(name);
-		// 	setForm({
-		// 		...form,
-		// 		[field]: {
-		// 			...form[field],
-		// 			value: value,
-		// 			name: name,
-		// 		},
-		// 	});
-		// 	setSearchKeyword('');
-		// }
 		if (field === "phone") {
 			// Định dạng số điện thoại
 			setForm({
@@ -332,7 +230,6 @@ const UpdateUserComponentPayment = ({
 			});
 		}
 		else {
-
 			setForm({
 				...form,
 				[field]: {
@@ -340,9 +237,9 @@ const UpdateUserComponentPayment = ({
 					value: value,
 				},
 			});
-			// Kiểm tra xem người dùng đã thay đổi giá trị của trường nào hay chưa
-			// Gọi hàm updateUserInfo để truyền thông tin người dùng qua props
+			// onValidate()
 			updateUserInfo(form);
+
 		}
 	};
 	const onBlurFocusInput = (value,field) => {
@@ -441,23 +338,9 @@ const UpdateUserComponentPayment = ({
 		if (isError) {
 			return setForm(newForm);
 		}
-		// handleUpdate();
-	};
-	/** LIFE CYCLE */
 
-
-	const handleSearchChange = (event) => {
-		setSearchKeyword(event.target.value);
 	};
 
-
-
-
-	// useEffect(() => {
-	// 	fetchProvinces();
-	// },[]);
-
-	/** RENDER */
 	return (
 
 
@@ -533,11 +416,11 @@ const UpdateUserComponentPayment = ({
 										<InputAdornment position="start">
 											<FontAwesomeIcon
 												fontSize={20}
-												// color={
-												// 	form.email.isFocus || form.email.value.trim() !== ""
-												// 		? Colors.bgLogin
-												// 		: Colors.bgLogin
-												// }
+												color={
+													form.email.isFocus || form.email.value.trim() !== ""
+														? Colors.bgLogin
+														: Colors.bgLogin
+												}
 												className={classes.conIconInput}
 											/>
 										</InputAdornment>
@@ -564,16 +447,16 @@ const UpdateUserComponentPayment = ({
 											{t("name")}
 										</Typography> */}
 											<Input
-												// style={{
-												// 	border:
-												// 		!form.name.isFocus &&
-												// 		`2px solid ${form.name.error
-												// 			? Colors.secondary
-												// 			: form.name.value.trim() !== ""
-												// 				? Colors.success
-												// 				: "transparent"
-												// 		}`,
-												// }}
+												style={{
+													border:
+														!form.name.isFocus &&
+														`2px solid ${form.name.error
+															? Colors.secondary
+															: form.name.value.trim() !== ""
+																? Colors.success
+																: "transparent"
+														}`,
+												}}
 												className={classes.conInput}
 												fullWidth
 												placeholder={t("name")}
@@ -582,11 +465,11 @@ const UpdateUserComponentPayment = ({
 													<InputAdornment position="start">
 														<FontAwesomeIcon
 															fontSize={20}
-															// color={
-															// 	form.name.isFocus || form.name.value.trim() !== ""
-															// 		? Colors.bgLogin
-															// 		: Colors.bgLogin
-															// }
+															color={
+																form.name.isFocus || form.name.value.trim() !== ""
+																	? Colors.bgLogin
+																	: Colors.bgLogin
+															}
 															className={classes.conIconInput}
 														/>
 													</InputAdornment>
@@ -689,92 +572,7 @@ const UpdateUserComponentPayment = ({
 											onBlur={() => onBlurFocusInput(false,"city")}
 										/>
 									</Box>
-									{/* <Box className={classes.conItemInput}>
-								
-										<FormControl fullWidth>
-											<InputLabel className={classes.txtTitleInput} variant="standard" htmlFor="uncontrolled-native">Tỉnh/Thành phố</InputLabel>
-											<Select
 
-											
-												defaultValue={user?.province}
-												inputProps={{
-													name: 'province',
-													id: 'uncontrolled-native',
-												}}
-											
-											>
-												<Input
-													placeholder="Tìm kiếm tỉnh/thành phố"
-													value={searchKeyword}
-													className={classes.conInput}
-													onChange={handleSearchChange}
-												/>
-												{provinces
-													.filter((province) =>
-														province.name.toLowerCase().includes(searchKeyword.toLowerCase())
-													)
-													.map((filteredProvince) => (
-														<MenuItem
-															className={classes.conInput}
-															key={filteredProvince.code}
-															value={filteredProvince.code}
-															name={filteredProvince.name}
-														>
-															{filteredProvince.name}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-
-									</Box> */}
-									{/* <Box className={classes.conItemInput}>
-										<FormControl fullWidth>
-											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Thành phố/Quận/Huyện</InputLabel>
-											<Select
-										
-												value={form.city.value || ""} // Đây là giá trị được chọn
-												fullWidth
-												onChange={(event) => onChangeInput(event,"city")}
-												disabled={loading}
-												displayEmpty
-												className={classes.conInput}
-												onFocus={() => onBlurFocusInput(true,"city")}
-												onBlur={() => onBlurFocusInput(false,"city")}
-												inputProps={{ style: { border: 'none' } }}
-												startAdornment={
-													<InputAdornment position="start">
-														<FontAwesomeIcon
-															fontSize={20}
-														
-															className={classes.conIconInput}
-														/>
-													</InputAdornment>
-												}
-											>
-											
-												<Input
-													placeholder="Tìm kiếm thành phố/huyện"
-													value={searchKeyword}
-													className={classes.conInput}
-													onChange={handleSearchChange}
-												/>
-												{citys
-													.filter((city) =>
-														city.name.toLowerCase().includes(searchKeyword.toLowerCase())
-													)
-													.map((filteredCity) => (
-														<MenuItem
-															className={classes.conInput}
-															key={filteredCity.code}
-															value={filteredCity.code}
-															name={filteredCity.name}
-														>
-															{filteredCity.name}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-									</Box> */}
 									<Box className={classes.conItemInput}>
 										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
 
@@ -803,53 +601,7 @@ const UpdateUserComponentPayment = ({
 											onBlur={() => onBlurFocusInput(false,"ward")}
 										/>
 									</Box>
-									{/* <Box className={classes.conItemInput}>
-										<FormControl fullWidth>
-											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
-											<Select
 
-												value={shippingAddress?.ward || form.province.value}
-												fullWidth
-												onChange={(event) => onChangeInput(event,"ward")}
-												disabled={loading}
-												displayEmpty
-												className={classes.conInput}
-												onFocus={() => onBlurFocusInput(true,"ward")}
-												onBlur={() => onBlurFocusInput(false,"ward")}
-												startAdornment={
-													<InputAdornment position="start">
-														<FontAwesomeIcon
-															fontSize={20}
-
-															className={classes.conIconInput}
-														/>
-													</InputAdornment>
-												}
-											>
-
-												<Input
-													placeholder="Tìm kiếm thành phố/huyện"
-													value={searchKeyword}
-													className={classes.conInput}
-													onChange={handleSearchChange}
-												/>
-												{wards
-													.filter((ward) =>
-														ward.name.toLowerCase().includes(searchKeyword.toLowerCase())
-													)
-													.map((filteredWard) => (
-														<MenuItem
-															className={classes.conInput}
-															key={filteredWard.code}
-															value={filteredWard.code}
-															name={filteredWard.name}
-														>
-															{filteredWard.name}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-									</Box> */}
 									<Box className={classes.conItemInput}>
 										<FormControl fullWidth>
 											<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Số nhà - đường</InputLabel>

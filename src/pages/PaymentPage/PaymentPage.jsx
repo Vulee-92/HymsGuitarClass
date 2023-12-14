@@ -24,7 +24,8 @@ import useUpdateUserMutation from 'hooks/useUpdateUserMutation';
 import { useMutation,useQuery } from '@tanstack/react-query';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateUserComponentPayment from '../../components/UpdateUserComponentPayment';
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const PaymentPage = () => {
 	const order = useSelector((state) => state.order)
 	const shippingAddress = useSelector(state => state.order.shippingAddress);
@@ -169,7 +170,7 @@ const PaymentPage = () => {
 			},1000); // Thời gian tạm dừng 1000ms (1 giây)
 		} else {
 			// Hiển thị thông báo lỗi hoặc thực hiện hành động khác khi thông tin chưa được nhập đầy đủ
-			message.error("Vui lòng nhập đầy đủ thông tin.");
+			toast.error("Vui lòng nhập đầy đủ thông tin.");
 			setIsProcessing(false);
 		}
 	};
@@ -488,6 +489,18 @@ const PaymentPage = () => {
 					</Grid>
 
 				</Grid>
+				<ToastContainer
+					position="bottom-center"
+					autoClose={3000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+					theme="dark"
+				/>
 			</Loading>
 
 		</>
