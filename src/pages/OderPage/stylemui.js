@@ -44,7 +44,6 @@ export default makeStyles(() => {
 			fontSize: "14px",
 			fontWeight: 400,
 			lineHeight: 1.5,
-			marginLeft: "10px",
 			alignItems: "center",
 			overflow: "hidden",
 		},
@@ -203,6 +202,72 @@ export default makeStyles(() => {
 					backgroundColor: '#245c4f'
 				}
 			},
-		}
+		},
+		boxCard: {
+
+			marginTop: "10px",
+			margin: "0 auto",
+			borderTop: "1px solid #454F5B",
+			borderRadius: "9px",
+			boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
+			"&:hover": {
+				boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				transition: "boxShadow 0.3s ease -in -out 0s"
+			},
+
+		},
+		hymnsName: {
+			...CStyles.txt_title_item,
+			fontSize: "0.7rem",
+		},
+		WrapperLeft: {
+			width: '800px',
+			backgroundColor: "#fff",
+			color: "rgb(33,43,54)",
+			transition: "box - shadow 300ms cubic - bezier(0.4,0,0.2,1) 0ms",
+			overflow: "hidden",
+			borderRadius: "16px",
+			padding: "0px 0px 40px",
+
+		},
+		nameProductInfo: {
+			...CStyles.txt_body_item,
+
+			background: "rgba(221,221,221,1)",
+			height: "40px",
+			padding: "8px 15px",
+			marginTop: 10,
+			width: "100%",
+			textTransform: "none",
+			border: "solid 1px rgb(255,255,255,0)",
+			borderRadius: "999px",
+			color: "#436E67",
+			fontSize: "1rem",
+			fontWeight: "500",
+			transition: "all 0.1s ease- out 0s",
+			"&:hover": {
+				// boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				// transition: "boxShadow 0.3s ease -in -out 0s"
+				background: "rgba(221,221,221,1)",
+
+			},
+
+		},
+		WrapperRight: {
+			width: '100%', // Đặt chiều rộng là 100% mặc định
+
+			// Media Query để thay đổi chiều rộng tùy thuộc vào kích thước màn hình
+			// '@media (min-width: 600px)': {
+			// 	width: '600px', // Đối với màn hình rộng hơn hoặc bằng 600px
+			// },
+
+			color: "rgb(33,43,54)",
+			transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+			overflow: "hidden",
+			borderRadius: "16px",
+			padding: "30px 24px 0px",
+			backgroundColor: "rgb(247, 248, 250)"
+		},
+
 	};
 });

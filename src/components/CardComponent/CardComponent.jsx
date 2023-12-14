@@ -100,55 +100,53 @@ const CardComponent = (product) => {
 
 
 	return (
-		<section id="Explore" className={classes.boxCard}>
-			<Box >
-				<LazyLoad>
-					<img
-						style={{
-							display: 'block',
-							height: '230px',
-							width: '80%',
-							position: 'relative',
-							top: 10,
-							cursor: 'pointer',
-							left: "10%"
-						}}
-						onClick={() => handleDetailsProduct()}
-						// sx={{ left: { xl: "50px",lg: "15px",xs: "-20px" } }}
-						src={product?.product?.image[0]} alt={product?.product?.image[0]} />
-				</LazyLoad>
+		<Box id="Explore" className={classes.boxCard}>
+			<LazyLoad>
+				<img
+					style={{
+						display: 'block',
+						height: '100%',
+						width: '80%',
+						position: 'relative',
+						top: 10,
+						cursor: 'pointer',
+						left: "10%"
+					}}
+					onClick={() => handleDetailsProduct()}
+					// sx={{ left: { xl: "50px",lg: "15px",xs: "-20px" } }}
+					src={product?.product?.image[0]} alt={product?.product?.image[0]} />
+			</LazyLoad>
 
-				<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.name}</Typography>
-				<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#436E67" }} >còn hàng</Typography>}</Typography>
+			<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.name}</Typography>
+			<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#436E67" }} >còn hàng</Typography>}</Typography>
 
-				<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5 }}>{convertPrice(product?.product?.price)}</Typography>
-				<Grid container spacing={2} item sm={12} md={12} >
-					<Grid item xs={6} sm={6} md={6} xl={6} spacing={2} >
-						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
-							className={classes.nameProductInfo}
-							onClick={handleAddOrderProduct}
+			<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5 }}>{convertPrice(product?.product?.price)}</Typography>
+			<Grid container spacing={2} item sm={12} md={12} >
+				<Grid item xs={6} sm={6} md={6} xl={6} spacing={2} >
+					<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+						className={classes.nameProductInfo}
+						onClick={handleAddOrderProduct}
 
-						>
-							Giỏ hàng
-						</LoadingButton>
-					</Grid>
-					<Grid item xs={6} sm={6} md={6} xl={6}>
-						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
-							className={classes.nameProductInfo}
-							style={{
-								background: "#436E67",
-								color: "#fff"
-							}} onClick={() => handleBuyNow()}
-						>
-							Mua ngay
-						</LoadingButton>
-					</Grid>
+					>
+						Giỏ hàng
+					</LoadingButton>
 				</Grid>
+				<Grid item xs={6} sm={6} md={6} xl={6}>
+					<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+						className={classes.nameProductInfo}
+						style={{
+							background: "#436E67",
+							color: "#fff"
+						}} onClick={() => handleBuyNow()}
+					>
+						Mua ngay
+					</LoadingButton>
+				</Grid>
+			</Grid>
 
 
-			</Box>
 
-		</section>
+		</Box >
 	);
 }
 

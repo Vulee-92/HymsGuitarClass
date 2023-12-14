@@ -19,7 +19,10 @@ export default makeStyles(() => {
 			backgroundRepeat: 'no-repeat',
 			backgroundSize: 'cover',
 			transition: 'transform 0.3s ease',
-			backgroundPosition: 'center center'
+			backgroundPosition: 'center center',
+			"@media (max-width: 767px)": {
+				marginTop: "20vh",
+			},
 		},
 
 	};

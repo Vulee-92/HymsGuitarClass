@@ -128,7 +128,7 @@ const ContactPage = () => {
 			<Loading isLoading={isLoading || loading}>
 
 				<CarouselComponent />
-				<Container maxWidth="xl" sx={{ overflow: 'hidden' }}>
+				<Container maxWidth="lg" sx={{ overflow: 'hidden' }}>
 					<Grid container className={classes.conContent} sx={{ overflow: 'hidden' }}>
 
 						<Grid item xs={12} sm={12} lg={4} className={classes.conInfo} >

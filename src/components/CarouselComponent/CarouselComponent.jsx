@@ -31,8 +31,10 @@ const CarouselComponent = () => {
 
 						className={classes.carouselImage}
 						style={{
-							backgroundImage: `url(${isMobile ? images.mobile : images.desktop})`,
 							height: isMedium ? '80% !important' : '500px !important',
+							marginTop: isMobile ? "20vh !important" : "0px",
+							backgroundImage: `url(${isMobile ? images.mobile : images.desktop})`,
+
 						}}
 					/>
 				</SwiperSlide>
