@@ -28,17 +28,10 @@ const CardComponent = (product) => {
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
 
-		if (Notification.permission === 'granted') {
-			// Kiểm tra xem chuông đã được bật chưa
-			const notification = new Notification('Test');
-			notification.onshow = () => {
-				// Phát âm thanh khi chuông đã được bật
-				clickSound.play();
-			};
-		}
+		// Phát âm thanh khi người dùng bấm nút
+		clickSound.play();
 
-		navigator.vibrate([200,400,200]);
-
+		navigator.vibrate([100,200,100]);
 
 		const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
 
