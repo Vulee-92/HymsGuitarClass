@@ -315,7 +315,7 @@ const ConfirmPaymentPage = () => {
 		phone: false,
 		password: false,
 	});
-	const deliveryMessage = shippingAddress?.city === "Thành phố Tam Kỳ"
+	const deliveryMessage = shippingAddress?.city === "Tam Kỳ"
 		? "Giao hàng miễn phí - vận chuyển tức thì"
 		: "Gửi đồ đạc xa xôi, đừng lo lắng một chút nào. Hymns sẽ cố gắng giảm phí vận chuyển cho bạn, hoặc thậm chí Hymns sẽ trả lại tiền cho bạn nếu phí thấp hơn. Hymns không chỉ bán hàng mà còn là người bạn đồng hành trên con đường vận chuyển!";
 	return (
@@ -424,7 +424,7 @@ const ConfirmPaymentPage = () => {
 								<Typography className={classes.txtShipping}>Chọn phương thức giao hàng</Typography>
 
 								<WrapperRadio onChange={handleDilivery} value={delivery}>
-									{shippingAddress?.city === "Thành phố Tam Kỳ" ? (
+									{shippingAddress?.city === "Tam Kỳ" ? (
 										<Radio value="fastTK">
 											<Typography className={classes.txtInfoUser}>FAST		</Typography>{" "}
 											<Typography className={classes.txtInfoUser}>{deliveryMessage}</Typography>
