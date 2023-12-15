@@ -11,10 +11,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { decreaseAmount,increaseAmount,removeAllOrderProduct,removeOrderProduct,selectedOrder } from "../../../redux/slides/orderSlide";
+
 import { useLocation,useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import * as OrderService from '../../../services/OrderService'
 import { useMutationHooks } from 'hooks/useMutationHook';
@@ -24,6 +24,11 @@ import { LoadingButton } from '@mui/lab';
 import styles from "./stylemui";
 import { convertPrice } from 'utils';
 import { Card,CardContent,CardMedia,Tooltip } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTags,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer } from 'react-toastify';
+import { calculateDiscountedPrice } from 'utils';
+import { calculateDiscountedPriceNoConvert } from 'utils';
 function createData(orderId,date,customer,totalAmount,status,items) {
 	return {
 		orderId,
@@ -37,14 +42,13 @@ function createData(orderId,date,customer,totalAmount,status,items) {
 
 function OrderRow(props) {
 	const { order } = props;
-	console.log("order",order)
-
 	const [open,setOpen] = useState(false);
 	const formattedTime = moment(order?.createdAt).locale('vi');
 	const classes = styles();
 	const navigate = useNavigate()
 	let timeOfDay;
 	const hour = formattedTime.hour();
+	const dispatch = useDispatch();
 
 	if (hour >= 6 && hour < 12) {
 		timeOfDay = <Typography>am</Typography>;
@@ -53,12 +57,14 @@ function OrderRow(props) {
 	} else {
 		timeOfDay = 'pm';
 	}
-
+	const handleDeleteOrder = (idProduct) => {
+		dispatch(removeOrderProduct({ idProduct }));
+	};
 	return (
 		<>
 			<TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
 
-				<TableCell className={classes.txtInfoOrder} sx={{ width: "50%" }}>
+				<TableCell className={classes.txtInfoOrder} sx={{ width: "40%" }}>
 					<Card sx={{ display: 'flex',marginBottom: 1,boxShadow: "none" }} >
 						<CardMedia
 							component="img"
@@ -89,9 +95,17 @@ function OrderRow(props) {
 
 					</Card>
 				</TableCell>
-				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "25%" }}>				{convertPrice(order.price)}
+
+				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>			{order?.discount > 0 && (
+					<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5,textDecoration: "line-through",fontSize: ".8rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
+				)}	{calculateDiscountedPrice(order)}
 				</TableCell>
-				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "25%" }}>		{convertPrice(order.price * order.amount)}</TableCell>
+				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>{convertPrice((calculateDiscountedPriceNoConvert(order)) * order?.amount)}
+
+				</TableCell>
+				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>						<FontAwesomeIcon
+					onClick={() => handleDeleteOrder(order.product)} icon={faTrash} style={{ color: "#436E67",cursor: "pointer" }} />
+				</TableCell>
 
 				{/* <TableCell align="center" className={classes.txtInfoOrder}>
 					<PDFDownloadButton order={order} />
@@ -122,8 +136,12 @@ OrderRow.propTypes = {
 
 export default function OrderTable(order) {
 	const classes = styles();
+	const navigate = useNavigate();
 
+	const handleToProduct = () => {
+		navigate("/product");
 
+	}
 
 
 
@@ -135,12 +153,45 @@ export default function OrderTable(order) {
 						<TableCell className={classes.txtForgot}>Sản phẩm</TableCell>
 						<TableCell className={classes.txtForgot} align="right">Giá</TableCell>
 						<TableCell className={classes.txtForgot} align="right">Tổng tiền</TableCell>
+						<TableCell className={classes.txtForgot} align="right">Xoá</TableCell>
+
 					</TableRow>
 				</TableHead>
-				<TableBody>
-					{order?.order?.orderItemsSlected?.map((orderItem) => (
-						< OrderRow order={orderItem} />
-					))}
+				<TableBody >
+					{order?.order?.orderItems.length === 0 ? (
+						<>
+							<Typography className={classes.txtValueTotal}
+
+							>Hiện bạn chưa có sản phẩm nào trong giỏ hàng.</Typography>
+							<Typography className={classes.txtValueTotal}
+								onClick={() => handleToProduct()}
+								style={{
+									color: "#436E67",
+									fontSize: "1rem",
+									marginTop: "1%",
+									textDecoration: "underline",
+									cursor: "pointer",
+									textAlign: "left",
+								}}
+							>Tiếp tục mua hàng tại đây.</Typography>
+							<ToastContainer
+								position="bottom-center"
+								autoClose={3000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								theme="dark"
+							/>
+						</>
+
+					) : (
+						order?.order?.orderItemsSlected?.map((orderItem) => (
+							< OrderRow order={orderItem} />
+						)))}
 
 				</TableBody>
 			</Table>

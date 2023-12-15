@@ -6,7 +6,7 @@ import { DeleteOutlined,MinusOutlined,PlusOutlined } from "@ant-design/icons";
 import { WrapperInputNumber } from "../../components/ProductDetailsComponent/style";
 import { useDispatch,useSelector } from "react-redux";
 import { decreaseAmount,increaseAmount,removeAllOrderProduct,removeOrderProduct,selectedOrder } from "../../redux/slides/orderSlide";
-import { convertPrice } from "../../utils";
+import { calculateDiscountedPriceNoConvert,convertPrice } from "../../utils";
 import { useMemo } from "react";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import * as UserService from "../../services/UserService";
@@ -28,6 +28,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoadingButton } from "@mui/lab";
 import { Assets } from "configs";
 import OrderTable from "./TableOrderComponent/TableOrderComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTags,faXmark } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -138,36 +140,53 @@ const OrderPage = () => {
 	const handleChangeAddress = () => {
 		setIsOpenModalUpdateInfo(true);
 	};
+	console.log("order?.orderItemsSlected?",order?.orderItemsSlected)
 
-	const priceMemo = useMemo(() => {
-		const result = order?.orderItemsSlected?.reduce((total,cur) => {
-			return total + cur.price * cur.amount;
+	const totalPrice = useMemo(() => {
+		if (order?.orderItemsSelected?.length === 0) {
+			return 0;
+		}
+
+		const result = order?.orderItemsSlected.reduce((total,cur) => {
+			console.log("cur",cur)
+
+			console.log("total",total)
+
+			const discountedPrice = calculateDiscountedPriceNoConvert(cur);
+			console.log("discountedPrice",discountedPrice)
+
+			return total + discountedPrice * cur.amount;
 		},0);
+
 		return result;
 	},[order]);
 
-	const priceDiscountMemo = useMemo(() => {
-		const result = order?.orderItemsSlected?.reduce((total,cur) => {
-			const totalDiscount = cur.discount ? cur.discount : 0;
-			return total + (priceMemo * (totalDiscount * cur.amount)) / 100;
-		},0);
-		if (Number(result)) {
-			return result;
-		}
-		return 0;
-	},[order]);
+	console.log("totalPrice",totalPrice)
+	// const priceDiscountMemo = useMemo(() => {
+	// 	const result = order?.orderItemsSlected?.reduce((total,cur) => {
+	// 		const totalDiscount = cur.discount ? cur.discount : 0;
+	// 		return total + (priceMemo * (totalDiscount * cur.amount)) / 100;
+	// 	},0);
+	// 	if (Number(result)) {
+	// 		return result;
+	// 	}
+	// 	return 0;
+	// },[order]);
 
 
-	const totalPriceMemo = useMemo(() => {
-		return Number(priceMemo) - Number(priceDiscountMemo);
-	},[priceMemo,priceDiscountMemo]);
+	// const totalPriceMemo = useMemo(() => {
+	// 	return Number(priceMemo) - Number(priceDiscountMemo);
+	// },[priceMemo,priceDiscountMemo]);
 
 	const handleRemoveAllOrder = () => {
 		if (listChecked?.length > 1) {
 			dispatch(removeAllOrderProduct({ listChecked }));
 		}
 	};
+	const handleToProduct = () => {
+		navigate("/product");
 
+	}
 
 	const handleAddCard = () => {
 		setIsProcessing(true);
@@ -234,50 +253,106 @@ const OrderPage = () => {
 
 							<Container sx={{ display: { xl: "none",xs: "block" } }}>
 
+								{order.orderItems.length === 0 ? (
+									<>
+										<Typography className={classes.txtValueTotal}
+											style={{
+												color: "#436E67",
+												fontSize: "1.1rem",
+												marginTop: "5%",
+												textAlign: "center",
+											}}
+										>Hiện bạn chưa có sản phẩm nào trong giỏ hàng.</Typography>
+										<Typography className={classes.txtValueTotal}
+											onClick={() => handleToProduct()}
+											style={{
+												color: "#436E67",
+												fontSize: "1rem",
+												marginTop: "1%",
+												textDecoration: "underline",
+												cursor: "pointer",
+												textAlign: "center",
+											}}
+										>Tiếp tục mua hàng tại đây.</Typography>
+										<ToastContainer
+											position="bottom-center"
+											autoClose={3000}
+											hideProgressBar={false}
+											newestOnTop={false}
+											closeOnClick
+											rtl={false}
+											pauseOnFocusLoss
+											draggable
+											pauseOnHover
+											theme="dark"
+										/>
+									</>
 
-								{order?.orderItems?.map((order) => {
-									return (
-										<Card sx={{ display: 'flex',marginBottom: 1 }} className={classes.boxCard}>
-											<CardMedia
-												component="img"
-												sx={{ width: 130 }}
-												image={order?.image[0]}
-												alt="Live from space album cover"
-											/>
-											<Box sx={{ display: 'flex',flexDirection: 'column' }}>
-												<CardContent sx={{ flex: '1 0 auto' }}>
-													<Tooltip title={order?.name}>
-														<Typography className={classes.nameProductCard}
-														>
+								) : (
+									order.orderItems?.map((order) => {
+										return (
+											<>
 
-															{order?.name.length > 30 ? `${order?.name.slice(0,50)}...` : order?.name}
-														</Typography>
 
-													</Tooltip>
+												<Card sx={{ display: 'flex',marginBottom: 1 }} className={classes.boxCard}>
 
-													<Typography className={classes.txtValueTotal}>
-														Còn hàng
-													</Typography>
-													<Typography
-														className={classes.nameProduct}
-														style={{
-															fontSize: "15px",
-															color: "#0a0a0a",
-															marginTop: "10px",
-															marginBottom: "10px",
-														}}
-													>
-														{convertPrice(order.price * order.amount)}
-													</Typography>
-												</CardContent>
-												<Box sx={{ display: 'flex',alignItems: 'center',pl: 1,pb: 1 }}>
+													<CardMedia
+														component="img"
+														sx={{ width: 100 }}
+														image={order?.image[0]}
+														alt="Live from space album cover"
+													/>
+													<Box sx={{ display: 'flex',flexDirection: 'column' }}>
+														<CardContent sx={{ flex: '1 0 auto' }}>
+															<Tooltip title={order?.name}>
+																<Typography className={classes.nameProductCard}
+																>
 
-												</Box>
-											</Box>
+																	{order?.name.length > 30 ? `${order?.name.slice(0,50)}...` : order?.name}
+																</Typography>
 
-										</Card>
-									);
-								})}
+															</Tooltip>
+
+															<Typography className={classes.txtValueTotal}>
+																Còn hàng
+															</Typography>
+															{order?.discount > 0 && (
+																<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: ".6rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
+															)}
+
+															<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
+																{convertPrice((calculateDiscountedPriceNoConvert(order)) * order?.amount)}
+															</Typography>
+															{/* <Typography
+																className={classes.nameProduct}
+																style={{
+																	fontSize: "15px",
+																	color: "#0a0a0a",
+																	marginTop: "10px",
+																	marginBottom: "10px",
+																}}
+															>
+																{convertPrice(order.price * order.amount)}
+															</Typography> */}
+														</CardContent>
+														<Box sx={{ display: 'flex',alignItems: 'center',pl: 1,pb: 1 }}>
+
+														</Box>
+													</Box>
+													<Box style={{
+														padding: "10px 15px 0px 0px"
+													}}>
+														<FontAwesomeIcon style={{ cursor: "pointer" }}
+															onClick={() => handleDeleteOrder(order.product)} icon={faXmark} />
+													</Box>
+												</Card>
+
+											</>
+										);
+									})
+								)}
+
+
 							</Container>
 							<Box sx={{ display: { xl: "block",xs: "none" } }} >
 								<OrderTable order={order} />
@@ -305,12 +380,12 @@ const OrderPage = () => {
 
 										}}
 									>
-										{convertPrice(priceMemo)}
+										{convertPrice(totalPrice)}
 									</Typography>
 								</Grid>
 
 								<Grid item xs={6}>
-									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
+									<Typography className={classes.txtValueTotal}>Tổng số lượng</Typography>
 								</Grid>
 								<Grid item xs={6}>
 									<Typography className={classes.txtValueTotal}
@@ -321,7 +396,7 @@ const OrderPage = () => {
 											textAlign: "right"
 										}}
 									>
-										{convertPrice(priceDiscountMemo)}
+										{order?.orderItemsSlected.length}
 									</Typography>
 								</Grid>
 							</Grid>

@@ -3,7 +3,7 @@ import React,{ useEffect,useState } from 'react'
 import { Lable,WrapperInfo,WrapperLeft,WrapperRadio,WrapperRight,WrapperTotal } from './style';
 
 import { useDispatch,useSelector } from 'react-redux';
-import { convertPrice } from '../../utils';
+import { calculateDiscountedPriceNoConvert,convertPrice } from '../../utils';
 import { useMemo } from 'react';
 
 import { useMutationHooks } from '../../hooks/useMutationHook';
@@ -21,7 +21,7 @@ import { Badge,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialo
 import styles from "./stylemui";
 import MobileCartTotalPriceComponent from '../../components/MobileCartTotalPriceComponent/MobileCartTotalPriceComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeftLong,faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong,faLocationDot,faTags } from '@fortawesome/free-solid-svg-icons';
 import { LoadingButton } from '@mui/lab';
 import useUpdateUserMutation from 'hooks/useUpdateUserMutation';
 import { useMutation,useQuery } from '@tanstack/react-query';
@@ -64,23 +64,23 @@ const ConfirmPaymentPage = () => {
 	const backToOrder = () => {
 		navigate("/payment");
 	}
-	const priceMemo = useMemo(() => {
-		const result = order?.orderItemsSlected?.reduce((total,cur) => {
-			return total + ((cur.price * cur.amount))
-		},0)
-		return result
-	},[order])
 
-	const priceDiscountMemo = useMemo(() => {
-		const result = order?.orderItemsSlected?.reduce((total,cur) => {
-			const totalDiscount = cur.discount ? cur.discount : 0
-			return total + (priceMemo * (totalDiscount * cur.amount) / 100)
-		},0)
-		if (Number(result)) {
-			return result
+	const priceMemo = useMemo(() => {
+		if (order?.orderItemsSelected?.length === 0) {
+			return 0;
 		}
-		return 0
-	},[order])
+
+		const result = order?.orderItemsSlected.reduce((total,cur) => {
+
+
+			const discountedPrice = calculateDiscountedPriceNoConvert(cur);
+
+			return total + discountedPrice * cur.amount;
+		},0);
+
+		return result;
+	},[order]);
+
 
 	const diliveryPriceMemo = useMemo(() => {
 		if (shippingAddress?.city === "Thành phố Tam Kỳ") {
@@ -90,8 +90,8 @@ const ConfirmPaymentPage = () => {
 		}
 	},[priceMemo])
 	const totalPriceMemo = useMemo(() => {
-		return Number(priceMemo) - Number(priceDiscountMemo) + Number(diliveryPriceMemo)
-	},[priceMemo,priceDiscountMemo,diliveryPriceMemo])
+		return Number(priceMemo) + Number(diliveryPriceMemo)
+	},[priceMemo,diliveryPriceMemo])
 	const mutationAddOrder = useMutationHooks(
 		(data) => {
 			const { token,...rests } = data;
@@ -498,8 +498,12 @@ const ConfirmPaymentPage = () => {
 													<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 600,marginBottom: "10px" }} component='Box' >
 														{order?.name}
 													</Typography>
+													{order?.discount > 0 && (
+														<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: ".6rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
+													)}
+
 													<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
-														{(order?.price * order?.amount)?.toLocaleString()}₫
+														{convertPrice((calculateDiscountedPriceNoConvert(order)) * order?.amount)}
 													</Typography>
 												</Box>
 
@@ -517,7 +521,7 @@ const ConfirmPaymentPage = () => {
 								</Box>
 								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
-									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
+									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>0 ₫</Typography>
 								</Box>
 								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 									<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>

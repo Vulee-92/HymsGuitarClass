@@ -2,13 +2,14 @@ import React,{ useEffect,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Box,Grid,Typography } from '@mui/material'
 import styles from "./styledmui";
-import { convertPrice } from '../../utils';
+import { convertPrice,calculateDiscountedPrice } from '../../utils';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch,useSelector } from 'react-redux';
 import { addOrderProduct,resetOrder,addToOrderAndSelect } from "../../redux/slides/orderSlide";
 import LazyLoad from 'react-lazyload';
 import { styled } from '@mui/styles';
-import audios from '../../assets/audio/audiowellcome.mp3'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTag,faTags } from '@fortawesome/free-solid-svg-icons';
 
 
 const CardComponent = (product) => {
@@ -21,20 +22,11 @@ const CardComponent = (product) => {
 		navigate(`/product-details/${product?.product?.slug}`);
 
 	};
-	const [clickSound] = useState(new Audio(audios));
-
 	const dispatch = useDispatch();
 
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
-
-		// Phát âm thanh khi người dùng bấm nút
-		clickSound.play();
-
-		navigator.vibrate([100,200,100]);
-
 		const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
-
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && product?.product?.countInStock > 0)) {
 			dispatch(
 				addOrderProduct({
@@ -49,31 +41,25 @@ const CardComponent = (product) => {
 						discount: product?.product?.discount,
 						countInstock: product?.product?.countInStock,
 					},
+
 				})
+
 			);
+
 		} else {
+
 			// setErrorLimitOrder(true);
 		}
-
 		setIsProcessing(false);
 
-		// Các đoạn mã khác nếu có
+		// }
+		// handleCartClick();
+		// setOpenDialog(true);
 	};
-	useEffect(() => {
-		return () => {
-			// Cleanup: Dừng âm thanh khi component unmount
-			clickSound.pause();
-			clickSound.currentTime = 0;
-		};
-	},[clickSound]);
-
 	const [addedToOrder,setAddedToOrder] = useState(false);
 
 	const handleBuyNow = async () => {
 		try {
-			if ('vibrate' in navigator) {
-				navigator.vibrate([100,200,100]);
-			}
 			setIsProcessing(true);
 
 			const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
@@ -115,6 +101,7 @@ const CardComponent = (product) => {
 
 
 
+
 	return (
 		<Box id="Explore" className={classes.boxCard}>
 			<LazyLoad>
@@ -135,8 +122,11 @@ const CardComponent = (product) => {
 
 			<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.name}</Typography>
 			<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#436E67" }} >còn hàng</Typography>}</Typography>
+			{product?.product?.discount > 0 && (
+				<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5,textDecoration: "line-through",fontSize: ".8rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(product?.product?.price)}</Typography>
+			)}
 
-			<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5 }}>{convertPrice(product?.product?.price)}</Typography>
+			<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5 }}>{calculateDiscountedPrice(product?.product)} </Typography>
 			<Grid container spacing={2} item sm={12} md={12} >
 				<Grid item xs={6} sm={6} md={6} xl={6} spacing={2} >
 					<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
