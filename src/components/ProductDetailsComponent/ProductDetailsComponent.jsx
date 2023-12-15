@@ -17,7 +17,7 @@ import styles from "./stylemui";
 import { Accordion,AccordionDetails,AccordionSummary,useScrollTrigger,Alert,Box,Breadcrumbs,Button,Card,CardContent,CardMedia,Container,Dialog,DialogActions,DialogContent,DialogTitle,Divider,Drawer,Fab,Grid,IconButton,ImageList,ImageListItem,ImageListItemBar,Link,Paper,Rating,Snackbar,Stack,Typography,useMediaQuery } from "@mui/material";
 import "react-medium-image-zoom/dist/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBox,faChevronDown,faCircleArrowLeft,faPeopleCarryBox,faTags,faTruck,faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useDebounce } from "hooks/useDebounce";
 import { Helmet } from "react-helmet-async";
@@ -29,6 +29,8 @@ import { LoadingButton } from "@mui/lab";
 import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobile";
 import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiperComponent";
 import AnswerComponent from "../../components/AnswerComponent/AnswerComponent";
+import { convertPrice } from "utils";
+import { calculateDiscountedPriceNoConvert } from "utils";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -569,9 +571,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							}}>
 								<Box className={classes.txtPrice} >
 									<WrapperPriceProduct style={{ padding: "10px 16px ",background: "rgb(36, 92, 79,0.01)" }}>
+										{productDetails?.discount > 0 && (
+											<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: "1rem",color: "#45cc8f" }}><FontAwesomeIcon icon={faTags} />{convertPrice(productDetails?.price)}</Typography>
+										)}
+
 										<Typography className={classes.nameProduct} style={{ textAlign: "left",fontSize: "32px" }}>
-											{productDetails?.price?.toLocaleString()}₫
+											{convertPrice((calculateDiscountedPriceNoConvert(productDetails)))}
 										</Typography>
+
+
 									</WrapperPriceProduct>
 								</Box>
 
@@ -702,7 +710,15 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								</Grid>
 								<Grid item xs={12} sm={8} xl={8}>
 									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",fontWeight: 600,marginBottom: "10px" }}>{productDetails?.name}</Typography>
-									<Typography className={classes.priceTitle} style={{ fontSize: "1.2rem",textAlign: "left",fontWeight: 500 }}>	{(productDetails?.price)?.toLocaleString()}₫</Typography>
+									{productDetails?.discount > 0 && (
+										<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: "1rem",color: "#45cc8f" }}><FontAwesomeIcon icon={faTags} />{convertPrice(productDetails?.price)}</Typography>
+									)}
+
+									<Typography className={classes.nameProduct} style={{ fontSize: "1.2rem",textAlign: "left",fontWeight: 500 }}>
+
+										{convertPrice((calculateDiscountedPriceNoConvert(productDetails)))}
+
+									</Typography>
 									<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
 										<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400,lineHeight: 1.5 }}>Slượng:</Typography>
 										<Typography className={classes.priceTitle} style={{ textAlign: "center",fontSize: "1rem",fontWeight: 500,lineHeight: 1.5 }} >
@@ -711,9 +727,14 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									</Box>
 									<Box style={{ display: "flex",gap: '10px',justifyContent: "space-between" }}>
 										<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 400 }}>Tạm tính:</Typography>
+
+
 										<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500 }} >
-											{(productDetails?.price * numProduct)?.toLocaleString()}₫
+
+											{convertPrice((calculateDiscountedPriceNoConvert(productDetails)) * numProduct)}
+
 										</Typography>
+
 									</Box>
 								</Grid>
 							</Grid>

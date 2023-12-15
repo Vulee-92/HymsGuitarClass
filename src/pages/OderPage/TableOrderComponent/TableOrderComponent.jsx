@@ -100,10 +100,13 @@ function OrderRow(props) {
 					<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5,textDecoration: "line-through",fontSize: ".8rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
 				)}	{calculateDiscountedPrice(order)}
 				</TableCell>
+				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "10%" }}>{order?.amount}
+
+				</TableCell>
 				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>{convertPrice((calculateDiscountedPriceNoConvert(order)) * order?.amount)}
 
 				</TableCell>
-				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>						<FontAwesomeIcon
+				<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "10%" }}>						<FontAwesomeIcon
 					onClick={() => handleDeleteOrder(order.product)} icon={faTrash} style={{ color: "#436E67",cursor: "pointer" }} />
 				</TableCell>
 
@@ -152,6 +155,8 @@ export default function OrderTable(order) {
 					<TableRow className={classes.WrapperRight}>
 						<TableCell className={classes.txtForgot}>Sản phẩm</TableCell>
 						<TableCell className={classes.txtForgot} align="right">Giá</TableCell>
+						<TableCell className={classes.txtForgot} align="right">SLượng</TableCell>
+
 						<TableCell className={classes.txtForgot} align="right">Tổng tiền</TableCell>
 						<TableCell className={classes.txtForgot} align="right">Xoá</TableCell>
 

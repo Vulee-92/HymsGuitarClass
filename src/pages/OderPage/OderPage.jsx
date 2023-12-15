@@ -313,8 +313,8 @@ const OrderPage = () => {
 
 															</Tooltip>
 
-															<Typography className={classes.txtValueTotal}>
-																Còn hàng
+															<Typography className={classes.txtValueTotal} style={{ fontSize: ".8rem" }}>
+																SLượng: {order?.amount}
 															</Typography>
 															{order?.discount > 0 && (
 																<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: ".6rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
@@ -385,7 +385,7 @@ const OrderPage = () => {
 								</Grid>
 
 								<Grid item xs={6}>
-									<Typography className={classes.txtValueTotal}>Tổng số lượng</Typography>
+									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
 								</Grid>
 								<Grid item xs={6}>
 									<Typography className={classes.txtValueTotal}
@@ -396,7 +396,7 @@ const OrderPage = () => {
 											textAlign: "right"
 										}}
 									>
-										{order?.orderItemsSlected.length}
+										0
 									</Typography>
 								</Grid>
 							</Grid>
