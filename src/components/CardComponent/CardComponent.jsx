@@ -8,6 +8,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { addOrderProduct,resetOrder,addToOrderAndSelect } from "../../redux/slides/orderSlide";
 import LazyLoad from 'react-lazyload';
 import { styled } from '@mui/styles';
+import audios from '../../assets/audio/audiowellcome.mp3'
 
 
 const CardComponent = (product) => {
@@ -20,14 +21,27 @@ const CardComponent = (product) => {
 		navigate(`/product-details/${product?.product?.slug}`);
 
 	};
+	const [clickSound] = useState(new Audio(audios));
+
 	const dispatch = useDispatch();
 
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
-		if ('vibrate' in navigator) {
-			navigator.vibrate([100,200,100]);
+
+		if (Notification.permission === 'granted') {
+			// Kiểm tra xem chuông đã được bật chưa
+			const notification = new Notification('Test');
+			notification.onshow = () => {
+				// Phát âm thanh khi chuông đã được bật
+				clickSound.play();
+			};
 		}
+
+		navigator.vibrate([200,400,200]);
+
+
 		const orderRedux = order?.orderItems?.find((item) => item.product === product?.product?._id);
+
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && product?.product?.countInStock > 0)) {
 			dispatch(
 				addOrderProduct({
@@ -42,21 +56,24 @@ const CardComponent = (product) => {
 						discount: product?.product?.discount,
 						countInstock: product?.product?.countInStock,
 					},
-
 				})
-
 			);
-
 		} else {
-
 			// setErrorLimitOrder(true);
 		}
+
 		setIsProcessing(false);
 
-		// }
-		// handleCartClick();
-		// setOpenDialog(true);
+		// Các đoạn mã khác nếu có
 	};
+	useEffect(() => {
+		return () => {
+			// Cleanup: Dừng âm thanh khi component unmount
+			clickSound.pause();
+			clickSound.currentTime = 0;
+		};
+	},[clickSound]);
+
 	const [addedToOrder,setAddedToOrder] = useState(false);
 
 	const handleBuyNow = async () => {
