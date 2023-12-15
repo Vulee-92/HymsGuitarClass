@@ -477,7 +477,7 @@ const PaymentPage = () => {
 								</Box>
 								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 									<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
-									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>0</Typography>
+									<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>0 ₫</Typography>
 								</Box>
 								<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 									<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>

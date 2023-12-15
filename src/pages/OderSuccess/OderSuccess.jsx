@@ -4,7 +4,7 @@ import Loading from '../../components/LoadingComponent/Loading';
 import { useSelector } from 'react-redux';
 import { Navigate,useLocation,useNavigate,useParams } from 'react-router-dom';
 import { orderContant } from '../../contant';
-import { convertPrice } from '../../utils';
+import { calculateDiscountedPriceNoConvert,convertPrice } from '../../utils';
 import { Container,Box,Typography,Grid,Card,Badge,CardMedia,CardContent,Link } from '@mui/material';
 import styles from "./stylemui";
 import { Assets } from 'configs';
@@ -13,6 +13,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { LoadingButton } from '@mui/lab';
 import confetti from 'canvas-confetti';
+import { faTags } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const OrderSucess = () => {
 	const params = useParams()
 	const { id } = params
@@ -56,21 +58,21 @@ const OrderSucess = () => {
 	// const { isLoading,data } = queryOrder;
 
 	const priceMemo = useMemo(() => {
-		const result = data?.orderItems?.reduce((total,cur) => {
-			return total + ((cur.price * cur.amount))
-		},0)
-		return result
-	},[data])
-	const priceDiscountMemo = useMemo(() => {
-		const result = data?.orderItems?.reduce((total,cur) => {
-			const totalDiscount = cur.discount ? cur.discount : 0
-			return total + (priceMemo * (totalDiscount * cur.amount) / 100)
-		},0)
-		if (Number(result)) {
-			return result
+		if (data?.orderItems?.length === 0) {
+			return 0;
 		}
-		return 0
-	},[data])
+
+		const result = data?.orderItems?.reduce((total,cur) => {
+
+
+			const discountedPrice = calculateDiscountedPriceNoConvert(cur);
+
+			return total + discountedPrice * cur.amount;
+		},0);
+
+		return result;
+	},[data]);
+
 
 
 	const status =
@@ -455,8 +457,12 @@ const OrderSucess = () => {
 														<Typography className={classes.nameProduct} style={{ fontSize: "1rem",fontWeight: 600,marginBottom: "10px" }} component='Box' >
 															{order?.name}
 														</Typography>
+														{order?.discount > 0 && (
+															<Typography className={classes.txtPrice} style={{ textAlign: 'left',marginBottom: 5,textDecoration: "line-through",fontSize: ".6rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(order?.price)}</Typography>
+														)}
+
 														<Typography className={classes.priceTitle} style={{ fontSize: "1rem",textAlign: "left",fontWeight: 500,marginTop: "5px" }} >
-															{(order?.price * order?.amount)?.toLocaleString()}₫
+															{convertPrice((calculateDiscountedPriceNoConvert(order)) * order?.amount)}
 														</Typography>
 													</Box>
 
@@ -474,7 +480,7 @@ const OrderSucess = () => {
 									</Box>
 									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 										<Typography className={classes.txtValueTotal}>Giảm giá</Typography>
-										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>{convertPrice(priceDiscountMemo)}</Typography>
+										<Typography style={{ color: '#000',fontSize: '14px',fontWeight: 'bold' }}>0 ₫</Typography>
 									</Box>
 									<Box style={{ display: 'flex',alignItems: 'center',justifyContent: 'space-between' }}>
 										<Typography className={classes.txtValueTotal}>Phí giao hàng</Typography>
