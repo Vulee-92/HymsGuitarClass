@@ -5,7 +5,7 @@ import { Assets } from '../../configs';
 import styles from "./styledmui";
 import { useMediaQuery } from 'react-responsive';
 const images = {
-	desktop: Assets.bgHymnsFacebook,
+	desktop: Assets.bgHymnsCenterChristmas,
 	mobile: Assets.bgHomeMobile,
 };
 
