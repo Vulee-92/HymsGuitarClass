@@ -83,7 +83,7 @@ const ConfirmPaymentPage = () => {
 
 
 	const diliveryPriceMemo = useMemo(() => {
-		if (shippingAddress?.city === "Thành phố Tam Kỳ") {
+		if (shippingAddress?.city === "Tam Kỳ") {
 			return 0
 		} else {
 			return order.shippingAddress.shippingFee
