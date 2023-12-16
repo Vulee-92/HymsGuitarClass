@@ -31,6 +31,9 @@ import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiper
 import AnswerComponent from "../../components/AnswerComponent/AnswerComponent";
 import { convertPrice } from "utils";
 import { calculateDiscountedPriceNoConvert } from "utils";
+import Loading from "components/LoadingComponent/Loading";
+import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import ProductNotification from "components/ProductNotification/ProductNotification";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -224,7 +227,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		setOpenDialog(false);
 	};
 	const { isLoading,data: productDetails } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
-	console.log("productDetails,",productDetails)
 
 
 	useEffect(() => {
@@ -335,10 +337,13 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 		setImages(fetchedImages);
 	},[]);
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
+	console.log("productDetails?.countInStock",productDetails?.countInStock)
 	return (
 		<>
 
-			{/* <Loading isLoading={isLoading}> */}
 			< Helmet >
 				<title>{productDetails?.name}</title>
 			</Helmet>
@@ -370,10 +375,22 @@ const ProductDetailsComponent = ({ idProduct }) => {
 											className={classes.btnBottomShow}
 											sx={{
 												width: { xl: "200px",xs: "180px" },
+												background: productDetails?.countInStock === 0 ? "#CCCCCC" : "#436E67",color: productDetails?.countInStock === 0 ? "#B22222" : "#fff !important",
 											}}
+											disabled={productDetails?.countInStock === 0}
 											onClick={handleAddOrderProduct}
 										>
-											Thêm vào giỏ hàng
+											<Typography className={classes.nameProductInfo}>
+												{productDetails?.countInStock === 0 ? (
+													<Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}>
+														Hết hàng
+													</Typography>
+												) : (
+													<Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700" }}>
+														Mua ngay
+													</Typography>
+												)}
+											</Typography>
 										</LoadingButton>
 										{!errorLimitOrder ? (
 											<>
@@ -436,19 +453,30 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 											className={classes.nameProductInfo}
 											style={{
-												background: "#436E67",
+												background: productDetails?.countInStock === 0 ? "#CCCCCC" : "#436E67",color: productDetails?.countInStock === 0 ? "#B22222" : "#fff !important",
 												height: "48px",
 												width: "200px",
 												textTransform: "none",
 												border: "none",
 												borderRadius: "4px",
-												color: "#fff",
+
 												fontSize: "15px",
 												fontWeight: "700",
 											}}
 											onClick={handleAddOrderProduct}
+											disabled={productDetails?.countInStock === 0}
 										>
-											Thêm vào giỏ hàng
+											<Typography className={classes.nameProductInfo}>
+												{productDetails?.countInStock === 0 ? (
+													<Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}>
+														Hết hàng
+													</Typography>
+												) : (
+													<Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700" }}>
+														Mua ngay
+													</Typography>
+												)}
+											</Typography>
 										</LoadingButton>
 										{!errorLimitOrder ? (
 											<>
@@ -582,9 +610,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 									</WrapperPriceProduct>
 								</Box>
-
 								<Box style={{ padding: "10px 16px ",display: "flex" }}>
-									<Typography className={classes.nameProduct}>Slượng:</Typography>
+									<Typography className={classes.nameProduct}>Số lượng:</Typography>
 
 									<Box>
 										<button
@@ -593,18 +620,29 @@ const ProductDetailsComponent = ({ idProduct }) => {
 												background: "transparent",
 												cursor: "pointer",
 											}}
-											onClick={() => handleChangeCount("decrease",numProduct === 1)}
+											onClick={() => handleChangeCount("decrease",numProduct === 1 || productDetails?.countInStock === 0)}
+											disabled={numProduct === 1 || productDetails?.countInStock === 0}
 										>
 											<MinusOutlined style={{ color: "#000",fontSize: "20px" }} />
 										</button>
-										<WrapperInputNumber onChange={onChange} defaultValue={1} max={productDetails?.countInStock} min={1} value={numProduct} size='small' />
+										<WrapperInputNumber
+											onChange={onChange}
+											defaultValue={1}
+											max={productDetails?.countInStock}
+											min={1}
+											value={numProduct}
+											size="small"
+										/>
 										<button
 											style={{
 												border: "none",
 												background: "transparent",
 												cursor: "pointer",
 											}}
-											onClick={() => handleChangeCount("increase",numProduct === productDetails?.countInStock)}
+											onClick={() =>
+												handleChangeCount("increase",numProduct === productDetails?.countInStock || productDetails?.countInStock === 0)
+											}
+											disabled={numProduct === productDetails?.countInStock || productDetails?.countInStock === 0}
 										>
 											<PlusOutlined style={{ color: "#000",fontSize: "20px" }} />
 										</button>
@@ -612,34 +650,48 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								</Box>
 
 								<Box style={{ alignItems: "center",gap: "12px",padding: "10px 16px",textAlign: "center" }}>
-									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
+									<LoadingButton
+										fullWidth
+										size="large"
+										type="submit"
+										variant="contained"
+										loading={isProcessing}
 										className={classes.nameProductInfo}
-
 										ref={cartButtonRef}
-										color='primary'
-										aria-label='Mua hàng'
+										color="primary"
+										aria-label="Mua hàng"
 										style={{
-											background: errorLimitOrder ? "#CCCCCC" : "#436E67",
+											background: productDetails?.countInStock === 0 ? "#CCCCCC" : "#436E67",
 											height: "48px",
 											width: "100%",
 											textTransform: "none",
-											border: "none",
 											borderRadius: "4px",
-											color: errorLimitOrder ? "#B22222" : "#fff !important",
+											color: productDetails?.countInStock === 0 ? "#B22222" : "#fff !important",
 											fontSize: "15px",
 											fontWeight: "700",
+											border: "none",
 										}}
 										onClick={handleAddOrderProduct}
-										disabled={errorLimitOrder}
+										disabled={productDetails?.countInStock === 0}
 									>
-										<Typography className={classes.nameProductInfo}>{!errorLimitOrder ? <Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700",}}> Thêm vào giỏ hàng</Typography> : <Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}> Hết hàng</Typography>}</Typography>
+										<Typography className={classes.nameProductInfo}>
+											{productDetails?.countInStock === 0 ? (
+												<Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}>
+													Hết hàng
+												</Typography>
+											) : (
+												<Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700" }}>
+													Mua ngay
+												</Typography>
+											)}
+										</Typography>
 									</LoadingButton>
 								</Box>
 								{(!errorLimitOrder
 									&&
 									<Box className={classes.boxInfoShipping}>
 										<FontAwesomeIcon icon={faBox} style={{ color: "#436E67",marginRight: "15px",fontSize: "16px" }} />
-										<Typography className={classes.nameProductInfo}>{!errorLimitOrder ? "Còn hàng" : <Typography style={{ color: "#B22222" }}> Hết hàng</Typography>}</Typography>
+										<Typography className={classes.nameProductInfo}>{errorLimitOrder ? <Typography style={{ color: "#B22222" }}> Hết hàng</Typography> : "Còn hàng"}</Typography>
 									</Box>
 								)}
 
@@ -670,19 +722,30 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
 										className={classes.nameProductInfo}
 										style={{
-											background: "#436E67",
+											background: productDetails?.countInStock === 0 ? "#CCCCCC" : "#436E67",color: productDetails?.countInStock === 0 ? "#B22222" : "#fff !important",
 											height: "48px",
 											width: "100%",
 											border: "none",
 											borderRadius: "4px",
 											textTransform: "none",
-											color: "#fff",
+
 											fontSize: "15px",
 											fontWeight: "700",
 										}}
 										onClick={handleAddOrderProduct}
+										disabled={productDetails?.countInStock === 0}
 									>
-										Thêm vào giỏ hàng
+										<Typography className={classes.nameProductInfo}>
+											{productDetails?.countInStock === 0 ? (
+												<Typography className={classes.nameProductInfo} style={{ color: "#B22222",fontWeight: "700" }}>
+													Hết hàng
+												</Typography>
+											) : (
+												<Typography className={classes.nameProductInfo} style={{ color: "#fff",fontWeight: "700" }}>
+													Mua ngay
+												</Typography>
+											)}
+										</Typography>
 									</LoadingButton>
 									{errorLimitOrder && <Typography className={classes.nameProductInfo} style={{ color: "red" }}>Sản phẩm hết hàng</Typography>}
 								</div>
@@ -836,7 +899,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 					))}
 				</Container >
 			)}
-
 
 		</>
 	);

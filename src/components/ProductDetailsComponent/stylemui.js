@@ -97,7 +97,7 @@ export default makeStyles(() => {
 			width: "100%",
 			border: "10px solid #fff",
 			margin: " 5px auto",
-			height: "50%",
+			height: "100%",
 
 			"@media all and (min-width: 768px)": {
 				width: "calc(30% - 10px)",
