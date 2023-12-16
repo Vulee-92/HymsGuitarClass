@@ -9,7 +9,7 @@ export default makeStyles(() => {
 		container: {
 			...CStyles.center,
 			height: "100vh",
-			backgroundImage: `url(${Assets.bgFacebook})`,
+			backgroundImage: `url(${Assets.bgHome_1})`,
 			backgroundSize: "100% ",
 			backgroundRepeat: "no-repeat",
 			// overflowY: "auto",
