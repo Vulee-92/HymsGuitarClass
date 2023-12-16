@@ -23,6 +23,9 @@ import 'moment/locale/vi';
 import { LoadingButton } from '@mui/lab';
 import styles from "./stylemui";
 import { convertPrice } from 'utils';
+import { calculateDiscountedPrice } from 'utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTags } from '@fortawesome/free-solid-svg-icons';
 function createData(orderId,date,customer,totalAmount,status,items) {
 	return {
 		orderId,
@@ -97,38 +100,36 @@ function OrderRow(props) {
 							<Table size="small" aria-label="order items">
 								<TableHead>
 									<TableRow>
-										<TableCell className={classes.txtForgot}>Tên</TableCell>
-										<TableCell className={classes.txtForgot} align="center">Số lượng</TableCell>
+										<TableCell className={classes.txtForgot}>Sản phẩm</TableCell>
+										<TableCell className={classes.txtForgot} align="right">Giá</TableCell>
+										<TableCell className={classes.txtForgot} align="right">SLượng</TableCell>
 										<TableCell className={classes.txtForgot} align="right">Thành tiền</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
 									{order?.orderItems?.map((item) => (
 										<TableRow key={item?.name} sx={{ maxWidth: 20 }}>
-											{/* <TableCell component="th" scope="row" sx={{ maxWidth: 20 }}>
-												<img
-													src={item.image}
-													style={{
-														width: "50px",
-														height: "50px",
-														objectFit: "cover",
-													}}
-												/>
-											</TableCell> */}
+
 											<TableCell className={classes.txtInfoOrder} style={{ display: "flex",alignItems: "center",fontSize: "10px" }}>
 												<img
-													src={item.image}
+													src={item.image[0]}
 													style={{
 														width: "50px",
 														height: "50px",
 														objectFit: "cover",
 													}} />
 												{item.name.slice(0,10)}</TableCell>
-											<TableCell className={classes.txtInfoOrder} align="center">{item.amount}</TableCell>
-											<TableCell className={classes.txtInfoOrder} align="right" >{convertPrice(item.price)}</TableCell>
+
+											<TableCell align="right" className={classes.txtInfoOrder} sx={{ width: "20%" }}>			{item?.discount > 0 && (
+												<Typography className={classes.txtPrice} style={{ textAlign: 'right',cursor: 'pointers',marginBottom: 5,textDecoration: "line-through",fontSize: ".8rem" }}><FontAwesomeIcon icon={faTags} />{convertPrice(item?.price)}</Typography>
+											)}	{calculateDiscountedPrice(item)}
+											</TableCell>
+											<TableCell className={classes.txtInfoOrder} align="right">{item.amount}</TableCell>
+											<TableCell className={classes.txtInfoOrder} align="right" >{calculateDiscountedPrice(item)}</TableCell>
+
 										</TableRow>
 									))}
-									<TableRow sx={{ maxWidth: 20 }}>
+									<TableRow sx={{ maxWidth: "md" }}>
 										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Tổng</TableCell>
 										<TableCell className={classes.txtForgot} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.itemsPrice)}</TableCell>
 									</TableRow>

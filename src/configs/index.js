@@ -44,6 +44,7 @@ export const Assets = {
 	bgHome_1: require("../assets/images/background/index.jpg"),
 
 	bgHomeMobile: require("../assets/images/background/bg_carousel_moblie.webp"),
+	bgHymnsFacebook: require("../assets/images/background/bgHymnsFacebook.webp"),
 
 	bgHymnsCenter: require("../assets/images/background/hymnscenter_bg.png"),
 	bgHymnsCenterChristmas: require("../assets/images/background/bg_carousel_desktop_christmas_3.webp"),
@@ -66,13 +67,13 @@ export const Assets = {
 	class: require("../assets/class.jpg"),
 	bgBlog: require("../assets/shape-avatar.svg"),
 	logoEmail: require("../assets/images/logo/gmail.png"),
-
 	ic_analytics: require("../assets/navbar/ic_analytics.svg"),
 	ic_blog: require("../assets/navbar/ic_blog.svg"),
 	ic_cart: require("../assets/navbar/ic_cart.svg"),
 	ic_disabled: require("../assets/navbar/ic_disabled.svg"),
 	ic_lock: require("../assets/navbar/ic_lock.svg"),
 	ic_user: require("../assets/navbar/ic_user.svg"),
+	bgFacebook: require("../assets/images/background/hymnsFacebook.webp"),
 
 	// /** ICON */
 };

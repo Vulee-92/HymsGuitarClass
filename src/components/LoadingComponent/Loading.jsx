@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React,{ useState,useEffect } from 'react';
-import electric from '../../assets/hymns.gif';
+import electric from '../../assets/loading/hymnsLoading.gif';
 import styles from "./stylemui";
 import Typical from 'react-typical';
 import { Assets } from 'configs';
