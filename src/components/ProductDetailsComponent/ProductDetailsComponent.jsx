@@ -33,7 +33,6 @@ import { convertPrice } from "utils";
 import { calculateDiscountedPriceNoConvert } from "utils";
 import Loading from "components/LoadingComponent/Loading";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
-import ProductNotification from "components/ProductNotification/ProductNotification";
 const { v4: uuidv4 } = require('uuid');
 
 
