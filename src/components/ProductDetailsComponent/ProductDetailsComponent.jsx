@@ -346,6 +346,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			< Helmet >
 				<title>{productDetails?.name}</title>
 			</Helmet>
+
 			{products && (
 				<div>
 					<Drawer
@@ -815,7 +816,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									textTransform: "none",
 									fontWeight: "600",
 								}}>
-								Tiếp tục mua sắm
+								Mua sắm
 							</Button>
 							<Button
 								className={classes.nameProductInfo}
