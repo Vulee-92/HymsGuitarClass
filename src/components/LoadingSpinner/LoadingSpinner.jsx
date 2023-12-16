@@ -1,11 +1,16 @@
-import React from 'react';
+import * as React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const LoadingSpinner = () => {
 	return (
-		<div style={{ display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100vh' }}>
-			<CircularProgress color="#436E67" />
-		</div>
+		<Box style={{ display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100vh' }}>
+			<CircularProgress
+				color="success"
+				fourColor
+				variant="indeterminate"
+			/>
+		</Box>
 	);
 };
 
