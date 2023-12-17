@@ -367,8 +367,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						<Container width={{ md: "xs",xl: "xs",lg: "xs" }} style={{ overflow: "hidden" }}>
 							<Box sx={{ display: "flex",flexDirection: "row",justifyContent: { xs: "space-between",md: "end",xl: "end" },zIndex: 999999999999999 }}>
 								<Typography className={classes.priceTitle} style={{ alignItems: "center",gap: "12px",padding: "30px",textAlign: "center" }}>
-									{productDetails?.price?.toLocaleString()}₫
+									{convertPrice((calculateDiscountedPriceNoConvert(productDetails)))}
+
 								</Typography>
+
 								<div style={{ alignItems: "center",gap: "12px",padding: "16px",textAlign: "center" }}>
 									<div>
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
