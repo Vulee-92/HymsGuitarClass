@@ -26,16 +26,7 @@ import { convertPrice } from 'utils';
 import { calculateDiscountedPrice } from 'utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTags } from '@fortawesome/free-solid-svg-icons';
-function createData(orderId,date,customer,totalAmount,status,items) {
-	return {
-		orderId,
-		date,
-		customer,
-		totalAmount,
-		status,
-		items,
-	};
-}
+
 
 function OrderRow(props) {
 	const { order } = props;
@@ -91,7 +82,7 @@ function OrderRow(props) {
 				</TableCell> */}
 			</TableRow>
 			<TableRow>
-				<TableCell style={{ paddingBottom: 0,paddingTop: 0 }} colSpan={6}>
+				<TableCell style={{ paddingBottom: 0,paddingTop: 0 }} colSpan={12}>
 					<Collapse in={open} timeout="auto" unmountOnExit>
 						<Box sx={{ margin: 1 }}>
 							<Typography className={classes.nameProduct}>
@@ -104,6 +95,7 @@ function OrderRow(props) {
 										<TableCell className={classes.txtForgot} align="right">Giá</TableCell>
 										<TableCell className={classes.txtForgot} align="right">SLượng</TableCell>
 										<TableCell className={classes.txtForgot} align="right">Thành tiền</TableCell>
+
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -129,17 +121,18 @@ function OrderRow(props) {
 
 										</TableRow>
 									))}
-									<TableRow sx={{ maxWidth: "md" }}>
-										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Tổng</TableCell>
-										<TableCell className={classes.txtForgot} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.itemsPrice)}</TableCell>
+									<TableRow
+									>
+										<TableCell colSpan={3} className={classes.txtForgot} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>Tổng</TableCell>
+										<TableCell colSpan={3} className={classes.txtForgot} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>{convertPrice(order.itemsPrice)}</TableCell>
 									</TableRow>
 									<TableRow>
-										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Vận chuyển</TableCell>
-										<TableCell className={classes.txtForgot} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.shippingPrice)}</TableCell>
+										<TableCell colSpan={3} className={classes.txtForgot} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>Vận chuyển</TableCell>
+										<TableCell colSpan={3} className={classes.txtForgot} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>{convertPrice(order.shippingPrice)}</TableCell>
 									</TableRow>
 									<TableRow>
-										<TableCell className={classes.txtForgot} colSpan={1} sx={{ textAlign: { xl: "right",xs: "left" } }}>Tổng tiền</TableCell>
-										<TableCell className={classes.priceTitle} colSpan={2} sx={{ textAlign: { xl: "right",xs: "left" } }}>{convertPrice(order.totalPrice)}</TableCell>
+										<TableCell colSpan={3} className={classes.txtForgot} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>Tổng tiền</TableCell>
+										<TableCell colSpan={3} className={classes.priceTitle} sx={{ textAlign: { xl: "right",xs: "left",border: 'none' } }}>{convertPrice(order.totalPrice)}</TableCell>
 									</TableRow>
 								</TableBody>
 							</Table>
@@ -168,16 +161,8 @@ OrderRow.propTypes = {
 	}).isRequired,
 };
 
-const orders = [
-	createData('1','2023-01-01','John Doe',150.0,'Shipped',[
-		{ name: 'Product A',quantity: 2,price: 30.0 },
-		{ name: 'Product B',quantity: 1,price: 90.0 },
-	]),
-	createData('2','2023-01-05','Jane Doe',75.0,'Processing',[
-		{ name: 'Product C',quantity: 1,price: 75.0 },
-	]),
-	// Thêm các đơn đặt hàng mẫu khác nếu cần
-];
+
+
 
 export default function OrderTable() {
 	const location = useLocation()

@@ -18,24 +18,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import AnswerComponent from "components/AnswerComponent/AnswerComponent";
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
+import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
-const PRODUCT_COLOR = [
-	"#00AB55",
-	"#000000",
-	"#FFFFFF",
-	"#FFC0CB",
-	"#FF4842",
-	"#1890FF",
-	"#94D82D",
-	"#FFC107",
-];
-const Item = styled(Paper)(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	boxShadow: "none",
-	color: theme.palette.text.secondary,
-}));
+
+
 // const ProductList = React.lazy(() => import('../../sections/@dashboard/products'));
 
 const ProductsPage = () => {
@@ -103,29 +89,16 @@ const ProductsPage = () => {
 			keepPreviousData: true,
 		}
 	);
+	if (isLoading) {
+		return <LoadingSpinner />;
+	}
 
-	useEffect(() => {
-		if (state) {
-			fetchProductType(state,panigate.page,panigate.limit);
-		}
-	},[state,panigate.page,panigate.limit]);
-	const productList = products?.data?.map((product,index) => ({
-		id: product._id,
-		cover: product?.image,
-		name: product?.name[index],
-		// price: convertPrice(number({ min: 4,max: 99,precision: 0.01 })),
-		colors:
-			(index === 0 && PRODUCT_COLOR.slice(0,2)) ||
-			(index === 1 && PRODUCT_COLOR.slice(1,3)) ||
-			(index === 2 && PRODUCT_COLOR.slice(2,4)) ||
-			(index === 3 && PRODUCT_COLOR.slice(3,6)) ||
-			(index === productss.length - 1 && PRODUCT_COLOR.slice(4,6)) ||
-			(index === productss.length - 2 && PRODUCT_COLOR.slice(5,6)) ||
-			PRODUCT_COLOR,
-		// status: sample(["new", "new", "", ""]),
-		...product,
-	})).filter(product => state ? product.type === state : true);
-	console.log("products",products)
+	// useEffect(() => {
+	// 	if (state) {
+	// 		fetchProductType(state,panigate.page,panigate.limit);
+	// 	}
+	// },[state,panigate.page,panigate.limit]);
+
 	return (
 		<>
 			<Helmet>

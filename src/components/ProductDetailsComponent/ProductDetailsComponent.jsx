@@ -188,10 +188,11 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			}
 		}
 	};
-
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
+
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
+
 		if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
 			dispatch(
 				addOrderProduct({
@@ -206,21 +207,54 @@ const ProductDetailsComponent = ({ idProduct }) => {
 						discount: productDetails?.discount,
 						countInstock: productDetails?.countInStock,
 					},
-
 				})
-
 			);
-
 		} else {
-
 			setErrorLimitOrder(true);
 		}
-		setIsProcessing(false);
 
-		// }
-		handleCartClick();
-		setOpenDialog(true);
+		// Delay for 1 second before setting isProcessing to false
+		setTimeout(() => {
+			setIsProcessing(false);
+			handleCartClick();
+			setOpenDialog(true);
+		},1000);
+
+
 	};
+
+	// const handleAddOrderProduct = () => {
+	// 	setIsProcessing(true);
+	// 	const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
+	// 	if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
+	// 		dispatch(
+	// 			addOrderProduct({
+	// 				orderItem: {
+	// 					name: productDetails?.name,
+	// 					amount: numProduct,
+	// 					type: productDetails?.type,
+	// 					fee: productDetails?.fee,
+	// 					image: productDetails?.image,
+	// 					price: productDetails?.price,
+	// 					product: productDetails?._id,
+	// 					discount: productDetails?.discount,
+	// 					countInstock: productDetails?.countInStock,
+	// 				},
+
+	// 			})
+
+	// 		);
+
+	// 	} else {
+
+	// 		setErrorLimitOrder(true);
+	// 	}
+	// 	setIsProcessing(false);
+
+	// 	// }
+	// 	handleCartClick();
+	// 	setOpenDialog(true);
+	// };
 
 	const handleCloseDialog = () => {
 		setOpenDialog(false);
@@ -339,7 +373,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	if (isLoading) {
 		return <LoadingSpinner />;
 	}
-	console.log("productDetails?.countInStock",productDetails?.countInStock)
 	return (
 		<>
 
