@@ -28,6 +28,7 @@ const SendEmailForgotPasswordSuccess = lazy(() => import("../pages/SendEmailForg
 const ChangePassword = lazy(() => import("../pages/ChangePassword/ChangePassword"));
 const ResetPasswordPage = lazy(() => import("../pages/ResetPasswordPage/ResetPasswordPage"));
 const ResetPasswordDonePage = lazy(() => import("../pages/ResetPasswordDonePage/ResetPasswordDonePage"));
+const CategoryProductPage = lazy(() => import("../pages/CategoryProductPage/CategoryProductPage"));
 
 export const routes = [
 	{
@@ -114,12 +115,18 @@ export const routes = [
 		// isShowHeader: true,
 	},
 	{
-		path: "/product/:type?",
+		path: "/product/:id?",
 		page: ProductsPage,
 		isShowHeader: true,
 		isShowFooter: true,
 	},
 
+
+	{
+		path: "category",
+		page: CategoryProductPage,
+		isShowHeader: true,
+	},
 	{
 		path: "product/:type",
 		page: TypeProductPage,

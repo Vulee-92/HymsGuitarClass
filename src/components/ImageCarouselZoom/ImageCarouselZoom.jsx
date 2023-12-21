@@ -26,7 +26,7 @@ const ImageCarouselZoom = (props) => {
 				{props?.data?.map((image,index) => (
 					<div key={index} onClick={() => handleImageClick(index)}>
 						<Zoom  >
-							<img src={image} style={{ height: '500px',width: 'auto' }} alt={`Image ${index}`} />
+							<img src={image} sx={{ height: '500px',width: 'auto' }} alt={`Image ${index}`} />
 						</Zoom>
 					</div>
 				))}

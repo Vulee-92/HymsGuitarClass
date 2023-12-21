@@ -12,7 +12,7 @@ import Typical from "react-typical";
 // import NavbarComponent from "components/NavbarComponent/NavbarComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation,useParams } from "react-router-dom";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
@@ -31,37 +31,56 @@ const ProductsPage = () => {
 		setOpenFilter(true);
 		// setState(null);
 	};
+	const [products,setOrderData] = useState(null);
+	// State variable to track loading status
+	const [isLoading,setIsLoading] = useState(true);
 	const classes = styles();
 	const handleCloseFilter = () => {
 		setOpenFilter(false);
 	};
-	const searchProduct = useSelector((state) => state?.product?.search);
-	const searchDebounce = useDebounce(searchProduct,500);
-	// const fetchProductAll = async (page,limit) => {
-	// 	setLoading(true);
-	// 	let res;
-	// 	if (state) {
-	// 		res = await ProductService.getProductType(state,page,limit);
-	// 	} else {
-	// 		res = await ProductService.getAllProduct();
-	// 	}
-	// 	if (res?.status === "OK") {
-	// 		setLoading(false);
-	// 		setProducts(res?.data);
-	// 		setPanigate({ ...panigate,total: res?.totalPage });
-	// 	} else {
-	// 		setLoading(false);
-	// 	}
-	// };
-	const fetchProductAll = async (context) => {
-		// const limit = context?.queryKey && context?.queryKey[1];
-		// const search = context?.queryKey && context?.queryKey[2];
-		const res = await ProductService.getAllProduct();
+	const params = useParams()
+	const { id } = params
 
+	console.log("idididididid",id)
+	// const searchProduct = useSelector((state) => state?.product?.search);
+	// const searchDebounce = useDebounce(searchProduct,500);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				setIsLoading(true);
+
+				const res = await ProductService.getAllProduct(id);
+
+				// Your other logic...
+
+
+
+				// Set order data or perform other logic based on the response
+				setOrderData(res.data);
+			} catch (error) {
+				// Handle error...
+			} finally {
+				setIsLoading(false); // Set loading to false whether there's an error or not
+			}
+		};
+
+		fetchData();
+	},[id]);
+	const fetchProductAll = async (context) => {
+		const res = await ProductService.getAllProduct(id,context.queryKey[1].limit);
 		return res;
 	};
-	const { state } = useLocation();
 
+	// const { isLoading,data: products,isPreviousData } = useQuery(
+	// 	["products"],
+	// 	fetchProductAll,
+	// 	{
+	// 		retry: 3,
+	// 		retryDelay: 100,
+	// 		keepPreviousData: true,
+	// 	}
+	// );
 	const [productss,setProducts] = useState([]);
 	const [loading,setLoading] = useState(false);
 	const [panigate,setPanigate] = useState({
@@ -80,15 +99,18 @@ const ProductsPage = () => {
 			setLoading(false);
 		}
 	};
-	const { isLoading,data: products,isPreviousData } = useQuery(
-		["products"],
-		fetchProductAll,
-		{
-			retry: 3,
-			retryDelay: 100,
-			keepPreviousData: true,
-		}
-	);
+	// const { isLoading,data: products,isPreviousData } = useQuery(
+	// 	["products"],
+	// 	fetchProductAll,
+	// 	{
+	// 		retry: 3,
+	// 		retryDelay: 100,
+	// 		keepPreviousData: true,
+	// 	}
+	// );
+	console.log("products",products)
+
+
 	if (isLoading) {
 		return <LoadingSpinner />;
 	}

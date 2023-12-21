@@ -20,7 +20,7 @@ const navConfig = [
 	},
 	{
 		title: 'Sản phẩm',
-		path: '/product',
+		path: '/category',
 		icon: icon('ic_cart'),
 		// children: [
 		// 	{

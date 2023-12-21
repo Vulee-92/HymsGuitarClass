@@ -154,7 +154,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	};
 	const menuItems = [
 		{ path: '/',label: t('home') },
-		{ path: '/product',label: t('product') },
+		{ path: '/category',label: t('product') },
 		{ path: '/about',label: t('about') },
 		{ path: '/blog',label: t('blog') },
 		{ path: '/contact',label: t('contact') },
@@ -374,7 +374,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								{t('about')}
 							</Button>
 							<Button
-								onClick={() => navigate('/product')}
+								onClick={() => navigate('/category')}
 								sx={{ color: "white",display: "block" }}
 								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
 							>
