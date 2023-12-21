@@ -94,13 +94,13 @@ export default makeStyles(() => {
 			fontSize: "20px",
 		},
 		galleryProduct: {
-			width: "100%",
+			width: "50%",
 			border: "10px solid #fff",
 			margin: " 5px auto",
 			height: "100%",
 
-			"@media all and (min-width: 768px)": {
-				width: "calc(70% - 10px)",
+			"@media all and (max-width: 768px)": {
+				width: "calc(90% - 10px)",
 			},
 		},
 		txtTitleBox: {
