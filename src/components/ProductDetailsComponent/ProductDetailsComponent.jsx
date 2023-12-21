@@ -541,7 +541,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 							</Grid>
 						</Grid>
 					</Grid>
-					<Typography sx={{ display: { xs: "flex",xl: "flex",lg: "none",md: "none",sm: "none" },borderBottom: { xs: "2px solid #d6d6d4",xl: "none" },paddingBottom: { xs: "10px" },marginTop: { xs: 0,xl: "16px",lg: "16px",md: "16px" },}} style={{ marginBottom: "16px",textAlign: "left" }} className={classes.nameProductMobile}>
+					<Typography sx={{ display: { xs: "flex",xl: "flex",lg: "flex",md: "flex",sm: "flex" },borderBottom: { xs: "2px solid #d6d6d4",xl: "none" },paddingBottom: { xs: "10px" },marginTop: { xs: 0,xl: "16px",lg: "16px",md: "16px" },}} style={{ marginBottom: "16px",textAlign: "left" }} className={classes.nameProductMobile}>
 						{productDetails?.name}
 					</Typography>
 
