@@ -14,13 +14,12 @@ const cache = new LRUCache({ max: 100,maxAge: 1000 * 60 * 10 }); // Lưu trữ t
 // 	return res.data
 // }
 export const getAllProduct = async (search) => {
-	// const cacheKey = `${search}-${limit}`;
-	// const cachedResult = cache.get(cacheKey);
+	const cacheKey = `${search}`;
+	const cachedResult = cache.get(cacheKey);
 
-	// if (cachedResult) {
-	// 	return cachedResult;
-	// }
-	console.log("search",search)
+	if (cachedResult) {
+		return cachedResult;
+	}
 	let res = {};
 	if (search?.length > 0) {
 		const encodedSearch = encodeURIComponent(search);
@@ -34,7 +33,7 @@ export const getAllProduct = async (search) => {
 	}
 
 	const result = res.data;
-	// cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
+	cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
 
 	return result;
 };
@@ -50,7 +49,7 @@ export const getProductType = async (type,page,limit) => {
 
 export const createProduct = async (data) => {
 	const res = await axios.post(
-		`${process.env.REACT_APP_API_URL} / product / create`,
+		`${process.env.REACT_APP_API_URL}/product/create`,
 		data
 	);
 	return res.data;
@@ -58,7 +57,7 @@ export const createProduct = async (data) => {
 
 export const getDetailsProduct = async (id) => {
 	const res = await axios.get(
-		`${process.env.REACT_APP_API_URL} / product / get - details / ${id}`
+		`${process.env.REACT_APP_API_URL}/product/get-details/${id}`
 	);
 	return res.data;
 };
@@ -66,7 +65,7 @@ export const getDetailsProduct = async (id) => {
 
 export const updateProduct = async (id,access_token,data) => {
 	const res = await axiosJWT.put(
-		`${process.env.REACT_APP_API_URL} / product / update / ${id}`,
+		`${process.env.REACT_APP_API_URL}/product/update/${id}`,
 		data,
 		{
 			headers: {
@@ -79,7 +78,7 @@ export const updateProduct = async (id,access_token,data) => {
 
 export const deleteProduct = async (id,access_token) => {
 	const res = await axiosJWT.delete(
-		`${process.env.REACT_APP_API_URL} / product / delete -product / ${id}`,
+		`${process.env.REACT_APP_API_URL}/product/delete-product/${id}`,
 		{
 			headers: {
 				token: `Bearer ${access_token}`,
@@ -91,7 +90,7 @@ export const deleteProduct = async (id,access_token) => {
 
 export const deleteManyProduct = async (data,access_token) => {
 	const res = await axiosJWT.post(
-		`${process.env.REACT_APP_API_URL} / product / delete -many`,
+		`${process.env.REACT_APP_API_URL}/product/delete-many`,
 		data,
 		{
 			headers: {
@@ -104,7 +103,7 @@ export const deleteManyProduct = async (data,access_token) => {
 
 export const getAllTypeProduct = async () => {
 	const res = await axios.get(
-		`${process.env.REACT_APP_API_URL} / product / get - all - type`
+		`${process.env.REACT_APP_API_URL}/product/get-all-type`
 	);
 	return res.data;
 };
