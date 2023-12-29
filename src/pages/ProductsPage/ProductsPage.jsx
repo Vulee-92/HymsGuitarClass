@@ -41,7 +41,6 @@ const ProductsPage = () => {
 	const params = useParams()
 	const { id } = params
 
-	console.log("idididididid",id)
 	// const searchProduct = useSelector((state) => state?.product?.search);
 	// const searchDebounce = useDebounce(searchProduct,500);
 
@@ -108,7 +107,6 @@ const ProductsPage = () => {
 	// 		keepPreviousData: true,
 	// 	}
 	// );
-	console.log("products",products)
 
 
 	if (isLoading) {

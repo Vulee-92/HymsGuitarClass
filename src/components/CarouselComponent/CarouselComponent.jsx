@@ -17,7 +17,6 @@ const CarouselComponent = () => {
 	// Define breakpoints for mobile and medium views
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 	const isMedium = useMediaQuery({ minWidth: 768,maxWidth: 1509 });
-	console.log("isMedium",isMedium)
 	return (
 		<Box className={classes.carouselContainer}>
 			<Swiper

@@ -140,7 +140,6 @@ const OrderPage = () => {
 	const handleChangeAddress = () => {
 		setIsOpenModalUpdateInfo(true);
 	};
-	console.log("order?.orderItemsSlected?",order?.orderItemsSlected)
 
 	const totalPrice = useMemo(() => {
 		if (order?.orderItemsSelected?.length === 0) {
@@ -148,12 +147,9 @@ const OrderPage = () => {
 		}
 
 		const result = order?.orderItemsSlected.reduce((total,cur) => {
-			console.log("cur",cur)
 
-			console.log("total",total)
 
 			const discountedPrice = calculateDiscountedPriceNoConvert(cur);
-			console.log("discountedPrice",discountedPrice)
 
 			return total + discountedPrice * cur.amount;
 		},0);
@@ -161,7 +157,6 @@ const OrderPage = () => {
 		return result;
 	},[order]);
 
-	console.log("totalPrice",totalPrice)
 	// const priceDiscountMemo = useMemo(() => {
 	// 	const result = order?.orderItemsSlected?.reduce((total,cur) => {
 	// 		const totalDiscount = cur.discount ? cur.discount : 0;

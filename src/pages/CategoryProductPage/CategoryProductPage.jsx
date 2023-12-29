@@ -19,7 +19,7 @@ const CategoryProductPage = () => {
 	const classes = styles();
 	// const { filter: categoryId } = useParams();
 	const categories = [
-		{ id: 'acoustic-guitar',name: 'Guitar Acoustic',icon: Assets.guitar },
+		{ id: 'Acoustic-guitars',name: 'Guitar Acoustic',icon: Assets.guitar },
 		{ id: 'accessories',name: 'Phụ kiện',icon: Assets.daydeoguitar },
 		{ id: 'piano-electric',name: 'Piano Điện',icon: Assets.piano },
 		{ id: '',name: 'Tất cả',icon: Assets.guitar },

@@ -42,7 +42,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const [numProduct,setNumProduct] = useState(1);
 	const order = useSelector((state) => state.order);
 	const user = useSelector((state) => state.user);
-	console.log("user",user)
 	const classes = styles();
 	const [limit,setLimit] = useState(12);
 	const [showFab,setShowFab] = useState(false);
@@ -91,12 +90,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		if (userId === null || userId === "undefined") {
 			// Nếu không có, tạo mới và lưu vào localStorage
 			userId = generateUserId();
-			console.log("generateUserId",userId)
 			localStorage.setItem("userId",userId);
 		}
 		if (userId !== null && userId !== "undefined") {
 			// Thực hiện yêu cầu API
-			console.log("userID",userId)
 			const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
 
 			// Kiểm tra và xử lý giá trị userId từ response
@@ -321,7 +318,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	// Finally, concatenate the two arrays to get the desired order
 	// ?.concat(otherProducts)
 	const sortedProductsGuitar = acousticProducts;
-	console.log("sortedProductss",sortedProductsGuitar)
 	// const filteredProducts = productsNosearch?.data?.filter(product => product.selled > 1);
 
 	const {
@@ -344,8 +340,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		const handleScroll = () => {
 			const cartButtonTop = cartButtonRef.current.getBoundingClientRect().top;
 			const cartButtonOut = cartButtonRefOut.current.getBoundingClientRect().top;
-			console.log("cartButtonTop",cartButtonTop)
-			console.log("cartButtonOut",cartButtonOut)
+
 			if (cartButtonOut < 0 && cartButtonTop < 0) {
 				setIsCartOpen(false);
 			}

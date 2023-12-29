@@ -39,7 +39,6 @@ const IconContactAllPageComponent = () => {
 
 		if (option === 'messenger') {
 			const messengerElement = document.querySelector('.fb_dialog_advanced');
-			console.log("messengerElement",messengerElement)
 			if (messengerElement) {
 				messengerElement.style.display = 'block';
 				setMessengerChatOpen(true);
@@ -52,7 +51,6 @@ const IconContactAllPageComponent = () => {
 	};
 	if (document.querySelector('.fb_customer_chat_bounce_out_v2')) {
 		const dialogElement = document.querySelector('.fb_dialog_advanced');
-		console.log("dialogElement",dialogElement)
 		dialogElement.style.display = 'none';
 	}
 

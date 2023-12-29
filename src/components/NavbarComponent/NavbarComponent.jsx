@@ -16,10 +16,10 @@ const NavbarComponent = () => {
 	const classes = styles();
 	const navigate = useNavigate();
 	const fetchAllTypeProduct = async () => {
-		const res = await ProductService.getAllTypeProduct()
-		if (res?.status === 'OK') {
-			setTypeProducts(res?.data)
-		}
+		// const res = await ProductService.getAllTypeProduct()
+		// if (res?.status === 'OK') {
+		// 	setTypeProducts(res?.data)
+		// }
 	}
 	const { isLoading,data: products,isPreviousData } = useQuery(
 		["products"],
@@ -31,7 +31,7 @@ const NavbarComponent = () => {
 		}
 	);
 	useEffect(() => {
-		fetchAllTypeProduct()
+		// fetchAllTypeProduct()
 	},[])
 	// Sử dụng useMediaQuery để xác định kích thước màn hình
 	const isDesktop = useMediaQuery('(min-width:899px)');

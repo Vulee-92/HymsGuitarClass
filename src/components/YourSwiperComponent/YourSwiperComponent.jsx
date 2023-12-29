@@ -30,7 +30,6 @@ const YourSwiperComponent = ({ latestProducts,classes,isLoading }) => {
 			>
 				{latestProducts?.map((product) => {
 					const firstImage = product.image[0];
-					console.log("productproductproductproduct",product)
 
 					return (
 						<SwiperSlide className={classes.SwiperSlide} key={product._id}>
