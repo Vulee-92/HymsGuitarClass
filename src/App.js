@@ -17,7 +17,6 @@ import { resetUser,updateUser } from "./redux/slides/userSlide";
 import Loading from "./components/LoadingComponent/Loading";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from './components/ScrollToTopComponent/ScrollToTopComponent';
-import IconContactAllPageComponent from "components/IconContactAllPageComponent/IconContactAllPageComponent";
 
 function App() {
 	const dispatch = useDispatch();
@@ -84,27 +83,6 @@ function App() {
 	};
 
 
-	useEffect(() => {
-		setIsLoading(true);
-		const { storageData,decoded } = handleDecoded();
-		let isAuthorizationSet = false; // Biến đánh dấu
-
-		if (decoded?.id) {
-			handleGetDetailsUser(decoded?.id,storageData);
-
-			// Kiểm tra biến đánh dấu trước khi gọi hàm setAuthorizationHeader
-			if (!isAuthorizationSet) {
-				UserService.axiosJWT.interceptors.request.use(
-					setAuthorizationHeader,
-					(error) => Promise.reject(error)
-				);
-				isAuthorizationSet = true; // Đánh dấu là đã gọi hàm setAuthorizationHeader
-			}
-		}
-
-		setIsLoading(false);
-	},[]);
-
 
 
 	const handleGetDetailsUser = async (id,token) => {
@@ -133,6 +111,26 @@ function App() {
 		if (decoded?.id) {
 			handleGetDetailsUser(decoded?.id,storageData);
 		}
+		setIsLoading(false);
+	},[]);
+	useEffect(() => {
+		setIsLoading(true);
+		const { storageData,decoded } = handleDecoded();
+		let isAuthorizationSet = false; // Biến đánh dấu
+
+		if (decoded?.id) {
+			handleGetDetailsUser(decoded?.id,storageData);
+
+			// Kiểm tra biến đánh dấu trước khi gọi hàm setAuthorizationHeader
+			if (!isAuthorizationSet) {
+				UserService.axiosJWT.interceptors.request.use(
+					setAuthorizationHeader,
+					(error) => Promise.reject(error)
+				);
+				isAuthorizationSet = true; // Đánh dấu là đã gọi hàm setAuthorizationHeader
+			}
+		}
+
 		setIsLoading(false);
 	},[]);
 	return (

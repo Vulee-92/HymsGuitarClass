@@ -74,9 +74,9 @@ export const Assets = {
 	ic_user: require("../assets/navbar/ic_user.svg"),
 	bgFacebook: require("../assets/images/background/hymnsFacebook.webp"),
 
-	daydeoguitar: require("../assets/category/phukien.png"),
-	guitar: require("../assets/category/guitar.png"),
-	piano: require("../assets/category/piano.png"),
+	daydeoguitar: require("../assets/category/phukien_2.png"),
+	guitar: require("../assets/category/guitar_2.png"),
+	piano: require("../assets/category/piano_2.png"),
 
 
 	// /** ICON */
