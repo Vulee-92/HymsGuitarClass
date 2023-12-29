@@ -59,7 +59,7 @@ const CategoryProductPage = () => {
 				<Typography className={classes.txtTitleBox}>Danh mục</Typography>
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					{categories.map((category) => (
-						<Grid item xs={12} xl={4} >
+						<Grid item xs={12} xl={3} >
 
 							<Box className={classes.conCard} key={category.id}>
 								<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
