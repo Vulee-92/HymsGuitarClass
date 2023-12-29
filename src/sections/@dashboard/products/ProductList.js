@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 // @mui
 import { Grid } from "@mui/material";
 import ShopProductCard from "./ProductCard";
-import CardComponent from "components/CardComponent/CardComponent";
+import CardComponent from "../../../components/CardComponent/CardComponent";
 
 // ----------------------------------------------------------------------
 
