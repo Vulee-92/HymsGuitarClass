@@ -75,8 +75,9 @@ export const Assets = {
 	bgFacebook: require("../assets/images/background/hymnsFacebook.webp"),
 
 	daydeoguitar: require("../assets/category/phukien_2.png"),
-	guitar: require("../assets/category/guitar_2.png"),
+	guitar: require("../assets/category/guitar_1.png"),
 	piano: require("../assets/category/piano_2.png"),
+
 
 
 	// /** ICON */
