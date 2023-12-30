@@ -220,38 +220,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 	};
 
-	// const handleAddOrderProduct = () => {
-	// 	setIsProcessing(true);
-	// 	const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
-	// 	if (orderRedux?.amount + numProduct <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
-	// 		dispatch(
-	// 			addOrderProduct({
-	// 				orderItem: {
-	// 					name: productDetails?.name,
-	// 					amount: numProduct,
-	// 					type: productDetails?.type,
-	// 					fee: productDetails?.fee,
-	// 					image: productDetails?.image,
-	// 					price: productDetails?.price,
-	// 					product: productDetails?._id,
-	// 					discount: productDetails?.discount,
-	// 					countInstock: productDetails?.countInStock,
-	// 				},
 
-	// 			})
 
-	// 		);
-
-	// 	} else {
-
-	// 		setErrorLimitOrder(true);
-	// 	}
-	// 	setIsProcessing(false);
-
-	// 	// }
-	// 	handleCartClick();
-	// 	setOpenDialog(true);
-	// };
 
 	const handleCloseDialog = () => {
 		setOpenDialog(false);
@@ -477,7 +447,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 										}}
 									>
 										<Box style={{ alignItems: "flex-end !important" }}>
-											<Typography className={classes.priceTitle}>{productDetails?.price?.toLocaleString()}₫</Typography>
+											<Typography className={classes.priceTitle}>									{convertPrice((calculateDiscountedPriceNoConvert(productDetails)))}</Typography>
 											<Typography className={classes.txtTilte}> Hỗ trợ vận chuyển cho mọi đơn hàng!</Typography>
 										</Box>
 										<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isProcessing}
@@ -721,13 +691,25 @@ const ProductDetailsComponent = ({ idProduct }) => {
 									&&
 									<Box className={classes.boxInfoShipping}>
 										<FontAwesomeIcon icon={faBox} style={{ color: "#436E67",marginRight: "15px",fontSize: "16px" }} />
-										<Typography className={classes.nameProductInfo}>{errorLimitOrder ? <Typography style={{ color: "#B22222" }}> Hết hàng</Typography> : "Còn hàng"}</Typography>
+										{productDetails?.type === 'piano-electric' ? (
+											<Typography className={classes.nameProductInfo}>{productDetails?.countInStock === 0 ? <Typography style={{ color: "#B22222" }}> Hết hàng</Typography> : "Còn hàng - khu vực TP. HCM"}</Typography>
+
+										) : (
+											<Typography className={classes.nameProductInfo}>{productDetails?.countInStock === 0 ? <Typography style={{ color: "#B22222" }}> Hết hàng</Typography> : "Còn hàng"}</Typography>
+										)}
+
 									</Box>
 								)}
 
 								<Box className={classes.boxInfoShipping} >
 									<FontAwesomeIcon icon={faPeopleCarryBox} style={{ color: "#436E67",marginRight: "10px",fontSize: "16px" }} />
-									<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển nội thành TP. Tam Kỳ</Typography>
+									{productDetails?.type === 'piano-electric' ? (
+										<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển nội thành TP. HCM</Typography>
+
+									) : (
+										<Typography className={classes.nameProductInfo}>Miễn phí vận chuyển nội thành TP. Tam Kỳ</Typography>
+									)}
+
 								</Box>
 								<Box className={classes.boxInfoShipping}>
 									<FontAwesomeIcon icon={faTruck} style={{ color: "#436E67",marginRight: "10px",fontSize: "16px" }} />

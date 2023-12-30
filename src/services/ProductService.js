@@ -1,6 +1,7 @@
 import axios from "axios";
 import { axiosJWT } from "./UserService";
-import LRUCache from "lru-cache";
+import { LRUCache } from 'lru-cache';
+
 
 const cache = new LRUCache({ max: 100,maxAge: 1000 * 60 * 10 }); // Lưu trữ tối đa 100 kết quả, mỗi kết quả được lưu trữ trong 10 phút
 

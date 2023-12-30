@@ -74,10 +74,10 @@ export const Assets = {
 	ic_user: require("../assets/navbar/ic_user.svg"),
 	bgFacebook: require("../assets/images/background/hymnsFacebook.webp"),
 
-	daydeoguitar: require("../assets/category/phukien_2.png"),
-	guitar: require("../assets/category/guitar_1.png"),
-	piano: require("../assets/category/piano_2.png"),
-
+	daydeoguitar: require("../assets/category/triangle-music.png"),
+	guitar: require("../assets/category/guitar-electric.png"),
+	piano: require("../assets/category/piano-keyboard.png"),
+	allguitar: require("../assets/category/photo-film-music.png")
 
 
 	// /** ICON */
