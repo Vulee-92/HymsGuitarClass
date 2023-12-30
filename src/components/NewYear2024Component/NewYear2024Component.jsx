@@ -6,34 +6,23 @@ const NewYear2024Component = () => {
 		const container = document.getElementById('fireworks-container');
 
 		const options = {
-			maxRockets: 3,
-			rocketSpawnInterval: 2000,
-			numParticles: 20,
-			explosionMinHeight: 0.2,
-			explosionMaxHeight: 0.9,
-			explosionChance: 0.01
+			maxRockets: 3,        // Số lượng pháo bông tối đa
+			rocketSpawnInterval: 1500, // Khoảng thời gian giữa việc tạo ra các pháo bông (ms)
+			numParticles: 100,    // Số lượng hạt pháo bông
+			explosionMinHeight: 0.2,  // Độ cao tối thiểu của pháo bông
+			explosionMaxHeight: 0.9,  // Độ cao tối đa của pháo bông
+			explosionChance: 0.08,
+			traceSpeed: 1
+
 		};
 
 		const fireworks = new Fireworks(container,options);
+		fireworks.start();
 
-		// Bắt đầu hiệu ứng sau 10 giây
-		const timeoutId = setTimeout(() => {
-			fireworks.start();
-		},500); // 10 giây
-
-		// Dừng hiệu ứng sau 20 giây (10 giây thời gian chờ và 10 giây thời gian chạy hiệu ứng)
-		const stopTimeoutId = setTimeout(() => {
-			fireworks.stop();
-		},10000); // 20 giây
-
-		// Xóa các timeout khi component unmount
-		return () => {
-			clearTimeout(timeoutId);
-			clearTimeout(stopTimeoutId);
-		};
+		return () => fireworks.stop();
 	},[]);
 
-	return <div id="fireworks-container" style={{ position: 'absolute',top: 0,left: 0,width: '100%',height: '100%',zIndex: 100 }} />;
+	return <div id="fireworks-container" style={{ position: 'absolute',top: 0,left: 0,width: '100%',height: '100vh' }} />;
 };
 
 export default NewYear2024Component;
