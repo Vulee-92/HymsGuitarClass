@@ -120,7 +120,6 @@ const HomePage = () => {
 	// Finally, concatenate the two arrays to get the desired order
 	// ?.concat(otherProducts)
 	const sortedProductsGuitar = acousticProducts;
-	console.log("sortedProductss",sortedProductsGuitar)
 	const filteredProducts = productsNosearch?.data
 		?.filter(product => product.selled > 1)
 		?.sort((a,b) => b.selled - a.selled);
