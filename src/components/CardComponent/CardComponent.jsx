@@ -108,12 +108,12 @@ const CardComponent = (product) => {
 				<img
 					style={{
 						display: 'block',
-						height: '100%',
-						width: '80%',
+						height: '15vh',
+						width: '90%',
 						position: 'relative',
 						top: 10,
 						cursor: 'pointer',
-						left: "10%"
+						left: "0%"
 					}}
 					onClick={() => handleDetailsProduct()}
 					// sx={{ left: { xl: "50px",lg: "15px",xs: "-20px" } }}
