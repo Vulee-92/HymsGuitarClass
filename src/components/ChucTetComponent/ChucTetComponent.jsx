@@ -2,7 +2,7 @@ import React,{ useState,useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import { Assets } from 'configs';
-import { Box,DialogActions,DialogContent,DialogTitle } from '@mui/material';
+import { Box,Container,DialogActions,DialogContent,DialogTitle } from '@mui/material';
 
 const ChucTetComponent = () => {
 	const [open,setOpen] = useState(false);
@@ -27,18 +27,18 @@ const ChucTetComponent = () => {
 			aria-describedby="alert-dialog-description"
 			fullWidth
 			maxWidth="sm"
-
-			sx={{ borderRadius: 30 }}
+			style={{ height: '100%',width: '100%' }}
 		>
-
-			<img src={Assets.chuctet} alt="Tết Greetings" style={{ height: '100%',width: '100%' }} onClick={handleClose} />
+			<img src={Assets.chuctet} alt="Tết Greetings" style={{ height: '75vh',width: '100%' }} onClick={handleClose} />
 			<Button
 				sx={{
 					backgroundColor: `rgb(166, 1, 0)`,
 					color: "rgb(255, 207, 110)",
-					borderTop: "1px solid rgb(255, 207, 110)",
+					borderTop: "2px solid rgb(255, 207, 110)",
 					fontFamily: "Public Sans",
 					fontSize: "1rem",
+					height: "100%",
+					width: "100%",
 					fontWeight: 600,
 					cursor: "pointer",
 					"&:hover": {
@@ -50,6 +50,7 @@ const ChucTetComponent = () => {
 			>
 				Đóng
 			</Button>
+
 
 		</Dialog>
 	);
