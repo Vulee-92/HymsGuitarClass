@@ -112,10 +112,10 @@ const HomePage = () => {
 
 	// Lấy ra 5 sản phẩm mới nhất
 	const latestProducts = sortedProducts?.slice(0,12);
-	const acousticProducts = latestProducts?.filter(product => product.type === "Acoustic Guitars");
+	const acousticProducts = latestProducts?.filter(product => product.type === "Acoustic-guitars");
 
-	// Then, filter out all products without type "Acoustic Guitars"
-	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic Guitars");
+	// Then, filter out all products without type "Acoustic-guitars"
+	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic-guitars");
 
 	// Finally, concatenate the two arrays to get the desired order
 	// ?.concat(otherProducts)
