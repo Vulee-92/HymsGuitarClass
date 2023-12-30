@@ -162,7 +162,7 @@ function App() {
 														<Layout>
 															<LazyPage />
 															<ChucTetComponent />
-															<NewYear2024Component />
+															{/* <NewYear2024Component /> */}
 															{/* <IconContactAllPageComponent /> */}
 														</Layout>
 													) : (
