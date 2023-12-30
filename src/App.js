@@ -17,10 +17,13 @@ import { resetUser,updateUser } from "./redux/slides/userSlide";
 import Loading from "./components/LoadingComponent/Loading";
 import { HelmetProvider } from "react-helmet-async";
 import ScrollToTop from './components/ScrollToTopComponent/ScrollToTopComponent';
+import NewYear2024Component from "components/NewYear2024Component/NewYear2024Component";
+import ChucTetComponent from "components/ChucTetComponent/ChucTetComponent";
 
 function App() {
 	const dispatch = useDispatch();
 	const [isLoading,setIsLoading] = useState(false);
+	const [showDrawer,setShowDrawer] = useState(false);
 	const user = useSelector((state) => state.user);
 	const isLoggedIn = user?.access_token; // Kiểm tra xem người dùng đã đăng nhập chưa
 	// ...
@@ -81,6 +84,7 @@ function App() {
 
 		return config;
 	};
+
 
 
 
@@ -157,6 +161,8 @@ function App() {
 													{isAuthorized ? (
 														<Layout>
 															<LazyPage />
+															<ChucTetComponent />
+															<NewYear2024Component />
 															{/* <IconContactAllPageComponent /> */}
 														</Layout>
 													) : (

@@ -77,7 +77,8 @@ export const Assets = {
 	daydeoguitar: require("../assets/category/triangle-music.png"),
 	guitar: require("../assets/category/guitar-electric.png"),
 	piano: require("../assets/category/piano-keyboard.png"),
-	allguitar: require("../assets/category/photo-film-music.png")
+	allguitar: require("../assets/category/photo-film-music.png"),
+	chuctet: require("../assets/images/CHUCTET.png"),
 
 
 	// /** ICON */

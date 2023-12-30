@@ -33,6 +33,7 @@
     "canvas-confetti": "^1.9.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
+    "fireworks-js": "^2.10.7",
     "framer-motion": "^10.16.1",
     "i18next": "^23.2.11",
     "install": "^0.13.0",

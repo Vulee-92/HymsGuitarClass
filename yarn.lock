@@ -6013,6 +6013,11 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
+fireworks-js@^2.10.7:
+  version "2.10.7"
+  resolved "https://registry.yarnpkg.com/fireworks-js/-/fireworks-js-2.10.7.tgz#eb099652304356aef160ec00869fc60f00c6277a"
+  integrity sha512-FyRNiqlgu9ZeFCjfN0UiGUlj5dUWNYLyFaWN/Q8sOMf0E+KGA4dMROaBZpCtym85fChgCspoa3jHoLTRZiy74A==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/flat-cache/-/flat-cache-3.0.4.tgz"
