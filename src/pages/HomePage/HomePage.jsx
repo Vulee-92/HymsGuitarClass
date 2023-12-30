@@ -112,7 +112,10 @@ const HomePage = () => {
 
 	// Lấy ra 5 sản phẩm mới nhất
 	const latestProducts = sortedProducts?.slice(0,12);
-	const acousticProducts = latestProducts?.filter(product => product.type === "Acoustic-guitars");
+	const acousticProducts = latestProducts?.filter(
+		product => product.type === "Acoustic-guitars" || product.type === "piano-electric"
+	);
+
 
 	// Then, filter out all products without type "Acoustic-guitars"
 	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic-guitars");
