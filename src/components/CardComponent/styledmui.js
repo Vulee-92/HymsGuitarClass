@@ -61,7 +61,6 @@ export default makeStyles(() => {
 			borderBottom: "0px",
 			padding: 15,
 			width: "80%",
-			height: "30vh",
 			margin: "0 auto",
 			borderTop: "2px solid #454F5B",
 			borderRadius: "9px",

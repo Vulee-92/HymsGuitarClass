@@ -108,7 +108,7 @@ const CardComponent = (product) => {
 				<img
 					style={{
 						display: 'block',
-						height: '15vh',
+						height: '100%',
 						width: '90%',
 						position: 'relative',
 						top: 10,
