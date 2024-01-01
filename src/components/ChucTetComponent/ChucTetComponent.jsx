@@ -42,7 +42,7 @@ const ChucTetComponent = () => {
 			/>
 			<Button
 				sx={{
-					backgroundColor: `rgb(166, 1, 0)`,
+					backgroundColor: `#C75126`,
 					color: 'rgb(255, 207, 110)',
 					borderTop: '2px solid rgb(255, 207, 110)',
 					fontFamily: 'Public Sans',
@@ -53,7 +53,7 @@ const ChucTetComponent = () => {
 					cursor: 'pointer',
 					'&:hover': {
 						backgroundColor: `rgb(255, 207, 110)`,
-						color: 'rgb(166, 1, 0)',
+						color: '#C75126',
 					},
 				}}
 				onClick={handleClose}
