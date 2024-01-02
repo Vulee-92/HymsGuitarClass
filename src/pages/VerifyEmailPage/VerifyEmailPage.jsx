@@ -42,7 +42,7 @@ const VerifyEmailPage = () => {
 									alignItems: "center"
 								}}>
 									<Box className={classes.conButton} sx={{ display: 'flex',alignItems: 'center',justifyContent: 'center' }}>
-										<a href="https://mail.google.com/mail/u/0/#search/from%3A(hymnsguitarclass%40gmail.com)+in%3Aanywhere" target="_blank" style={{ display: 'flex',alignItems: 'center',textDecoration: 'none' }}>
+										<a href="https://mail.google.com/mail/u/0/#search/from%3A(hymnscenter%40gmail.com)+in%3Aanywhere" target="_blank" style={{ display: 'flex',alignItems: 'center',textDecoration: 'none' }}>
 											<img
 												src={Assets.logoEmail}
 												alt="Logo Email"
