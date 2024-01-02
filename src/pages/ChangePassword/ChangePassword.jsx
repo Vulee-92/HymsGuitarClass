@@ -2,13 +2,11 @@
 import React,{ useEffect,useState } from "react";
 import {
 	Box,
-	Button,
-	CircularProgress,
-	Container,
+	FormControl,
 	Grid,
 	Input,
 	InputAdornment,
-	Modal,
+	InputLabel,
 	Tooltip,
 	Typography,
 	tooltipClasses,
@@ -26,7 +24,6 @@ import {
 import * as UserService from "../../services/UserService";
 import * as message from "../../components/Message/Message";
 
-import CStyles from "../../utils/common/index";
 /** STYLES */
 import styles from "./style";
 // import { faPen } from '@fortawesome/free-light-svg-icons';
@@ -34,9 +31,6 @@ import { Colors } from "../../utils/colors";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import { useDispatch,useSelector } from "react-redux";
 import { updateUser } from "../../redux/slides/userSlide";
-import Loading from "../../components/LoadingComponent/Loading";
-import CButton from "../../components/CButton";
-import AnimationComponent from "../../components/AnimationComponent/AnimationComponent";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import PasswordCheckerComponent from "components/PasswordCheckerComponent/PasswordCheckerComponent";
@@ -105,13 +99,75 @@ const ChangePassword = () => {
 	const handleUpdate = () => {
 		const newPassword = form.password.value;
 
-		mutation.mutate({
-			id: user?.id,
-			name: form.name.value,
-			password: newPassword || user?.password,
-			access_token: user?.access_token,
-		});
+		// Kiểm tra xem người dùng đã nhập mật khẩu mới hay không
+		if (newPassword) {
+			// Nếu có mật khẩu mới, cập nhật cả id, name và password
+			mutation.mutate({
+				id: user?.id,
+				name: form.name.value,
+				phone: form.phone.value,
+				province: form.province.value,
+				city: form.city.value,
+				ward: form.ward.value,
+				password: newPassword,
+				address: form.address.value,
+				access_token: user?.access_token,
+			});
+		}
+		else {
+			// Nếu không có mật khẩu mới, chỉ cập nhật id và name
+			mutation.mutate({
+				id: user?.id,
+				name: form.name.value,
+				phone: form.phone.value,
+				province: form.province.value,
+				city: form.city.value,
+				ward: form.ward.value,
+				address: form.address.value,
+				access_token: user?.access_token,
+			});
+		}
 	};
+	// const handleUpdate = () => {
+	// 	const newPassword = form.password.value;
+
+	// 	// Tạo một đối tượng để lưu trữ dữ liệu cần cập nhật
+	// 	const updatedData = {
+	// 		id: user?.id,
+	// 		name: form.name.value,
+	// 		phone: form.phone.value,
+	// 		province: form.province.value,
+	// 		city: form.city.value,
+	// 		ward: form.ward.value,
+	// 		address: form.address.value,
+	// 	};
+
+	// 	// Kiểm tra xem người dùng đã nhập mật khẩu mới hay không
+	// 	if (newPassword) {
+	// 		// Nếu có mật khẩu mới, thêm trường password vào đối tượng cập nhật
+	// 		updatedData.password = newPassword;
+	// 	}
+
+	// 	// Kiểm tra từng trường nếu có giá trị mới và khác giá trị cũ thì thêm vào đối tượng cập nhật
+	// 	Object.keys(updatedData).forEach((key) => {
+	// 		const newValue = updatedData[key];
+	// 		const oldValue = user[key];
+
+	// 		if (newValue !== undefined && newValue !== oldValue) {
+	// 			updatedData[key] = newValue;
+	// 		} else {
+	// 			delete updatedData[key];
+	// 		}
+	// 	});
+
+	// 	// Gọi mutation với dữ liệu cập nhật
+	// 	mutation.mutate({
+	// 		updatedData,
+	// 		access_token: user?.access_token,
+	// 	}
+	// 	);
+	// };
+
 
 
 	useEffect(() => {
@@ -125,6 +181,7 @@ const ChangePassword = () => {
 			message.error();
 		}
 	},[isSuccess,isError,navigate]);
+	// const comparePassword = bcrypt.compareSync(password,checkUser.password);
 
 	const [form,setForm] = useState({
 		name: {
@@ -139,6 +196,46 @@ const ChangePassword = () => {
 			msg: "",
 			error: false,
 		},
+		phone: {
+			value: user?.phone || "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			name: user?.phone || "",
+			isShow: false,
+		},
+		province: {
+			value: user?.province || "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			name: user?.province || "",
+			isShow: false,
+		},
+		city: {
+			value: user?.city || "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			name: user?.city || "",
+			isShow: false,
+		},
+		ward: {
+			value: user?.ward || "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			name: user?.ward || "",
+			isShow: false,
+		},
+		address: {
+			value: user?.address || "",
+			isFocus: false,
+			msg: "",
+			error: false,
+			name: user?.address || "",
+			isShow: false,
+		},
 		password: {
 			value: "",
 			isFocus: false,
@@ -148,13 +245,29 @@ const ChangePassword = () => {
 		},
 	});
 	const onChangeInput = (event,field) => {
-		setForm({
-			...form,
-			[field]: {
-				...form[field],
-				value: event.target.value,
-			},
-		});
+		let value = event.target.value;
+		let name = '';
+
+		if (field === "phone") {
+			// Định dạng số điện thoại
+			setForm({
+				...form,
+				[field]: {
+					...form[field],
+					value: formatPhoneNumber(value),
+					name: name,
+				},
+			});
+		}
+		else {
+			setForm({
+				...form,
+				[field]: {
+					...form[field],
+					value: event.target.value,
+				},
+			});
+		};
 	};
 	const onBlurFocusInput = (value,field) => {
 		setForm({
@@ -175,8 +288,21 @@ const ChangePassword = () => {
 			},
 		});
 	};
-
+	const formatPhoneNumber = (phoneNumber) => {
+		const numericPhoneNumber = phoneNumber.replace(/\D/g,''); // Loại bỏ các ký tự không phải số
+		if (numericPhoneNumber.length >= 10) {
+			const part1 = numericPhoneNumber.substring(0,4);
+			const part2 = numericPhoneNumber.substring(4,6);
+			const part3 = numericPhoneNumber.substring(6,8);
+			const part4 = numericPhoneNumber.substring(8);
+			return `(${part1}) ${part2} ${part3} ${part4}`;
+		} else {
+			return numericPhoneNumber;
+		}
+	};
 	const onValidate = () => {
+		handleUpdate();
+
 		setErrorMsg("");
 		setForm({
 			...form,
@@ -184,9 +310,24 @@ const ChangePassword = () => {
 				...form.name,
 				error: false,
 			},
-
-			password: {
-				...form.password,
+			phone: {
+				...form.phone,
+				error: false,
+			},
+			province: {
+				...form.province,
+				error: false,
+			},
+			city: {
+				...form.city,
+				error: false,
+			},
+			ward: {
+				...form.ward,
+				error: false,
+			},
+			address: {
+				...form.address,
 				error: false,
 			},
 		});
@@ -199,7 +340,31 @@ const ChangePassword = () => {
 			form.name.error = true;
 			form.name.msg = t("txt_error_name_empty");
 		}
-
+		if (form.city.value.trim() === "") {
+			isError = true;
+			form.city.error = true;
+			form.city.msg = "txt_error_access_code_empty";
+		}
+		if (form.ward.value.trim() === "") {
+			isError = true;
+			form.ward.error = true;
+			form.ward.msg = "txt_error_access_code_empty";
+		}
+		if (form.province.value.trim() === "") {
+			isError = true;
+			form.province.error = true;
+			form.province.msg = "txt_error_access_code_empty";
+		}
+		if (form.address.value.trim() === "") {
+			isError = true;
+			form.address.error = true;
+			form.address.msg = "txt_error_access_code_empty";
+		}
+		if (form.phone.value === "") {
+			isError = true;
+			form.phone.error = true;
+			form.phone.msg = "txt_error_access_code_empty";
+		}
 
 		if (isError) {
 			return setForm(newForm);
@@ -294,46 +459,188 @@ const ChangePassword = () => {
 									onBlur={() => onBlurFocusInput(false,"name")}
 								/>
 							</Box>
-							<Box className={classes.conItemInput}>
-								<Typography className={classes.txtTitleInput}>
-									{t("email")}
-								</Typography>
-								<Input
 
-									// style={{
-									// 	border:
-									// 		!form.email.isFocus &&
-									// 		`2px solid ${form.email.error
-									// 			? Colors.secondary
-									// 			: form.email.value.trim() !== ""
-									// 				? Colors.success
-									// 				: "transparent"
-									// 		}`,
-									// }}
-									className={classes.conInput}
-									fullWidth
-									placeholder={t("email")}
-									disabled
-									value={form.email.value}
-								// startAdornment={
-								// 	<InputAdornment position="start">
-								// 		<FontAwesomeIcon
-								// 			icon={faAddressCard}
-								// 			fontSize={20}
-								// 			color={
-								// 				form.email.isFocus || form.email.value.trim() !== ""
-								// 					? Colors.bgLogin
-								// 					: Colors.bgLogin
-								// 			}
-								// 			className={classes.conIconInput}
-								// 		/>
-								// 	</InputAdornment>
-								// }
-								// onChange={(event) => onChangeInput(event,"email")}
-								// onFocus={() => onBlurFocusInput(true,"email")}
-								// onBlur={() => onBlurFocusInput(false,"email")}
-								/>
-							</Box>
+							<Grid container spacing={2}>
+								<Grid item xs={12} sm={6} lg={6} xl={6} >
+									<Box className={classes.conItemInput}>
+										<Typography className={classes.txtTitleInput}>
+											{t("email")}
+										</Typography>
+										<Input
+
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("email")}
+											disabled
+											value={form.email.value}
+
+										/>
+									</Box>
+								</Grid>
+
+								<Grid item xs={12} sm={6} lg={6} xl={6} >
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} >Số điện thoại</InputLabel>
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("phone")}
+											value={form.phone.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														// icon={faphoneCard}
+														fontSize={20}
+														color={
+															form.phone.isFocus || form.phone.value !== ""
+																? Colors.bgLogin
+																: Colors.bgLogin
+														}
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"phone")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"phone")}
+											onBlur={() => onBlurFocusInput(false,"phone")}
+										/>
+									</Box>
+								</Grid>
+
+							</Grid>
+							<Grid container spacing={2}>
+
+								<Grid item xs={12} sm={12} lg={12} xl={6}>
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} variant="standard" htmlFor="uncontrolled-native">Tỉnh/Thành phố</InputLabel>
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Tỉnh/Thành phố")}
+											value={form?.province?.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"province")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"province")}
+											onBlur={() => onBlurFocusInput(false,"province")}
+										/>
+									</Box>
+
+
+								</Grid>
+								<Grid item xs={12} sm={12} lg={12} xl={6}>
+
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Thành phố/Quận/Huyện</InputLabel>
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Thành phố/Quận/Huyện")}
+											value={form?.city?.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"city")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"city")}
+											onBlur={() => onBlurFocusInput(false,"city")}
+										/>
+									</Box>
+								</Grid>
+								<Grid item xs={12} sm={12} lg={12} xl={6}>
+
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Phường/Thị trấn/Xã</InputLabel>
+
+
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("Thành phố/Quận/Huyện")}
+											value={form?.ward.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.email.isFocus || form.email.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"ward")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"ward")}
+											onBlur={() => onBlurFocusInput(false,"ward")}
+										/>
+									</Box>
+								</Grid>
+								<Grid item xs={12} sm={12} lg={12} xl={6}>
+
+									<Box className={classes.conItemInput}>
+										<InputLabel className={classes.txtTitleInput} id="demo-simple-select-label">Số nhà - đường</InputLabel>
+										<Input
+											className={classes.conInput}
+											fullWidth
+											placeholder={t("address")}
+											value={form.address.value}
+											startAdornment={
+												<InputAdornment position="start">
+													<FontAwesomeIcon
+														fontSize={20}
+														// color={
+														// 	form.address.isFocus || form.address.value.trim() !== ""
+														// 		? Colors.bgLogin
+														// 		: Colors.bgLogin
+														// }
+														className={classes.conIconInput}
+													/>
+												</InputAdornment>
+											}
+											onChange={(event) => onChangeInput(event,"address")}
+											disabled={loading}
+											onFocus={() => onBlurFocusInput(true,"address")}
+											onBlur={() => onBlurFocusInput(false,"address")}
+										/>
+									</Box>
+								</Grid>
+							</Grid>
+
+							<Grid item xs={12} sm={12} lg={12} xl={12}>
+								<Box className={classes.conMsg}>
+									<Typography className={classes.txtError}>
+										{t(errorMsg)}
+									</Typography>
+								</Box>
+							</Grid>
 							<Box className={classes.conItemInput}>
 								<Typography className={classes.txtTitleInput}>
 									{t("password")}
@@ -395,7 +702,6 @@ const ChangePassword = () => {
 								</LightTooltip>
 							</Box>
 						</Box>
-						{/* {error && <Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>{error}</Typography>} */}
 						<Box className={classes.conMsg}>
 							<Typography className={classes.txtError}>
 								{t(errorMsg)}
@@ -406,21 +712,6 @@ const ChangePassword = () => {
 								{(form.email.msg = t("txt_error_name_empty"))}
 							</span>
 						)}
-
-						{/* <Loading isLoading={isLoading}>
-
-							<CButton style={{ fullWidth: "30%" }}
-								disabled={!name.length || !password.length}
-								title={"Cập nhập"}
-								onClick={onValidate}
-								onKeyDown={(e) => {
-									if (e.key === "Enter") {
-										onValidate();
-									}
-								}}
-							/>
-						</Loading> */}
-
 						<LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isLoading} onKeyDown={(e) => {
 							if (e.key === "Enter") {
 								onValidate();
