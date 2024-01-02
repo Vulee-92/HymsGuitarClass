@@ -150,7 +150,9 @@ export default makeStyles(() => {
 		},
 		txtTitleInput: {
 			...CStyles.txt_title_item,
-			color: Colors.placeHolder,
+			color: "rgb(128, 128, 137)",
+			fontSize: "3px !important",
+			fontWeight: 400,
 		},
 		conInputUnfixable: {
 			...CStyles.rowAliCen,
@@ -216,6 +218,7 @@ export default makeStyles(() => {
 			width: '100%',
 			border: 'none',
 			borderRadius: '5px',
+			textTransform: "none",
 			'&.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-containedSizeLarge': {
 				// CSS cho trạng thái loading
 				'&.MuiButton-label': {
@@ -367,9 +370,7 @@ export default makeStyles(() => {
 			fontSize: 18,
 			cursor: "pointer",
 		},
-		txtTitleInput: {
-			...CStyles.txt_title_item,
-		},
+
 		txtError: {
 			...CStyles.txt_error,
 		},
