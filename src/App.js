@@ -161,7 +161,6 @@ function App() {
 													{isAuthorized ? (
 														<Layout>
 															<LazyPage />
-															<ChucTetComponent />
 															{/* <NewYear2024Component /> */}
 															{/* <IconContactAllPageComponent /> */}
 														</Layout>

@@ -16,6 +16,7 @@ import BlogPostCardMobile from "../../sections/@dashboard/blog/BlogPostCardMobil
 import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiperComponent";
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import Loading from "components/LoadingComponent/Loading";
+import ChucTetComponent from "components/ChucTetComponent/ChucTetComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const HomePage = () => {
@@ -143,6 +144,7 @@ const HomePage = () => {
 				</Helmet>
 
 				<CarouselComponent />
+				{/* <ChucTetComponent /> */}
 
 				<Container maxWidth='lg'>
 					<Box>
