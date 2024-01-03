@@ -341,12 +341,26 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	return (
 		<>
 
-			< Helmet >
+			<Helmet>
 				<title>{productDetails?.name}</title>
-				<meta property="og:image" content={productDetails.image} />
-				<meta property="og:description" content={productDetails?.name} />
+				{productDetails?.images && productDetails.images.length > 0 && (
+
+					<meta property="og:url" content={productDetails.images[0]} />
+				)}
+
+				<meta property="og:title" content={productDetails?.name} />
+				<meta property="og:description" name="description" content={productDetails?.name} />
+				<meta property="og:price:amount" content={productDetails?.price} />
+				{productDetails?.images && productDetails.images.length > 0 && (
+					<meta property="og:image" content={productDetails.images[0]} />
+
+				)}
+				<meta property="og:url" content={`https://www.hymnscenter.com/product-details/${productDetails?.slug}`} />
+
 
 			</Helmet>
+
+
 
 			{products && (
 				<div>
