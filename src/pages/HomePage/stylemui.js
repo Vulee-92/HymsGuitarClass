@@ -45,6 +45,20 @@ export default makeStyles(() => {
 			// 	},
 			// },
 		},
+		nameProduct: {
+			...CStyles.txt_header_title,
+			textAlign: "center",
+			fontWeight: 500,
+			color: "#231e18",
+			fontSize: "1rem",
+			margin: "0 auto",
+			overflow: "hidden",
+			overflowWrap: "break-word",
+			wordWrap: "break-word",
+			paddingBottom: "30px",
+			marginTop: "30px",
+			cursor: 'pointers'
+		},
 		txtTitleBox: {
 			fontSize: "1.5rem",
 			fontWeight: 600,

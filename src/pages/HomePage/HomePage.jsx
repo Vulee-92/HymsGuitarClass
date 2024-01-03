@@ -17,6 +17,9 @@ import YourSwiperComponent from "../../components/YourSwiperComponent/YourSwiper
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import Loading from "components/LoadingComponent/Loading";
 import ChucTetComponent from "components/ChucTetComponent/ChucTetComponent";
+import CategoryProductPage from "pages/CategoryProductPage/CategoryProductPage";
+import { useNavigate } from "react-router-dom";
+import { Assets } from "configs";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const HomePage = () => {
@@ -27,13 +30,24 @@ const HomePage = () => {
 	const [loading,setLoading] = useState(false);
 	const { t } = useTranslation();
 	const [typeProducts,setTypeProducts] = useState([]);
-
+	const navigate = useNavigate();
+	// const { filter: categoryId } = useParams();
+	const categories = [
+		{ id: 'Acoustic-guitars',name: 'Guitar',icon: Assets.guitar },
+		{ id: 'piano-electric',name: 'Piano điện',icon: Assets.piano },
+		{ id: 'accessories',name: 'Phụ kiện',icon: Assets.daydeoguitar },
+		{ id: '',name: 'Tất cả',icon: Assets.allguitar },
+		// Thêm các danh mục khác nếu cần
+	];
 	const slides = [];
 	for (let i = 0; i < 5; i++) {
 		slides.push(<SwiperSlide key={`slide-${i}`}>Slide {i + 1}</SwiperSlide>);
 	}
 
-
+	const handleDetailsProduct = (categoryId) => {
+		// Chuyển đến trang chi tiết sản phẩm với giá trị danh mục
+		navigate(`/product/${categoryId}`);
+	};
 	const fetchProductAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
@@ -198,7 +212,60 @@ const HomePage = () => {
 					</Button>
 
 				</Container>
+				<Container maxWidth="lg"  >
+					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
+					<Swiper
+						grabCursor={true}
+						breakpoints={{
+							320: { slidesPerView: 2 },
+							480: { slidesPerView: 2 },
+							768: { slidesPerView: 2 },
+							1024: { slidesPerView: 4 },
+							1200: { slidesPerView: 4 },
+							1489: { slidesPerView: 4 }
+						}}
+						spaceBetween={30}
+						pagination={{
+							clickable: true,
+						}}
+						modules={[Pagination]}
+						className="mySwiper"
+					>
+						{categories.map((category) => {
 
+							return (
+								<SwiperSlide >
+									<Box className={classes.conCard} >
+										<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
+											<img src={category.icon} style={{ height: "8vh",width: "100%",margin: "0 auto",display: "flex" }} />
+											<Typography className={classes.nameProduct} >{category.name}</Typography>
+										</Box>
+									</Box>
+
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+				</Container>
+				{/* <Container maxWidth="lg"  >
+					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
+					<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+						{categories.map((category) => (
+							<Grid item xs={12} xl={3} >
+
+								<Box className={classes.conCard} key={category.id}>
+									<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
+										<img src={category.icon} style={{ height: "50px",margin: "0 auto",display: "flex" }} />
+										<Typography className={classes.nameProduct} >{category.name}</Typography>
+									</Box>
+								</Box>
+
+							</Grid>
+						))}
+
+
+					</Grid>
+				</Container> */}
 				<Container maxWidth='lg'>
 					<Typography className={classes.txtTitleBox}>Sản phẩm bán chạy</Typography>
 					<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
