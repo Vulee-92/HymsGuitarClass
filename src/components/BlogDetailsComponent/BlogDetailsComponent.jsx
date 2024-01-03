@@ -57,29 +57,7 @@ const BlogDetailPage = ({ idBlog }) => {
 		fetchGetDetailsBlog
 	);
 
-	useEffect(() => {
-		// Thử chọn phần tử meta
-		const ogImageMeta = document.querySelector('meta[property="og:image"]');
-		const ogImageMetaUrl = document.querySelector('meta[property="og:image:secure_url"]');
-		const ogImageUrl = document.querySelector('meta[property="og:url"]');
 
-		const ogImageMetaTitle = document.querySelector('meta[property="og:title"]');
-		if (ogImageUrl) {
-			ogImageMeta.setAttribute('content',blogDetails?.image);
-		}
-		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
-		if (ogImageMeta) {
-			ogImageMeta.setAttribute('content',blogDetails?.image);
-		}
-
-		if (ogImageMetaUrl) {
-			ogImageMetaUrl.setAttribute('content',blogDetails?.image);
-		}
-
-		if (ogImageMetaTitle) {
-			ogImageMetaTitle.setAttribute('content',blogDetails?.image || "Hymns Center");
-		}
-	},[blogDetails]);
 
 
 

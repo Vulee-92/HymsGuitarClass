@@ -229,29 +229,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const { isLoading,data: productDetails } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
 
 
-	useEffect(() => {
-		// Thử chọn phần tử meta
-		const ogImageMeta = document.querySelector('meta[property="og:image"]');
-		const ogImageMetaUrl = document.querySelector('meta[property="og:image:secure_url"]');
-		const ogImageUrl = document.querySelector('meta[property="og:url"]');
 
-		const ogImageMetaTitle = document.querySelector('meta[property="og:title"]');
-		if (ogImageUrl) {
-			ogImageMeta.setAttribute('content',productDetails?.image);
-		}
-		// Kiểm tra xem phần tử có tồn tại không trước khi thay đổi thuộc tính
-		if (ogImageMeta) {
-			ogImageMeta.setAttribute('content',productDetails?.image);
-		}
-
-		if (ogImageMetaUrl) {
-			ogImageMetaUrl.setAttribute('content',productDetails?.image);
-		}
-
-		if (ogImageMetaTitle) {
-			ogImageMetaTitle.setAttribute('content',productDetails?.image || "Hymns Center");
-		}
-	},[productDetails]);
 
 
 	useEffect(() => {
