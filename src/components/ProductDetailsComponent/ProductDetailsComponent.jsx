@@ -338,6 +338,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	if (isLoading) {
 		return <LoadingSpinner />;
 	}
+	// const imageone = productDetails.image[0];
+	// console.log("imageone",imageone)
+
 	return (
 		<>
 
@@ -358,7 +361,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 				{/* Set og:image with the URL of the first image in the array */}
 				{productDetails?.images && productDetails.images.length > 0 && (
-					<meta property="og:image" content={productDetails.images[0]} />
+					<meta property="og:image" content={productDetails.image[0]} />
 				)}
 			</Helmet>
 
