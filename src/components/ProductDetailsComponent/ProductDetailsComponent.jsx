@@ -343,6 +343,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 			< Helmet >
 				<title>{productDetails?.name}</title>
+				<meta property="og:image" content={productDetails.image} />
+				<meta property="og:description" content={productDetails?.name} />
+
 			</Helmet>
 
 			{products && (
