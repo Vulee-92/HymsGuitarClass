@@ -237,7 +237,7 @@ const HomePage = () => {
 								<SwiperSlide >
 									<Box className={classes.conCard} >
 										<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
-											<img src={category.icon} style={{ height: "50px",width: "100%",margin: "0 auto",display: "flex" }} />
+											<img src={category.icon} style={{ height: "30%",width: "30%",margin: "0 auto",display: "flex" }} />
 											<Typography className={classes.nameProduct} >{category.name}</Typography>
 										</Box>
 									</Box>

@@ -344,17 +344,24 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			<Helmet>
 				<title>{productDetails?.name}</title>
 
-				<meta property="og:url" content={productDetails.images[0]} />
-
-				<meta property="og:title" content={productDetails?.name} />
-				<meta property="og:description" name="description" content={productDetails?.name} />
-				<meta property="og:price:amount" content={productDetails?.price} />
-				<meta property="og:image" content={productDetails.images[0]} />
-
+				{/* Set og:url with the slug */}
 				<meta property="og:url" content={`https://www.hymnscenter.com/product-details/${productDetails?.slug}`} />
 
+				{/* Set og:title with the product name */}
+				<meta property="og:title" content={productDetails?.name} />
 
+				{/* Set og:description with the product name */}
+				<meta property="og:description" name="description" content={productDetails?.name} />
+
+				{/* Set og:price:amount with the product price */}
+				<meta property="og:price:amount" content={productDetails?.price} />
+
+				{/* Set og:image with the URL of the first image in the array */}
+				{productDetails?.images && productDetails.images.length > 0 && (
+					<meta property="og:image" content={productDetails.images[0]} />
+				)}
 			</Helmet>
+
 
 
 

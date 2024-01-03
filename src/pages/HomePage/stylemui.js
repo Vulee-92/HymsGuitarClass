@@ -94,7 +94,20 @@ export default makeStyles(() => {
 			// 	},
 			// },
 		},
+		conCard: {
+			borderBottom: "0px",
+			padding: 15,
+			width: "80%",
+			margin: "0 auto",
+			borderTop: "2px solid #454F5B",
+			borderRadius: "9px",
+			boxShadow: "0px .8px .8px 0px rgba(0,0,0,0.11)",
+			"&:hover": {
+				boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
+				transition: "boxShadow 0.3s ease -in -out 0s"
+			},
 
+		},
 
 
 		txtTilte: {
