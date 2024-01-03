@@ -360,7 +360,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 				<meta property="og:price:amount" content={productDetails?.price} />
 
 				{/* Set og:image with the URL of the first image in the array */}
-				{productDetails?.images && productDetails.images.length > 0 && (
+				{productDetails?.image && productDetails.image.length > 0 && (
 					<meta property="og:image" content={productDetails.image[0]} />
 				)}
 			</Helmet>

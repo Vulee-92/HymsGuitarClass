@@ -47,7 +47,6 @@ const CategoryProductPage = () => {
 	};
 
 
-
 	return (
 		<>
 			<Helmet>
