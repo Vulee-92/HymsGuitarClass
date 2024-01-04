@@ -33,6 +33,7 @@ import { convertPrice } from "utils";
 import { calculateDiscountedPriceNoConvert } from "utils";
 import Loading from "components/LoadingComponent/Loading";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import useMetaTags from "hooks/useMetaTags";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -219,19 +220,19 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 
 	};
-	useEffect(() => {
-		// Hide the default og:image and og:description in index.html
-		const defaultOgImage = document.getElementById('defaultOgImage');
-		const defaultOgDescription = document.getElementById('defaultOgDescription');
+	// useEffect(() => {
+	// 	// Hide the default og:image and og:description in index.html
+	// 	const defaultOgImage = document.getElementById('defaultOgImage');
+	// 	const defaultOgDescription = document.getElementById('defaultOgDescription');
 
-		if (defaultOgImage) {
-			defaultOgImage.style.display = 'none';
-		}
+	// 	if (defaultOgImage) {
+	// 		defaultOgImage.style.display = 'none';
+	// 	}
 
-		if (defaultOgDescription) {
-			defaultOgDescription.style.display = 'none';
-		}
-	},[]);
+	// 	if (defaultOgDescription) {
+	// 		defaultOgDescription.style.display = 'none';
+	// 	}
+	// },[]);
 
 
 
@@ -288,7 +289,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-
+	useMetaTags(productDetails?.name,productDetails?.description,productDetails?.image[0]);
 
 
 
@@ -337,22 +338,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 			<Helmet>
 				<title>{productDetails?.name}</title>
 
-				{/* Set og:url with the slug */}
-				<meta property="og:url" content={`https://www.hymnscenter.com/product-details/${productDetails?.slug}`} />
 
-				{/* Set og:title with the product name */}
-				<meta property="og:title" content={productDetails?.name} />
-
-				{/* Set og:description with the product name */}
-				<meta property="og:description" name="description" content={productDetails?.name} />
-
-				{/* Set og:price:amount with the product price */}
-				<meta property="og:price:amount" content={productDetails?.price} />
-
-				{/* Set og:image with the URL of the first image in the array */}
-				{productDetails?.image && productDetails.image.length > 0 && (
-					<meta property="og:image" content={productDetails.image[0]} />
-				)}
 			</Helmet>
 
 
