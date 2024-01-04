@@ -318,7 +318,19 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	}
 	// const imageone = productDetails.image[0];
 	// console.log("imageone",imageone)
+	useEffect(() => {
+		// Hide the default og:image and og:description in index.html
+		const defaultOgImage = document.getElementById('defaultOgImage');
+		const defaultOgDescription = document.getElementById('defaultOgDescription');
 
+		if (defaultOgImage) {
+			defaultOgImage.style.display = 'none';
+		}
+
+		if (defaultOgDescription) {
+			defaultOgDescription.style.display = 'none';
+		}
+	},[]);
 	return (
 		<>
 
