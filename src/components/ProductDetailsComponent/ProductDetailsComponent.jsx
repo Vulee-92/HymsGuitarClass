@@ -289,7 +289,12 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 100,
 		keepPreviousData: true,
 	});
-	useMetaTags(productDetails?.name,productDetails?.name,productDetails?.image[0]);
+	useMetaTags(
+		productDetails?.name,
+		productDetails?.name,
+		productDetails?.image[0],
+		`https://www.hymnscenter.com/product-details/${productDetails?.slug}`
+	);
 
 
 
