@@ -271,10 +271,10 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 	// Lấy ra 5 sản phẩm mới nhất
 	const latestProducts = sortedProducts?.slice(0,5);
-	const acousticProducts = latestProducts?.filter(product => product.type === "Phụ kiện");
+	const acousticProducts = latestProducts?.filter(product => product.type === "accessories");
 
 	// Then, filter out all products without type "Acoustic Guitars"
-	const otherProducts = latestProducts?.filter(product => product.type !== "Phụ kiện");
+	const otherProducts = latestProducts?.filter(product => product.type !== "accessories");
 
 	// Finally, concatenate the two arrays to get the desired order
 	// ?.concat(otherProducts)
