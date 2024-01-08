@@ -245,7 +245,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 
 
-	MetaTagsComponent({
+	useMetaTags({
 		productDetails: productDetails,
 	});
 
@@ -344,7 +344,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	return (
 		<>
 
-			{/* <MetaTagsComponent productDetails={productDetails} /> */}
+			<MetaTagsComponent productDetails={productDetails} />
 			{products && (
 				<div>
 					<Drawer
