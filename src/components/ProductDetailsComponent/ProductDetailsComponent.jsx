@@ -35,6 +35,7 @@ import Loading from "components/LoadingComponent/Loading";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import useMetaTags from "hooks/useMetaTags";
 import MetaTags from "components/MetaTagsComponent/MetaTagsComponent";
+import MetaTagsComponent from "components/MetaTagsComponent/MetaTagsComponent";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -244,7 +245,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 
 
-
+	MetaTagsComponent({
+		productDetails: productDetails,
+	});
 
 	useEffect(() => {
 		const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id);
@@ -341,7 +344,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	return (
 		<>
 
-			<MetaTags productDetails={productDetails} />
+			{/* <MetaTagsComponent productDetails={productDetails} /> */}
 			{products && (
 				<div>
 					<Drawer
