@@ -34,6 +34,7 @@ import { calculateDiscountedPriceNoConvert } from "utils";
 import Loading from "components/LoadingComponent/Loading";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import useMetaTags from "hooks/useMetaTags";
+import MetaTags from "components/MetaTagsComponent/MetaTagsComponent";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -340,22 +341,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	return (
 		<>
 
-			<Helmet>
-				<title>{productDetails?.name}</title>
-				<meta
-					name="description"
-					content={productDetails?.name}
-				/>
-				<meta property="og:image:alt" content={productDetails?.name} />
-				<meta property="og:title" content={productDetails?.name} />
-				<meta property="og:image:width" content="450" />
-				<meta property="og:image:height" content="298" />
-				<meta property="og:description" content={productDetails?.name} />
-				<meta property="og:image" content={productDetails?.image[0]} />
-				<meta property="og:image:alt" content={productDetails?.name} />
-				<meta property="og:url" content={`https://www.hymnscenter.com/product-details/${productDetails?.slug}`} />
-				<meta property="og:type" content="product" />
-			</Helmet>
+			<MetaTags productDetails={productDetails} />
 			{products && (
 				<div>
 					<Drawer
