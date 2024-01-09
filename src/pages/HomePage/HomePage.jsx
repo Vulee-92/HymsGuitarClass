@@ -126,18 +126,19 @@ const HomePage = () => {
 	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
 
 	// Lấy ra 5 sản phẩm mới nhất
-	const latestProducts = sortedProducts?.slice(0,12);
+	const latestProducts = sortedProducts?.slice(0,24);
 	const acousticProducts = latestProducts?.filter(
-		product => product.type === "Acoustic-guitars" || product.type === "piano-electric"
+		product => product.type === "piano-electric"
 	);
 
 
 	// Then, filter out all products without type "Acoustic-guitars"
-	const otherProducts = latestProducts?.filter(product => product.type !== "Acoustic-guitars");
+	const otherProducts = latestProducts?.filter(product => product.type == "Acoustic-guitars");
 
 	// Finally, concatenate the two arrays to get the desired order
 	// ?.concat(otherProducts)
 	const sortedProductsGuitar = acousticProducts;
+	const sortedProductsGuitars = otherProducts;
 	const filteredProducts = productsNosearch?.data
 		?.filter(product => product.selled > 1)
 		?.sort((a,b) => b.selled - a.selled);
@@ -159,10 +160,34 @@ const HomePage = () => {
 
 				<CarouselComponent />
 				{/* <ChucTetComponent /> */}
-
 				<Container maxWidth='lg'>
 					<Box>
 						<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
+						<div className={classes.sliderWrapper}>
+							{isLoading ? (
+								<Typical
+									steps={[
+										'Loading...',500
+									]}
+									loop={Infinity}
+									wrapper="span"
+									className={classes.txtTilteLoading}
+									style={{ textAlign: "center",willChange: "transform" }}
+								/>
+							) : (
+								<YourSwiperComponent latestProducts={sortedProductsGuitars} classes={classes} isLoading={isLoadingx} />
+
+							)}
+
+						</div>
+					</Box>
+
+
+				</Container>
+
+				<Container maxWidth='lg'>
+					<Box>
+						<Typography className={classes.txtTitleBox}>PIANO ĐIỆN</Typography>
 						<div className={classes.sliderWrapper}>
 							{isLoading ? (
 								<Typical
@@ -212,6 +237,30 @@ const HomePage = () => {
 					</Button>
 
 				</Container>
+
+				{/* <Container maxWidth="lg"  >
+					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
+					<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+						{categories.map((category) => (
+							<Grid item xs={12} xl={3} >
+
+								<Box className={classes.conCard} key={category.id}>
+									<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
+										<img src={category.icon} style={{ height: "50px",margin: "0 auto",display: "flex" }} />
+										<Typography className={classes.nameProduct} >{category.name}</Typography>
+									</Box>
+								</Box>
+
+							</Grid>
+						))}
+
+
+					</Grid>
+				</Container> */}
+				<Container maxWidth='lg'>
+					<Typography className={classes.txtTitleBox}>Sản phẩm bán chạy</Typography>
+					<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
+				</Container>
 				<Container maxWidth="lg"  >
 					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
 					<Swiper
@@ -247,30 +296,6 @@ const HomePage = () => {
 						})}
 					</Swiper>
 				</Container>
-				{/* <Container maxWidth="lg"  >
-					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
-					<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-						{categories.map((category) => (
-							<Grid item xs={12} xl={3} >
-
-								<Box className={classes.conCard} key={category.id}>
-									<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
-										<img src={category.icon} style={{ height: "50px",margin: "0 auto",display: "flex" }} />
-										<Typography className={classes.nameProduct} >{category.name}</Typography>
-									</Box>
-								</Box>
-
-							</Grid>
-						))}
-
-
-					</Grid>
-				</Container> */}
-				<Container maxWidth='lg'>
-					<Typography className={classes.txtTitleBox}>Sản phẩm bán chạy</Typography>
-					<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
-				</Container>
-
 				<Box sx={{ backgroundColor: "#f7f8fa !important",paddingTop: "20px",paddingBottom: "20px" }}>
 					<Container maxWidth='md' style={{ marginTop: "50px",padding: 0 }}>
 						<>
@@ -286,6 +311,7 @@ const HomePage = () => {
 							</Container>
 						</>
 					</Container >
+
 					<Container maxWidth='lg' style={{ marginTop: "50px",padding: 0 }} sx={{ display: { xl: "none",xs: "block" } }}>
 						<>
 							<Container maxWidth='lg' style={{ padding: 0 }}>

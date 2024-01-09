@@ -315,9 +315,12 @@ const ConfirmPaymentPage = () => {
 		phone: false,
 		password: false,
 	});
-	const deliveryMessage = shippingAddress?.city === "Tam Kỳ"
+	const city = shippingAddress?.city?.toLowerCase();
+
+	const deliveryMessage = (city === "tam kỳ" || city === "thành phố tam kỳ")
 		? "Giao hàng miễn phí - vận chuyển tức thì"
 		: "Gửi đồ đạc xa xôi, đừng lo lắng một chút nào. Hymns sẽ cố gắng giảm phí vận chuyển cho bạn, hoặc thậm chí Hymns sẽ trả lại tiền cho bạn nếu phí thấp hơn. Hymns không chỉ bán hàng mà còn là người bạn đồng hành trên con đường vận chuyển!";
+
 	return (
 
 		<>

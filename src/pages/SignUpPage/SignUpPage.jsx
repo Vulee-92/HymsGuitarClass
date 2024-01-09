@@ -1,6 +1,4 @@
 import React,{ useEffect,useState } from 'react'
-import InputForm from '../../components/InputForm/InputForm'
-import { EyeFilled,EyeInvisibleFilled } from '@ant-design/icons'
 import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
 import Loading from '../../components/LoadingComponent/Loading'
@@ -38,6 +36,7 @@ const SignUpPage = () => {
 	)
 
 	const { data,isLoading,isSuccess,isError } = mutation
+
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -261,9 +260,11 @@ const SignUpPage = () => {
 	};
 	const navigate = useNavigate()
 	const handleNavigateSignIn = () => {
-		navigate('/verify')
+		if (data.status === "OK") {
+			navigate('/verify')
+		}
 	}
-
+	console.log("first",data)
 	useEffect(() => {
 		if (isSuccess) {
 			message.success(t("thành cônng"));
@@ -363,6 +364,16 @@ const SignUpPage = () => {
 										onBlur={() => onBlurFocusInput(false,"email")}
 									/>
 								</Box>
+								{isError && (
+									<Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>
+										Email không hợp lệ
+									</Typography>
+								)}
+								{data?.status === "ERR" && (
+									<Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>
+										Email đã đăng ký
+									</Typography>
+								)}
 								<Box className={classes.conItemInput}>
 									<Typography className={classes.txtTitleInput}>
 										{t("password")}
@@ -475,6 +486,7 @@ const SignUpPage = () => {
 										}}
 									/>
 								</Box>
+
 								{error && <Typography className={classes.txtStrongPassword} style={{ color: 'red',marginTop: "10px" }}>{error}</Typography>}
 								{/* <Box className={classes.conItemInput}>
 									<Typography className={classes.txtTitleInput} sx={{ fontSize: { xs: "13px !important" } }}>{t('confirm_password')}</Typography>

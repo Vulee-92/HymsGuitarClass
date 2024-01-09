@@ -116,8 +116,8 @@ const UpdateUserComponentPayment = ({
 	});
 	// Hàm tính phí vận chuyển
 	const calculateShippingFee = (address,products) => {
-
-		const freeShippingCities = ['tam kỳ','tam kỳ','Tam kỳ'];
+		const lowerCase = address.toLowerCase();
+		const freeShippingCities = ['tam kỳ','tam kỳ','Tam kỳ','Thành phố Tam Kỳ'];
 		const shippingFeePerAccessory = 50000;
 		const shippingFeePerAccessoryBulk = 30000;
 		const shippingFeePerGuitar = 150000;
@@ -144,7 +144,7 @@ const UpdateUserComponentPayment = ({
 
 		if (totalGuitarQuantity > 0 && totalAccessoryQuantity > 0) {
 			// Tính phí vận chuyển cho đàn guitar theo quy định, phụ kiện miễn phí
-			if (address !== 'tam kỳ') {
+			if (lowerCase !== 'tam kỳ' || lowerCase !== 'thành phố tam kỳ') {
 				if (totalGuitarQuantity === 1) {
 					totalShippingFee += shippingFeePerGuitar;
 				} else if (totalGuitarQuantity === 2) {
@@ -155,7 +155,7 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalAccessoryQuantity > 0) {
-			if (address === 'tam kỳ') {
+			if (lowerCase === 'tam kỳ' || lowerCase == 'thành phố tam kỳ') {
 				// Miễn phí vận chuyển cho phụ kiện nếu mua tại Thành phố Thành phố tam kỳ
 				return totalShippingFee;
 			} else {
@@ -168,7 +168,7 @@ const UpdateUserComponentPayment = ({
 		}
 
 		if (totalGuitarQuantity > 0) {
-			if (address === 'tam kỳ') {
+			if (lowerCase === 'tam kỳ' || lowerCase == 'thành phố tam kỳ') {
 				// Miễn phí vận chuyển cho đàn guitar nếu mua tại Thành phố Thành phố tam kỳ
 				return totalShippingFee;
 			} else {
