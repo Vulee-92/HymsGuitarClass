@@ -20,6 +20,7 @@ import ChucTetComponent from "components/ChucTetComponent/ChucTetComponent";
 import CategoryProductPage from "pages/CategoryProductPage/CategoryProductPage";
 import { useNavigate } from "react-router-dom";
 import { Assets } from "configs";
+import CategoryList from "components/SchemaComponent/SchemaComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const HomePage = () => {
@@ -135,8 +136,6 @@ const HomePage = () => {
 	// Then, filter out all products without type "Acoustic-guitars"
 	const otherProducts = latestProducts?.filter(product => product.type == "Acoustic-guitars");
 
-	// Finally, concatenate the two arrays to get the desired order
-	// ?.concat(otherProducts)
 	const sortedProductsGuitar = acousticProducts;
 	const sortedProductsGuitars = otherProducts;
 	const filteredProducts = productsNosearch?.data
@@ -157,9 +156,8 @@ const HomePage = () => {
 				<Helmet>
 					<title> Hymns Center</title>
 				</Helmet>
-
+				<CategoryList />
 				<CarouselComponent />
-				{/* <ChucTetComponent /> */}
 				<Container maxWidth='lg'>
 					<Box>
 						<Typography className={classes.txtTitleBox}>Sản phẩm mới</Typography>
@@ -238,25 +236,6 @@ const HomePage = () => {
 
 				</Container>
 
-				{/* <Container maxWidth="lg"  >
-					<Typography className={classes.txtTitleBox}>Tìm theo danh mục</Typography>
-					<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-						{categories.map((category) => (
-							<Grid item xs={12} xl={3} >
-
-								<Box className={classes.conCard} key={category.id}>
-									<Box style={{ cursor: "pointer",}} onClick={() => handleDetailsProduct(category.id)}>
-										<img src={category.icon} style={{ height: "50px",margin: "0 auto",display: "flex" }} />
-										<Typography className={classes.nameProduct} >{category.name}</Typography>
-									</Box>
-								</Box>
-
-							</Grid>
-						))}
-
-
-					</Grid>
-				</Container> */}
 				<Container maxWidth='lg'>
 					<Typography className={classes.txtTitleBox}>Sản phẩm bán chạy</Typography>
 					<YourSwiperComponent latestProducts={filteredProducts} classes={classes} />
@@ -356,34 +335,6 @@ const HomePage = () => {
 							</Swiper>
 						</Grid>
 					</Box>
-					{/* <Button
-					sx={{ p: 3 }}
-					style={{
-						width: "100%",
-						display: "flex",
-						justifyContent: "center",
-						marginTop: "10px",
-					}}
-				>
-					<WrapperButtonMore
-						textbutton={isPreviousData ? "Load more" : "Xem thêm"}
-						type='outline'
-						styleButton={{
-							border: `1px solid ${blogs?.total === blogs?.data?.length ? "#f5f5f5" : "#436E67"}`,
-							color: `${blogs?.total === blogs?.data?.length ? "#000" : "#436E67"}`,
-							width: "180px",
-							height: "38px",
-							borderRadius: "4px",
-							display: `${blogs?.total === blogs?.data?.length || blogs?.totalPage === 1 ? "none" : "block"}`,
-						}}
-						disabled={blogs?.total === blogs?.data?.length || blogs?.totalPage === 1}
-						styleTextButton={{
-							fontWeight: 500,
-							color: blogs?.total === blogs?.data?.length && "#000",
-						}}
-						onClick={() => setLimit((prev) => prev + 2)}
-					/>
-				</Button> */}
 				</Container >
 
 				{(recentlyViewed?.products && (

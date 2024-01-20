@@ -582,8 +582,6 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								></Typography>
 							</Paper>
 							<hr style={{ marginBottom: "60px" }} />
-
-
 						</Grid>
 
 						<Grid container spacing={2} sx={{ width: "100%",justifyContent: { xs: "center" },marginLeft: { xs: "0px",xl: "-16px",md: "-16px",sm: "-16px" },marginTop: { xs: "0px",xl: "40px" },paddingLeft: { xs: "0px !important",xl: "0px" } }} item xs={12} sm={12} md={12} lg={4} xl={4} style={{ height: "fit-content" }}>

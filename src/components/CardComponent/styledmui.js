@@ -15,7 +15,7 @@ export default makeStyles(() => {
 			textAlign: "center",
 			fontWeight: 500,
 			color: "#231e18",
-			fontSize: "1.3rem",
+			fontSize: "1rem",
 			width: "80%",
 			margin: "0 auto",
 			height: "70px",
@@ -28,7 +28,7 @@ export default makeStyles(() => {
 		},
 		txtPrice: {
 			...CStyles.txt_body_item,
-			fontSize: "1.125rem",
+			fontSize: "1rem",
 			textAlign: "left",
 			fontWeight: 500,
 			marginBottom: 5,
@@ -47,7 +47,7 @@ export default makeStyles(() => {
 			borderRadius: "999px",
 			color: "#436E67",
 			fontSize: "1rem",
-			fontWeight: "500",
+			fontWeight: "400",
 			transition: "all 0.1s ease- out 0s",
 			"&:hover": {
 				// boxShadow: "0px 18px 28px rgba(0,0,0,0.15),0px 0px 1px rgba(0,0,0,0.31)",
@@ -60,7 +60,8 @@ export default makeStyles(() => {
 		boxCard: {
 			borderBottom: "0px",
 			padding: 15,
-			width: "80%",
+			width: "90%",
+			height: "100%",
 			margin: "0 auto",
 			borderTop: "2px solid #454F5B",
 			borderRadius: "9px",
