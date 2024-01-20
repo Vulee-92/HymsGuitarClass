@@ -1,7 +1,7 @@
 // CategoryList.js
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const CategoryList = () => {
 	// Dữ liệu Schema.org JSON-LD cho danh sách danh mục
