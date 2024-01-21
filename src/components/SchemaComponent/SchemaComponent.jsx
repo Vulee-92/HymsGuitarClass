@@ -45,21 +45,13 @@ const CategoryList = () => {
 	};
 
 	return (
-		<div>
-			{/* Hiển thị danh sách danh mục */}
-			<ul>
-				{categories.map((category,index) => (
-					<li key={index}>{category.name}</li>
-				))}
-			</ul>
 
-			{/* Thêm dữ liệu Schema.org vào thẻ head */}
-			<Helmet>
-				<script type="application/ld+json">
-					{JSON.stringify(schemaData)}
-				</script>
-			</Helmet>
-		</div>
+
+		<Helmet>
+			<script type="application/ld+json">
+				{JSON.stringify(schemaData)}
+			</script>
+		</Helmet>
 	);
 };
 
