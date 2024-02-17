@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  search: "",
+	search: "",
 };
 
 export const productSlide = createSlice({
-  name: "product",
-  initialState,
-  reducers: {
-    searchProduct: (state, action) => {
-      state.search = action.payload;
-    },
-  },
+	name: "product",
+	initialState,
+	reducers: {
+		searchProduct: (state,action) => {
+			state.search = action.payload;
+		},
+	},
 });
 
 // Action creators are generated for each case reducer function

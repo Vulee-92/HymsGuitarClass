@@ -19,6 +19,7 @@ import AnimationComponent from "components/AnimationComponent/AnimationComponent
 import AnswerComponent from "components/AnswerComponent/AnswerComponent";
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
+import ShopProductSort from "../../sections/@dashboard/products/ProductSort";
 const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
 
 
@@ -127,12 +128,23 @@ const ProductsPage = () => {
 			<CarouselComponent />
 
 			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
+				{/* <Grid container spacing={2} > */}
+				{/* <Grid item xs={12} sm={12} md={3} xl={3} spacing={2} > */}
 				<Typography className={classes.txtTitleBox}>Sản phẩm</Typography>
+				{/* 
+					</Grid>
+					<Grid item xs={12} sm={12} md={12} xl={9}>
+						<ShopProductSort />
+
+
+					</Grid>
+				</Grid> */}
+
 				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-					{/* <Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
+					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
 						<NavbarComponent />
-					</Grid> */}
-					<Grid item xs={12} sm={12} md={12} xl={12}>
+					</Grid>
+					<Grid item xs={12} sm={12} md={12} xl={9}>
 						{/* <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} /> */}
 						<ProductList products={products} />
 

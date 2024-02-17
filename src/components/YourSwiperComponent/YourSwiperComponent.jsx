@@ -29,12 +29,12 @@ const YourSwiperComponent = ({ latestProducts,classes,isLoading }) => {
 				className="mySwiper"
 			>
 				{latestProducts?.map((product) => {
-					const firstImage = product.image[0];
 
 					return (
 						<SwiperSlide className={classes.SwiperSlide} key={product._id}>
 							<CardComponent
 								product={product}
+								homePage={true}
 								// post={post}
 								// index={index}
 								style={{ cursor: 'pointer' }}

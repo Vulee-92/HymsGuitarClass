@@ -22,7 +22,6 @@ export default makeStyles(() => {
 			overflow: "hidden",
 			overflowWrap: "break-word",
 			wordWrap: "break-word",
-			paddingBottom: "30px",
 			marginTop: "30px",
 			cursor: 'pointers'
 		},
@@ -103,6 +102,23 @@ export default makeStyles(() => {
 			fontWeight: 600,
 			color: "#0b2238",
 		},
+		boxImg: {
+			display: 'block',
+			width: '250px !important',
+			height: '250px !important',
+			objectFit: 'cover',
+			position: 'relative',
+			top: 10,
+			cursor: 'pointer',
+			left: "10%",
+			"& .swiper-slide img": {
+				width: '100% !important',
+				height: '100% !important',
+			}
+		},
+		boxPrice: {
+			height: '60px'
+		}
 	};
 }
 )
