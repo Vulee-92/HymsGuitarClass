@@ -18,10 +18,8 @@ const CardComponent = ({ product,homePage }) => {
 	const navigate = useNavigate();
 	const handleDetailsProduct = () => {
 		navigate(`/product-details/${product?.slug}`);
-
 	};
 	const dispatch = useDispatch();
-
 	const handleAddOrderProduct = () => {
 		setIsProcessing(true);
 		const orderRedux = order?.orderItems?.find((item) => item.product === product?._id);
@@ -39,7 +37,6 @@ const CardComponent = ({ product,homePage }) => {
 						discount: product?.discount,
 						countInstock: product?.countInStock,
 					},
-
 				})
 
 			);
@@ -107,7 +104,7 @@ const CardComponent = ({ product,homePage }) => {
 
 			}}>
 				<img
-					className={classes.boxImg}
+					className={homePage ? classes.boxImgHome : classes.boxImg}
 					onClick={() => handleDetailsProduct()}
 					src={product?.image && product.image[0]}
 					alt={product?.image && product.image[0]} />

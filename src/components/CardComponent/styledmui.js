@@ -129,7 +129,6 @@ export default makeStyles(() => {
 				height: '15vh !important',
 			},
 			cursor: 'pointer',
-			left: "10%",
 			"& .swiper-slide img": {
 				width: '100% !important',
 				height: '100% !important',
