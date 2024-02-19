@@ -102,6 +102,21 @@ export default makeStyles(() => {
 			fontWeight: 600,
 			color: "#0b2238",
 		},
+		boxImgHome: {
+			display: 'block',
+			width: '250px !important',
+			height: '250px !important',
+			objectFit: 'cover',
+			position: 'relative',
+			top: 10,
+
+			cursor: 'pointer',
+			left: "10%",
+			"& .swiper-slide img": {
+				width: '100% !important',
+				height: '100% !important',
+			}
+		},
 		boxImg: {
 			display: 'block',
 			width: '250px !important',
