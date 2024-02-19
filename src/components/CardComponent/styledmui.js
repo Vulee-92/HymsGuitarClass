@@ -109,6 +109,10 @@ export default makeStyles(() => {
 			objectFit: 'cover',
 			position: 'relative',
 			top: 10,
+			"@media (max-width: 550px)": {
+				width: '100% !important',
+				height: '15vh !important',
+			},
 			cursor: 'pointer',
 			left: "10%",
 			"& .swiper-slide img": {
