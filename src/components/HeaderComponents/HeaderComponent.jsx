@@ -46,7 +46,7 @@ import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
 import Nav from "./dashboard/nav";
-import debounce from 'lodash/debounce'
+// import debounce from 'lodash/debounce'
 import _ from 'lodash';
 import { useDebounce } from "hooks/useDebounce";
 import Iconify from "components/iconify";
@@ -54,7 +54,16 @@ import { convertPrice } from "utils";
 import Searchbar from "./dashboard/header/Searchbar";
 import { bgBlur } from '../../utils/cssStyles';
 
-
+// Hàm debounce
+function debounce(func,delay) {
+	let timeoutId;
+	return function (...args) {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => {
+			func.apply(this,args);
+		},delay);
+	};
+}
 const StyledMenu = styled(({ numResults,...props }) => (
 	<Menu
 		elevation={0}
@@ -99,26 +108,6 @@ const StyledMenu = styled(({ numResults,...props }) => (
 }));
 
 
-
-
-const StyledSearchbar = styled('div')(({ theme }) => ({
-	...bgBlur({ color: theme.palette.background.default }),
-	top: 0,
-	left: 0,
-	zIndex: 99,
-	width: '100%',
-	display: 'flex',
-	position: 'absolute',
-	alignItems: 'center',
-	height: 64,
-	padding: theme.spacing(0,3),
-	// boxShadow: theme.customShadows.z8,
-	[theme.breakpoints.up('md')]: {
-		height: 64,
-		padding: theme.spacing(0,5),
-	},
-}));
-
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -127,8 +116,10 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const user = useSelector((state) => state.user);
 	const order = useSelector((state) => state.order);
 	const [userName,setUserName] = useState("");
-	const [search,setSearch] = useState("");
-	const [productsSearch,setProductsSearch] = useState(null);
+	const [search,setSearch] = useState('');
+	const [productsSearch,setProductsSearch] = useState([]);
+	const debounceTimer = useRef(null);
+	// const [productsSearch,setProductsSearch] = useState(null);
 	const [userAvatar,setUserAvatar] = useState("");
 	const [loading,setLoading] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
@@ -136,7 +127,6 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const [isPageLoaded,setIsPageLoaded] = useState(false);
 	const [currentIcon,setCurrentIcon] = useState(faBarsStaggered);
 	const [anchorEl,setAnchorEl] = useState(null);
-
 	const handleMouseOver = (event) => {
 		setAnchorEl(event.currentTarget);
 		setMenuOpen(true);
@@ -156,14 +146,6 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		setOpen(true)
 	};
 
-	// const fetchSearchProduct = async () => {
-	// 	if (search) {
-	// 		const res = await ProductService.getSearchProduct(search)
-	// 		return res
-	// 	}
-
-	// }
-	// const { isLoading,data: productsSearch,isPreviousData } = useQuery(['products',search],fetchSearchProduct,{ retry: 3,retryDelay: 1000,keepPreviousData: true })
 	const handleClose = () => {
 		if (menuOpen) {
 			setAnchorEl(null);
@@ -204,21 +186,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 
 	// const open = Boolean(anchorEl);
 	const [open,setOpen] = useState(false);
-
-
-
-
-	const [anchorElUser,setAnchorElUser] = React.useState(null);
 	const [menuOpen,setMenuOpen] = useState(false);
 	const [isOpenPopup,setIsOpenPopup] = useState(false)
-
-
-
-
-	const handleMenuItemClick = (path) => {
-		setIsDrawerOpen(!isDrawerOpen);
-		navigate(path);
-	};
 
 
 	const content = (
@@ -296,22 +265,30 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	}
 	useEffect(() => {
 		const fetchSearchProduct = async () => {
-			if (search) {
-				const res = await ProductService.getSearchProduct(search);
-				setProductsSearch(res);
-			}
+			const res = await ProductService.getSearchProduct(search);
+			setProductsSearch(res);
 		};
 
-		fetchSearchProduct();
+		// Xóa timer debounce cũ nếu có
+		if (debounceTimer.current) {
+			clearTimeout(debounceTimer.current);
+		}
+
+		// Thiết lập timer debounce mới
+		debounceTimer.current = setTimeout(() => {
+			if (search.trim() !== '') { // Kiểm tra xem search có giá trị không
+				fetchSearchProduct();
+			}
+		},1000);
+
+		// Hủy timer debounce khi component unmount
+		return () => {
+			clearTimeout(debounceTimer.current);
+		};
 	},[search]);
 
 
 
-
-	// Hàm search với debounce
-	const debouncedSearch = debounce((value) => {
-		setSearch(value);
-	},500);
 	const handleProductClick = (productName) => {
 		// Xử lý sản phẩm khi được bấm
 		if (productName) {
@@ -320,79 +297,18 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		}
 		handleCloseSearchh()
 	};
-	const [showSearchResults,setShowSearchResults] = useState(false);
+	// // Hàm search với debounce
+	// const debouncedSearch = debounce((value) => {
+	// 	setSearch(value);
+	// },1000);
 	const handleInputChange = (e) => {
 		setSearch(e.target.value);
-		setShowSearchResults(e.target.value !== '');
-		debouncedSearch(e.target.value);
-	};
-	const [openSearchMobile,setOpenSearchMobile] = useState(false);
-
-	const handleOpenSearchMobile = () => {
-		setOpenSearchMobile(!openSearchMobile);
 	};
 
-	const handleCloseSearchMobile = () => {
-		setOpenSearchMobile(false);
-	};
-	const renderSearchMobile = () => {
-		return (
-			<>
-				<ClickAwayListener onClickAway={handleCloseSearchMobile}>
-					<div >
-						{!openSearchMobile && (
-							<IconButton onClick={handleOpenSearchMobile}>
-								<Iconify icon="eva:search-fill" />
-							</IconButton>
-						)}
-						<StyledMenu numResults={productsSearch?.length}
-							id="basic-menu"
-							anchorEl={anchorElSearchs}
-							open={opens}
-							onClose={handleCloseSearchh}
-							sx={{ maxHeight: "500px",marginTop: "20px" }}
-						>
-							<Slide direction="down" in={openSearchMobile} mountOnEnter unmountOnExit>
-								<StyledSearchbar numResults={productsSearch?.length} sx={{ maxHeight: "500px" }}>
-									<Input className={classes.conInput}
-										autoFocus
-										fullWidth
-										disableUnderline
-										placeholder="Search…"
-										onChange={handleInputChange}
-										startAdornment={
-											<InputAdornment position="start">
-												<Iconify icon="eva:search-fill" sx={{ color: 'text.disabled',width: 20,height: 20 }} />
-											</InputAdornment>
-										}
-										sx={{ mr: 1,fontWeight: 'fontWeightBold' }}
-									/>
 
-								</StyledSearchbar>
 
-							</Slide>
-							{showSearchResults && (
-								<List style={{ position: 'absolute',left: '0%',transform: 'translateX(0%)',zIndex: 999999 }}>
-									{productsSearch?.data?.map((option,index) => (
-										<ListItem key={index} onClick={() => handleProductClick(option)} sx={{ display: "block",borderBottom: "1px solid #f5f5f5" }}>
-											<Box sx={{ display: 'flex',alignItems: 'center',justifyContent: "space-around" }}>
-												<Box sx={{ cursor: 'pointer' }} >
-													<Typography className={classes.txtNameSearch} >{option?.name}</Typography>
-													<Typography className={classes.txtPriceSearch} >{convertPrice(option?.price)}</Typography>
-												</Box>
-												<img src={option?.image[0]} alt={option?.name} style={{ marginLeft: 'auto',height: 35,width: 35,cursor: 'pointer' }} />
-											</Box>
-										</ListItem>
-									))}
-								</List>
-							)}
-						</StyledMenu>
-					</div>
 
-				</ClickAwayListener>
-			</>
-		)
-	};
+
 	const renderSearch = () => {
 		return (
 			<>
