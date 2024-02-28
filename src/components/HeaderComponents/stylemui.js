@@ -196,6 +196,17 @@ export default makeStyles(() => {
 			textAlign: "center",
 			marginTop: 48,
 		},
+
+		txtNameSearch: {
+			...CStyles.txt_body_item,
+			marginTop: "1rem",
+			fontWeight: 500
+		},
+		txtPriceSearch: {
+			...CStyles.txt_body_item,
+			marginTop: "1rem",
+			fontWeight: 400
+		},
 		txtBtnRegister: {
 			...CStyles.txt_body_item,
 			fontWeight: CStyles.fBold,
@@ -250,12 +261,7 @@ export default makeStyles(() => {
 			// marginBottom: "30px",
 		},
 		colorChangeDark: {
-			// background: "#000",
-			// backdropFilter: "saturate(1) blur(20px) !important",
-			// borderBottom: "1px solid #edeef1",
-			// width: "100%",
-			// zIndex: 1000,
-			// transition: " all .5s ease-in-out",
+
 			display: "fixed",
 			background: "rgba(255, 255, 255)",
 			height: "80px",
@@ -333,29 +339,85 @@ export default makeStyles(() => {
 			transition: "height 2s",
 			top: 0,
 		},
+		conSearch: {
+			...CStyles.rowAliCenJusBet,
+			borderRadius: 20,
+			border: `1px solid ${Colors.placeHolder}`,
+			borderRadius: '8px !important',
+			margin: 10,
+			overflowY: "hidden"
+			// height: 40,
+			// minWidth: 300
+		},
+		conInput: {
+			...CStyles.txt_body_item,
+			flex: 1,
+			display: 'flex',
+			width: "100%",
+			alignItems: 'center',
+			paddingLeft: 5,
+			border: `1px solid ${Colors.placeHolder}`,
+			fontWeight: `${CStyles.fBold} !important`,
+			borderRadius: '8px !important',
+			border: 'none',
+			// padding: `0px 12px`,
+			"& input": {
+				flex: 1,
+				"&::placeholder": { color: Colors.placeHolder,opacity: 1,'-webkit-text-fill-color': Colors.placeHolder },
+				'-webkit-text-fill-color': `${Colors.text} !important`,
+			},
+			"& $Mui-disabled": {
+				opacity: 0
+			},
+			"&:before": {
+				content: 'none'
+			},
+			"&:after": {
+				content: 'none'
+			},
+			"& $MuiFilledInput-underline": {
+				backgroundColor: "#fff !important",
+				borderBottom: "none"
+			}
+		},
+
 		hymnsName: {
 			...CStyles.txt_title_item,
-			fontSize: "1rem",
+			fontSize: "1.5rem",
 			fontWeight: 600,
 
+		},
+		conButtonSearch: {
+			marginTop: `10px !important`,
+			borderRadius: 24,
+			margin: `10px 10px`,
+			height: `40px !important`,
+			border: `1px solid ${Colors.placeHolder} !important`,
+			boxShadow: `none`,
 		},
 		txtTilteLight: {
 			...CStyles.txt_body_item,
 			color: "#fff",
 			fontSize: "14px",
-			fontWeight: 400,
-			textTransform: "capitalize",
+			fontWeight: 600,
+			textTransform: "uppercase",
+			paddingLeft: "0px",
+			paddingRight: "30px",
 			marginRight: "10px",
+			marginTop: "5px",
 			marginBottom: 0,
 		},
 		txtTilteDark: {
 			...CStyles.txt_body_item,
 			color: "#000",
 			fontSize: "14px",
-			fontWeight: 400,
+			fontWeight: 600,
 			marginRight: "10px",
 			marginBottom: 0,
-			textTransform: "capitalize",
+			paddingLeft: "0px",
+			paddingRight: "30px",
+
+			textTransform: "uppercase",
 		},
 		txtInfoUser: {
 			...CStyles.txt_body_item,

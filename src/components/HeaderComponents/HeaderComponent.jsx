@@ -1,4 +1,5 @@
-import React,{ Fragment,useEffect,useRef,useState } from "react";
+import React,{ Fragment,useEffect,useMemo,useRef,useState } from "react";
+// import JSONLD from 'react-jsonld';
 
 import { Badge,Col,Popover } from "antd";
 import Button from "@mui/material/Button";
@@ -7,7 +8,6 @@ import * as ProductService from "../../services/ProductService";
 import { resetUser } from "../../redux/slides/userSlide";
 
 import { UserOutlined,ShoppingCartOutlined } from "@ant-design/icons";
-import ButttonInputSearch from "../ButttonInputSearch/ButttonInputSearch";
 import { unstable_HistoryRouter,useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import * as UserService from "../../services/UserService";
@@ -18,34 +18,106 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
 import { Assets,Configs,Keys } from "../../configs";
-import { styled } from "@mui/material/styles";
+import { alpha,styled } from "@mui/material/styles";
 import Loading from "../LoadingComponent/Loading";
-import Switch from "@mui/material/Switch";
 import {
 	Menu,
 	MenuItem,
-	Grid,
 	Typography,
-	FormControlLabel,
-	Stack,
-	FormGroup,
-	Icon,
-	Skeleton,
-	CardMedia,
-	Drawer,
+	TextField,
+	useAutocomplete,
+	InputAdornment,
+	Input,
+	List,
+	ListItem,
+	ClickAwayListener,
+	Slide,
 } from "@mui/material";
+import { motion } from 'framer-motion';
+
 import { useTranslation } from "react-i18next";
-import ProfileScreen from "../../pages/profile";
 import styles from "./stylemui";
 import "../../App.css";
 import { searchProduct } from "../../redux/slides/productSlide";
 import { Header } from "antd/es/layout/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFast } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered,faTimes,faXmark,faUser,faX,faRightFromBracket,faTruckFast,faMagnifyingGlass,faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import i18n from "../../utils/languages/i18n";
 import { Helpers } from "../../utils/helpers";
 import Nav from "./dashboard/nav";
+import debounce from 'lodash/debounce'
+import _ from 'lodash';
+import { useDebounce } from "hooks/useDebounce";
+import Iconify from "components/iconify";
+import { convertPrice } from "utils";
+import Searchbar from "./dashboard/header/Searchbar";
+import { bgBlur } from '../../utils/cssStyles';
+
+
+const StyledMenu = styled(({ numResults,...props }) => (
+	<Menu
+		elevation={0}
+		anchorOrigin={{
+			vertical: 'bottom',
+			horizontal: 'right',
+		}}
+		transformOrigin={{
+			vertical: 'top',
+			horizontal: 'right',
+		}}
+		{...props}
+	/>
+))(({ theme,numResults }) => ({
+	'& .MuiPaper-root': {
+		borderRadius: 6,
+		minHeight: numResults ? `${Math.min(numResults,5) * 48}px` : '50px',
+		width: '300px',
+		overflowY: "hidden",
+
+		color:
+			theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+		boxShadow:
+			'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+		'& .MuiMenu-list': {
+			padding: '4px 0',
+		},
+		'& .MuiMenuItem-root': {
+			'& .MuiSvgIcon-root': {
+				fontSize: 18,
+				color: theme.palette.text.secondary,
+				marginRight: theme.spacing(1.5),
+			},
+			'&:active': {
+				backgroundColor: alpha(
+					theme.palette.primary.main,
+					theme.palette.action.selectedOpacity,
+				),
+			},
+		},
+	},
+}));
+
+
+
+
+const StyledSearchbar = styled('div')(({ theme }) => ({
+	...bgBlur({ color: theme.palette.background.default }),
+	top: 0,
+	left: 0,
+	zIndex: 99,
+	width: '100%',
+	display: 'flex',
+	position: 'absolute',
+	alignItems: 'center',
+	height: 64,
+	padding: theme.spacing(0,3),
+	// boxShadow: theme.customShadows.z8,
+	[theme.breakpoints.up('md')]: {
+		height: 64,
+		padding: theme.spacing(0,5),
+	},
+}));
 
 const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const dispatch = useDispatch();
@@ -56,6 +128,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const order = useSelector((state) => state.order);
 	const [userName,setUserName] = useState("");
 	const [search,setSearch] = useState("");
+	const [productsSearch,setProductsSearch] = useState(null);
 	const [userAvatar,setUserAvatar] = useState("");
 	const [loading,setLoading] = useState(false);
 	const [lang,setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'vi');
@@ -80,21 +153,17 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	},[]);
 
 	const handleToggleDrawer = () => {
-		// if (isPageLoaded) {
-		// 	setIsDrawerOpen((prev) => !prev);
-		// 	setCurrentIcon((prevIcon) =>
-		// 		prevIcon === faBarsStaggered ? faTimes : faBarsStaggered
-		// 	);
-		// }
 		setOpen(true)
 	};
 
-	const handleCloseDrawer = () => {
-		setIsDrawerOpen(false);
-		setCurrentIcon(faBarsStaggered);
-	};
+	// const fetchSearchProduct = async () => {
+	// 	if (search) {
+	// 		const res = await ProductService.getSearchProduct(search)
+	// 		return res
+	// 	}
 
-
+	// }
+	// const { isLoading,data: productsSearch,isPreviousData } = useQuery(['products',search],fetchSearchProduct,{ retry: 3,retryDelay: 1000,keepPreviousData: true })
 	const handleClose = () => {
 		if (menuOpen) {
 			setAnchorEl(null);
@@ -104,13 +173,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const handleNavigateLogin = () => {
 		navigate("/login");
 	};
-	const handleNavigateProfile = () => {
-		navigate("/profile");
-	};
 
-	const handleNavigateSignIn = () => {
-		navigate("/sign-up");
-	};
 	const [colorChange,setColorchange] = useState(false);
 	const changeNavbarColor = () => {
 		if (window.scrollY >= 80) {
@@ -149,16 +212,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 	const [menuOpen,setMenuOpen] = useState(false);
 	const [isOpenPopup,setIsOpenPopup] = useState(false)
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
-	const menuItems = [
-		{ path: '/',label: t('home') },
-		{ path: '/category',label: t('product') },
-		{ path: '/about',label: t('about') },
-		{ path: '/blog',label: t('blog') },
-		{ path: '/contact',label: t('contact') },
-	];
+
+
 
 	const handleMenuItemClick = (path) => {
 		setIsDrawerOpen(!isDrawerOpen);
@@ -167,7 +222,6 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 
 
 	const content = (
-
 		<div>
 			<Loading isLoading={loading}>
 				<Box
@@ -213,63 +267,12 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		</div>
 	);
 
-	// const [lang, setLang] = useState(Helpers.getDataStorage(Keys.lang) || 'en');
 
-	const handleLanguageChange = () => {
-		const newLang = lang === 'en' ? 'vi' : 'en';
-		setLang(newLang);
-		i18n.changeLanguage(newLang);
-		Helpers.setDataStorage(Keys.lang,newLang);
-	};
+
 	useEffect(() => {
 		Helpers.setDataStorage(Keys.language,lang)
 		i18n.changeLanguage(lang);
 	},[]);
-
-	const LanguageSwitch = styled(Switch)(({ theme,lang }) => ({
-		width: 62,
-		height: 34,
-		padding: 7,
-		'& .MuiSwitch-switchBase': {
-			margin: 1,
-			padding: 0,
-			transform: 'translateX(6px)',
-			'&.Mui-checked': {
-				color: '#fff',
-				transform: 'translateX(22px)',
-				'& .MuiSwitch-thumb:before': {
-					backgroundImage: `url(${lang === 'vi' ? Assets.vnFlag : Assets.usFlag})`,
-					width: '100%',
-					height: '100%',
-					backgroundSize: "cover",
-				},
-				'& + .MuiSwitch-track': {
-					opacity: 1,
-					backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-				},
-			},
-		},
-		'& .MuiSwitch-thumb': {
-			width: 32,
-			height: 32,
-			'&:before': {
-				content: "''",
-				position: 'absolute',
-				width: '100%',
-				height: '100%',
-				left: 0,
-				top: 0,
-				backgroundImage: `url(${lang === 'vi' ? Assets.usFlag : Assets.vnFlag})`,
-				backgroundSize: "cover",
-				backgroundRepeat: "no-repeat",
-			},
-		},
-		'& .MuiSwitch-track': {
-			opacity: 1,
-			backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-			borderRadius: 20 / 2,
-		},
-	}));
 
 
 
@@ -291,38 +294,203 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 		}
 		setIsOpenPopup(false)
 	}
-	const onSearch = (e) => {
+	useEffect(() => {
+		const fetchSearchProduct = async () => {
+			if (search) {
+				const res = await ProductService.getSearchProduct(search);
+				setProductsSearch(res);
+			}
+		};
+
+		fetchSearchProduct();
+	},[search]);
+
+
+
+
+	// Hàm search với debounce
+	const debouncedSearch = debounce((value) => {
+		setSearch(value);
+	},500);
+	const handleProductClick = (productName) => {
+		// Xử lý sản phẩm khi được bấm
+		if (productName) {
+			const selectedProductSlug = productName?.slug ?? null;
+			navigate(`/p/${selectedProductSlug}`);
+		}
+		handleCloseSearchh()
+	};
+	const [showSearchResults,setShowSearchResults] = useState(false);
+	const handleInputChange = (e) => {
 		setSearch(e.target.value);
-		dispatch(searchProduct(e.target.value));
+		setShowSearchResults(e.target.value !== '');
+		debouncedSearch(e.target.value);
+	};
+	const [openSearchMobile,setOpenSearchMobile] = useState(false);
+
+	const handleOpenSearchMobile = () => {
+		setOpenSearchMobile(!openSearchMobile);
+	};
+
+	const handleCloseSearchMobile = () => {
+		setOpenSearchMobile(false);
+	};
+	const renderSearchMobile = () => {
+		return (
+			<>
+				<ClickAwayListener onClickAway={handleCloseSearchMobile}>
+					<div >
+						{!openSearchMobile && (
+							<IconButton onClick={handleOpenSearchMobile}>
+								<Iconify icon="eva:search-fill" />
+							</IconButton>
+						)}
+						<StyledMenu numResults={productsSearch?.length}
+							id="basic-menu"
+							anchorEl={anchorElSearchs}
+							open={opens}
+							onClose={handleCloseSearchh}
+							sx={{ maxHeight: "500px",marginTop: "20px" }}
+						>
+							<Slide direction="down" in={openSearchMobile} mountOnEnter unmountOnExit>
+								<StyledSearchbar numResults={productsSearch?.length} sx={{ maxHeight: "500px" }}>
+									<Input className={classes.conInput}
+										autoFocus
+										fullWidth
+										disableUnderline
+										placeholder="Search…"
+										onChange={handleInputChange}
+										startAdornment={
+											<InputAdornment position="start">
+												<Iconify icon="eva:search-fill" sx={{ color: 'text.disabled',width: 20,height: 20 }} />
+											</InputAdornment>
+										}
+										sx={{ mr: 1,fontWeight: 'fontWeightBold' }}
+									/>
+
+								</StyledSearchbar>
+
+							</Slide>
+							{showSearchResults && (
+								<List style={{ position: 'absolute',left: '0%',transform: 'translateX(0%)',zIndex: 999999 }}>
+									{productsSearch?.data?.map((option,index) => (
+										<ListItem key={index} onClick={() => handleProductClick(option)} sx={{ display: "block",borderBottom: "1px solid #f5f5f5" }}>
+											<Box sx={{ display: 'flex',alignItems: 'center',justifyContent: "space-around" }}>
+												<Box sx={{ cursor: 'pointer' }} >
+													<Typography className={classes.txtNameSearch} >{option?.name}</Typography>
+													<Typography className={classes.txtPriceSearch} >{convertPrice(option?.price)}</Typography>
+												</Box>
+												<img src={option?.image[0]} alt={option?.name} style={{ marginLeft: 'auto',height: 35,width: 35,cursor: 'pointer' }} />
+											</Box>
+										</ListItem>
+									))}
+								</List>
+							)}
+						</StyledMenu>
+					</div>
+
+				</ClickAwayListener>
+			</>
+		)
+	};
+	const renderSearch = () => {
+		return (
+			<>
+				<Button
+					id="basic-button"
+					aria-controls={opens ? 'basic-menu' : undefined}
+					aria-haspopup="true"
+					aria-expanded={opens ? 'true' : undefined}
+					onClick={handleClickSearch}
+				>
+					<FontAwesomeIcon icon={faMagnifyingGlass} sx={{ color: "#fff" }} />
+				</Button>
+				<StyledMenu numResults={productsSearch?.length}
+					id="basic-menu"
+					anchorEl={anchorElSearchs}
+					open={opens}
+					onClose={handleCloseSearchh}
+					sx={{ maxHeight: "500px",marginTop: "20px" }}
+				>
+					<Box className={classes.conSearch}>
+						<Input className={classes.conInput}
+							fullWidth
+							onChange={handleInputChange}
+							// value={search}
+							endAdornment={
+								<InputAdornment position='end'
+									onClick={() => setSearch('')}
+								>
+									{search !== '' && <FontAwesomeIcon style={{ cursor: 'pointer',paddingRight: 15 }} icon={faTimes} color={"#000"} />}
+								</InputAdornment>
+							}
+							placeholder="Search…"
+						/>
+						{search == '' && (
+							<Box className={classes.conSearchButton} sx={{ paddingRight: 2 }}>
+								<FontAwesomeIcon icon={faSearch} color={"#000"} />
+							</Box>
+						)}
+
+
+					</Box>
+					<List>
+						{productsSearch?.data?.map((option,index) => (
+							<ListItem key={index} onClick={() => handleProductClick(option)} sx={{ display: "block",borderBottom: "1px solid #f5f5f5" }}>
+								<Box sx={{ display: 'flex',alignItems: 'center',justifyContent: "space-around" }}>
+									<Box sx={{ cursor: 'pointer' }} >
+										<Typography className={classes.txtNameSearch} >{option?.name}</Typography>
+										<Typography className={classes.txtPriceSearch} >{convertPrice(option?.price)}</Typography>
+									</Box>
+									<img src={option?.image[0]} alt={option?.name} style={{ marginLeft: 'auto',height: 35,width: 35,cursor: 'pointer' }} />
+								</Box>
+							</ListItem>
+						))}
+
+					</List>
+
+
+				</StyledMenu >
+			</>
+		)
+
+	};
+	useEffect(() => {
+		// Xóa giá trị của productsSearch khi giá trị search thay đổi
+		return () => {
+			setProductsSearch(null); // Giả sử setProductsSearch là hàm để cập nhật giá trị productsSearch
+		};
+	},[search]);
+	const [anchorElSearchs,setAnchorElSearchs] = React.useState(null);
+
+	const opens = Boolean(anchorElSearchs);
+	const handleClickSearch = (event) => {
+		setAnchorElSearchs(event.currentTarget);
+	};
+	const handleCloseSearchh = () => {
+		setAnchorElSearchs(null);
 	};
 	return (
 		<Container maxWidth="xl">
 			<AppBar className={colorChange ? classes.colorChangeDark : classes.colorChangeLight}>
 				<Container width={{ md: "xs",xl: "xl",lg: "xs" }} style={{ overflow: "hidden" }}>
 					<Toolbar disableGutters style={{ display: "flex",justifyContent: "space-between",alignItems: 'center' }}>
-
-
 						<Box sx={{ flexGrow: 0,display: { xs: "flex",md: "none" },position: "relative",zIndex: 1,overflow: 'auto' }} className={classes.headerHontainer}>
 							<IconButton
 								size="large"
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
-
 								onClick={handleToggleDrawer}
 								color="inherit"
 							>
 								<FontAwesomeIcon icon={currentIcon} style={{ fontSize: "18px" }} />
 							</IconButton>
-
 							<Nav openNav={open} onCloseNav={() => setOpen(false)} />
-
 						</Box>
 						<Typography
 							href="/"
-
 							sx={{
-
 								display: { xs: "flex",md: "none" },
 								flexGrow: 1,
 								fontFamily: "monospace",
@@ -330,21 +498,23 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								letterSpacing: '.3rem',
 								color: "inherit",
 								textDecoration: "none"
-							}} className={classes.hymnsName} style={{ justifyContent: "center",color: colorChange ? "#000" : "#fff",}} >HYMNS CENTER</Typography>
+							}} className={classes.hymnsName} style={{ justifyContent: "flex-start",color: colorChange ? "#000" : "#fff",fontSize: "1.1rem",lineHeight: 0 }} >HYMNS CENTER</Typography>
+						<Box sx={{
+							display: { xs: "block",md: "none" }
+						}}>
+							{renderSearch()}
+							{/* <Searchbar /> */}
+						</Box>
+
 						<Box sx={{
 							display: { xs: "block",md: "none" }
 						}}>
 							<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
 								<Badge count={order?.orderItems?.length} size="small">
 									<ShoppingCartOutlined style={{ fontSize: '20px',paddingRight: '5px',color: colorChange ? "#000" : "#fff" }} />
-
 								</Badge>
 							</div>
-
 						</Box>
-
-
-
 
 
 						{/* CHO DESKTOP */}
@@ -358,59 +528,51 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 									color: "inherit",
 									textDecoration: "none",
 									cursor: 'pointer',
-								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '250px' }} >HYMNS CENTER</Typography>
-							<Button
-								onClick={() => navigate('/')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('home')}
-							</Button>
-							<Button
-								onClick={() => navigate('/about')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('about')}
-							</Button>
-							<Button
-								onClick={() => navigate('/category')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('product')}
-							</Button>
+								}} className={classes.hymnsName} style={{ color: colorChange ? "#000" : "#fff",paddingRight: '100px' }} >HYMNS CENTER</Typography>
 
-							<Button
-								onClick={() => navigate('/blog')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('blog')}
-							</Button>
+							<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex" } }} style={{ justifyContent: "flex-start",alignItems: 'center' }}>
 
-							<Button
-								onClick={() => navigate('/contact')}
-								sx={{ color: "white",display: "block" }}
-								className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
-							>
-								{t('contact')}
-							</Button>
+								<Button
+									onClick={() => navigate('/')}
+									sx={{ color: "white",display: "block" }}
+									className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+								>
+									{t('home')}
+								</Button>
+								<Button
+									onClick={() => navigate('/about')}
+									sx={{ color: "white",display: "block" }}
+									className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+								>
+									{t('about')}
+								</Button>
+								<Button
+									onClick={() => navigate('/category')}
+									sx={{ color: "white",display: "block" }}
+									className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+								>
+									{t('product')}
+								</Button>
+
+								<Button
+									onClick={() => navigate('/blog')}
+									sx={{ color: "white",display: "block" }}
+									className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+								>
+									{t('blog')}
+								</Button>
+
+								<Button
+									onClick={() => navigate('/contact')}
+									sx={{ color: "white",display: "block" }}
+									className={colorChange ? classes.txtTilteDark : classes.txtTilteLight}
+								>
+									{t('contact')}
+								</Button>
+							</Box>
 						</Box>
-						{/* <Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex" } }} style={{ justifyContent: "space-between",alignItems: 'center' }}>
-							{!isHiddenSearch && (
-								<Col span={13}>
-									<ButttonInputSearch
-										size="large"
-										bordered={false}
-										textbutton="Tìm kiếm"
-										placeholder="input search text"
-										onChange={onSearch}
-										backgroundColorButton="#5a20c1"
-									/>
-								</Col>
-							)}
-						</Box> */}
+
+
 						<Box sx={{ flexGrow: 0,display: { xs: "none",md: "flex",xl: "flex" },justifyContent: "center",alignItems: 'center' }} >
 							<Box >
 
@@ -426,7 +588,7 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 									<></>
 								)}
 							</Box>
-							<Menu
+							{/* <Menu
 								sx={{ mt: "45px" }}
 								id="menu-appbar"
 								anchorEl={anchorElUser}
@@ -460,8 +622,8 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 									<Typography textAlign="center"></Typography>
 								</MenuItem>
 
-							</Menu>
-							<MenuItem>
+							</Menu> */}
+							<MenuItem sx={{ width: "80px" }}>
 
 								<Tooltip>
 
@@ -489,6 +651,57 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 									{/* </IconButton> */}
 								</Tooltip>
 							</MenuItem>
+							<MenuItem sx={{ padding: "0px !important" }}>
+
+								{renderSearch()}
+							</MenuItem>
+
+							{/* <Box sx={{ height: "100%" }}>
+								<Dialog
+									open={openSearch}
+									// onClose={handleCloseSearch}
+									BackdropComponent={Backdrop}
+									BackdropProps={{ style: { backdropFilter: 'blur(5px)' } }}
+									PaperProps={{
+										component: 'form',
+										onSubmit: (event) => {
+											event.preventDefault();
+											const formData = new FormData(event.currentTarget);
+											const formJson = Object.fromEntries(formData.entries());
+											const email = formJson.email;
+											console.log(email);
+										},
+									}}
+									sx={{ height: 'auto' }}
+								>
+
+									<DialogTitle>Subscribe</DialogTitle>
+									<DialogContent sx={{ height: 'auto' }}>
+										<DialogContentText>
+
+											<Box className={classes.conSearch}>
+												<div className={classes.conInput}>
+													<InputWrapper >
+														<Input className={classes.conInput} {...getInputProps()} />
+														{groupedOptions.length > 0 && (
+															<ListboxWrapper>
+																<Listbox {...getListboxProps()}>
+																	{groupedOptions.map((option,index) => (
+																		<li className={classes.conInput} sx={{ margin: 10 }} {...getOptionProps({ option,index })}>{option.name}</li>
+																	))}
+																</Listbox>
+															</ListboxWrapper>
+														)}
+													</InputWrapper>
+												</div>
+											</Box>
+
+										</DialogContentText>
+									</DialogContent>
+
+								</Dialog>
+							</Box> */}
+
 							<MenuItem>
 								{/* {!isHiddenCart && user.access_token && ( */}
 								<div onClick={() => navigate('/order')} style={{ cursor: 'pointer',display: 'float' }}>
@@ -503,22 +716,13 @@ const HeaderComponent = ({ isHiddenSearch = false,isHiddenCart = true }) => {
 								} */}
 							</MenuItem>
 
-							{/* <MenuItem>
-								<FormControlLabel
-									control={
-										<LanguageSwitch
-											sx={{ m: 1 }}
-											checked={lang === 'en'}
-											onClick={handleLanguageChange}
-										/>
-									}
-								/>
-							</MenuItem> */}
 						</Box>
 
 
 					</Toolbar>
+
 				</Container>
+
 			</AppBar >
 		</Container >
 

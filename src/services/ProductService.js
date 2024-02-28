@@ -38,7 +38,24 @@ export const getAllProduct = async (search) => {
 
 	return result;
 };
+export const getSearchProduct = async (search) => {
+	const cacheKey = `${search}`;
+	const cachedResult = cache.get(cacheKey);
 
+	if (cachedResult) {
+		return cachedResult;
+	}
+	let res = {};
+	const encodedSearch = encodeURIComponent(search);
+	res = await axios.get(
+		`${process.env.REACT_APP_API_URL}/product/search?filter=${encodedSearch}`
+	);
+
+	const result = res.data;
+	cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
+
+	return result;
+};
 export const getProductType = async (type,page,limit) => {
 	// if (type) {
 	// 	const res = await axios.get(
@@ -58,7 +75,7 @@ export const createProduct = async (data) => {
 
 export const getDetailsProduct = async (id) => {
 	const res = await axios.get(
-		`${process.env.REACT_APP_API_URL}/product/get-details/${id}`
+		`${process.env.REACT_APP_API_URL}/product/p/${id}`
 	);
 	return res.data;
 };

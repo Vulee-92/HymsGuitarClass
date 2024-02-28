@@ -17,7 +17,7 @@ const CardComponent = ({ product,homePage }) => {
 	const order = useSelector((state) => state.order);
 	const navigate = useNavigate();
 	const handleDetailsProduct = () => {
-		navigate(`/product-details/${product?.slug}`);
+		navigate(`/p/${product?.slug}`);
 	};
 	const dispatch = useDispatch();
 	const handleAddOrderProduct = () => {

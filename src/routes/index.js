@@ -161,7 +161,7 @@ export const routes = [
 
 
 	{
-		path: "/product-details/:id",
+		path: "/p/:id",
 		page: ProductDetailsPage,
 		isShowHeader: true,
 		isShowFooter: true,

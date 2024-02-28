@@ -35,7 +35,7 @@ import Loading from "components/LoadingComponent/Loading";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import useMetaTags from "hooks/useMetaTags";
 import MetaTags from "components/MetaTagsComponent/MetaTagsComponent";
-import MetaTagsComponent from "components/MetaTagsComponent/MetaTagsComponent";
+import MetaTagsComponent from "../../components/MetaTagsComponent/MetaTagsComponent";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -111,16 +111,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 	};
 
-	const fetchGetDetailsProduct = async (context) => {
-		const slug = context?.queryKey && context?.queryKey[1];
-		setSlug(slug);
 
-		if (slug) {
-			const res = await ProductService.getDetailsProduct(slug);
-			await fetchRecentlyViewed(slug);
-			return res?.data;
-		}
-	};
 
 
 	const fetchRecentlyViewedGet = async () => {
@@ -236,12 +227,17 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	// 	}
 	// },[]);
 
+	const fetchGetDetailsProduct = async (context) => {
+		setSlug(idProduct);
+		const res = await ProductService.getDetailsProduct(idProduct);
+		// await fetchRecentlyViewed(idProduct);
 
-
+		return res?.data;
+	};
+	const { isLoading,data: productDetails,isPreviousDatass } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
 	const handleCloseDialog = () => {
 		setOpenDialog(false);
 	};
-	const { isLoading,data: productDetails } = useQuery(["productDetails",idProduct],fetchGetDetailsProduct,{ enabled: !!idProduct });
 
 
 

@@ -4,8 +4,8 @@
  * Validate email
  */
 const validateEmail = email => {
-	let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-	return reg.test(email);
+	// let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	// return reg.test(email);
 };
 
 /**
@@ -23,18 +23,18 @@ const setDataStorage = (key,data) => {
  ** Get data from local storage
  **/
 const getDataStorage = key => {
-	try {
-		let res = localStorage.getItem(key);
-		if (res) {
-			if (res === '') return null;
-			res = JSON.parse(res);
-			return res;
-		} else {
-			return null;
-		}
-	} catch (e) {
-		return null;
-	}
+	// try {
+	// 	let res = localStorage.getItem(key);
+	// 	if (res) {
+	// 		if (res === '') return null;
+	// 		res = JSON.parse(res);
+	// 		return res;
+	// 	} else {
+	// 		return null;
+	// 	}
+	// } catch (e) {
+	// 	return null;
+	// }
 }
 
 /**

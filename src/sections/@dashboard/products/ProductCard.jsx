@@ -34,7 +34,7 @@ export default function ShopProductCard({ product }) {
 	const navigate = useNavigate();
 	const classes = styles();
 	const handleDetailsProduct = (slug) => {
-		navigate(`/product-details/${slug}`);
+		navigate(`/p/${slug}`);
 	};
 	return (
 		<>
