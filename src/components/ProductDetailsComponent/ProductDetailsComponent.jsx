@@ -117,7 +117,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 	const fetchRecentlyViewedGet = async () => {
 		let storageUserID = localStorage.getItem("userId");
 		if (storageUserID === "undefined") {
-			const res = await RecentlyViewed.postRecentlyViewed(slug,userId);
+			const res = await RecentlyViewed.postRecentlyViewed(slug,storageUserID);
 			localStorage.removeItem('userId');
 			return res.data;
 		}
