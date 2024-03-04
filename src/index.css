@@ -12,10 +12,26 @@
 body {
 	margin: 0;
 	cursor: default;
-	user-select: none;
+	/* user-select: none; */
 	font-family: 'Public Sans, sans-serif';
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	/* Thay đổi màu khi người dùng chọn */
+	::selection {
+		background-color: #436E67;
+		/* Màu nền khi chọn */
+		color: #fff;
+		/* Màu chữ khi chọn */
+	}
+
+	/* Thay đổi màu khi người dùng chọn phần không phải văn bản */
+	::-moz-selection {
+		background-color: #436E67;
+		/* Màu nền khi chọn */
+		color: #fff;
+		/* Màu chữ khi chọn */
+	}
 }
 
 @font-face {
