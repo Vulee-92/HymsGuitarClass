@@ -77,30 +77,6 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 				<StyledCardMedia
 
 				>
-					{/* <SvgColor
-						color="paper"
-						src={mask}
-						sx={{
-							width: 80,
-							height: 36,
-							zIndex: 9,
-							bottom: -15,
-							position: 'absolute',
-							color: 'background.paper',
-						}}
-					/>
-					<StyledAvatar
-						src={image}
-						sx={{
-							...((!latestPost) && {
-								zIndex: 9,
-								top: 24,
-								left: 24,
-								width: 40,
-								height: 40,
-							}),
-						}}
-					/> */}
 					<LazyLoad>
 						<StyledCover onClick={() => handleDetailBlog(id)} alt={title} src={image} />
 					</LazyLoad>
@@ -130,7 +106,7 @@ export default function BlogPostCardMobile({ blog,index,id,responsive }) {
 								onClick={() => handleDetailBlog(id)}
 								className={classes.txtTilte}
 								dangerouslySetInnerHTML={{
-									__html: description?.slice(0,50) + "..."
+									__html: description?.slice(0,99) + "..."
 								}}
 							/>
 						</Box>

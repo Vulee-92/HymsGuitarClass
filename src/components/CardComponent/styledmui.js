@@ -12,18 +12,24 @@ export default makeStyles(() => {
 		},
 		nameProduct: {
 			...CStyles.txt_header_title,
-			textAlign: "center",
+			// textAlign: "center",
 			fontWeight: 500,
 			color: "#231e18",
-			fontSize: "1rem",
-			width: "80%",
+			// fontSize: "1.2rem",
+			width: "100%",
 			margin: "0 auto",
 			height: "70px",
 			overflow: "hidden",
 			overflowWrap: "break-word",
 			wordWrap: "break-word",
 			marginTop: "30px",
-			cursor: 'pointers'
+			cursor: 'pointer',
+			textOverflow: "ellipsis",
+			lineHeight: "20px",
+			WebkitLineClamp: 3,
+			height: "60px",
+			display: "-webkit-box",
+			WebkitBoxOrient: "vertical"
 		},
 		txtPrice: {
 			...CStyles.txt_body_item,

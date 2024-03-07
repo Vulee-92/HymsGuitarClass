@@ -122,14 +122,9 @@ const BlogUserPage = () => {
 			</Helmet>
 			<CarouselComponent />
 			<Container maxWidth="lg">
-				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
+				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "20px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
 					<Grid item xs={12} sm={12} md={12} xl={12}>
 						<Item>
-							<Grid container spacing={3}>
-								{/* {blogList.map((blog,index) => ( */}
-								{/* <BlogPostCard blog={blogList} /> */}
-								{/* ))} */}
-							</Grid>
 							<Grid container sx={{ display: { xl: "block",xs: "none" } }}>
 								< Grid container item spacing={2} >
 									{blogs?.data?.map((post,index) => (

@@ -40,6 +40,13 @@ export default makeStyles(() => {
 			fontSize: "1.3rem",
 			overflow: "hidden",
 			overflowWrap: "break-word",
+			cursor: 'pointer',
+			textOverflow: "ellipsis",
+			lineHeight: "20px",
+			WebkitLineClamp: 3,
+			height: "60px",
+			display: "-webkit-box",
+			WebkitBoxOrient: "vertical",
 			height: "40px !important",textTransform: "none",
 			"&:hover": {
 				color: "#436E67",

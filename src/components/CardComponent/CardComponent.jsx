@@ -9,7 +9,15 @@ import { addOrderProduct,resetOrder,addToOrderAndSelect } from "../../redux/slid
 import LazyLoad from 'react-lazyload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag,faTags } from '@fortawesome/free-solid-svg-icons';
-
+import { styled } from '@mui/styles';
+const StyledProductImg = styled('img')({
+	top: 0,
+	width: '100% !important',
+	height: '100% !important',
+	objectFit: 'cover',
+	position: 'absolute',
+	cursor: 'pointer'
+});
 const CardComponent = ({ product,homePage }) => {
 	const classes = styles();
 	const [isProcessing,setIsProcessing] = useState(false);
@@ -98,19 +106,17 @@ const CardComponent = ({ product,homePage }) => {
 
 	return (
 		<Box className={classes.boxCard}>
-			<LazyLoad style={{
-				display: 'block',
-				cursor: 'pointer',
-
-			}}>
-				<img
-					className={homePage ? classes.boxImgHome : classes.boxImg}
-					onClick={() => handleDetailsProduct()}
-					src={product?.image && product.image[0]}
-					alt={product?.image && product.image[0]} />
-			</LazyLoad>
-
-			<Typography className={classes.nameProduct} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.name.slice(0,80)}</Typography>
+			<Box
+				sx={{ pt: '100%',position: 'relative' }}>
+				<LazyLoad>
+					<StyledProductImg
+						// className={homePage ? classes.boxImgHome : classes.boxImg}
+						onClick={() => handleDetailsProduct()}
+						src={product?.image && product.image[0]}
+						alt={product?.image && product.image[0]} />
+				</LazyLoad>
+			</Box>
+			<Typography className={classes.nameProduct} sx={{ cursor: 'pointer',fontSize: { xs: "1rem !important",xl: "1.2rem !important",textAlign: { xs: "left !important",xl: "center !important" } } }} onClick={() => handleDetailsProduct()}> 			{product?.name.slice(0,80)}</Typography>
 			<Box className={classes.boxPrice}>
 				<Typography className={classes.txtPrice} sx={{ cursor: 'pointer' }} onClick={() => handleDetailsProduct()}> 			{product?.countInStock === 0 ? <Typography className={classes.txtStatusSell} style={{ color: "rgb(178, 34, 34)" }} >hết hàng</Typography> : <Typography className={classes.txtStatusSell} style={{ color: "#436E67" }} >còn hàng</Typography>}</Typography>
 
