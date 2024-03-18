@@ -128,7 +128,7 @@ const ProductsPage = () => {
 			</Helmet>
 
 			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
-				<Box className={classes.carouselContainer}>
+				<Box className={classes.carouselContainer} sx={{ display: { xl: "block",xs: "none" } }}>
 					<Grid container spacing={2} >
 						<Grid item xl={6} xs={12}>
 							<img src={Assets.bgAccessories} className={classes.carouselImage} />
@@ -144,7 +144,7 @@ const ProductsPage = () => {
 				</Box>
 				<Typography className={classes.txtTitleBox}>{collection?.name}</Typography>
 				<Grid container spacing={2}>
-					<Grid item xs={12} md={2.5}>
+					<Grid item xs={12} md={3}>
 						<Accordion expanded={true} style={{ margin: "0px",boxShadow: "none" }}>
 							<AccordionSummary
 								style={{ marginTop: "0px" }}
@@ -228,7 +228,7 @@ const ProductsPage = () => {
 							</AccordionDetails>
 						</Accordion>
 					</Grid>
-					<Grid item xs={12} md={9.5}>
+					<Grid item xs={12} md={9}>
 						<ProductList products={products} />
 					</Grid>
 				</Grid>
