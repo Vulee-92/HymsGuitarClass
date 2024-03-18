@@ -159,7 +159,7 @@ const ProductsPage = () => {
 							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
 								<Grid container spacing={1}>
 									{brands.map((item) => (
-										<Grid item key={item.slug} sx={12} xl={12} style={{ paddingRight: "8px !important" }}>
+										<Grid item key={item.slug} xs={12} xl={12} style={{ paddingRight: "8px !important" }}>
 											<Grid container spacing={2} alignItems="center">
 												<Grid item xs={10} sm={10}   >
 													<Box className={classes.txtCheckbox}>
@@ -200,7 +200,7 @@ const ProductsPage = () => {
 							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
 								<Grid container spacing={1}>
 									{categories.map((item) => (
-										<Grid item key={item.slug} sx={12} xl={12}>
+										<Grid item key={item.slug} xs={12} xl={12}>
 											<Grid container spacing={2} alignItems="center">
 												<Grid item xs={10} sm={10} >
 													<Box className={classes.txtCheckbox}>
