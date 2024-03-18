@@ -14,30 +14,69 @@ const cache = new LRUCache({ max: 100,maxAge: 1000 * 60 * 10 }); // Lưu trữ t
 // 	}
 // 	return res.data
 // }
-export const getAllProduct = async (search) => {
-	const cacheKey = `${search}`;
-	const cachedResult = cache.get(cacheKey);
+// export const getAllProduct = async (search) => {
+// 	const cacheKey = `${search}`;
+// 	const cachedResult = cache.get(cacheKey);
 
-	if (cachedResult) {
-		return cachedResult;
-	}
+// 	if (cachedResult) {
+// 		return cachedResult;
+// 	}
+// 	let res = {};
+// 	if (search?.length > 0) {
+// 		const encodedSearch = encodeURIComponent(search);
+// 		res = await axios.get(
+// 			`${process.env.REACT_APP_API_URL}/product/get-all/${encodedSearch}`
+// 		);
+// 	} else {
+// 		res = await axios.get(
+// 			`${process.env.REACT_APP_API_URL}/product/get-all`
+// 		);
+// 	}
+
+// 	const result = res.data;
+// 	cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
+
+// 	return result;
+// };
+
+
+export const getAllProduct = async (collections,type,vendor) => {
 	let res = {};
-	if (search?.length > 0) {
-		const encodedSearch = encodeURIComponent(search);
-		res = await axios.get(
-			`${process.env.REACT_APP_API_URL}/product/get-all?filter[]=type,${encodedSearch}`
-		);
-	} else {
-		res = await axios.get(
-			`${process.env.REACT_APP_API_URL}/product/get-all`
-		);
+	let url = `${process.env.REACT_APP_API_URL}/product/get-all`;
+
+	// Xây dựng URL phù hợp dựa trên các tham số
+	if (collections) {
+		url += `/${encodeURIComponent(collections)}`;
 	}
 
-	const result = res.data;
-	cache.set(cacheKey,result); // Lưu kết quả vào bộ nhớ đệm
+	const queryParams = [];
+	if (type) {
+		queryParams.push(`type=${type}`);
+	}
+	if (vendor) {
+		queryParams.push(`vendor=${vendor}`);
+	}
 
-	return result;
+	if (queryParams.length > 0) {
+		url += `?${queryParams.join('&')}`;
+	}
+
+	// Gọi API
+	try {
+		res = await axios.get(url);
+	} catch (error) {
+		console.error('Error fetching products:',error);
+		// Xử lý lỗi nếu cần
+	}
+
+	return res.data;
 };
+
+
+
+
+
+
 export const getSearchProduct = async (search) => {
 	const cacheKey = `${search}`;
 	const cachedResult = cache.get(cacheKey);

@@ -47,6 +47,7 @@ export const Assets = {
 
 	bgHymnsCenter: require("../assets/images/background/bg_carousel_desktop_christmas_3.webp"),
 	bgHome1: require("../assets/images/background/1.png"),
+	bgAccessories: require("../assets/images/background/g7th.jpg"),
 	bgHome2: require("../assets/images/background/2.png"),
 	bgHome3: require("../assets/images/background/3.png"),
 	bgHome4: require("../assets/images/background/4.png"),

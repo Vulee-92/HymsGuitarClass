@@ -1,4 +1,4 @@
-import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails } from "@mui/material";
+import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox } from "@mui/material";
 import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort,ProductList,ProductCartWidget,ProductFilterSidebar } from '../../sections/@dashboard/products';
@@ -12,7 +12,7 @@ import Typical from "react-typical";
 // import NavbarComponent from "components/NavbarComponent/NavbarComponent";
 import { useDebounce } from "hooks/useDebounce";
 import { useSelector } from "react-redux";
-import { useLocation,useParams } from "react-router-dom";
+import { useLocation,useNavigate,useParams } from "react-router-dom";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
@@ -20,143 +20,224 @@ import AnswerComponent from "components/AnswerComponent/AnswerComponent";
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import ShopProductSort from "../../sections/@dashboard/products/ProductSort";
+import { Assets } from "configs";
 const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
 
-
-// const ProductList = React.lazy(() => import('../../sections/@dashboard/products'));
-
 const ProductsPage = () => {
-	const [openFilter,setOpenFilter] = useState(false);
-	const [typeProducts,setTypeProducts] = useState([])
-	const handleOpenFilter = () => {
-		setOpenFilter(true);
-		// setState(null);
-	};
-	const [products,setOrderData] = useState(null);
-	// State variable to track loading status
+	const [products,setProducts] = useState(null);
 	const [isLoading,setIsLoading] = useState(true);
+	const [brands,setBrands] = useState([]);
+	const [categories,setCategories] = useState([]);
+	const params = useParams();
 	const classes = styles();
-	const handleCloseFilter = () => {
-		setOpenFilter(false);
-	};
-	const params = useParams()
-	const { id } = params
 
-	// const searchProduct = useSelector((state) => state?.product?.search);
-	// const searchDebounce = useDebounce(searchProduct,500);
-
+	const [selectedBrands,setSelectedBrands] = useState([]);
+	const [selectedCategories,setSelectedCategories] = useState([]);
+	const [collection,setCollection] = useState();
+	console.log("collection",collection)
+	const navigate = useNavigate();
+	console.log("selectedBrands",selectedBrands)
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				setIsLoading(true);
 
-				const res = await ProductService.getAllProduct(id);
+				const { id,type,vendor } = params;
+				console.log("id",type,vendor);
+				const res = await ProductService.getAllProduct(id,selectedCategories,selectedBrands);
 
-				// Your other logic...
-
-
-
-				// Set order data or perform other logic based on the response
-				setOrderData(res.data);
+				setProducts(res.data);
+				setBrands(res.brands);
+				setCategories(res.categories);
+				setCollection(res.collections[0]);
 			} catch (error) {
+				console.error('Error fetching products:',error);
 				// Handle error...
 			} finally {
-				setIsLoading(false); // Set loading to false whether there's an error or not
+				setIsLoading(false);
 			}
 		};
 
 		fetchData();
-	},[id]);
-	const fetchProductAll = async (context) => {
-		const res = await ProductService.getAllProduct(id,context.queryKey[1].limit);
-		return res;
-	};
+	},[params]);
 
-	// const { isLoading,data: products,isPreviousData } = useQuery(
-	// 	["products"],
-	// 	fetchProductAll,
-	// 	{
-	// 		retry: 3,
-	// 		retryDelay: 100,
-	// 		keepPreviousData: true,
-	// 	}
-	// );
-	const [productss,setProducts] = useState([]);
-	const [loading,setLoading] = useState(false);
-	const [panigate,setPanigate] = useState({
-		page: 0,
-		limit: 10,
-		total: 1,
-	});
-	const fetchProductType = async (type,page,limit) => {
-		setLoading(true);
-		const res = await ProductService.getProductType(type,page,limit);
-		if (res?.status === "OK") {
-			setLoading(false);
-			setProducts(res?.data);
-			setPanigate({ ...panigate,total: res?.totalPage });
-		} else {
-			setLoading(false);
+	// if (isLoading) {
+	// 	return <LoadingSpinner />;
+	// }
+	const handleCheckboxClick = (value,type) => {
+		let updatedSelectedBrands = [...selectedBrands];
+		let updatedSelectedCategories = [...selectedCategories];
+
+		if (type === "brand") {
+			if (selectedBrands.includes(value)) {
+				updatedSelectedBrands = selectedBrands.filter((v) => v !== value);
+			} else {
+				updatedSelectedBrands.push(value);
+			}
+		} else if (type === "cate") {
+			if (selectedCategories.includes(value)) {
+				updatedSelectedCategories = selectedCategories.filter((v) => v !== value);
+			} else {
+				updatedSelectedCategories.push(value);
+			}
 		}
+
+		const urlParams = new URLSearchParams();
+
+		if (updatedSelectedBrands.length > 0) {
+			urlParams.set("vendor",updatedSelectedBrands.join("%2C"));
+		}
+
+		if (updatedSelectedCategories.length > 0) {
+			urlParams.set("type",updatedSelectedCategories.join("%2C"));
+		}
+
+		setSelectedBrands(updatedSelectedBrands);
+		setSelectedCategories(updatedSelectedCategories);
+
+		navigate(window.location.pathname + "?" + urlParams.toString());
 	};
-	// const { isLoading,data: products,isPreviousData } = useQuery(
-	// 	["products"],
-	// 	fetchProductAll,
-	// 	{
-	// 		retry: 3,
-	// 		retryDelay: 100,
-	// 		keepPreviousData: true,
-	// 	}
-	// );
 
-
-	if (isLoading) {
-		return <LoadingSpinner />;
-	}
 
 	// useEffect(() => {
-	// 	if (state) {
-	// 		fetchProductType(state,panigate.page,panigate.limit);
+	// 	// ... other code
+	// 	const fetchData = async () => {
+	// 		// ...
+	// 		const res = await ProductService.getAllProduct(
+	// 			id,
+	// 			selectedCategories.join(","), // Use joined categories for type
+	// 			selectedBrands.join(" ") // Use space-separated brands for vendor
+	// 		);
+	// 		// ...
+	// 	};
+	// 	fetchData();
+	// },[params,selectedBrands,selectedCategories]);
+	// const handleCheckboxClick = (value,type) => {
+	// 	if (type === "brand") {
+	// 		navigate(`/product/accessories?vendor=${value.normalize('NFD').replace(/[\u0300-\u036f]/g,'')?.replace(/ /g,'_')}`,{ state: value })
+	// 	} else if (type === "cate") {
+	// 		navigate(`/product/accessories?type=${value.normalize('NFD').replace(/[\u0300-\u036f]/g,'')?.replace(/ /g,'_')}`,{ state: value })
+
 	// 	}
-	// },[state,panigate.page,panigate.limit]);
+	// };
 
 	return (
 		<>
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
-			<CarouselComponent />
 
-			<Container maxWidth="lg" style={{ marginTop: "100px" }} >
-				{/* <Grid container spacing={2} > */}
-				{/* <Grid item xs={12} sm={12} md={3} xl={3} spacing={2} > */}
-				<Typography className={classes.txtTitleBox}>Sản phẩm</Typography>
-				{/* 
+			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
+				<Box className={classes.carouselContainer}>
+					<Grid container spacing={2} >
+						<Grid item xl={6} xs={12}>
+							<img src={Assets.bgAccessories} className={classes.carouselImage} />
+						</Grid>
+						<Grid item xl={6} xs={12} style={{ background: "#000",display: "flex",justifyContent: "center",alignItems: "center" }}>
+							<Box textAlign="left">
+								<Typography className={classes.txtDesTitle} style={{ color: "#fff",textAlign: "left" }}>{collection?.name}</Typography>
+								<Typography className={classes.txtDesTitle} style={{ color: "#fff",fontSize: "1rem",textAlign: "left",width: "90%" }}>{collection?.description}</Typography>
+							</Box>
+						</Grid>
+
 					</Grid>
-					<Grid item xs={12} sm={12} md={12} xl={9}>
-						<ShopProductSort />
+				</Box>
+				<Typography className={classes.txtTitleBox}>{collection?.name}</Typography>
+				<Grid container spacing={2}>
+					<Grid item xs={12} md={2.5}>
+						<Accordion expanded={true} style={{ margin: "0px",boxShadow: "none" }}>
+							<AccordionSummary
+								style={{ marginTop: "0px" }}
+								expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={16} color="#000" />}
+								aria-controls="panel1a-content"
+								id="panel1a-header"
+								className={classes.BoxTilte}
+
+							>
+								<Typography className={classes.txtTilte} >Thương hiệu</Typography>
+							</AccordionSummary>
+							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
+								<Grid container spacing={1}>
+									{brands.map((item) => (
+										<Grid item key={item.slug} sx={12} xl={12} style={{ paddingRight: "8px !important" }}>
+											<Grid container spacing={2} alignItems="center">
+												<Grid item xs={10} sm={10}   >
+													<Box className={classes.txtCheckbox}>
+
+														<Checkbox
+															sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+															onClick={() => handleCheckboxClick(item.slug,"brand")}
+														/>
+														{item.brand}
+													</Box>
+												</Grid>
+												<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
+													<Box className={classes.txtCheckbox}>
+
+														({item.count})
+													</Box>
 
 
+												</Grid>
+											</Grid>
+										</Grid>
+									))}
+								</Grid>
+							</AccordionDetails>
+						</Accordion>
+
+						{/* Accordion Loại sản phẩm */}
+						<Accordion expanded={true} style={{ margin: "0px",boxShadow: "none",marginTop: "10px" }} >
+							<AccordionSummary
+								style={{ marginTop: "0px" }}
+								expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
+								aria-controls="panel1a-content"
+								id="panel1a-header"
+								className={classes.BoxTilte}
+							>
+								<Typography className={classes.txtTilte}  >Loại sản phẩm</Typography>
+							</AccordionSummary>
+							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
+								<Grid container spacing={1}>
+									{categories.map((item) => (
+										<Grid item key={item.slug} sx={12} xl={12}>
+											<Grid container spacing={2} alignItems="center">
+												<Grid item xs={10} sm={10} >
+													<Box className={classes.txtCheckbox}>
+														<Checkbox
+															onClick={() => handleCheckboxClick(item.slug,"cate")}
+
+															sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+															data-type={"cate"}
+														/>
+														{item.category}
+													</Box>
+
+												</Grid>
+												<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
+													<Box className={classes.txtCheckbox}>
+
+														({item.count})
+													</Box>
+
+												</Grid>
+											</Grid>
+										</Grid>
+									))}
+								</Grid>
+							</AccordionDetails>
+						</Accordion>
 					</Grid>
-				</Grid> */}
-
-				<Grid container spacing={2} item sm={12} md={12} sx={{ marginTop: { xs: "0px",xl: "50px",lg: "50px",md: "0px",sm: "0px" } }}>
-					<Grid item xs={12} sm={12} md={3} xl={3} spacing={2} >
-						<NavbarComponent />
-					</Grid>
-					<Grid item xs={12} sm={12} md={12} xl={9}>
-						{/* <ProductList products={state ? productList?.filter(product => product?.type === state) : productList} /> */}
+					<Grid item xs={12} md={9.5}>
 						<ProductList products={products} />
-
 					</Grid>
 				</Grid>
 			</Container>
+
 			<Container maxWidth="lg">
 				<AnswerComponent />
-
 			</Container>
 		</>
-
 	);
 };
 

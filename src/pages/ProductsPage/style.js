@@ -6,7 +6,25 @@ import CStyles from "../../utils/common";
 
 export default makeStyles(() => {
 	return {
+		carouselContainer: {
+			width: '100%',
+			overflow: 'hidden',
+			margin: "0 auto",
+			height: '200px	', // Adjust the height as needed
 
+		},
+		carouselImage: {
+			width: '100% !important',
+			height: '200px !important', // Adjust the height as needed
+			objectFit: 'cover',
+			backgroundRepeat: 'no-repeat',
+			backgroundSize: 'cover',
+			transition: 'transform 0.3s ease',
+			backgroundPosition: 'center center',
+			"@media (max-width: 767px)": {
+				marginTop: "20vh",
+			},
+		},
 		conModal: {
 			...CStyles.shadow,
 			top: "50%",
@@ -21,6 +39,24 @@ export default makeStyles(() => {
 			height: "100%",
 			marginBottom: "5%",
 			marginTop: "5%",
+		},
+		txtTilte: {
+			...CStyles.txt_body_item,
+			color: "#000",
+			fontSize: "1.2rem",
+			fontWeight: 600,
+			margin: "0px",
+			cursor: "pointer",
+		},
+		BoxTilte: {
+			border: "1px solid #d6d6d4",
+			margin: "0px",
+			height: "40px",
+			background: "#f4f4f2",
+			color: "#000",
+			borderTopLeftRadius: "3px",
+			borderTopRightRadius: "3px",
+			minHeight: "0px !important",
 		},
 		conTextCreate: {
 			...CStyles.txt_header_title,
@@ -416,8 +452,22 @@ export default makeStyles(() => {
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#393939",
-			fontSize: "16px",
+			fontSize: "1rem",
 			fontWeight: 700,
+			lineHeight: 1.7,
+			textAlign: "left",
+			fontSmooth: "antialiased !important",
+			// marginBottom: "30px",
+			"@media (max-width: 550px)": {
+				fontSize: ".8rem",
+				textAlign: "left",
+			},
+		},
+		txtCheckbox: {
+			...CStyles.txt_body_item,
+			color: "#393939",
+			fontSize: "1rem",
+			fontWeight: 500,
 			lineHeight: 1.7,
 			textAlign: "left",
 			fontSmooth: "antialiased !important",

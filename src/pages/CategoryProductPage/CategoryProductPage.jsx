@@ -19,10 +19,10 @@ const CategoryProductPage = () => {
 	const classes = styles();
 	// const { filter: categoryId } = useParams();
 	const categories = [
-		{ id: 'Acoustic-guitars',name: 'Guitar',icon: Assets.guitar },
-		{ id: 'piano-electric',name: 'Piano điện',icon: Assets.piano },
-		{ id: 'accessories',name: 'Phụ kiện',icon: Assets.daydeoguitar },
-		{ id: '',name: 'Tất cả',icon: Assets.allguitar },
+		{ id: 'acoustic-guitars',name: 'Guitar',icon: Assets.guitar,type: 1 },
+		{ id: 'piano-dien',name: 'Piano điện',icon: Assets.piano,type: 1 },
+		{ id: 'accessories',name: 'Phụ kiện',icon: Assets.daydeoguitar,type: 1 },
+		{ id: '',name: 'Tất cả',icon: Assets.allguitar,type: 1 },
 		// Thêm các danh mục khác nếu cần
 	];
 

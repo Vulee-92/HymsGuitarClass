@@ -1,8 +1,8 @@
 import React,{ useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import Zoom from 'react-img-zoom';
 
 const ImageCarouselZoom = (props) => {
 	const [selectedImage,setSelectedImage] = useState(0);
@@ -25,9 +25,10 @@ const ImageCarouselZoom = (props) => {
 			>
 				{props?.data?.map((image,index) => (
 					<div key={index} onClick={() => handleImageClick(index)}>
-						<Zoom zoomMargin={20} style={{ maxWidth: '50vw',maxHeight: '50vh' }}>
-							<img src={image} sx={{ height: '100px',width: 'auto' }} alt={`Image ${index}`} />
-						</Zoom>
+						<Zoom zoomMargin={20} style={{ maxWidth: '30vw',maxHeight: '50vh' }} img={image} sx={{ height: '100px',width: 'auto' }} alt={`Image ${index}`} zoomScale={1.5}
+							width={600}
+							height={600} />
+
 					</div>
 				))}
 			</Carousel>

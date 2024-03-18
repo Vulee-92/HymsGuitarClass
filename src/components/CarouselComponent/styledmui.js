@@ -9,6 +9,7 @@ export default makeStyles(() => {
 		carouselContainer: {
 			width: '100%',
 			overflow: 'hidden',
+			margin: "0 auto",
 			height: '500px	', // Adjust the height as needed
 
 		},
