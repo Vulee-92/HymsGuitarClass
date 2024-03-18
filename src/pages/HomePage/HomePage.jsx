@@ -21,6 +21,7 @@ import CategoryProductPage from "pages/CategoryProductPage/CategoryProductPage";
 import { useNavigate } from "react-router-dom";
 import { Assets } from "configs";
 import CategoryList from "components/SchemaComponent/SchemaComponent";
+import FilterBrandComponent from "components/FilterBrandComponent/FilterBrandComponent";
 <script src='https://unpkg.com/codyhouse-framework/main/assets/js/util.js'></script>;
 
 const HomePage = () => {
@@ -49,10 +50,10 @@ const HomePage = () => {
 		// Chuyển đến trang chi tiết sản phẩm với giá trị danh mục
 		navigate(`/product/${categoryId}`);
 	};
-	const fetchProductAll = async (context) => {
-		const limit = context?.queryKey && context?.queryKey[1];
-		const search = context?.queryKey && context?.queryKey[2];
-		const res = await ProductService.getAllProduct(search,limit);
+	const fetchProductAll = async () => {
+		// const limit = context?.queryKey && context?.queryKey[1];
+		// const search = context?.queryKey && context?.queryKey[2];
+		const res = await ProductService.getAllProduct();
 
 		return res;
 	};
@@ -111,7 +112,7 @@ const HomePage = () => {
 	const {
 		isLoading,
 		data: products,
-	} = useQuery(["products",limit,searchDebounce],fetchProductAll,{
+	} = useQuery(["products"],fetchProductAll,{
 		retry: 3,
 		retryDelay: 100,
 		keepPreviousData: true,
@@ -125,7 +126,6 @@ const HomePage = () => {
 		keepPreviousData: true,
 	});
 	const sortedProducts = products?.data?.sort((a,b) => b.createdAt - a.createdAt);
-
 	// Lấy ra 5 sản phẩm mới nhất
 	const latestProducts = sortedProducts?.slice(0,24);
 	const acousticProducts = latestProducts?.filter(
@@ -180,9 +180,15 @@ const HomePage = () => {
 						</div>
 					</Box>
 
-
 				</Container>
+				{/* <Container maxWidth='lg'>
+					<Box>
+						<Typography className={classes.txtTitleBox}>Tìm theo thương hiệu</Typography>
+						<FilterBrandComponent />
 
+					</Box>
+
+				</Container> */}
 				<Container maxWidth='lg'>
 					<Box>
 						<Typography className={classes.txtTitleBox}>PIANO ĐIỆN</Typography>
