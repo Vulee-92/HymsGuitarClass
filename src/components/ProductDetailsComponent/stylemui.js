@@ -100,7 +100,7 @@ export default makeStyles(() => {
 			height: "100%",
 
 			"@media all and (max-width: 768px)": {
-				width: "calc(90% - 10px)",
+				width: "calc(100% - 0px)",
 			},
 		},
 		txtTitleBox: {

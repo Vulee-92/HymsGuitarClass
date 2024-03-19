@@ -2,7 +2,8 @@ import React,{ useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import 'react-medium-image-zoom/dist/styles.css';
-import Zoom from 'react-img-zoom';
+import styles from "./stylemui";
+import { Avatar,Box } from '@mui/material';
 
 const ImageCarouselZoom = (props) => {
 	const [selectedImage,setSelectedImage] = useState(0);
@@ -10,6 +11,11 @@ const ImageCarouselZoom = (props) => {
 	const handleImageClick = (index) => {
 		setSelectedImage(index);
 	};
+	const [zoomed,setZoomed] = useState(false);
+	const toggleZoom = () => {
+		setZoomed(!zoomed);
+	};
+	const classes = styles();
 
 	return (
 		<>
@@ -24,12 +30,13 @@ const ImageCarouselZoom = (props) => {
 				showStatus={false}  // Set showStatus to false to hide "1 of 2" text
 			>
 				{props?.data?.map((image,index) => (
-					<div key={index} onClick={() => handleImageClick(index)}>
-						<Zoom zoomMargin={20} style={{ maxWidth: '30vw',maxHeight: '50vh' }} img={image} sx={{ height: '100px',width: 'auto' }} alt={`Image ${index}`} zoomScale={1.5}
-							width={600}
-							height={600} />
+					<Box key={index} onClick={() => handleImageClick(index)} style={{ height: "0px !important, width: 0px !important" }} >
+						<img src={image} className={zoomed ? classes.zoomIn : classes.zoomOut} alt={`Image ${index}`}
+							onClick={toggleZoom}
 
-					</div>
+						/>
+
+					</Box>
 				))}
 			</Carousel>
 
