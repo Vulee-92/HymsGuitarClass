@@ -415,6 +415,28 @@ export default makeStyles(() => {
 			fontSize: 18,
 			cursor: "pointer",
 		},
+		txtFilter: {
+			...CStyles.txt_body_item,
+			textAlign: "center",
+			color: "#000",
+			fontSize: 18,
+			cursor: "pointer",
+		},
+		boxFilter: {
+			alignItems: "center",
+			background: "#fff",
+			border: " 1px solid #d6d6d4",
+			borderRadius: "22px",
+			cursor: "pointer",
+			display: "flex !important",
+			height: "44px",
+			outline: 0,
+			padding: "0 10px",
+			marginRight: "10px !important"
+		},
+		selectedBox: {
+			background: "#f4f4f2",
+		},
 		txtTitleInput: {
 			...CStyles.txt_title_item,
 		},

@@ -1,4 +1,4 @@
-import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox } from "@mui/material";
+import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox,IconButton,Drawer,useMediaQuery } from "@mui/material";
 import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort,ProductList,ProductCartWidget,ProductFilterSidebar } from '../../sections/@dashboard/products';
@@ -19,24 +19,38 @@ import AnimationComponent from "components/AnimationComponent/AnimationComponent
 import AnswerComponent from "components/AnswerComponent/AnswerComponent";
 import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
-import ShopProductSort from "../../sections/@dashboard/products/ProductSort";
 import { Assets } from "configs";
-const NavbarComponent = React.lazy(() => import('../../components/NavbarComponent/NavbarComponent'));
-
+import { FilterList } from "@mui/icons-material";
+import TuneIcon from '@mui/icons-material/Tune';
+import Slider from "react-slick";
 const ProductsPage = () => {
 	const [products,setProducts] = useState(null);
 	const [isLoading,setIsLoading] = useState(true);
 	const [brands,setBrands] = useState([]);
 	const [categories,setCategories] = useState([]);
+	console.log("categories",categories)
 	const params = useParams();
 	const classes = styles();
+	const [open,setOpen] = React.useState(false);
 
+	const handleDrawerOpen = () => {
+		setOpen(true);
+	};
+
+	const handleDrawerClose = () => {
+		setOpen(false);
+	};
 	const [selectedBrands,setSelectedBrands] = useState([]);
 	const [selectedCategories,setSelectedCategories] = useState([]);
 	const [collection,setCollection] = useState();
-	console.log("collection",collection)
-	const navigate = useNavigate();
-	console.log("selectedBrands",selectedBrands)
+	console.log("selectedCategories",selectedCategories)
+	const navigate = useNavigate(); const isDesktop = useMediaQuery('(min-width: 600px)'); // Kiểm tra nếu đây là desktop
+	const [expanded,setExpanded] = React.useState(isDesktop);
+	// const [expanded,setExpanded] = useState(false); // State để kiểm soát việc mở rộng của Accordion
+
+	const handleExpandIconClick = () => {
+		setExpanded(!expanded); // Khi bấm vào expandIcon, đảo ngược giá trị của expanded
+	};
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -98,43 +112,145 @@ const ProductsPage = () => {
 		navigate(window.location.pathname + "?" + urlParams.toString());
 	};
 
+	const handleSliderBoxClick = (slug) => {
+		// Kiểm tra xem slug có trong danh sách đã chọn hay không
+		const isSelected = selectedCategories.includes(slug);
+		let updatedSelectedCategories;
 
-	// useEffect(() => {
-	// 	// ... other code
-	// 	const fetchData = async () => {
-	// 		// ...
-	// 		const res = await ProductService.getAllProduct(
-	// 			id,
-	// 			selectedCategories.join(","), // Use joined categories for type
-	// 			selectedBrands.join(" ") // Use space-separated brands for vendor
-	// 		);
-	// 		// ...
-	// 	};
-	// 	fetchData();
-	// },[params,selectedBrands,selectedCategories]);
-	// const handleCheckboxClick = (value,type) => {
-	// 	if (type === "brand") {
-	// 		navigate(`/product/accessories?vendor=${value.normalize('NFD').replace(/[\u0300-\u036f]/g,'')?.replace(/ /g,'_')}`,{ state: value })
-	// 	} else if (type === "cate") {
-	// 		navigate(`/product/accessories?type=${value.normalize('NFD').replace(/[\u0300-\u036f]/g,'')?.replace(/ /g,'_')}`,{ state: value })
+		// Nếu đã chọn, loại bỏ slug khỏi danh sách
+		if (isSelected) {
+			updatedSelectedCategories = selectedCategories.filter((category) => category !== slug);
+		} else {
+			// Nếu chưa chọn, thêm slug vào danh sách
+			updatedSelectedCategories = [...selectedCategories,slug];
+		}
 
-	// 	}
-	// };
+		// Cập nhật biến state
+		setSelectedCategories(updatedSelectedCategories);
+	};
 
+	const filter = () => {
+		return (
+			<>
+				<Accordion expanded={expanded} // expanded là một object, không phải là một array
+					style={{ margin: "0px",boxShadow: "none" }}
+				>
+					<AccordionSummary
+						style={{ marginTop: "0px" }}
+						expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={16} color="#000" />}
+						aria-controls="panel1-content"
+						id="panel1-header"
+						className={classes.BoxTilte}
+						onClick={handleExpandIconClick}
+
+					>
+						<Typography className={classes.txtTilte} >Thương hiệu</Typography>
+					</AccordionSummary>
+					<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
+						<Grid container spacing={1}>
+							{brands.map((item) => (
+								<Grid item key={item.slug} xs={12} xl={12} style={{ paddingRight: "8px !important" }}>
+									<Grid container spacing={2} alignItems="center">
+										<Grid item xs={10} sm={10}   >
+											<Box className={classes.txtCheckbox}>
+
+												<Checkbox
+													sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+													onClick={() => handleCheckboxClick(item.slug,"brand")}
+												/>
+												{item.brand}
+											</Box>
+										</Grid>
+										<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
+											<Box className={classes.txtCheckbox}>
+
+												({item.count})
+											</Box>
+
+
+										</Grid>
+									</Grid>
+								</Grid>
+							))}
+						</Grid>
+					</AccordionDetails>
+				</Accordion>
+
+				{/* Accordion Loại sản phẩm */}
+				<Accordion expanded={expanded}// expanded là một object, không phải là một array
+					style={{ margin: "0px",boxShadow: "none" }}
+				>
+					<AccordionSummary
+						style={{ marginTop: "0px" }}
+						expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+						className={classes.BoxTilte}
+						onClick={handleExpandIconClick}
+
+					>
+						<Typography className={classes.txtTilte}  >Loại sản phẩm</Typography>
+					</AccordionSummary>
+					<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
+						<Grid container spacing={1}>
+							{categories.map((item) => (
+								<Grid item key={item.slug} xs={12} xl={12}>
+									<Grid container spacing={2} alignItems="center">
+										<Grid item xs={10} sm={10} >
+											<Box className={classes.txtCheckbox}>
+												<Checkbox
+													onClick={() => handleCheckboxClick(item.slug,"cate")}
+
+													sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+													data-type={"cate"}
+												/>
+												{item.category}
+											</Box>
+
+										</Grid>
+										<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
+											<Box className={classes.txtCheckbox}>
+
+												({item.count})
+											</Box>
+
+										</Grid>
+									</Grid>
+								</Grid>
+							))}
+						</Grid>
+					</AccordionDetails>
+				</Accordion>
+
+
+			</>
+		)
+	}
+	const drawerHeight = () => {
+		// Thay thế bằng logic tính toán chiều cao dựa trên nội dung thực tế của bạn
+		return "90%"; // Ví dụ: chiều cao là 200px
+	};
+	const settings = {
+		dots: false,
+
+		speed: 500,
+		slidesToShow: 3,
+		slidesToScroll: 1,
+
+	};
 	return (
 		<>
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
-
 			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
-				<Box className={classes.carouselContainer} sx={{ display: { xl: "block",xs: "none" } }}>
+				<Box className={classes.carouselContainer} sx={{ display: { xl: "block",xs: "flex" } }}>
 					<Grid container spacing={2} >
 						<Grid item xl={6} xs={12}>
 							<img src={Assets.bgAccessories} className={classes.carouselImage} />
 						</Grid>
 						<Grid item xl={6} xs={12} style={{ background: "#000",display: "flex",justifyContent: "center",alignItems: "center" }}>
-							<Box textAlign="left">
+							<Box >
 								<Typography className={classes.txtDesTitle} style={{ color: "#fff",textAlign: "left" }}>{collection?.name}</Typography>
 								<Typography className={classes.txtDesTitle} style={{ color: "#fff",fontSize: "1rem",textAlign: "left",width: "90%" }}>{collection?.description}</Typography>
 							</Box>
@@ -143,96 +259,68 @@ const ProductsPage = () => {
 					</Grid>
 				</Box>
 				<Typography className={classes.txtTitleBox}>{collection?.name}</Typography>
+				<Box sx={{ display: { xs: "block",xl: "none" },alignItems: 'center' }}>
+
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						edge="end"
+						onClick={handleDrawerOpen}
+						sx={{ ml: 1 }}
+					>
+						<Box className={classes.boxFilter} >
+
+							<TuneIcon /> <Typography className={classes.txtFilter} >Filter</Typography>
+						</Box>
+
+					</IconButton>
+
+					<Slider {...settings} >
+						{categories?.map((item) => (
+							<Box className={`${classes.boxFilter} ${selectedCategories.includes(item.slug) ? classes.selectedBox : ''}`}
+								onClick={() => handleCheckboxClick(item.slug,"cate")}
+								data-type={"cate"}
+
+							>
+
+								<Typography className={classes.txtFilter} style={{ fontSize: "13px" }} >	{item?.category}</Typography>
+							</Box>
+
+						))}
+					</Slider>
+
+
+					<Drawer
+						anchor="bottom"
+						open={open}
+						onClose={handleDrawerClose}
+						ModalProps={{
+							keepMounted: true, // Better open performance on mobile.
+						}}
+						PaperProps={{
+							style: {
+								height: drawerHeight(),
+							},
+						}}
+					>
+						{filter()}
+
+
+					</Drawer>
+				</Box>
+
 				<Grid container spacing={2}>
-					<Grid item xs={12} md={3}>
-						<Accordion expanded={true} style={{ margin: "0px",boxShadow: "none" }}>
-							<AccordionSummary
-								style={{ marginTop: "0px" }}
-								expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={16} color="#000" />}
-								aria-controls="panel1a-content"
-								id="panel1a-header"
-								className={classes.BoxTilte}
+					<Grid item xs={12} md={3} sx={{ display: { xs: "none",xl: "block" } }}>
 
-							>
-								<Typography className={classes.txtTilte} >Thương hiệu</Typography>
-							</AccordionSummary>
-							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
-								<Grid container spacing={1}>
-									{brands.map((item) => (
-										<Grid item key={item.slug} xs={12} xl={12} style={{ paddingRight: "8px !important" }}>
-											<Grid container spacing={2} alignItems="center">
-												<Grid item xs={10} sm={10}   >
-													<Box className={classes.txtCheckbox}>
-
-														<Checkbox
-															sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
-															onClick={() => handleCheckboxClick(item.slug,"brand")}
-														/>
-														{item.brand}
-													</Box>
-												</Grid>
-												<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
-													<Box className={classes.txtCheckbox}>
-
-														({item.count})
-													</Box>
-
-
-												</Grid>
-											</Grid>
-										</Grid>
-									))}
-								</Grid>
-							</AccordionDetails>
-						</Accordion>
-
-						{/* Accordion Loại sản phẩm */}
-						<Accordion expanded={true} style={{ margin: "0px",boxShadow: "none",marginTop: "10px" }} >
-							<AccordionSummary
-								style={{ marginTop: "0px" }}
-								expandIcon={<FontAwesomeIcon icon={faChevronDown} fontSize={18} color="#000" />}
-								aria-controls="panel1a-content"
-								id="panel1a-header"
-								className={classes.BoxTilte}
-							>
-								<Typography className={classes.txtTilte}  >Loại sản phẩm</Typography>
-							</AccordionSummary>
-							<AccordionDetails sx={{ boxShadow: "none",padding: "0px !important" }}>
-								<Grid container spacing={1}>
-									{categories.map((item) => (
-										<Grid item key={item.slug} xs={12} xl={12}>
-											<Grid container spacing={2} alignItems="center">
-												<Grid item xs={10} sm={10} >
-													<Box className={classes.txtCheckbox}>
-														<Checkbox
-															onClick={() => handleCheckboxClick(item.slug,"cate")}
-
-															sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
-															data-type={"cate"}
-														/>
-														{item.category}
-													</Box>
-
-												</Grid>
-												<Grid item xs={2} sm={2} sx={{ textAlign: "right" }}>
-													<Box className={classes.txtCheckbox}>
-
-														({item.count})
-													</Box>
-
-												</Grid>
-											</Grid>
-										</Grid>
-									))}
-								</Grid>
-							</AccordionDetails>
-						</Accordion>
+						{filter()}
 					</Grid>
+
 					<Grid item xs={12} md={9}>
 						<ProductList products={products} />
 					</Grid>
 				</Grid>
 			</Container>
+
 
 			<Container maxWidth="lg">
 				<AnswerComponent />
