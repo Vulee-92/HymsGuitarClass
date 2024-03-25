@@ -264,7 +264,6 @@ const SignUpPage = () => {
 			navigate('/verify')
 		}
 	}
-	console.log("first",data)
 	useEffect(() => {
 		if (isSuccess) {
 			message.success(t("thành cônng"));

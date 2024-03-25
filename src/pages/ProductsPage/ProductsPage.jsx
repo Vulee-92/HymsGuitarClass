@@ -54,7 +54,6 @@ const ProductsPage = () => {
 	const [isLoading,setIsLoading] = useState(true);
 	const [brands,setBrands] = useState([]);
 	const [categories,setCategories] = useState([]);
-	console.log("categories",categories)
 	const params = useParams();
 	const classes = styles();
 	const [open,setOpen] = React.useState(false);
@@ -69,7 +68,6 @@ const ProductsPage = () => {
 	const [selectedBrands,setSelectedBrands] = useState([]);
 	const [selectedCategories,setSelectedCategories] = useState([]);
 	const [collection,setCollection] = useState();
-	console.log("selectedCategories",selectedCategories)
 	const navigate = useNavigate(); const isDesktop = useMediaQuery('(min-width: 600px)'); // Kiểm tra nếu đây là desktop
 	const [expanded,setExpanded] = React.useState(isDesktop);
 	// const [expanded,setExpanded] = useState(false); // State để kiểm soát việc mở rộng của Accordion
@@ -83,7 +81,6 @@ const ProductsPage = () => {
 				setIsLoading(true);
 
 				const { id,type,vendor } = params;
-				console.log("id",type,vendor);
 				const res = await ProductService.getAllProduct(id,selectedCategories,selectedBrands);
 
 				setProducts(res.data);

@@ -72,7 +72,6 @@ const FilterBrandComponent = () => {
 	useEffect(() => {
 		fetchBrandProducts();
 	},[]);
-	console.log("brand",brands)
 	return (
 		<Slider {...settings}>
 			{brands.map((brand) => (

@@ -11,6 +11,7 @@ import CarouselComponent from "components/CarouselComponent/CarouselComponent";
 import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 import { Link,useNavigate,useParams } from "react-router-dom";
 import { Assets } from "configs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 
@@ -19,7 +20,7 @@ const CategoryProductPage = () => {
 	const classes = styles();
 	// const { filter: categoryId } = useParams();
 	const categories = [
-		{ id: 'acoustic-guitars',name: 'Guitar',icon: Assets.guitar,type: 1 },
+		{ id: 'guitar',name: 'Guitar',icon: Assets.guitar,type: 1 },
 		{ id: 'piano-dien',name: 'Piano điện',icon: Assets.piano,type: 1 },
 		{ id: 'accessories',name: 'Phụ kiện',icon: Assets.daydeoguitar,type: 1 },
 		{ id: '',name: 'Tất cả',icon: Assets.allguitar,type: 1 },
