@@ -1,4 +1,4 @@
-import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox,IconButton,Drawer,useMediaQuery } from "@mui/material";
+import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox,IconButton,Drawer,useMediaQuery,Breadcrumbs,Chip,emphasize } from "@mui/material";
 import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort,ProductList,ProductCartWidget,ProductFilterSidebar } from '../../sections/@dashboard/products';
@@ -13,7 +13,7 @@ import Typical from "react-typical";
 import { useDebounce } from "hooks/useDebounce";
 import { useSelector } from "react-redux";
 import { useLocation,useNavigate,useParams } from "react-router-dom";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown,faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimationComponent from "components/AnimationComponent/AnimationComponent";
 import AnswerComponent from "components/AnswerComponent/AnswerComponent";
@@ -23,6 +23,32 @@ import { Assets } from "configs";
 import { FilterList } from "@mui/icons-material";
 import TuneIcon from '@mui/icons-material/Tune';
 import Slider from "react-slick";
+
+
+const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+	const backgroundColor =
+		theme.palette.mode === 'light'
+			? theme.palette.grey[100]
+			: theme.palette.grey[800];
+	return {
+		backgroundColor,
+		height: theme.spacing(3),
+		color: theme.palette.text.primary,
+		fontWeight: theme.typography.fontWeightRegular,
+		'&:hover, &:focus': {
+			backgroundColor: emphasize(backgroundColor,0.06),
+		},
+		'&:active': {
+			boxShadow: theme.shadows[1],
+			backgroundColor: emphasize(backgroundColor,0.12),
+		},
+	};
+}); // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
+
+function handleClick(event) {
+	event.preventDefault();
+	console.info('You clicked a breadcrumb.');
+}
 const ProductsPage = () => {
 	const [products,setProducts] = useState(null);
 	const [isLoading,setIsLoading] = useState(true);
@@ -230,85 +256,157 @@ const ProductsPage = () => {
 		// Thay thế bằng logic tính toán chiều cao dựa trên nội dung thực tế của bạn
 		return "90%"; // Ví dụ: chiều cao là 200px
 	};
+	const maxSlidesToShow = 3; // Số lượng slide tối đa để hiển thị
+
+	// Tạo đối tượng settings cho slider
 	const settings = {
-		dots: false,
-
 		speed: 500,
-		slidesToShow: 3,
+		marginRight: 30,
+		slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
 		slidesToScroll: 1,
-
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToScroll: 3,
+					infinite: true,
+					dots: true
+				}
+			},
+			{
+				breakpoint: 600,
+				settings: {
+					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToScroll: 2,
+					initialSlide: 2
+				}
+			},
+			{
+				breakpoint: 390,
+				settings: {
+					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToScroll: 1
+				}
+			}
+		]
 	};
+
+
+	// Sử dụng hàm setupSlider với một mảng categories nhất định
+
 	return (
 		<>
 			<Helmet>
 				<title> Hymns - Sản phẩm </title>
 			</Helmet>
 			<Container maxWidth="lg" style={{ marginTop: "100px" }}>
-				<Box className={classes.carouselContainer} sx={{ display: { xl: "block",xs: "flex" } }}>
+
+				<Box className={classes.carouselContainer} sx={{ display: { xl: "block",xs: "block" },height: { xs: "auto",xl: "200px" } }}>
+					<div role="presentation" style={{ marginBottom: "10px" }}>
+						<Breadcrumbs aria-label="breadcrumb">
+							<StyledBreadcrumb
+								component="a"
+								href="#"
+								label="Trang chủ"
+							/>
+							<StyledBreadcrumb
+								label={collection?.name}
+							/>
+						</Breadcrumbs>
+					</div>
 					<Grid container spacing={2} >
 						<Grid item xl={6} xs={12}>
 							<img src={Assets.bgAccessories} className={classes.carouselImage} />
 						</Grid>
-						<Grid item xl={6} xs={12} style={{ background: "#000",display: "flex",justifyContent: "center",alignItems: "center" }}>
+						<Grid item xl={6} xs={12} sx={{ background: { xl: "#000",xs: "#fff" },display: "flex",justifyContent: "center",alignItems: "center" }}>
 							<Box >
-								<Typography className={classes.txtDesTitle} style={{ color: "#fff",textAlign: "left" }}>{collection?.name}</Typography>
-								<Typography className={classes.txtDesTitle} style={{ color: "#fff",fontSize: "1rem",textAlign: "left",width: "90%" }}>{collection?.description}</Typography>
+								<Typography className={classes.txtDesTitle} sx={{ color: { xs: "#000",xl: "#fff !important" },display: { xl: "flex",xs: "none" },textAlign: "left" }}>{collection?.name}</Typography>
+								<Typography className={classes.txtDesTitle} sx={{ color: { xs: "#000 !important",xl: "#fff !important" },textAlign: "left",fontSize: "1.115rem !important",marginTop: { xl: "16px",xs: "2px" } }}>{collection?.description}</Typography>
 							</Box>
 						</Grid>
 
 					</Grid>
 				</Box>
-				<Typography className={classes.txtTitleBox}>{collection?.name}</Typography>
-				<Box sx={{ display: { xs: "block",xl: "none" },alignItems: 'center' }}>
+				<br />
+				{/* <Typography className={classes.txtTitleBox}>{collection?.name}</Typography> */}
+				<Box
 
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="end"
-						onClick={handleDrawerOpen}
-						sx={{ ml: 1 }}
-					>
-						<Box className={classes.boxFilter} >
+				>
 
-							<TuneIcon /> <Typography className={classes.txtFilter} >Filter</Typography>
-						</Box>
-
-					</IconButton>
-
-					<Slider {...settings} >
-						{categories?.map((item) => (
-							<Box className={`${classes.boxFilter} ${selectedCategories.includes(item.slug) ? classes.selectedBox : ''}`}
-								onClick={() => handleCheckboxClick(item.slug,"cate")}
-								data-type={"cate"}
-
-							>
-
-								<Typography className={classes.txtFilter} style={{ fontSize: "13px" }} >	{item?.category}</Typography>
-							</Box>
-
-						))}
-					</Slider>
-
-
-					<Drawer
-						anchor="bottom"
-						open={open}
-						onClose={handleDrawerClose}
-						ModalProps={{
-							keepMounted: true, // Better open performance on mobile.
-						}}
-						PaperProps={{
-							style: {
-								height: drawerHeight(),
-							},
-						}}
-					>
-						{filter()}
-
-
-					</Drawer>
+					{selectedCategories && ( // Kiểm tra xem mục được chọn hay không
+						<Typography className={classes.txtFilterChoose}>{selectedCategories.length} bộ lọc đang sử dụng</Typography>
+					)}
 				</Box>
 
+				<Grid container spacing={2}
+					direction="row"
+					justifyContent="flex-start"
+					sx={{ display: { xl: "none",xs: "flex" } }}
+					alignItems="center"
+				>
+					<Grid item xs={3}
+					>
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							edge="end"
+							onClick={handleDrawerOpen}
+						>
+							<Box className={classes.boxFilter} >
+
+								<TuneIcon fontSize="13px" /> <Typography className={classes.txtFilter} >Filter</Typography>
+							</Box>
+
+						</IconButton>
+					</Grid>
+					<Grid item xs={9}>
+						<Slider {...settings} style={{
+							marginRight: "30px !important"
+
+						}}>
+							{categories?.map((item) => (
+								<Box className={`${classes.boxFilterItem} ${selectedCategories.includes(item.slug) ? classes.selectedBox : ''}`}
+									onClick={() => handleCheckboxClick(item.slug,"cate")}
+									data-type={"cate"}
+									style={{ display: 'inline-block',marginRight: '10px',marginBottom: '10px' }} // Thiết lập display inline-block và margin
+
+								>
+
+									<Typography className={classes.txtFilter} style={{ fontSize: "13px" }} >	{item?.category}</Typography>
+									{selectedCategories.includes(item.slug) && ( // Kiểm tra xem mục được chọn hay không
+										<FontAwesomeIcon icon={faCircleXmark} />
+									)}
+								</Box>
+
+							))}
+						</Slider>
+					</Grid>
+
+				</Grid>
+
+
+
+
+
+
+				<Drawer
+					anchor="bottom"
+					open={open}
+					onClose={handleDrawerClose}
+					ModalProps={{
+						keepMounted: true, // Better open performance on mobile.
+					}}
+					PaperProps={{
+						style: {
+							height: drawerHeight(),
+						},
+					}}
+				>
+					{filter()}
+
+
+				</Drawer>
 				<Grid container spacing={2}>
 					<Grid item xs={12} md={3} sx={{ display: { xs: "none",xl: "block" } }}>
 

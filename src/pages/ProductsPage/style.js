@@ -10,7 +10,7 @@ export default makeStyles(() => {
 			width: '100%',
 			overflow: 'hidden',
 			margin: "0 auto",
-			height: '200px	', // Adjust the height as needed
+			// height: '200px	', // Adjust the height as needed
 
 		},
 		carouselImage: {
@@ -21,9 +21,9 @@ export default makeStyles(() => {
 			backgroundSize: 'cover',
 			transition: 'transform 0.3s ease',
 			backgroundPosition: 'center center',
-			// "@media (max-width: 767px)": {
-			// 	marginTop: "20vh",
-			// },
+			"@media (max-width: 767px)": {
+				borderRadius: 10
+			},
 		},
 		conModal: {
 			...CStyles.shadow,
@@ -409,8 +409,7 @@ export default makeStyles(() => {
 		},
 		txtDesTitle: {
 			...CStyles.txt_body_item,
-			textAlign: "center",
-			marginTop: Configs.pH,
+			textAlign: "left",
 			color: Colors.bgLogin,
 			fontSize: 18,
 			cursor: "pointer",
@@ -419,7 +418,7 @@ export default makeStyles(() => {
 			...CStyles.txt_body_item,
 			textAlign: "center",
 			color: "#000",
-			fontSize: 18,
+			fontSize: 13,
 			cursor: "pointer",
 		},
 		boxFilter: {
@@ -430,6 +429,20 @@ export default makeStyles(() => {
 			cursor: "pointer",
 			display: "flex !important",
 			height: "44px",
+			outline: 0,
+			padding: "0 10px",
+		},
+		boxFilterItem: {
+			alignItems: "center",
+			background: "#fff",
+			border: " 1px solid #d6d6d4",
+			minWidth: "50px",
+			borderRadius: "22px",
+			cursor: "pointer",
+			display: "flex !important",
+			justifyContent: "space-between",
+			height: "44px",
+			width: 'auto',
 			outline: 0,
 			padding: "0 10px",
 			marginRight: "10px !important"
@@ -498,6 +511,13 @@ export default makeStyles(() => {
 				fontSize: ".8rem",
 				textAlign: "left",
 			},
+		},
+		txtFilterChoose: {
+			color: "#979797",
+			float: "right",
+			fontStyle: "italic",
+			fontWeight: 400,
+			marginTop: 20,
 		},
 		txtAnswer: {
 			...CStyles.txt_body_item,
