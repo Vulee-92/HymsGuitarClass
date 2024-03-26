@@ -45,15 +45,14 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 	};
 }); // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
 
-function handleClick(event) {
-	event.preventDefault();
-	console.info('You clicked a breadcrumb.');
-}
+
 const ProductsPage = () => {
 	const [products,setProducts] = useState(null);
 	const [isLoading,setIsLoading] = useState(true);
 	const [brands,setBrands] = useState([]);
 	const [categories,setCategories] = useState([]);
+	const [brandsAndCategories,setBrandsAndCategories] = useState({ brands: [],categories: [] });
+	console.log("brandsAndCategories",brandsAndCategories)
 	const params = useParams();
 	const classes = styles();
 	const [open,setOpen] = React.useState(false);
@@ -86,6 +85,7 @@ const ProductsPage = () => {
 				setProducts(res.data);
 				setBrands(res.brands);
 				setCategories(res.categories);
+				setBrandsAndCategories({ brands: res.brands,categories: res.categories });
 				setCollection(res.collections[0]);
 			} catch (error) {
 				console.error('Error fetching products:',error);
@@ -97,6 +97,19 @@ const ProductsPage = () => {
 
 		fetchData();
 	},[params]);
+	const removeAllSelectedItems = () => {
+		setSelectedBrands([]);
+		setSelectedCategories([]);
+
+		// Xóa các tham số vendor và type khỏi URLParams
+		const urlParams = new URLSearchParams();
+		urlParams.delete("vendor");
+		urlParams.delete("type");
+
+		// Thay đổi URL với các tham số mới
+		navigate(window.location.pathname + "?" + urlParams.toString());
+	};
+
 
 	// if (isLoading) {
 	// 	return <LoadingSpinner />;
@@ -104,7 +117,6 @@ const ProductsPage = () => {
 	const handleCheckboxClick = (value,type) => {
 		let updatedSelectedBrands = [...selectedBrands];
 		let updatedSelectedCategories = [...selectedCategories];
-
 		if (type === "brand") {
 			if (selectedBrands.includes(value)) {
 				updatedSelectedBrands = selectedBrands.filter((v) => v !== value);
@@ -120,7 +132,7 @@ const ProductsPage = () => {
 		}
 
 		const urlParams = new URLSearchParams();
-
+		console.log(urlParams)
 		if (updatedSelectedBrands.length > 0) {
 			urlParams.set("vendor",updatedSelectedBrands.join("%2C"));
 		}
@@ -330,10 +342,16 @@ const ProductsPage = () => {
 				<Box
 
 				>
+					{/* {(selectedCategories.length || selectedBrands.length) && ( */}
+					<Box>
+						<Typography className={classes.txtFilterChoose}>
+							{selectedCategories.length + selectedBrands.length} bộ lọc đang sử dụng
+						</Typography>
+						{/* )} */}
 
-					{selectedCategories && ( // Kiểm tra xem mục được chọn hay không
-						<Typography className={classes.txtFilterChoose}>{selectedCategories.length} bộ lọc đang sử dụng</Typography>
-					)}
+						<Typography className={classes.txtFilterRemove} onClick={removeAllSelectedItems}>Xoá bộ lọc</Typography>
+					</Box>
+
 				</Box>
 
 				<Grid container spacing={2}
@@ -362,7 +380,7 @@ const ProductsPage = () => {
 							marginRight: "30px !important"
 
 						}}>
-							{categories?.map((item) => (
+							{brandsAndCategories?.categories?.map((item) => (
 								<Box className={`${classes.boxFilterItem} ${selectedCategories.includes(item.slug) ? classes.selectedBox : ''}`}
 									onClick={() => handleCheckboxClick(item.slug,"cate")}
 									data-type={"cate"}
@@ -372,6 +390,21 @@ const ProductsPage = () => {
 
 									<Typography className={classes.txtFilter} style={{ fontSize: "13px" }} >	{item?.category}</Typography>
 									{selectedCategories.includes(item.slug) && ( // Kiểm tra xem mục được chọn hay không
+										<FontAwesomeIcon icon={faCircleXmark} />
+									)}
+								</Box>
+
+							))}
+							{brandsAndCategories?.brands?.map((item) => (
+								<Box className={`${classes.boxFilterItem} ${selectedBrands.includes(item.slug) ? classes.selectedBox : ''}`}
+									onClick={() => handleCheckboxClick(item.slug,"cate")}
+									data-type={"cate"}
+									style={{ display: 'inline-block',marginRight: '10px',marginBottom: '10px' }} // Thiết lập display inline-block và margin
+
+								>
+
+									<Typography className={classes.txtFilter} style={{ fontSize: "13px" }} >	{item?.brand}</Typography>
+									{selectedBrands.includes(item.slug) && ( // Kiểm tra xem mục được chọn hay không
 										<FontAwesomeIcon icon={faCircleXmark} />
 									)}
 								</Box>

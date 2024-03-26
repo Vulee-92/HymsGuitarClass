@@ -517,7 +517,15 @@ export default makeStyles(() => {
 			float: "right",
 			fontStyle: "italic",
 			fontWeight: 400,
-			marginTop: 20,
+			// marginTop: 20,
+		},
+		txtFilterRemove: {
+			color: "#9f8a46",
+			fontSize: "12px",
+			fontWeight: 700,
+			letterSpacing: 0,
+			right: "10px",
+			textDecoration: "underline",
 		},
 		txtAnswer: {
 			...CStyles.txt_body_item,
