@@ -40,6 +40,15 @@ export default makeStyles(() => {
 			marginBottom: "5%",
 			marginTop: "5%",
 		},
+		drawerContent: {
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'flex-end',
+			height: '100%',
+		},
+		cancelButton: {
+			marginTop: 'auto', // Hiển thị nút ở dưới cùng
+		},
 		txtTilte: {
 			...CStyles.txt_body_item,
 			color: "#000",
@@ -540,6 +549,24 @@ export default makeStyles(() => {
 			"@media (max-width: 550px)": {
 				fontSize: ".8rem",
 				textAlign: "left",
+			},
+		},
+		btnLoginHeader: {
+			...CStyles.btn_login,
+			// fontWeight: CStyles.fBold,
+			marginTop: "0px",
+
+			backgroundColor: Colors.bgLogin,
+			cursor: "pointer",
+			fontSize: "1rem",
+			fontWeight: 400,
+			top: 10,
+			margin: 30,
+			padding: "10px 25px",
+			textTransform: "none",
+			"&:hover": {
+				backgroundColor: "#355852", /* Đổi màu nền khi hover */
+				color: "#fff", /* Đổi màu chữ khi hover */
 			},
 		},
 	};

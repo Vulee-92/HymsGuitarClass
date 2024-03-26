@@ -1,4 +1,4 @@
-import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox,IconButton,Drawer,useMediaQuery,Breadcrumbs,Chip,emphasize } from "@mui/material";
+import { Accordion,AccordionSummary,Box,Container,Grid,Paper,Stack,Typography,styled,AccordionDetails,Checkbox,IconButton,Drawer,useMediaQuery,Breadcrumbs,Chip,emphasize,Button } from "@mui/material";
 import React,{ Suspense,useEffect,useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { ProductSort,ProductList,ProductCartWidget,ProductFilterSidebar } from '../../sections/@dashboard/products';
@@ -52,7 +52,6 @@ const ProductsPage = () => {
 	const [brands,setBrands] = useState([]);
 	const [categories,setCategories] = useState([]);
 	const [brandsAndCategories,setBrandsAndCategories] = useState({ brands: [],categories: [] });
-	console.log("brandsAndCategories",brandsAndCategories)
 	const params = useParams();
 	const classes = styles();
 	const [open,setOpen] = React.useState(false);
@@ -97,10 +96,13 @@ const ProductsPage = () => {
 
 		fetchData();
 	},[params]);
+	const closeDrawer = () => {
+		setOpen(false); // Đặt state của drawer thành false để đóng nó
+	};
 	const removeAllSelectedItems = () => {
 		setSelectedBrands([]);
 		setSelectedCategories([]);
-
+		closeDrawer();
 		// Xóa các tham số vendor và type khỏi URLParams
 		const urlParams = new URLSearchParams();
 		urlParams.delete("vendor");
@@ -132,7 +134,6 @@ const ProductsPage = () => {
 		}
 
 		const urlParams = new URLSearchParams();
-		console.log(urlParams)
 		if (updatedSelectedBrands.length > 0) {
 			urlParams.set("vendor",updatedSelectedBrands.join("%2C"));
 		}
@@ -192,6 +193,7 @@ const ProductsPage = () => {
 												<Checkbox
 													sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
 													onClick={() => handleCheckboxClick(item.slug,"brand")}
+													checked={selectedBrands.includes(item.slug)}
 												/>
 												{item.brand}
 											</Box>
@@ -208,6 +210,7 @@ const ProductsPage = () => {
 								</Grid>
 							))}
 						</Grid>
+
 					</AccordionDetails>
 				</Accordion>
 
@@ -235,7 +238,7 @@ const ProductsPage = () => {
 											<Box className={classes.txtCheckbox}>
 												<Checkbox
 													onClick={() => handleCheckboxClick(item.slug,"cate")}
-
+													checked={selectedCategories.includes(item.slug)}
 													sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
 													data-type={"cate"}
 												/>
@@ -256,14 +259,23 @@ const ProductsPage = () => {
 						</Grid>
 					</AccordionDetails>
 				</Accordion>
-
+				<div className={classes.drawerContent}>
+					{(selectedCategories.length > 0 || selectedBrands.length > 0) && (
+						<Button
+							className={`${classes.btnLoginHeader} ${classes.cancelButton}`}
+							onClick={removeAllSelectedItems}
+						>
+							Huỷ
+						</Button>
+					)}
+				</div>
 
 			</>
 		)
 	}
 	const drawerHeight = () => {
 		// Thay thế bằng logic tính toán chiều cao dựa trên nội dung thực tế của bạn
-		return "90%"; // Ví dụ: chiều cao là 200px
+		return "80%"; // Ví dụ: chiều cao là 200px
 	};
 	const maxSlidesToShow = 3; // Số lượng slide tối đa để hiển thị
 
@@ -271,13 +283,15 @@ const ProductsPage = () => {
 	const settings = {
 		speed: 500,
 		marginRight: 30,
-		slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+		slidesToShow: Math.min(categories.length >= 2 || brands.length >= 2 ? maxSlidesToShow : 1,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
 		slidesToScroll: 1,
 		responsive: [
 			{
 				breakpoint: 1024,
 				settings: {
-					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToShow: Math.min(categories.length >= 2 || brands.length >= 2 ? maxSlidesToShow : 1,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					// Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+
 					slidesToScroll: 3,
 					infinite: true,
 					dots: true
@@ -286,7 +300,9 @@ const ProductsPage = () => {
 			{
 				breakpoint: 600,
 				settings: {
-					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToShow: Math.min(categories.length >= 2 || brands.length >= 2 ? maxSlidesToShow : 1,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					// Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+
 					slidesToScroll: 2,
 					initialSlide: 2
 				}
@@ -294,7 +310,9 @@ const ProductsPage = () => {
 			{
 				breakpoint: 390,
 				settings: {
-					slidesToShow: Math.min(categories.length,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					slidesToShow: Math.min(categories.length >= 2 || brands.length >= 2 ? maxSlidesToShow : 1,maxSlidesToShow), // Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+					// Số lượng slide để hiển thị không vượt quá maxSlidesToShow
+
 					slidesToScroll: 1
 				}
 			}
