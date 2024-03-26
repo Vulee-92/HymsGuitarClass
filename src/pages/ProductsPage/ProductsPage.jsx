@@ -344,12 +344,14 @@ const ProductsPage = () => {
 				>
 					{/* {(selectedCategories.length || selectedBrands.length) && ( */}
 					<Box>
+
 						<Typography className={classes.txtFilterChoose}>
 							{selectedCategories.length + selectedBrands.length} bộ lọc đang sử dụng
 						</Typography>
+						<Typography className={classes.txtFilterRemove} onClick={removeAllSelectedItems}>Xoá bộ lọc</Typography>
+
 						{/* )} */}
 
-						<Typography className={classes.txtFilterRemove} onClick={removeAllSelectedItems}>Xoá bộ lọc</Typography>
 					</Box>
 
 				</Box>
@@ -397,8 +399,8 @@ const ProductsPage = () => {
 							))}
 							{brandsAndCategories?.brands?.map((item) => (
 								<Box className={`${classes.boxFilterItem} ${selectedBrands.includes(item.slug) ? classes.selectedBox : ''}`}
-									onClick={() => handleCheckboxClick(item.slug,"cate")}
-									data-type={"cate"}
+									onClick={() => handleCheckboxClick(item.slug,"brand")}
+									data-type={"brand"}
 									style={{ display: 'inline-block',marginRight: '10px',marginBottom: '10px' }} // Thiết lập display inline-block và margin
 
 								>

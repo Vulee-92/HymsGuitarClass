@@ -514,7 +514,7 @@ export default makeStyles(() => {
 		},
 		txtFilterChoose: {
 			color: "#979797",
-			float: "right",
+			float: "left",
 			fontStyle: "italic",
 			fontWeight: 400,
 			// marginTop: 20,
@@ -522,6 +522,7 @@ export default makeStyles(() => {
 		txtFilterRemove: {
 			color: "#9f8a46",
 			fontSize: "12px",
+			float: "right",
 			fontWeight: 700,
 			letterSpacing: 0,
 			right: "10px",
